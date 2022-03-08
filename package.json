@@ -1,0 +1,32 @@
+{
+  "name": "whppt-next",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/whpptjs/whppt-next.git",
+  "author": "Svelte Team <info@sveltestudios.com>",
+  "keywords": [
+    "CMS",
+    "Next",
+    "React"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/whpptjs/whppt-next",
+  "bugs": {
+    "url": "https://github.com/whpptjs/whppt-next/issues"
+  },
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "@whppt/api-express": "^2.0.0-rc33"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "husky": "^7.0.0",
+    "jest": "^27.5.1"
+  }
+}
