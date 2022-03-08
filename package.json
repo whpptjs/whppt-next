@@ -1,5 +1,5 @@
 {
-  "name": "whppt-next",
+  "name": "@whppt/next",
   "version": "0.0.0",
   "main": "index.js",
   "repository": "https://github.com/whpptjs/whppt-next.git",
@@ -22,7 +22,8 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest",
+    "publish-rc": "yarn publish --access public --tag rc"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
