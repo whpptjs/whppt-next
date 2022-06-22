@@ -13,12 +13,10 @@
     "outDir": "./dist",
     "module": "esNext",
     "moduleResolution": "node",
-    "jsx": "preserve",
-    "paths": {
-      "@data": ["data/index.ts"],
-      "@components/*": ["components/*"],
-      "@format": ["components/format.ts"]
-    },
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "jsx": "react",
+    "paths": {},
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,

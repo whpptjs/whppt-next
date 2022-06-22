@@ -1,4 +1,4 @@
-import { FC, ReactElement, useMemo, useState } from "react";
+import React, { FC, ReactElement, useMemo, useState } from "react";
 import { Whppt } from "./Context";
 import type { WhpptAppEditorsArg } from "./EditorPanel";
 

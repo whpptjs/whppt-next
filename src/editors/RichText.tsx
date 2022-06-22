@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { WhpptEditorArgs } from "..";
 
 export const WhpptRichtextEditor: FC<WhpptEditorArgs> = ({

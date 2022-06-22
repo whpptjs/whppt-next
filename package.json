@@ -1,12 +1,12 @@
 {
   "name": "@whppt/next",
   "version": "0.0.2",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "types/index.d.ts",
   "files": [
     "/dist",
-    "/types",
-    "/src"
+    "/types"
   ],
   "repository": "https://github.com/whpptjs/whppt-next.git",
   "author": "Svelte Team <info@sveltestudios.com>",
@@ -24,7 +24,7 @@
     "prepare": "husky install",
     "test": "jest",
     "watch": "tsc --watch",
-    "build": "tsc",
+    "build": "rm -rf dist && rm -rf types && tsc",
     "publish:patch": "yarn test && yarn build && standard-version --release-as patch && yarn publish && git push --follow-tags",
     "publish:minor": "yarn test && yarn build && standard-version --release-as minor && yarn publish && git push --follow-tags",
     "publish:major": "yarn test && yarn build && standard-version --release-as major && yarn publish && git push --follow-tags"

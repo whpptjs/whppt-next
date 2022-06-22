@@ -1,4 +1,4 @@
-import { FC, ReactElement, useContext } from "react";
+import React, { FC, ReactElement, useContext } from "react";
 import { Whppt } from ".";
 
 export const Editor: FC<{

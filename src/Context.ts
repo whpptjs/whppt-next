@@ -19,7 +19,7 @@ export const Whppt = createContext<{
   editorState: {
     editor: "",
     value: undefined,
-    onChange: (value: any) => {},
+    onChange: () => {},
   },
-  showEditor: (value: any) => {},
+  showEditor: () => {},
 });
