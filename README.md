@@ -1,4 +1,4 @@
-# @Whppt/nuxt
+# @whppt/next
 
 [Documentation](https://www.whppt.org)
 
