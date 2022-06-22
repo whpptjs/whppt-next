@@ -9,6 +9,7 @@ export const WhpptMainNav: FC = ({}) => {
       <ul>
         <li>Collapse</li>
         <li onClick={() => toggleEditing()}>Toggle Editor</li>
+        <li>Log Out</li>
       </ul>
     </div>
   );
