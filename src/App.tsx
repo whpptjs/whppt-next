@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useMemo, useState } from "react";
 import { Whppt } from "./Context";
 import type { WhpptAppEditorsArg } from "./EditorPanel";
+import { WhpptMainNav } from "./MainNav";
 
 export type WhpptAppOptions = {
   children: ReactElement[];
@@ -49,6 +50,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
   return (
     <div>
       <Whppt.Provider value={context}>
+        <WhpptMainNav />
         {children}
         <div>{editors(editorState)}</div>
       </Whppt.Provider>
