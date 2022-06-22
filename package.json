@@ -1,7 +1,12 @@
 {
   "name": "@whppt/next",
-  "version": "0.0.0",
-  "main": "index.js",
+  "version": "0.0.2",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "/dist",
+    "/types"
+  ],
   "repository": "https://github.com/whpptjs/whppt-next.git",
   "author": "Svelte Team <info@sveltestudios.com>",
   "keywords": [
@@ -14,20 +19,23 @@
   "bugs": {
     "url": "https://github.com/whpptjs/whppt-next/issues"
   },
-  "files": [
-    "lib"
-  ],
-  "peerDependencies": {
-    "@whppt/api-express": "^2.0.0-rc33"
-  },
   "scripts": {
     "prepare": "husky install",
     "test": "jest",
-    "publish-rc": "yarn publish --access public --tag rc"
+    "watch": "tsc --watch",
+    "build": "tsc",
+    "publish:patch": "yarn test && yarn build && standard-version --release-as patch && yarn publish && git push --follow-tags",
+    "publish:minor": "yarn test && yarn build && standard-version --release-as minor && yarn publish && git push --follow-tags",
+    "publish:major": "yarn test && yarn build && standard-version --release-as major && yarn publish && git push --follow-tags"
+  },
+  "dependencies": {
+    "react": "17.0.2"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "husky": "^7.0.0",
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "standard-version": "^9.5.0",
+    "typescript": "^4.7.3"
   }
 }
