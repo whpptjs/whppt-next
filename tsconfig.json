@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "lib": ["dom", "es2017"],
+    "outDir": "./dist",
+    "module": "esNext",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "paths": {
+      "@data": ["data/index.ts"],
+      "@components/*": ["components/*"],
+      "@format": ["components/format.ts"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": false,
+    "target": "es6"
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", "types", "**/*test.ts"]
+}
