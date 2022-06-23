@@ -1,6 +1,10 @@
 @import "./tailwind.scss";
 @import "./mainNav.scss";
+@import "./editorPanel.scss";
 
 .whppt-app{
     display: flex;
+    &__content{
+        @apply flex-1
+    }
 }

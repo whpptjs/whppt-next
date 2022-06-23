@@ -115,7 +115,11 @@ export const WhpptMainNav: FC<{ setLightMode: Function }> = ({
   ]);
 
   return (
-    <div className="whppt-main-nav">
+    <div
+      className={`whppt-main-nav ${
+        showFullNav ? 'whppt-main-nav--show-full-nav' : ''
+      }`}
+    >
       <div className="whppt-main-nav-contents">
         <div>
           <button
@@ -132,7 +136,7 @@ export const WhpptMainNav: FC<{ setLightMode: Function }> = ({
           <div>
             {groupedItems.map((navItems) => {
               return (
-                <div>
+                <div key={navItems[0].group}>
                   <div className="whppt-main-nav-group--title">
                     {navItems[0].group}
                   </div>

@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, useContext } from "react";
-import { Whppt } from ".";
+import React, { FC, ReactElement, useContext } from 'react';
+import { Whppt } from '.';
 
 export const Editor: FC<{
   is: string;
@@ -10,7 +10,7 @@ export const Editor: FC<{
   const { showEditor, editing } = useContext(Whppt);
   return (
     <div
-      className="whppt-editor"
+      className="whppt-editor-selector"
       onClick={() => showEditor(is, value, onChange)}
     >
       {children({ isEditing: editing })}

@@ -11,6 +11,7 @@ import { WhpptIconSettings } from './icons/Settings';
 import { WhpptIconNav } from './icons/Nav';
 import { WhpptIconLogout } from './icons/Logout';
 import { WhpptIconBruce } from './icons/WhpptBruce';
+import { WhpptIconClose } from './icons/Close';
 
 export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'pointer') return <WhpptIconPointer></WhpptIconPointer>;
@@ -26,5 +27,6 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'dashboard') return <WhpptIconDashboard></WhpptIconDashboard>;
   if (is === 'logout') return <WhpptIconLogout></WhpptIconLogout>;
   if (is === 'bruce') return <WhpptIconBruce></WhpptIconBruce>;
+  if (is === 'close') return <WhpptIconClose></WhpptIconClose>;
   return <div></div>;
 };

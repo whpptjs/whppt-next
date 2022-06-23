@@ -1,6 +1,9 @@
 
 .whppt-main-nav {
-    @apply w-20 relative h-full ;
+    @apply w-20 relative h-full bg-green-400 ;
+    &--show-full-nav{
+        @apply w-56
+    }
     .whppt-main-nav-contents {
         @apply fixed top-0 left-0 bottom-0 p-5 bg-whpptDarkMode;
         @apply flex flex-col justify-between;
@@ -8,7 +11,7 @@
         @apply text-whpptLightMode;
     }   
     &__whppt-label{
-        @apply ml-5 ;
+        @apply ml-5 font-bold text-xl;
     }
     &__logo{
         @apply mb-10 flex items-center ;
@@ -18,7 +21,7 @@
     }
     &-group{
         &--title{
-            @apply capitalize text-left p-3
+            @apply capitalize text-left py-3
         }
         &__nav-item{
             @apply flex mb-5 items-center rounded;
