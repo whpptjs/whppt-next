@@ -1,9 +1,59 @@
-.whppt-main-nav {
-    @apply absolute z-50 bg-blue-600;
-    top: 2rem;
-    left: 2rem;
 
-    ul {
-        
+.whppt-main-nav {
+    @apply w-20 relative h-full ;
+    .whppt-main-nav-contents {
+        @apply fixed top-0 left-0 bottom-0 p-5 bg-whpptDarkMode;
+        @apply flex flex-col justify-between;
+        @apply border-r-2 border-whpptDarkMode;
+        @apply text-whpptLightMode;
+    }   
+    &__whppt-label{
+        @apply ml-5 ;
+    }
+    &__logo{
+        @apply mb-10 flex items-center ;
+    }
+    &__icon{
+        @apply w-12 h-12;
+    }
+    &-group{
+        &--title{
+            @apply capitalize text-left p-3
+        }
+        &__nav-item{
+            @apply flex mb-5 items-center rounded;
+            @apply hover:bg-whpptLightMode p-3 hover:text-whpptDarkMode;
+            
+            .whppt-main-nav__icon{
+                @apply w-6 h-6 ; 
+            }
+            &--active{
+                @apply bg-green-500;
+            }
+            &:disabled {
+                @apply opacity-30
+            }
+        }
+        &__label{
+            @apply ml-5 ;
+        }
+        &--toggle {
+            @apply mb-10
+        }
     }
 }
+.whppt-lightMode {
+    .whppt-main-nav {
+        &-contents {
+            @apply fixed top-0 left-0 bottom-0 p-5 bg-whpptLightMode;
+            @apply flex flex-col justify-between;
+            @apply text-whpptDarkMode;
+        }
+        &-group__nav-item{
+            @apply hover:bg-whpptDarkMode p-3 hover:text-whpptLightMode;
+        }
+    }
+}
+
+
+

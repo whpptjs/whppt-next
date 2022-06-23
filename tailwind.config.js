@@ -1,7 +1,12 @@
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ['./src/**/*.{html,js}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        whpptLightMode: '#fff',
+        whpptDarkMode: '#1a202c',
+      },
+    },
   },
   plugins: [],
 };

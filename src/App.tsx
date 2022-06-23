@@ -1,7 +1,7 @@
-import React, { FC, ReactElement, useMemo, useState } from "react";
-import { Whppt } from "./Context";
-import type { WhpptAppEditorsArg } from "./EditorPanel";
-import { WhpptMainNav } from "./MainNav";
+import React, { FC, ReactElement, useMemo, useState } from 'react';
+import { Whppt } from './Context';
+import type { WhpptAppEditorsArg } from './EditorPanel';
+import { WhpptMainNav } from './MainNav';
 
 export type WhpptAppOptions = {
   children: ReactElement[];
@@ -9,12 +9,13 @@ export type WhpptAppOptions = {
 };
 
 export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
+  const [lightMode, setLightMode] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editorState, setEditorState] = useState<{
     editor: string;
     value: any;
     onChange: (value: any) => void;
-  }>({ editor: "", value: undefined, onChange: () => {} });
+  }>({ editor: '', value: undefined, onChange: () => {} });
 
   const context = useMemo(
     () => ({
@@ -50,9 +51,11 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
   return (
     <div>
       <Whppt.Provider value={context}>
-        <WhpptMainNav />
-        {children}
-        <div>{editors(editorState)}</div>
+        <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
+          <WhpptMainNav setLightMode={() => setLightMode(!lightMode)} />
+          {children}
+          <div>{editors(editorState)}</div>
+        </div>
       </Whppt.Provider>
     </div>
   );
