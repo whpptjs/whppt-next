@@ -1,10 +1,15 @@
 @import "./tailwind.scss";
 @import "./mainNav.scss";
 @import "./editorPanel.scss";
+@import "./input.scss";
+@import "./richText.scss";
 
 .whppt-app{
     display: flex;
     &__content{
         @apply flex-1
     }
+}
+.hidden {
+    display: none;
 }

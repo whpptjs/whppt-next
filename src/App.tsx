@@ -8,6 +8,7 @@ export type WhpptAppOptions = {
   children: ReactElement[];
   editors: WhpptAppEditorsArg;
 };
+export type WhpptApp = FC<WhpptAppOptions>;
 
 export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
   const [lightMode, setLightMode] = useState(false);
@@ -56,9 +57,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
           <WhpptMainNav setLightMode={() => setLightMode(!lightMode)} />
           <div className="whppt-app__content">
             <div>{children}</div>
-            <WhpptEditorPanel editors={editors}>
-              {/* {editors(editorState)} */}
-            </WhpptEditorPanel>
+            <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
           </div>
         </div>
       </Whppt.Provider>

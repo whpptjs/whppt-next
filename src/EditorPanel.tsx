@@ -15,6 +15,7 @@ export type WhpptAppEditorsArg = ({
 export type WhpptEditorPanelArgs = {
   editors: WhpptAppEditorsArg;
 };
+export type WhpptEditorPanel = FC<WhpptEditorPanelArgs>;
 
 export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
   const { editorState, editing } = useContext(Whppt);

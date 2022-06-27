@@ -1,6 +1,6 @@
 
 .whppt-main-nav {
-    @apply w-20 relative h-full bg-green-400 ;
+    @apply w-20 relative h-full  ;
     &--show-full-nav{
         @apply w-56
     }
@@ -31,7 +31,7 @@
                 @apply w-6 h-6 ; 
             }
             &--active{
-                @apply bg-green-500;
+                @apply bg-whpptActive;
             }
             &:disabled {
                 @apply opacity-30

@@ -1,0 +1,27 @@
+.whppt-lightMode {
+    .whppt-plaintext {
+        .whppt-label{
+            @apply text-whpptDarkMode;
+        }
+        .whppt-input {
+            &-info {
+               @apply text-whpptDarkMode;
+            }
+        }
+    }
+}
+
+
+.whppt-plaintext {
+    .whppt-label{
+        @apply my-2;
+    }
+    .whppt-input {
+        &-info {
+            @apply opacity-70;
+        }
+        &-error {
+            @apply text-red-500;
+        }
+    }
+}

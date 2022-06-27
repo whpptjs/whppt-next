@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-import { WhpptEditorArgs } from "..";
+import React, { FC } from 'react';
+import { WhpptRichText } from '../ui/components/RichText';
+import { WhpptEditorArgs } from '..';
 
 export const WhpptRichtextEditor: FC<WhpptEditorArgs> = ({
   value,
@@ -7,10 +8,13 @@ export const WhpptRichtextEditor: FC<WhpptEditorArgs> = ({
 }) => {
   return (
     <div className="whppt-richtext-editor">
-      <input
-        type="input"
+      <WhpptRichText
+        id="whppt-richtext-input"
+        label="Whppt rich text Label"
+        error=""
+        info=""
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
       />
     </div>
   );
