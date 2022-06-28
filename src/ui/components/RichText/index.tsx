@@ -11,6 +11,7 @@ export type WhpptRichTextArgs = WhpptEditorArgs & {
   label: string;
   info: string;
   error: string;
+  formatOptionsOnly: boolean;
 };
 
 export const WhpptRichText: FC<WhpptRichTextArgs> = ({
@@ -19,6 +20,7 @@ export const WhpptRichText: FC<WhpptRichTextArgs> = ({
   info,
   value,
   onChange,
+  formatOptionsOnly,
 }) => {
   const editor = useEditor({
     extensions: [
@@ -43,7 +45,7 @@ export const WhpptRichText: FC<WhpptRichTextArgs> = ({
       <div className="whppt-label">
         <label htmlFor={id}>{label}</label>
       </div>
-      <WhpptMenuBar editor={editor} />
+      <WhpptMenuBar formatOptionsOnly={formatOptionsOnly} editor={editor} />
 
       <EditorContent className="whppt-input" editor={editor} />
       <p className="whppt-input-info">{info}</p>

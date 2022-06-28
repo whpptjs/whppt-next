@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useMemo, useState } from 'react';
 import { Whppt } from './Context';
 import type { WhpptAppEditorsArg } from './EditorPanel';
 import { WhpptEditorPanel } from './EditorPanel';
+import { WhpptFullScreenPopup } from './WhpptFullScreenPopup';
 import { WhpptMainNav } from './MainNav';
 
 export type WhpptAppOptions = {
@@ -55,6 +56,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
       <Whppt.Provider value={context}>
         <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
           <WhpptMainNav setLightMode={() => setLightMode(!lightMode)} />
+          <WhpptFullScreenPopup></WhpptFullScreenPopup>
           <div className="whppt-app__content">
             <div>{children}</div>
             <WhpptEditorPanel editors={editors}></WhpptEditorPanel>

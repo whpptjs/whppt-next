@@ -24,6 +24,9 @@ import { WhpptIconUnderline } from './icons/Underline';
 import { WhpptIconUndo } from './icons/Undo';
 import { WhpptIconChainLink } from './icons/ChainLink';
 import { WhpptIconParagraph } from './icons/Paragraph';
+import { WhpptIconLeftAlign } from './icons/LeftAlign';
+import { WhpptIconRightAlign } from './icons/RightAlign';
+import { WhpptIconCenterAlign } from './icons/CenterAlign';
 
 export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'pointer') return <WhpptIconPointer></WhpptIconPointer>;
@@ -52,5 +55,9 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'underline') return <WhpptIconUnderline></WhpptIconUnderline>;
   if (is === 'undo') return <WhpptIconUndo></WhpptIconUndo>;
   if (is === 'paragraph') return <WhpptIconParagraph></WhpptIconParagraph>;
+  if (is === 'left-align') return <WhpptIconLeftAlign></WhpptIconLeftAlign>;
+  if (is === 'right-align') return <WhpptIconRightAlign></WhpptIconRightAlign>;
+  if (is === 'center-align')
+    return <WhpptIconCenterAlign></WhpptIconCenterAlign>;
   return <div></div>;
 };

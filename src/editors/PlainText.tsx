@@ -12,8 +12,8 @@ export const WhpptPlaintextEditor: FC<WhpptEditorArgs> = ({
         id="whppt-plaintext-input"
         label="Whppt Label"
         type="text"
-        error=" Error happened"
-        info="inpet helper"
+        error="Error happened"
+        info="Input helper"
         value={value}
         onChange={onChange}
       />

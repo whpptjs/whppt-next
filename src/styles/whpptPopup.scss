@@ -1,0 +1,53 @@
+.whppt-lightMode {
+    .whppt-popup {
+        @apply bg-whpptLightMode text-whpptDarkMode;
+        &--active {
+            @apply border-whpptDarkMode;
+        }   
+        &__header {
+            @apply border-whpptDarkMode;
+        }
+
+        &__contents{
+            &--left{ @apply border-whpptDarkMode }
+        }
+    }
+}
+.whppt-popup  {
+    @apply bg-whpptDarkMode text-whpptLightMode;
+    position: fixed;
+    width: 0;
+    transition: width 0.3s ease;
+    right:0;
+    height: 100vh;
+    z-index: 1000;
+    top:0;
+    
+    &--active {
+        @apply border-l-2 border-whpptDarkMode;
+        width: 100%;
+    }
+
+    &__header{
+        @apply border-b-2 border-whpptLightMode p-5 text-xl flex items-center justify-between font-bold;
+        &--button{
+            @apply w-10 h-10;
+        }
+    }
+    &__contents{
+        @apply flex h-full;
+        input{
+            @apply text-whpptDarkMode border-2 border-whpptDarkMode w-full p-3 rounded;
+        }
+
+        &--left{ @apply w-2/12 border-r border-whpptLightMode h-full
+        }
+        &--right{ @apply w-10/12 p-5 h-full}
+    }
+    &__tab {
+        @apply p-5 border-b border-whpptLightMode w-full;
+        &--active {
+            @apply bg-whpptActive ;
+        }
+    }
+}
