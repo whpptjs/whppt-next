@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react';
 
-type CheckboxProps = {
+type WhpptCheckboxProps = {
   dark: boolean
   label: string
   value: string | ReadonlyArray<string> | number | undefined
 }
 
-export const Checkbox: FC<CheckboxProps> = ({dark, label, value}) => {
+export const Checkbox: FC<WhpptCheckboxProps> = ({dark, label, value}) => {
   const  [checked, setChecked] = useState(false);
 
   return (

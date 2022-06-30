@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
-import { Tab } from '../index';
+import { WhpptTab } from '../index';
 import { Button } from './../../ui/components/Button';
 
-export const OpenGraph: FC<Tab> = () => {
+export const OpenGraph: FC<WhpptTab> = () => {
   const onChange = () => {};
   const error = '';
   const value = '';

@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
-import { Tab } from '../index';
+import { WhpptTab } from '../index';
 import { Button } from './../../ui/components/Button';
 
-export const General: FC<Tab> = () => {
+export const General: FC<WhpptTab> = () => {
   const onChange = () => {};
   const error = '';
   const value = '';

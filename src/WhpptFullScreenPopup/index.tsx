@@ -9,14 +9,12 @@ import { OpenGraph } from './forms/OpenGraph';
 import { General } from './forms/General';
 import { Twitter } from './forms/Twitter';
 
-export type Tab = {
+export type WhpptTab = {
   name: string
   label: string
 };
 
-export type SelectedType = string;
-
-export type Tabs = Array<Tab>;
+export type WhpptSelectedType = string;
 
 export const WhpptFullScreenPopup: FC = () => {
   const { editing, toggleEditing } = useContext(Whppt);
@@ -26,7 +24,7 @@ export const WhpptFullScreenPopup: FC = () => {
     setSelectedTab(pageName);
   }, []);
 
-  const tabs: Tabs = [
+  const tabs: Array<WhpptTab> = [
     { name: 'general', label: 'General' },
     { name: 's-e-o', label: 'Seo' },
     { name: 'open-graph', label: 'Open Graph' },

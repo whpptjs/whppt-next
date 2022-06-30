@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
-import { Tab } from '../index';
+import { WhpptTab } from '../index';
 import { Button } from './../../ui/components/Button';
 import { Checkbox } from '../../ui/components/Checkbox';
 
-export const Seo: FC<Tab> = () => {
+export const Seo: FC<WhpptTab> = () => {
   const onChange = () => {};
   const error = '';
   const value = '';

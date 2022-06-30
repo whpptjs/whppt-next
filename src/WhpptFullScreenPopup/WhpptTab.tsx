@@ -5,16 +5,11 @@ type WhpptTabProps = {
   selectedTab: string
 }
 
-const defaultTab = 'general';
-
 export const WhpptTab: FC<WhpptTabProps> = ({ selectedTab, children }) => {
 
   return (
     <div>
-      {
-        children.find(tab => tab.props.name === selectedTab) ||
-        children.find(tab => tab.props.name === defaultTab)
-      }
+      { children.find(tab => tab.props.name === selectedTab) || children[0] }
     </div>
   );
 }
