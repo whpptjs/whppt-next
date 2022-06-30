@@ -1,27 +1,50 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTab } from '../index';
 import { Button } from './../../ui/components/Button';
 
 export const General: FC<WhpptTab> = () => {
-  const onChange = () => {};
+  const [slug, setSlug] = useState('');
+  const [pageType, setPageType] = useState('');
+  const [pageTemplate, setPageTemplate] = useState('');
+  const [isEditingSlug, setIsEditingSlug] = useState(false);
+
   const error = '';
-  const value = '';
   const info = '';
+
+  const submit = () => {
+  }
+
+  const duplicatePage = () => {
+  }
+
+  const deletePage = () => {
+  }
 
   return (
     <form className="whppt-form">
       <section className="whppt-form-section">
-        <WhpptInput
-          id="whppt-plaintext-input"
-          label="Page Slug"
-          type="text"
-          error={error}
-          info={info}
-          value={value || "current slug: /slug"}
-          onChange={onChange}
-        />
-        <Button text="Change Slug"/>
+        {
+          isEditingSlug
+            ? <WhpptInput
+                id="whppt-plaintext-input"
+                label="Page Slug"
+                type="text"
+                error={error}
+                info={info}
+                value={slug}
+                onChange={setSlug}
+              />
+            : <div className="whppt-plaintext">
+                <div className="whppt-label">
+                  <label>Page Slug</label>
+                </div>
+                <div className="whppt-form-slug-placeholder">
+                  <p>{`Current slug: /${slug}`}</p>
+                </div>
+              </div>
+        }
+        <Button text="Change Slug" onClick={() => setIsEditingSlug(!isEditingSlug)}/>
       </section>
 
       <section className="whppt-form-section">
@@ -31,8 +54,8 @@ export const General: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={pageType}
+          onChange={setPageType}
         />
         <WhpptInput
           id="whppt-plaintext-input"
@@ -40,15 +63,15 @@ export const General: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={pageTemplate}
+          onChange={setPageTemplate}
         />
-        <Button text="Change Page Type"/>
+        <Button text="Change Page Type" onClick={submit}/>
       </section>
 
       <section className="whppt-section-actions">
-        <Button text="Duplicate Page"/>
-        <Button text="Delete Page"/>
+        <Button text="Duplicate Page" onClick={duplicatePage}/>
+        <Button text="Delete Page" onClick={deletePage}/>
       </section>
     </form>
   )

@@ -1,14 +1,13 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 type WhpptCheckboxProps = {
   dark: boolean
   label: string
   value: string | ReadonlyArray<string> | number | undefined
+  onChange: () => void
 }
 
-export const Checkbox: FC<WhpptCheckboxProps> = ({dark, label, value}) => {
-  const  [checked, setChecked] = useState(false);
-
+export const Checkbox: FC<WhpptCheckboxProps> = ({ dark, label, value, onChange }) => {
   return (
     <div className={`whppt-checkbox
         ${dark ? 'whppt-checkbox--dark' : ''
@@ -16,9 +15,8 @@ export const Checkbox: FC<WhpptCheckboxProps> = ({dark, label, value}) => {
       <label>
         <input
           type="checkbox"
-          checked={checked}
           value={value}
-          onChange={() => setChecked(!checked)}
+          onChange={onChange}
         />
         <span className="whppt-checkbox__label">{label}</span>
         <span className="whppt-checkbox__checkmark"></span>

@@ -1,14 +1,38 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTab } from '../index';
 import { Button } from './../../ui/components/Button';
 import { Checkbox } from '../../ui/components/Checkbox';
 
 export const Seo: FC<WhpptTab> = () => {
-  const onChange = () => {};
+  const [title, setTitle] = useState('');
+  const [keyWords, setKeywords] = useState('');
+  const [description, setDescription] = useState('');
+  const [priorityLevel, setPriorityLevel] = useState('');
+  const [changeFrequency, setChangeFrequency] = useState('');
+  const [hideFromXML, setHideFromXML] = useState(false);
+
   const error = '';
-  const value = '';
   const info = '';
+
+  const submit = () => {
+    // const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
+    // const seoSettings = {
+    //   title,
+    //   keyWords,
+    //   description,
+    //   priority: {
+    //     priorityLevel,
+    //     changeFrequency
+    //   },
+    //   hideFromXML
+    // }
+    // setPage(...page, seoSettings)
+  }
+
+  const handleCheckBox = () => {
+    setHideFromXML(!hideFromXML);
+  }
 
   return (
     <form className="whppt-form">
@@ -19,8 +43,8 @@ export const Seo: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={title}
+          onChange={setTitle}
         />
         <WhpptInput
           id="whppt-plaintext-input"
@@ -28,8 +52,8 @@ export const Seo: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={keyWords}
+          onChange={setKeywords}
         />
          <WhpptInput
           id="whppt-plaintext-input"
@@ -37,8 +61,8 @@ export const Seo: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={description}
+          onChange={setDescription}
         />
         <WhpptInput
           id="whppt-plaintext-input"
@@ -46,8 +70,8 @@ export const Seo: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={priorityLevel}
+          onChange={setPriorityLevel}
         />
         <WhpptInput
           id="whppt-plaintext-input"
@@ -55,14 +79,19 @@ export const Seo: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={changeFrequency}
+          onChange={setChangeFrequency}
         />
-        <Checkbox dark={false} label={"HIDE THIS PAGE FROM THE SITEMAP XML?"} value={''}/>
+        <Checkbox
+          dark={false}
+          label={"HIDE THIS PAGE FROM THE SITEMAP XML?"}
+          value={'hide-from-xml'}
+          onChange={() => handleCheckBox()}
+        />
       </section>
 
       <section className="whppt-section-actions">
-        <Button text="Save Settings"/>
+        <Button text="Save Settings" onClick={submit}/>
       </section>
     </form>
   );

@@ -1,12 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTab } from '../index';
 import { Button } from './../../ui/components/Button';
 
 export const Twitter: FC<WhpptTab> = () => {
-  const onChange = () => {};
+  const [title, setTitle] = useState('');
+  const [keyWords, setKeywords] = useState('');
+  const [description, setDescription] = useState('');
+
+  const submit = () => {
+    //const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
+    //const twitterSettings = { title, description, keywords: keyWordsArray};
+    //setPage(...page, twitterSettings)
+  }
+
   const error = '';
-  const value = '';
   const info = '';
 
   return (
@@ -18,8 +26,8 @@ export const Twitter: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={title}
+          onChange={setTitle}
         />
         <WhpptInput
           id="whppt-plaintext-input"
@@ -27,8 +35,8 @@ export const Twitter: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={keyWords}
+          onChange={setKeywords}
         />
          <WhpptInput
           id="whppt-plaintext-input"
@@ -36,13 +44,13 @@ export const Twitter: FC<WhpptTab> = () => {
           type="text"
           error={error}
           info={info}
-          value={value}
-          onChange={onChange}
+          value={description}
+          onChange={setDescription}
         />
       </section>
 
       <section className="whppt-section-actions">
-        <Button text="Save Settings"/>
+        <Button text="Save Settings" onClick={submit}/>
       </section>
     </form>
   );
