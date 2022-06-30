@@ -1,13 +1,9 @@
 import React, { FC } from 'react';
 
 type ButtonProps = {
-  text: string
+  text: string;
 };
 
 export const Button: FC<ButtonProps> = ({ text }) => {
-  return (
-    <button className="whppt-form-button">
-      { text }
-    </button>
-  );
+  return <button className="whppt-button">{text}</button>;
 };
