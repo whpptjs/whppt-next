@@ -45,7 +45,7 @@
         &--right{ @apply w-10/12 p-5 h-full}
     }
     &__tab {
-        @apply p-5 border-b border-whpptLightMode w-full;
+        @apply p-5 border-b border-whpptLightMode w-full text-left;
         &--active {
             @apply bg-whpptActive ;
         }
