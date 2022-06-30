@@ -7,7 +7,7 @@ type WhpptButtonProps = {
 
 export const Button: FC<WhpptButtonProps> = ({ text, onClick }) => {
   return (
-    <button className="whppt-form-button" onClick={onClick} type="button">
+    <button className="whppt-button" onClick={onClick} type="button">
       { text }
     </button>
   );

@@ -1,7 +1,7 @@
 import React, { FC, useContext, useState, useCallback } from 'react';
 import { Whppt } from '../Context';
 import { WhpptIcon } from '../Icon';
-import { WhpptTabs } from './WhpptTabs'
+import { WhpptTabs } from './WhpptTabs';
 import { WhpptTab } from './WhpptTab';
 
 import { Seo } from './forms/Seo';
@@ -18,7 +18,7 @@ export type WhpptSelectedType = string;
 
 export const WhpptFullScreenPopup: FC = () => {
   const { editing, toggleEditing } = useContext(Whppt);
-  const [selectedTab, setSelectedTab] = useState('General');
+  const [selectedTab, setSelectedTab] = useState('general');
 
   const selectTab = useCallback((pageName) => {
     setSelectedTab(pageName);
@@ -60,14 +60,18 @@ export const WhpptFullScreenPopup: FC = () => {
       </div>
       <div className="whppt-popup__contents">
         <div className="whppt-popup__contents--left">
-          <WhpptTabs tabs={tabs} selectTab={selectTab}/>
+          <WhpptTabs
+            tabs={tabs}
+            selectTab={selectTab}
+            selectedTab={selectedTab}
+          />
         </div>
         <div className="whppt-popup__contents--right">
           <WhpptTab selectedTab={selectedTab}>
-            <General name="general" label="General"/>
-            <Seo name="s-e-o" label="Seo"/>
-            <OpenGraph name="open-graph" label="Open Graph"/>
-            <Twitter name="twitter" label="Twitter"/>
+            <General name="general" label="General" />
+            <Seo name="s-e-o" label="Seo" />
+            <OpenGraph name="open-graph" label="Open Graph" />
+            <Twitter name="twitter" label="Twitter" />
           </WhpptTab>
         </div>
       </div>

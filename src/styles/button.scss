@@ -1,0 +1,59 @@
+.whppt-lightMode {
+.whppt-button {
+
+  @apply text-whpptDarkMode;
+
+
+}
+}
+
+
+.whppt-button {
+  @apply text-whpptLightMode;
+  @apply text-base tracking-widest	;
+  @apply py-2 px-3 border-whpptActive border;
+  background-color: transparent;
+  border-radius: .3em;
+  position: relative;
+  overflow: hidden;
+  transition: .5s;
+}
+
+ 
+ .whppt-button::before, .whppt-button::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  @apply text-whpptActive;
+  @apply bg-whpptActive;
+  transition: 1s ease;
+}
+ 
+ .whppt-button::before {
+  top: -1em;
+  left: -1em;
+ }
+ 
+ .whppt-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+ }
+ 
+ .whppt-button:hover::before, .whppt-button:hover::after {
+  height: 410px;
+  width: 410px;
+ }
+ 
+ .whppt-button:hover {
+  @apply text-whpptLightMode;
+ }
+ 
+ .whppt-button:active {
+  filter: brightness(.8);
+ }
+ 

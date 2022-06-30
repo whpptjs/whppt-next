@@ -5,7 +5,7 @@ module.exports = {
       colors: {
         whpptLightMode: '#fff',
         whpptDarkMode: '#1a202c',
-        whpptActive: '#35920F',
+        whpptActive: '#3974CF',
       },
     },
   },
