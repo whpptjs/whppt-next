@@ -17,9 +17,9 @@
   position: relative;
   overflow: hidden;
   transition: .5s;
+  margin: .5rem 0;
 }
 
- 
  .whppt-button::before, .whppt-button::after {
   content: '';
   display: block;
