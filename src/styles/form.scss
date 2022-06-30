@@ -1,0 +1,47 @@
+.whppt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: .5em;
+
+  .whppt-section-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .whppt-form-button {
+    background-color: #5a67d8;
+    font-weight: bold;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.15s ease;
+    color: white;
+    margin: .5rem 0;
+
+    &:hover,
+    &:focus {
+      opacity: 0.4;
+    }
+
+    &:disabled {
+      background-color: lighten(#5a67d8, 20%);
+      color: #efefef;
+      cursor: not-allowed;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .whppt-form-section, .whppt-section-actions {
+    padding: 1rem;
+    @apply border border-whpptLightMode w-full;
+  }
+}

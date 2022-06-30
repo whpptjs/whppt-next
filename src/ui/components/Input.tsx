@@ -6,7 +6,7 @@ export type WhpptInputArgs = WhpptEditorArgs & {
   label: string;
   info: string;
   error: string;
-  type: 'text' | 'number';
+  type: 'text' | 'number' | 'checkbox';
 };
 
 export const WhpptInput: FC<WhpptInputArgs> = ({

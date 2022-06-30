@@ -1,0 +1,17 @@
+.whppt-checkbox {
+  display: flex;
+  align-items: center;
+  margin: .5rem 0;
+
+  label {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+
+  input {
+    width: 1rem;
+  }
+}

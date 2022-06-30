@@ -1,9 +1,48 @@
-import React, { FC } from 'react';
-// import { Whppt } from './Context';
+import React, { FC, useContext, useState, useCallback } from 'react';
+import { Whppt } from '../Context';
 import { WhpptIcon } from '../Icon';
+import { WhpptTabs } from './WhpptTabs'
+import { WhpptTab } from './WhpptTab';
+
+import { Seo } from './forms/Seo';
+import { OpenGraph } from './forms/OpenGraph';
+import { General } from './forms/General';
+import { Twitter } from './forms/Twitter';
+
+export type Tab = {
+  name: string
+  label: string
+};
+
+export type SelectedType = string;
+
+export type Tabs = Array<Tab>;
 
 export const WhpptFullScreenPopup: FC = () => {
-  // const { editorState, editing } = useContext(Whppt);
+  const { editing, toggleEditing } = useContext(Whppt);
+  const [selectedTab, setSelectedTab] = useState('General');
+
+  const selectTab = useCallback((pageName) => {
+    setSelectedTab(pageName);
+  }, []);
+
+  const tabs: Tabs = [
+    { name: 'general', label: 'General' },
+    { name: 's-e-o', label: 'Seo' },
+    { name: 'open-graph', label: 'Open Graph' },
+    { name: 'twitter', label: 'Twitter' },
+  ];
+
+  const item = {
+    key: 'select',
+    label: 'Select Component',
+    icon: 'close',
+    action: () => toggleEditing(),
+    isActive: editing,
+    order: 200,
+    group: 'page',
+    groupOrder: 200,
+  };
 
   return (
     <div className={`whppt-popup whppt-popup--active`}>
@@ -14,20 +53,25 @@ export const WhpptFullScreenPopup: FC = () => {
     > */}
       <div className="whppt-popup__header">
         Whppt Editor
-        <button className="whppt-popup__header--button">
-          <WhpptIcon is="close"></WhpptIcon>
+        <button
+          className="whppt-editor__header--button"
+          onClick={() => item.action && item.action()}
+        >
+          <WhpptIcon is={item.icon}></WhpptIcon>
         </button>
       </div>
       <div className="whppt-popup__contents">
         <div className="whppt-popup__contents--left">
-          <div className="whppt-popup__tab">General</div>
-          <div className="whppt-popup__tab ">Tab 2</div>
-          <div className="whppt-popup__tab  whppt-popup__tab--active">
-            Tab 3
-          </div>
-          <div className="whppt-popup__tab ">Tab 4</div>
+          <WhpptTabs tabs={tabs} selectTab={selectTab}/>
         </div>
-        <div className="whppt-popup__contents--right">Tab Content</div>
+        <div className="whppt-popup__contents--right">
+          <WhpptTab selectedTab={selectedTab}>
+            <General name="general" label="General"/>
+            <Seo name="s-e-o" label="Seo"/>
+            <OpenGraph name="open-graph" label="Open Graph"/>
+            <Twitter name="twitter" label="Twitter"/>
+          </WhpptTab>
+        </div>
       </div>
     </div>
   );

@@ -56,7 +56,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
       <Whppt.Provider value={context}>
         <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
           <WhpptMainNav setLightMode={() => setLightMode(!lightMode)} />
-          <WhpptFullScreenPopup></WhpptFullScreenPopup>
+          { editing && <WhpptFullScreenPopup></WhpptFullScreenPopup> }
           <div className="whppt-app__content">
             <div>{children}</div>
             <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
