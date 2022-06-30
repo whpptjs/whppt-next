@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
-import { WhpptInput } from '../../ui/components/Input';
-import { WhpptTab } from '../index';
-import { WhpptButton } from './../../ui/components/Button';
-import { WhpptTextArea } from './../../ui/components/TextArea';
+import { WhpptInput } from '../../../ui/components/Input';
+import { WhpptTab } from '../../index';
+import { WhpptButton } from '../../../ui/components/Button';
+import { WhpptTextArea } from '../../../ui/components/TextArea';
 
 export const Twitter: FC<WhpptTab> = () => {
   const [title, setTitle] = useState('');
@@ -13,7 +13,7 @@ export const Twitter: FC<WhpptTab> = () => {
     //const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
     //const twitterSettings = { title, description, keywords: keyWordsArray};
     //setPage(...page, twitterSettings)
-  }
+  };
 
   const error = '';
   const info = '';
@@ -39,7 +39,7 @@ export const Twitter: FC<WhpptTab> = () => {
           value={keyWords}
           onChange={setKeywords}
         />
-         <WhpptTextArea
+        <WhpptTextArea
           id="whppt-plaintext-input"
           label="Description"
           error={error}
@@ -54,4 +54,4 @@ export const Twitter: FC<WhpptTab> = () => {
       </section>
     </form>
   );
-}
+};

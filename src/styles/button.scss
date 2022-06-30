@@ -1,23 +1,22 @@
 .whppt-lightMode {
-.whppt-button {
-
-  @apply text-whpptDarkMode;
-
-
-}
+  .whppt-button {
+    @apply text-whpptDarkMode;
+  }
 }
 
 
 .whppt-button {
-  @apply text-whpptLightMode;
+  @apply text-whpptLightMode flex items-center z-10;
   @apply text-base tracking-widest	;
-  @apply py-2 px-3 border-whpptActive border;
+  @apply py-3 px-4 border-whpptActive border rounded-full;
   background-color: transparent;
-  border-radius: .3em;
   position: relative;
   overflow: hidden;
   transition: .5s;
   margin: .5rem 0;
+  &--text{
+    @apply mr-3
+  }
 }
 
  .whppt-button::before, .whppt-button::after {

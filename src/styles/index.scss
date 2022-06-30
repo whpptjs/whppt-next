@@ -1,12 +1,13 @@
+@import "./fonts.css";
 @import "./tailwind.scss";
 @import "./mainNav.scss";
 @import "./editorPanel.scss";
 @import "./input.scss";
 @import "./richText.scss";
 @import "./whpptPopup.scss";
-@import "./form.scss";
 @import "./checkbox.scss";
 @import "./button.scss";
+@import "./pageSettings.scss";
 
 .whppt-app{
     display: flex;

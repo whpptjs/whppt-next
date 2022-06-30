@@ -1,14 +1,17 @@
 import React, { FC } from 'react';
+import { WhpptIcon } from '../../Icon';
 
 type WhpptButtonProps = {
-  text: string
-  onClick: () => void
+  text: string;
+  icon: string | null;
+  onClick: () => void;
 };
 
-export const WhpptButton: FC<WhpptButtonProps> = ({ text, onClick }) => {
+export const WhpptButton: FC<WhpptButtonProps> = ({ text, icon, onClick }) => {
   return (
     <button className="whppt-button" onClick={onClick} type="button">
-      { text }
+      <div className={icon ? 'whppt-button--text' : ''}>{text}</div>
+      {icon && <WhpptIcon is={icon} />}
     </button>
   );
 };

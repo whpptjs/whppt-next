@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
-import { WhpptInput } from '../../ui/components/Input';
-import { WhpptTab } from '../index';
-import { WhpptButton } from './../../ui/components/Button';
-import { WhpptCheckbox } from '../../ui/components/Checkbox';
-import { WhpptTextArea } from './../../ui/components/TextArea';
+import { WhpptInput } from '../../../ui/components/Input';
+import { WhpptTab } from '../../index';
+import { WhpptButton } from '../../../ui/components/Button';
+import { WhpptCheckbox } from '../../../ui/components/Checkbox';
+import { WhpptTextArea } from '../../../ui/components/TextArea';
 
 export const Seo: FC<WhpptTab> = () => {
   const [title, setTitle] = useState('');
@@ -29,11 +29,11 @@ export const Seo: FC<WhpptTab> = () => {
     //   hideFromXML
     // }
     // setPage(...page, seoSettings)
-  }
+  };
 
   const handleCheckBox = () => {
     setHideFromXML(!hideFromXML);
-  }
+  };
 
   return (
     <form className="whppt-form">
@@ -56,7 +56,7 @@ export const Seo: FC<WhpptTab> = () => {
           value={keyWords}
           onChange={setKeywords}
         />
-         <WhpptTextArea
+        <WhpptTextArea
           id="whppt-plaintext-input"
           label="Description"
           error={error}
@@ -84,7 +84,7 @@ export const Seo: FC<WhpptTab> = () => {
         />
         <WhpptCheckbox
           dark={false}
-          label={"HIDE THIS PAGE FROM THE SITEMAP XML?"}
+          label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
           value={'hide-from-xml'}
           onChange={() => handleCheckBox()}
         />
@@ -95,4 +95,4 @@ export const Seo: FC<WhpptTab> = () => {
       </section>
     </form>
   );
-}
+};

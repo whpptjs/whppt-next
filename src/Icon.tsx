@@ -27,6 +27,8 @@ import { WhpptIconParagraph } from './icons/Paragraph';
 import { WhpptIconLeftAlign } from './icons/LeftAlign';
 import { WhpptIconRightAlign } from './icons/RightAlign';
 import { WhpptIconCenterAlign } from './icons/CenterAlign';
+import { WhpptIconBin } from './icons/Bin';
+import { WhpptIconDuplicate } from './icons/Duplicate';
 
 export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'pointer') return <WhpptIconPointer></WhpptIconPointer>;
@@ -59,5 +61,7 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'right-align') return <WhpptIconRightAlign></WhpptIconRightAlign>;
   if (is === 'center-align')
     return <WhpptIconCenterAlign></WhpptIconCenterAlign>;
+  if (is === 'bin') return <WhpptIconBin></WhpptIconBin>;
+  if (is === 'duplicate') return <WhpptIconDuplicate></WhpptIconDuplicate>;
   return <div></div>;
 };
