@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTab } from '../index';
-import { Button } from './../../ui/components/Button';
+import { WhpptButton } from './../../ui/components/Button';
 
 export const General: FC<WhpptTab> = () => {
   const [slug, setSlug] = useState('');
@@ -44,7 +44,7 @@ export const General: FC<WhpptTab> = () => {
                 </div>
               </div>
         }
-        <Button text="Change Slug" onClick={() => setIsEditingSlug(!isEditingSlug)}/>
+        <WhpptButton text="Change Slug" onClick={() => setIsEditingSlug(!isEditingSlug)}/>
       </section>
 
       <section className="whppt-form-section">
@@ -66,12 +66,12 @@ export const General: FC<WhpptTab> = () => {
           value={pageTemplate}
           onChange={setPageTemplate}
         />
-        <Button text="Change Page Type" onClick={submit}/>
+        <WhpptButton text="Change Page Type" onClick={submit}/>
       </section>
 
       <section className="whppt-section-actions">
-        <Button text="Duplicate Page" onClick={duplicatePage}/>
-        <Button text="Delete Page" onClick={deletePage}/>
+        <WhpptButton text="Duplicate Page" onClick={duplicatePage}/>
+        <WhpptButton text="Delete Page" onClick={deletePage}/>
       </section>
     </form>
   )

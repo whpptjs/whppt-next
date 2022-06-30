@@ -7,7 +7,7 @@ type WhpptCheckboxProps = {
   onChange: () => void
 }
 
-export const Checkbox: FC<WhpptCheckboxProps> = ({ dark, label, value, onChange }) => {
+export const WhpptCheckbox: FC<WhpptCheckboxProps> = ({ dark, label, value, onChange }) => {
   return (
     <div className={`whppt-checkbox
         ${dark ? 'whppt-checkbox--dark' : ''

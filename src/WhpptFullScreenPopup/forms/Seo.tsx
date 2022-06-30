@@ -1,8 +1,9 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTab } from '../index';
-import { Button } from './../../ui/components/Button';
-import { Checkbox } from '../../ui/components/Checkbox';
+import { WhpptButton } from './../../ui/components/Button';
+import { WhpptCheckbox } from '../../ui/components/Checkbox';
+import { WhpptTextArea } from './../../ui/components/TextArea';
 
 export const Seo: FC<WhpptTab> = () => {
   const [title, setTitle] = useState('');
@@ -55,10 +56,9 @@ export const Seo: FC<WhpptTab> = () => {
           value={keyWords}
           onChange={setKeywords}
         />
-         <WhpptInput
+         <WhpptTextArea
           id="whppt-plaintext-input"
           label="Description"
-          type="text"
           error={error}
           info={info}
           value={description}
@@ -82,7 +82,7 @@ export const Seo: FC<WhpptTab> = () => {
           value={changeFrequency}
           onChange={setChangeFrequency}
         />
-        <Checkbox
+        <WhpptCheckbox
           dark={false}
           label={"HIDE THIS PAGE FROM THE SITEMAP XML?"}
           value={'hide-from-xml'}
@@ -91,7 +91,7 @@ export const Seo: FC<WhpptTab> = () => {
       </section>
 
       <section className="whppt-section-actions">
-        <Button text="Save Settings" onClick={submit}/>
+        <WhpptButton text="Save Settings" onClick={submit} />
       </section>
     </form>
   );

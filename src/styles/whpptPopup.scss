@@ -36,7 +36,7 @@
     }
     &__contents{
         @apply flex h-full;
-        input{
+        input, textarea{
             @apply text-whpptDarkMode border-2 border-whpptDarkMode w-full p-3 rounded;
         }
 

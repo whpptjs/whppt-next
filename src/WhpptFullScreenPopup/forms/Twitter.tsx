@@ -1,7 +1,8 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTab } from '../index';
-import { Button } from './../../ui/components/Button';
+import { WhpptButton } from './../../ui/components/Button';
+import { WhpptTextArea } from './../../ui/components/TextArea';
 
 export const Twitter: FC<WhpptTab> = () => {
   const [title, setTitle] = useState('');
@@ -38,10 +39,9 @@ export const Twitter: FC<WhpptTab> = () => {
           value={keyWords}
           onChange={setKeywords}
         />
-         <WhpptInput
+         <WhpptTextArea
           id="whppt-plaintext-input"
           label="Description"
-          type="text"
           error={error}
           info={info}
           value={description}
@@ -50,7 +50,7 @@ export const Twitter: FC<WhpptTab> = () => {
       </section>
 
       <section className="whppt-section-actions">
-        <Button text="Save Settings" onClick={submit}/>
+        <WhpptButton text="Save Settings" onClick={submit} />
       </section>
     </form>
   );

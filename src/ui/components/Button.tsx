@@ -5,7 +5,7 @@ type WhpptButtonProps = {
   onClick: () => void
 };
 
-export const Button: FC<WhpptButtonProps> = ({ text, onClick }) => {
+export const WhpptButton: FC<WhpptButtonProps> = ({ text, onClick }) => {
   return (
     <button className="whppt-button" onClick={onClick} type="button">
       { text }
