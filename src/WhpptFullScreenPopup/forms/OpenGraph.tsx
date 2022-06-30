@@ -10,7 +10,7 @@ export const OpenGraph: FC<WhpptTab> = () => {
   const [description, setDescription] = useState('');
 
   const submit = () => {
-    //const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
+    //const keyWordsArray = keyWords.replace(/ +/g, '').split(','); TODO: Move to helper and import?
     //const openGraphSettings = { title, description, keywords: keyWordsArray};
     //setPage(...page, openGraphSettings)
   }
@@ -50,7 +50,11 @@ export const OpenGraph: FC<WhpptTab> = () => {
       </section>
 
       <section className="whppt-section-actions">
-        <WhpptButton text="Save Settings" onClick={submit} />
+        <WhpptButton
+          text="Save Settings"
+          onClick={submit}
+          disabled={ !title || !keyWords || !description }
+        />
       </section>
     </form>
   );

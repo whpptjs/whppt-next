@@ -40,6 +40,10 @@
             @apply text-whpptDarkMode border-2 border-whpptDarkMode w-full p-3 rounded;
         }
 
+        textarea{
+          resize: none;
+        }
+
         &--left{ @apply w-2/12 border-r border-whpptLightMode h-full
         }
         &--right{ @apply w-10/12 p-5 h-full}

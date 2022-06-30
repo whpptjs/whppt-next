@@ -50,7 +50,11 @@ export const Twitter: FC<WhpptTab> = () => {
       </section>
 
       <section className="whppt-section-actions">
-        <WhpptButton text="Save Settings" onClick={submit} />
+        <WhpptButton
+          text="Save Settings"
+          onClick={submit}
+          disabled={ !title || !keyWords || !description }
+        />
       </section>
     </form>
   );

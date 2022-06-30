@@ -12,7 +12,7 @@ export const General: FC<WhpptTab> = () => {
   const error = '';
   const info = '';
 
-  const submit = () => {
+  const changePageType = () => {
   }
 
   const duplicatePage = () => {
@@ -66,7 +66,7 @@ export const General: FC<WhpptTab> = () => {
           value={pageTemplate}
           onChange={setPageTemplate}
         />
-        <WhpptButton text="Change Page Type" onClick={submit}/>
+        <WhpptButton text="Change Page Type" onClick={changePageType}/>
       </section>
 
       <section className="whppt-section-actions">

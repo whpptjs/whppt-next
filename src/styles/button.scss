@@ -18,6 +18,14 @@
   overflow: hidden;
   transition: .5s;
   margin: .5rem 0;
+
+  &:disabled {
+    @apply opacity-30;
+  }
+
+  &:disabled::before, &:disabled::after {
+    display: none;
+  }
 }
 
  .whppt-button::before, .whppt-button::after {
