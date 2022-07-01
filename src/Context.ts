@@ -3,11 +3,13 @@ import { Api } from "./Api";
 import * as editor from "./Editor/Context";
 import * as page from "./Page/Context";
 import * as footer from "./Footer/Context";
+import * as site from "./Site/Context";
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
   ...page.Context(page.defaultArgs),
   ...footer.Context(footer.defaultArgs),
+  ...site.Context(site.defaultArgs),
   api: Api(),
 });
 Whppt.displayName = "WhpptContext";

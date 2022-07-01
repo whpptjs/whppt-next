@@ -8,6 +8,7 @@ import { Api } from "./Api";
 import * as editor from "./Editor/Context";
 import * as pageContext from "./Page/Context";
 import * as footerContext from "./Footer/Context";
+import * as siteContext from "./Site/Context";
 import { Footer } from "./Models";
 import { Domain } from "./App/Model/Domain";
 
@@ -38,6 +39,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
     pageContext.defaultPageSettingsState
   );
   const [footer, setFooter] = useState(pageContext.defaultState);
+  const [site, setSite] = useState(siteContext.defaultState);
+  const [siteSettings, setSiteSettings] = useState(siteContext.defaultSiteSettingsState);
 
   const context = useMemo(
     () => ({
@@ -56,8 +59,14 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         setPageSettings,
       }),
       ...footerContext.Context({ footer, setFooter, initFooter: initFooter }),
+      ...siteContext.Context({
+        site,
+        setSite,
+        siteSettings,
+        setSiteSettings,
+      })
     }),
-    [editing, editorState, page, footer, domain, pageSettings]
+    [editing, editorState, page, footer, domain, pageSettings, site, siteSettings]
   );
 
   useEffect(() => {

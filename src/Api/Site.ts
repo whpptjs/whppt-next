@@ -1,13 +1,13 @@
-import { Page } from "../Page/Page";
+import { Site } from "../Site/Site";
 import { WhpptHttp } from "./Http";
 
-export type PageApi = { loadFromSlug: (slug: string) => Promise<Page> };
-export type PageApiConstructor = ({ http }: { http: WhpptHttp }) => PageApi;
+export type SiteApi = { loadFromSlug: (slug: string) => Promise<Site> };
+export type SiteApiConstructor = ({ http }: { http: WhpptHttp }) => SiteApi;
 
-export const PageApi: PageApiConstructor = ({ http }) => {
+export const SiteApi: SiteApiConstructor = ({ http }) => {
   return {
     loadFromSlug: (slug) => {
-      return http.secure.postJson<Page>({ path: slug });
+      return http.secure.postJson<Site>({ path: slug });
     },
   };
 };

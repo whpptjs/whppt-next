@@ -5,6 +5,7 @@ export * from "./editors/PlainText";
 export * from "./Page";
 export * from "./editors/RichText";
 export * from "./editors/FormattedText";
+export * from "./Site";
 
 export type WhpptEditorArgs = {
   value: any | string;
