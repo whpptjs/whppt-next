@@ -19,6 +19,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
     value: any;
     onChange: (value: any) => void;
   }>({ editor: '', value: undefined, onChange: () => {} });
+  const [showFullNav, setShowFullNav] = useState(false);
 
   const context = useMemo(
     () => ({
@@ -55,8 +56,13 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
     <div>
       <Whppt.Provider value={context}>
         <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
-          <WhpptMainNav setLightMode={() => setLightMode(!lightMode)} />
-          { editing && <WhpptFullScreenPopup></WhpptFullScreenPopup> }
+          <WhpptMainNav
+            lightMode={lightMode}
+            showFullNav={showFullNav}
+            setLightMode={() => setLightMode(!lightMode)}
+            setShowFullNav={() => setShowFullNav(!showFullNav)}
+          />
+          <WhpptFullScreenPopup showFullNav={showFullNav} />
           <div className="whppt-app__content">
             <div>{children}</div>
             <WhpptEditorPanel editors={editors}></WhpptEditorPanel>

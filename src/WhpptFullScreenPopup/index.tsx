@@ -1,23 +1,24 @@
 import React, { FC, useContext, useState, useCallback } from 'react';
 import { Whppt } from '../Context';
-import { WhpptIcon } from '../Icon';
 import { WhpptTabs } from './WhpptTabs';
 import { WhpptTab } from './WhpptTab';
 
-import { Seo } from './forms/Seo';
-import { OpenGraph } from './forms/OpenGraph';
-import { General } from './forms/General';
-import { Twitter } from './forms/Twitter';
+import { Seo } from './forms/pageSettings/Seo';
+import { OpenGraph } from './forms/pageSettings/OpenGraph';
+import { General } from './forms/pageSettings/General';
+import { Twitter } from './forms/pageSettings/Twitter';
 
 export type WhpptTab = {
-  name: string
-  label: string
+  name: string;
+  label: string;
 };
 
 export type WhpptSelectedType = string;
 
-export const WhpptFullScreenPopup: FC = () => {
-  const { editing, toggleEditing } = useContext(Whppt);
+export const WhpptFullScreenPopup: FC<{ showFullNav: boolean }> = ({
+  showFullNav,
+}) => {
+  const { editing } = useContext(Whppt);
   const [selectedTab, setSelectedTab] = useState('general');
 
   const selectTab = useCallback((pageName) => {
@@ -31,49 +32,38 @@ export const WhpptFullScreenPopup: FC = () => {
     { name: 'twitter', label: 'Twitter' },
   ];
 
-  const item = {
-    key: 'select',
-    label: 'Select Component',
-    icon: 'close',
-    action: () => toggleEditing(),
-    isActive: editing,
-    order: 200,
-    group: 'page',
-    groupOrder: 200,
-  };
-
   return (
-    <div className={`whppt-popup whppt-popup--active`}>
+    <div
+      className={`whppt-popup whppt-popup 
+      ${showFullNav ? 'whppt-popup--fullNav' : ''}
+      ${editing ? 'whppt-popup whppt-popup--active' : ''}`}
+    >
       {/* <div
       className={`whppt-editor ${
         editorState.editor && editing ? 'whppt-editor--active' : ''
       }`}
     > */}
-      <div className="whppt-popup__header">
-        Whppt Editor
-        <button
-          className="whppt-editor__header--button"
-          onClick={() => item.action && item.action()}
-        >
-          <WhpptIcon is={item.icon}></WhpptIcon>
-        </button>
-      </div>
       <div className="whppt-popup__contents">
-        <div className="whppt-popup__contents--left">
+        <WhpptTabs
+          tabs={tabs}
+          selectTab={selectTab}
+          selectedTab={selectedTab}
+        />
+        {/* <div className="whppt-popup__contents--left">
           <WhpptTabs
             tabs={tabs}
             selectTab={selectTab}
             selectedTab={selectedTab}
           />
-        </div>
-        <div className="whppt-popup__contents--right">
-          <WhpptTab selectedTab={selectedTab}>
-            <General name="general" label="General" />
-            <Seo name="s-e-o" label="Seo" />
-            <OpenGraph name="open-graph" label="Open Graph" />
-            <Twitter name="twitter" label="Twitter" />
-          </WhpptTab>
-        </div>
+        </div> */}
+        <WhpptTab selectedTab={selectedTab}>
+          <General name="general" label="General" />
+          <Seo name="s-e-o" label="Seo" />
+          <OpenGraph name="open-graph" label="Open Graph" />
+          <Twitter name="twitter" label="Twitter" />
+        </WhpptTab>
+        {/* <div className="whppt-popup__contents--right">
+        </div> */}
       </div>
     </div>
   );

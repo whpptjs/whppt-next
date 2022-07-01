@@ -1,6 +1,6 @@
 .whppt-lightMode {
     .whppt-popup {
-        @apply bg-whpptLightMode text-whpptDarkMode;
+        @apply bg-whpptLightBorder text-whpptDarkMode;
         &--active {
             @apply border-whpptDarkMode;
         }   
@@ -13,29 +13,28 @@
         }
     }
 }
+
+
 .whppt-popup  {
-    @apply bg-whpptDarkMode text-whpptLightMode;
+    @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto left-20 hidden;
     position: fixed;
     width: 0;
     transition: width 0.3s ease;
     right:0;
     height: 100vh;
-    z-index: 1000;
+    z-index: 998;
     top:0;
+    &--fullNav{
+        @apply left-56;
+    }
     
     &--active {
-        @apply border-l-2 border-whpptDarkMode;
+        @apply border-l-2 border-whpptDarkMode block;
         width: 100%;
+
     }
 
-    &__header{
-        @apply border-b-2 border-whpptLightMode p-5 text-xl flex items-center justify-between font-bold;
-        &--button{
-            @apply w-10 h-10;
-        }
-    }
     &__contents{
-        @apply flex h-full;
         input, textarea{
             @apply text-whpptDarkMode border-2 border-whpptDarkMode w-full p-3 rounded;
         }
@@ -48,10 +47,24 @@
         }
         &--right{ @apply w-10/12 p-5 h-full}
     }
+    &__tabs{
+        min-height: 74px;
+        @apply px-10 flex w-full 
+    }
     &__tab {
-        @apply p-5 border-b border-whpptLightMode w-full text-left;
+        @apply h-full mr-5  w-full text-left ;
+        &--inline {
+            @apply inline-block
+        }
         &--active {
-            @apply bg-whpptActive ;
+            @apply text-whpptActive ;
+            .whppt-popup__tab--underline{
+                @apply border-whpptActive 
+            }
+        }
+        &--underline{
+            @apply border-b-2 border-transparent 
         }
     }
+ 
 }

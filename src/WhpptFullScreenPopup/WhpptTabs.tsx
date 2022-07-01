@@ -1,14 +1,18 @@
 import React, { FC } from 'react';
 import { WhpptTab } from './index';
 
-type WhpptTabsProps = { tabs: Array<WhpptTab>} & {
+type WhpptTabsProps = { tabs: Array<WhpptTab> } & {
   selectTab: (string) => void;
   selectedTab: string;
 };
 
-export const WhpptTabs: FC<WhpptTabsProps> = ({ tabs, selectTab, selectedTab }) => {
+export const WhpptTabs: FC<WhpptTabsProps> = ({
+  tabs,
+  selectTab,
+  selectedTab,
+}) => {
   return (
-    <ul className="whppt-pop__sidebar">
+    <ul className="whppt-popup__tabs">
       {tabs.map((tab: WhpptTab, index: number) => (
         <li key={index}>
           <button
@@ -17,7 +21,10 @@ export const WhpptTabs: FC<WhpptTabsProps> = ({ tabs, selectTab, selectedTab }) 
             }`}
             onClick={() => selectTab(tab.name)}
           >
-            {tab.label}
+            <div className="whppt-popup__tab--inline">
+              {tab.label}
+              <div className="whppt-popup__tab--underline"></div>
+            </div>
           </button>
         </li>
       ))}

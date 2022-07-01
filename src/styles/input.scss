@@ -7,21 +7,42 @@
             &-info {
                @apply text-whpptDarkMode;
             }
+            input {
+                @apply border-whpptDarkBorder text-black;
+            }
         }
     }
 }
 
 
 .whppt-plaintext {
+    @apply mb-5;
     .whppt-label{
         @apply my-2;
     }
     .whppt-input {
+        
         &-info {
             @apply opacity-70;
         }
         &-error {
             @apply text-red-500;
+            input {
+                @apply border-red-800;
+                &:focus,&:focus-visible{
+                    @apply border-red-800
+                } 
+            }
+        }
+        input, textarea {
+            @apply bg-transparent;
+            @apply border-2 border-whpptLightBorder border-opacity-70 rounded-lg text-white;
+            &:hover{
+                @apply border-opacity-100
+            } 
+            &:focus,&:focus-visible{
+                @apply border-whpptActive border-opacity-100 outline-none caret-whpptActive
+            } 
         }
     }
 }

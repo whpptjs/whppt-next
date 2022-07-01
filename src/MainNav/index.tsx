@@ -1,14 +1,16 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import { groupBy, sortBy } from 'lodash';
 import { WhpptIcon } from '../Icon';
 import { Whppt } from '../Context';
+import { ToggleWhpptIcon } from '../icons/Toggle';
 
-export const WhpptMainNav: FC<{ setLightMode: Function }> = ({
-  setLightMode,
-}) => {
+export const WhpptMainNav: FC<{
+  lightMode: boolean;
+  setLightMode: Function;
+  showFullNav: boolean;
+  setShowFullNav: Function;
+}> = ({ lightMode, setLightMode, showFullNav, setShowFullNav }) => {
   const { toggleEditing, editing } = useContext(Whppt);
-
-  const [showFullNav, setShowFullNav] = useState(false);
 
   const items = [
     {
@@ -123,7 +125,7 @@ export const WhpptMainNav: FC<{ setLightMode: Function }> = ({
       <div className="whppt-main-nav-contents">
         <div>
           <button
-            onClick={() => setShowFullNav(!showFullNav)}
+            onClick={() => setShowFullNav()}
             className="whppt-main-nav__logo"
           >
             <div className="whppt-main-nav__icon">
@@ -136,11 +138,11 @@ export const WhpptMainNav: FC<{ setLightMode: Function }> = ({
           <div>
             {groupedItems.map((navItems) => {
               return (
-                <div key={navItems[0].group}>
+                <div className="whppt-main-nav-group" key={navItems[0].group}>
                   <div className="whppt-main-nav-group--title">
                     {navItems[0].group}
                   </div>
-                  <ul className="whppt-main-nav-group">
+                  <ul className="whppt-main-nav-group__content">
                     {navItems.map((item) => {
                       return (
                         <li key={item.key}>
@@ -173,25 +175,25 @@ export const WhpptMainNav: FC<{ setLightMode: Function }> = ({
         </div>
 
         <div>
-          <button
-            onClick={() => setLightMode()}
-            className="whppt-main-nav-group__nav-item whppt-main-nav-group--toggle"
-          >
-            <div className="whppt-main-nav__icon">
-              T{/* <WhpptIcon is={'logout'}></WhpptIcon> */}
-            </div>
-            {showFullNav && (
-              <div className="whppt-main-nav-group__label">
-                Toggle Dark Mode
-              </div>
-            )}
-          </button>
           <button className="whppt-main-nav-group__nav-item">
             <div className="whppt-main-nav__icon">
               <WhpptIcon is={'logout'}></WhpptIcon>
             </div>
             {showFullNav && (
               <div className="whppt-main-nav-group__label">Log Out</div>
+            )}
+          </button>
+          <button
+            onClick={() => setLightMode()}
+            className="whppt-main-nav-group__toggle"
+          >
+            <div className="whppt-main-nav__icon">
+              <ToggleWhpptIcon active={lightMode} />
+            </div>
+            {showFullNav && (
+              <div className="whppt-main-nav-group__toggle--label ">
+                {lightMode ? 'Light Mode' : 'Dark Mode'}
+              </div>
             )}
           </button>
         </div>

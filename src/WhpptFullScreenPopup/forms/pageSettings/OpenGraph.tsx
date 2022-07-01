@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
-import { WhpptInput } from '../../ui/components/Input';
-import { WhpptTab } from '../index';
-import { WhpptButton } from './../../ui/components/Button';
-import { WhpptTextArea } from './../../ui/components/TextArea';
+import { WhpptInput } from '../../../ui/components/Input';
+import { WhpptTab } from '../../index';
+import { WhpptButton } from '../../../ui/components/Button';
+import { WhpptTextArea } from '../../../ui/components/TextArea';
 
 export const OpenGraph: FC<WhpptTab> = () => {
   const [title, setTitle] = useState('');
@@ -13,7 +13,7 @@ export const OpenGraph: FC<WhpptTab> = () => {
     //const keyWordsArray = keyWords.replace(/ +/g, '').split(','); TODO: Move to helper and import?
     //const openGraphSettings = { title, description, keywords: keyWordsArray};
     //setPage(...page, openGraphSettings)
-  }
+  };
 
   const error = '';
   const info = '';
@@ -39,7 +39,7 @@ export const OpenGraph: FC<WhpptTab> = () => {
           value={keyWords}
           onChange={setKeywords}
         />
-         <WhpptTextArea
+        <WhpptTextArea
           id="whppt-plaintext-input"
           label="Description"
           error={error}
@@ -51,6 +51,7 @@ export const OpenGraph: FC<WhpptTab> = () => {
 
       <section className="whppt-section-actions">
         <WhpptButton
+          icon=""
           text="Save Settings"
           onClick={submit}
           disabled={ !title || !keyWords || !description }
@@ -58,4 +59,4 @@ export const OpenGraph: FC<WhpptTab> = () => {
       </section>
     </form>
   );
-}
+};

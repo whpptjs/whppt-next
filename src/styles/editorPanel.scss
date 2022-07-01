@@ -11,7 +11,7 @@
     }
 }
 .whppt-editor {
-  @apply bg-whpptDarkMode text-whpptLightMode;
+  @apply bg-whpptDarkMode text-whpptLightMode font-Roboto;
   position: fixed;
   width: 0;
   transition: width 0.3s ease;
