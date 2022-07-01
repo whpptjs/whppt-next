@@ -1,4 +1,4 @@
-import { Footer } from "src/Models/Footer";
+import { Footer } from "src/Footer/Footer";
 
 export const defaultState = {} as Footer;
 

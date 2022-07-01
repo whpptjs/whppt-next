@@ -1,4 +1,4 @@
-import { Page } from "src/Models/Page";
+import { Page } from "src/Page/Page";
 
 export const defaultState = {} as Page;
 

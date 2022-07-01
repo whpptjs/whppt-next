@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from "react";
-import { WhpptIcon } from "../Icon";
+import { WhpptIcon } from "../ui/components/Icon";
 import { useWhppt } from "../Context";
 
 export type WhpptAppEditorsArg = ({

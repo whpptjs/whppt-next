@@ -1,22 +1,21 @@
-import React, { FC, useState } from 'react';
-import { WhpptInput } from '../../../ui/components/Input';
-import { WhpptTab } from '../../index';
-import { WhpptButton } from '../../../ui/components/Button';
-import { WhpptTextArea } from '../../../ui/components/TextArea';
+import React, { FC, useState } from "react";
+import { WhpptInput } from "../../ui/components/Input";
+import { WhpptButton, WhpptTextArea, WhpptTab } from "../../ui/components";
 
-export const OpenGraph: FC<WhpptTab> = () => {
-  const [title, setTitle] = useState('');
-  const [keyWords, setKeywords] = useState('');
-  const [description, setDescription] = useState('');
+export const Twitter: FC<WhpptTab> = () => {
+  const [title, setTitle] = useState("");
+  const [keyWords, setKeywords] = useState("");
+  const [description, setDescription] = useState("");
 
   const submit = () => {
-    //const keyWordsArray = keyWords.replace(/ +/g, '').split(','); TODO: Move to helper and import?
-    //const openGraphSettings = { title, description, keywords: keyWordsArray};
-    //setPage(...page, openGraphSettings)
+    // TODO: Deal with meta data keywords.
+    //const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
+    //const twitterSettings = { title, description, keywords: keyWordsArray};
+    //setPage(...page, twitterSettings)
   };
 
-  const error = '';
-  const info = '';
+  const error = "";
+  const info = "";
 
   return (
     <form className="whppt-form">
@@ -31,7 +30,7 @@ export const OpenGraph: FC<WhpptTab> = () => {
         </div>
       </section>
 
-      <section className="whppt-form-section whppt-form-page-settings__form">
+      <section className="whppt-form-section whppt-form-page-settings__form whppt-form-section--bottom-gap">
         <WhpptInput
           id="whppt-plaintext-input"
           label="Title"

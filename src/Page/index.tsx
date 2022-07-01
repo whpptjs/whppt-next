@@ -2,7 +2,7 @@ import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { useWhppt } from "../Context";
-import { Page } from "../Models/Page";
+import { Page } from "./Page";
 
 export const WhpptPage: FC<{
   children: (page: Page, setPage: (page: Page) => void) => ReactElement;

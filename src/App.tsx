@@ -2,8 +2,8 @@ import React, { FC, ReactElement, useEffect, useMemo, useState } from "react";
 import { Whppt } from "./Context";
 import type { WhpptAppEditorsArg } from "./Editor/EditorPanel";
 import { WhpptEditorPanel } from "./Editor/EditorPanel";
-import { WhpptFullScreenPopup } from "./WhpptFullScreenPopup";
-import { WhpptMainNav } from "./MainNav";
+import { SettingsPanel } from "./ui/SettingsPanel";
+import { WhpptMainNav } from "./ui/MainNav";
 import { Api } from "./Api";
 import * as editor from "./Editor/Context";
 import * as pageContext from "./Page/Context";
@@ -79,7 +79,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
             setLightMode={() => setLightMode(!lightMode)}
             setShowFullNav={() => setShowFullNav(!showFullNav)}
           />
-          <WhpptFullScreenPopup showFullNav={showFullNav} />
+          <SettingsPanel showFullNav={showFullNav} />
           {errorState ? (
             error(errorState)
           ) : (

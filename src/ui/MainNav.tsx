@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { groupBy, sortBy } from "lodash";
-import { WhpptIcon } from "../Icon";
+import { WhpptIcon } from "./components/Icon";
 import { useWhppt } from "../Context";
 import { ToggleWhpptIcon } from "../icons/Toggle";
 

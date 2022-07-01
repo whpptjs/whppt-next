@@ -1,15 +1,14 @@
-import React, { FC, useState } from 'react';
-import { WhpptInput } from '../../../ui/components/Input';
-import { WhpptTab } from '../../index';
-import { WhpptButton } from '../../../ui/components/Button';
+import React, { FC, useState } from "react";
+import { WhpptInput } from "../../ui/components/Input";
+import { WhpptButton, WhpptTab } from "../../ui/components";
 
 export const General: FC<WhpptTab> = () => {
-  const [slug, setSlug] = useState('');
-  const [pageType, setPageType] = useState('');
-  const [pageTemplate, setPageTemplate] = useState('');
+  const [slug, setSlug] = useState("");
+  const [pageType, setPageType] = useState("");
+  const [pageTemplate, setPageTemplate] = useState("");
 
-  const error = '';
-  const info = '';
+  const error = "";
+  const info = "";
 
   const submit = () => {};
 

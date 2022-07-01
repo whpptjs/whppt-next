@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { WhpptTab } from './index';
+import React, { FC } from "react";
+import { WhpptTab } from "./WhpptTab";
 
 type WhpptTabsProps = { tabs: Array<WhpptTab> } & {
   selectTab: (string) => void;
@@ -17,7 +17,7 @@ export const WhpptTabs: FC<WhpptTabsProps> = ({
         <li key={index}>
           <button
             className={`whppt-popup__tab  ${
-              selectedTab === tab.name ? 'whppt-popup__tab--active' : ''
+              selectedTab === tab.name ? "whppt-popup__tab--active" : ""
             }`}
             onClick={() => selectTab(tab.name)}
           >

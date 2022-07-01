@@ -1,20 +1,23 @@
-import React, { FC, useState } from 'react';
-import { WhpptInput } from '../../../ui/components/Input';
-import { WhpptTab } from '../../index';
-import { WhpptButton } from '../../../ui/components/Button';
-import { WhpptCheckbox } from '../../../ui/components/Checkbox';
-import { WhpptTextArea } from '../../../ui/components/TextArea';
+import React, { FC, useState } from "react";
+import { WhpptInput } from "../../ui/components/Input";
+
+import {
+  WhpptCheckbox,
+  WhpptButton,
+  WhpptTextArea,
+  WhpptTab,
+} from "../../ui/components";
 
 export const Seo: FC<WhpptTab> = () => {
-  const [title, setTitle] = useState('');
-  const [keyWords, setKeywords] = useState('');
-  const [description, setDescription] = useState('');
-  const [priorityLevel, setPriorityLevel] = useState('');
-  const [changeFrequency, setChangeFrequency] = useState('');
+  const [title, setTitle] = useState("");
+  const [keyWords, setKeywords] = useState("");
+  const [description, setDescription] = useState("");
+  const [priorityLevel, setPriorityLevel] = useState("");
+  const [changeFrequency, setChangeFrequency] = useState("");
   const [hideFromXML, setHideFromXML] = useState(false);
 
-  const error = '';
-  const info = '';
+  const error = "";
+  const info = "";
 
   const submit = () => {
     // const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
@@ -101,8 +104,8 @@ export const Seo: FC<WhpptTab> = () => {
         />
         <WhpptCheckbox
           dark={false}
-          label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
-          value={'hide-from-xml'}
+          label={"HIDE THIS PAGE FROM THE SITEMAP XML?"}
+          value={"hide-from-xml"}
           onChange={() => handleCheckBox()}
         />
       </section>

@@ -1,4 +1,4 @@
-import { Page } from "../Models/Page";
+import { Page } from "../Page/Page";
 import { WhpptHttp } from "./Http";
 
 export type PageApi = { loadFromSlug: (slug: string) => Promise<Page> };
