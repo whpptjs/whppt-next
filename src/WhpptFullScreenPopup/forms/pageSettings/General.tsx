@@ -1,13 +1,12 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../../ui/components/Input';
-import { WhpptTab } from '../../../index';
+import { WhpptTab } from '../../index';
 import { WhpptButton } from '../../../ui/components/Button';
 
 export const General: FC<WhpptTab> = () => {
   const [slug, setSlug] = useState('');
   const [pageType, setPageType] = useState('');
   const [pageTemplate, setPageTemplate] = useState('');
-  const [isEditingSlug, setIsEditingSlug] = useState(false);
 
   const error = '';
   const info = '';
@@ -43,14 +42,7 @@ export const General: FC<WhpptTab> = () => {
             value={slug}
             onChange={setSlug}
           />
-          {/* <div className="whppt-plaintext">
-            <div className="whppt-label">
-              <label>Page Slug</label>
-            </div>
-            <div className="whppt-form-slug-placeholder">
-              <p>{`Current slug: /${slug}`}</p>
-            </div>
-          </div> */}
+
           <WhpptButton text="Save New Slug" icon="" onClick={() => {}} />
         </section>
 

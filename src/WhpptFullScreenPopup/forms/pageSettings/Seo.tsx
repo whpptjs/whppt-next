@@ -37,7 +37,24 @@ export const Seo: FC<WhpptTab> = () => {
 
   return (
     <form className="whppt-form">
-      <section className="whppt-form-section">
+      <section className="whppt-form-page-settings__actions">
+        <div>
+          <WhpptButton
+            icon=""
+            text="Save Settings"
+            onClick={submit}
+            disabled={
+              !title ||
+              !keyWords ||
+              !description ||
+              !priorityLevel ||
+              !changeFrequency
+            }
+          />
+        </div>
+      </section>
+
+      <section className="whppt-form-section whppt-form-page-settings__form whppt-form-section--bottom-gap">
         <WhpptInput
           id="whppt-plaintext-input"
           label="Title"
@@ -88,10 +105,6 @@ export const Seo: FC<WhpptTab> = () => {
           value={'hide-from-xml'}
           onChange={() => handleCheckBox()}
         />
-      </section>
-
-      <section className="whppt-section-actions">
-        <WhpptButton text="Save Settings" onClick={submit} />
       </section>
     </form>
   );

@@ -34,7 +34,7 @@
                 } 
             }
         }
-        input {
+        input, textarea {
             @apply bg-transparent;
             @apply border-2 border-whpptLightBorder border-opacity-70 rounded-lg text-white;
             &:hover{

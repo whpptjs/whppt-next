@@ -16,7 +16,7 @@
 
 
 .whppt-popup  {
-    @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto left-20 hidden;
+    @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto ;
     position: fixed;
     width: 0;
     transition: width 0.3s ease;
@@ -24,13 +24,13 @@
     height: 100vh;
     z-index: 998;
     top:0;
-    &--fullNav{
-        @apply left-56;
-    }
     
     &--active {
-        @apply border-l-2 border-whpptDarkMode block;
+        @apply border-l-2 border-whpptDarkMode block pl-20 ;
         width: 100%;
+        &.whppt-popup--fullNav{
+            @apply pl-56;
+        }
 
     }
 
@@ -39,7 +39,13 @@
             @apply text-whpptDarkMode border-2 border-whpptDarkMode w-full p-3 rounded;
         }
 
- 
+        textarea{
+          resize: none;
+        }
+
+        &--left{ @apply w-2/12 border-r border-whpptLightMode h-full
+        }
+        &--right{ @apply w-10/12 p-5 h-full}
     }
     &__tabs{
         min-height: 74px;
