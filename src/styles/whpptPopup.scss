@@ -16,7 +16,7 @@
 
 
 .whppt-popup  {
-    @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto left-20 hidden;
+    @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto pl-20 ;
     position: fixed;
     width: 0;
     transition: width 0.3s ease;
@@ -25,7 +25,7 @@
     z-index: 998;
     top:0;
     &--fullNav{
-        @apply left-56;
+        @apply pl-56;
     }
     
     &--active {
