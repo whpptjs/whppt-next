@@ -20,7 +20,16 @@ export const OpenGraph: FC<WhpptTab> = () => {
 
   return (
     <form className="whppt-form">
-      <section className="whppt-form-section">
+      <section className="whppt-section-actions">
+        <WhpptButton
+          icon=""
+          text="Save Settings"
+          onClick={submit}
+          disabled={ !title || !keyWords || !description }
+        />
+      </section>
+
+      <section className="whppt-form-section whppt-form-page-settings__form">
         <WhpptInput
           id="whppt-plaintext-input"
           label="Title"
@@ -46,15 +55,6 @@ export const OpenGraph: FC<WhpptTab> = () => {
           info={info}
           value={description}
           onChange={setDescription}
-        />
-      </section>
-
-      <section className="whppt-section-actions">
-        <WhpptButton
-          icon=""
-          text="Save Settings"
-          onClick={submit}
-          disabled={ !title || !keyWords || !description }
         />
       </section>
     </form>
