@@ -1,11 +1,12 @@
 import React, { FC, useState } from "react";
 import { WhpptInput } from "../../ui/components/Input";
-import { WhpptButton, WhpptTab } from "../../ui/components";
+import { WhpptButton, WhpptTab, WhpptCheckbox } from "../../ui/components";
 
 export const General: FC<WhpptTab> = () => {
   const [slug, setSlug] = useState("");
   const [pageType, setPageType] = useState("");
   const [pageTemplate, setPageTemplate] = useState("");
+  const [hideFromXML, setHideFromXML] = useState(false);
 
   const error = "";
   const info = "";
@@ -15,6 +16,11 @@ export const General: FC<WhpptTab> = () => {
   const duplicatePage = () => {};
 
   const deletePage = () => {};
+
+
+  const handleCheckBox = () => {
+    setHideFromXML(!hideFromXML);
+  };
 
   return (
     <form className="whppt-form">
@@ -45,7 +51,7 @@ export const General: FC<WhpptTab> = () => {
           <WhpptButton text="Save New Slug" icon="" onClick={() => {}} />
         </section>
 
-        <section className="whppt-form-section">
+        <section className="whppt-form-section whppt-form-section--bottom-gap">
           <WhpptInput
             id="whppt-plaintext-input"
             label="Page Type"
@@ -64,8 +70,16 @@ export const General: FC<WhpptTab> = () => {
             value={pageTemplate}
             onChange={setPageTemplate}
           />
-
           <WhpptButton text="Change Page Type" icon="" onClick={submit} />
+        </section>
+
+        <section className="whppt-form-section">
+          <WhpptCheckbox
+              dark={false}
+              label={"HIDE THIS PAGE FROM THE SITEMAP XML?"}
+              value={"hide-from-xml"}
+              onChange={() => handleCheckBox()}
+          />
         </section>
       </div>
     </form>

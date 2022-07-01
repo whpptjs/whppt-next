@@ -2,7 +2,6 @@ import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
 
 import {
-  WhpptCheckbox,
   WhpptButton,
   WhpptTextArea,
   WhpptTab,
@@ -14,7 +13,6 @@ export const Seo: FC<WhpptTab> = () => {
   const [description, setDescription] = useState("");
   const [priorityLevel, setPriorityLevel] = useState("");
   const [changeFrequency, setChangeFrequency] = useState("");
-  const [hideFromXML, setHideFromXML] = useState(false);
 
   const error = "";
   const info = "";
@@ -32,10 +30,6 @@ export const Seo: FC<WhpptTab> = () => {
     //   hideFromXML
     // }
     // setPage(...page, seoSettings)
-  };
-
-  const handleCheckBox = () => {
-    setHideFromXML(!hideFromXML);
   };
 
   return (
@@ -101,12 +95,6 @@ export const Seo: FC<WhpptTab> = () => {
           info={info}
           value={changeFrequency}
           onChange={setChangeFrequency}
-        />
-        <WhpptCheckbox
-          dark={false}
-          label={"HIDE THIS PAGE FROM THE SITEMAP XML?"}
-          value={"hide-from-xml"}
-          onChange={() => handleCheckBox()}
         />
       </section>
     </form>
