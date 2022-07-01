@@ -1,2 +1,2 @@
 // TODO: Site settings + context
-export const Site = ({})
+export const Site = {};
