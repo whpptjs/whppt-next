@@ -63,10 +63,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   useEffect(() => {
     context.api.app.domain
       .loadForCurrentHost()
-      .then((domain) => {
-        setDomain(domain);
-      })
-      .catch(setError);
+      .then((domain) => setDomain(domain))
+      .catch((err) => setError(err));
   }, []);
 
   return (
