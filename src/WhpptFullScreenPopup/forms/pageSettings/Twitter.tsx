@@ -20,14 +20,16 @@ export const Twitter: FC<WhpptTab> = () => {
 
   return (
     <form className="whppt-form">
-      <section className="whppt-section-actions">
-        <WhpptButton
-          icon=""
-          text="Save Settings"
-          onClick={submit}
-          disabled={ !title || !keyWords || !description }
-        />
-      </section> 
+      <section className="whppt-form-page-settings__actions">
+        <div>
+          <WhpptButton
+            icon=""
+            text="Save Settings"
+            onClick={submit}
+            disabled={!title || !keyWords || !description}
+          />
+        </div>
+      </section>
 
       <section className="whppt-form-section whppt-form-page-settings__form whppt-form-section--bottom-gap">
         <WhpptInput
