@@ -23,6 +23,6 @@
     "strict": false,
     "target": "es6"
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "src/Context.ts.other"],
   "exclude": ["node_modules", "dist", "types", "**/*test.ts"]
 }

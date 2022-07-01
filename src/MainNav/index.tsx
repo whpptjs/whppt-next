@@ -1,8 +1,8 @@
-import React, { FC, useContext } from 'react';
-import { groupBy, sortBy } from 'lodash';
-import { WhpptIcon } from '../Icon';
-import { Whppt } from '../Context';
-import { ToggleWhpptIcon } from '../icons/Toggle';
+import React, { FC } from "react";
+import { groupBy, sortBy } from "lodash";
+import { WhpptIcon } from "../Icon";
+import { useWhppt } from "../Context";
+import { ToggleWhpptIcon } from "../icons/Toggle";
 
 export const WhpptMainNav: FC<{
   lightMode: boolean;
@@ -10,116 +10,116 @@ export const WhpptMainNav: FC<{
   showFullNav: boolean;
   setShowFullNav: Function;
 }> = ({ lightMode, setLightMode, showFullNav, setShowFullNav }) => {
-  const { toggleEditing, editing } = useContext(Whppt);
+  const { toggleEditing, editing } = useWhppt();
 
   const items = [
     {
-      key: 'select',
-      label: 'Select Component',
-      icon: 'pointer',
+      key: "select",
+      label: "Select Component",
+      icon: "pointer",
       action: () => toggleEditing(),
       isActive: editing,
       order: 200,
-      group: 'page',
+      group: "page",
       groupOrder: 200,
     },
     {
-      key: 'new-page',
-      label: 'Create New Page',
-      icon: 'new-page',
+      key: "new-page",
+      label: "Create New Page",
+      icon: "new-page",
       // action: () => this.newPage(),
       order: 300,
-      group: 'page',
+      group: "page",
       groupOrder: 200,
     },
     {
-      key: 'save',
-      label: 'Save Page',
-      icon: 'save',
+      key: "save",
+      label: "Save Page",
+      icon: "save",
 
       // disabled: !this.page || !this.page._id,
       // action: this.savePage,
       order: 400,
-      group: 'page',
+      group: "page",
       groupOrder: 200,
     },
     {
-      key: 'nav',
-      label: 'Save Navigation',
-      icon: 'nav',
+      key: "nav",
+      label: "Save Navigation",
+      icon: "nav",
       // action: () => this.saveNav(),
       order: 500,
-      group: 'site',
+      group: "site",
       groupOrder: 300,
     },
     {
-      key: 'footer',
-      label: 'Save Footer',
-      icon: 'footer',
-      group: 'site',
+      key: "footer",
+      label: "Save Footer",
+      icon: "footer",
+      group: "site",
       groupOrder: 300,
       // action: () => this.saveFooter(),
       order: 600,
     },
     {
-      key: 'publishPage',
-      label: 'Publish Page',
-      icon: 'publish',
+      key: "publishPage",
+      label: "Publish Page",
+      icon: "publish",
       // icon: this.hasPublishableChanges ? 'publish-with-notification' : 'publish',
       // disabled: !this.page || !this.page._id,
       // action: () => this.doEditInModal('publishSettings'),
       order: 700,
-      group: 'page',
+      group: "page",
       groupOrder: 200,
     },
     {
-      key: 'config-settings',
-      label: 'Open Config Settings',
-      icon: 'globe',
+      key: "config-settings",
+      label: "Open Config Settings",
+      icon: "globe",
       // action: () => this.doEditInModal('configSettings'),
       order: 800,
-      group: 'config',
+      group: "config",
       groupOrder: 400,
     },
     {
-      key: 'site-settings',
-      label: 'Open Site Settings',
-      icon: 'settings',
+      key: "site-settings",
+      label: "Open Site Settings",
+      icon: "settings",
       // action: () => this.doEditInModal('siteSettings'),
       order: 900,
-      group: 'site',
+      group: "site",
       groupOrder: 300,
     },
     {
-      key: 'page-settings',
-      label: 'Open Page Settings',
-      icon: 'page-settings',
+      key: "page-settings",
+      label: "Open Page Settings",
+      icon: "page-settings",
       // action: () => this.doEditInModal('pageSettings'),
       action: () => toggleEditing(),
       order: 1000,
-      group: 'page',
+      group: "page",
       groupOrder: 200,
     },
     {
-      key: 'dashboard',
-      label: 'Open Dashboard',
-      icon: 'dashboard',
+      key: "dashboard",
+      label: "Open Dashboard",
+      icon: "dashboard",
       order: 1100,
-      group: 'config',
+      group: "config",
       groupOrder: 400,
     },
 
     // ...this.$whppt.menuItems.map(i => ({ ...i, action: this.runAction(i.action) })),
   ];
 
-  const groupedItems = sortBy(groupBy(sortBy(items, ['order']), 'group'), [
-    'groupOrder',
+  const groupedItems = sortBy(groupBy(sortBy(items, ["order"]), "group"), [
+    "groupOrder",
   ]);
 
   return (
     <div
       className={`whppt-main-nav ${
-        showFullNav ? 'whppt-main-nav--show-full-nav' : ''
+        showFullNav ? "whppt-main-nav--show-full-nav" : ""
       }`}
     >
       <div className="whppt-main-nav-contents">
@@ -150,8 +150,8 @@ export const WhpptMainNav: FC<{
                             disabled={item.disabled}
                             className={`whppt-main-nav-group__nav-item ${
                               item.isActive
-                                ? 'whppt-main-nav-group__nav-item--active'
-                                : ''
+                                ? "whppt-main-nav-group__nav-item--active"
+                                : ""
                             }`}
                             onClick={() => item.action && item.action()}
                           >
@@ -177,7 +177,7 @@ export const WhpptMainNav: FC<{
         <div>
           <button className="whppt-main-nav-group__nav-item">
             <div className="whppt-main-nav__icon">
-              <WhpptIcon is={'logout'}></WhpptIcon>
+              <WhpptIcon is={"logout"}></WhpptIcon>
             </div>
             {showFullNav && (
               <div className="whppt-main-nav-group__label">Log Out</div>
@@ -192,7 +192,7 @@ export const WhpptMainNav: FC<{
             </div>
             {showFullNav && (
               <div className="whppt-main-nav-group__toggle--label ">
-                {lightMode ? 'Light Mode' : 'Dark Mode'}
+                {lightMode ? "Light Mode" : "Dark Mode"}
               </div>
             )}
           </button>

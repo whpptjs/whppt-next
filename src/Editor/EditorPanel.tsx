@@ -1,6 +1,6 @@
-import React, { FC, ReactElement, useContext } from 'react';
-import { Whppt } from './Context';
-import { WhpptIcon } from './Icon';
+import React, { FC, ReactElement } from "react";
+import { WhpptIcon } from "../Icon";
+import { useWhppt } from "../Context";
 
 export type WhpptAppEditorsArg = ({
   editor,
@@ -18,12 +18,12 @@ export type WhpptEditorPanelArgs = {
 export type WhpptEditorPanel = FC<WhpptEditorPanelArgs>;
 
 export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
-  const { editorState, editing } = useContext(Whppt);
+  const { editorState, editing } = useWhppt();
 
   return (
     <div
       className={`whppt-editor ${
-        editorState.editor && editing ? 'whppt-editor--active' : ''
+        editorState.editor && editing ? "whppt-editor--active" : ""
       }`}
     >
       <div className="whppt-editor__content-wrapper">

@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['plugin:react-hooks/recommended'],
+  extends: ["plugin:react/recommended", "plugin:react-hooks/recommended"],
 };

@@ -1,61 +1,70 @@
-import React, { FC, ReactElement, useMemo, useState } from 'react';
-import { Whppt } from './Context';
-import type { WhpptAppEditorsArg } from './EditorPanel';
-import { WhpptEditorPanel } from './EditorPanel';
-import { WhpptFullScreenPopup } from './WhpptFullScreenPopup';
-import { WhpptMainNav } from './MainNav';
+import React, { FC, ReactElement, useEffect, useMemo, useState } from "react";
+import { Whppt } from "./Context";
+import type { WhpptAppEditorsArg } from "./Editor/EditorPanel";
+import { WhpptEditorPanel } from "./Editor/EditorPanel";
+import { WhpptFullScreenPopup } from "./WhpptFullScreenPopup";
+import { WhpptMainNav } from "./MainNav";
+import { Api } from "./Api";
+import * as editor from "./Editor/Context";
+import * as pageContext from "./Page/Context";
+import * as footerContext from "./Footer/Context";
+import { Footer } from "./Models";
+import { Domain } from "./App/Model/Domain";
 
 export type WhpptAppOptions = {
   children: ReactElement[];
   editors: WhpptAppEditorsArg;
+  error: (error: Error) => ReactElement;
+  initNav?: (nav: any) => void;
+  initFooter?: (footer: Footer) => void;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
-export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
+export const WhpptApp: FC<WhpptAppOptions> = ({
+  children,
+  editors,
+  error,
+  // initNav,
+  initFooter,
+}) => {
   const [lightMode, setLightMode] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [editorState, setEditorState] = useState<{
-    editor: string;
-    value: any;
-    onChange: (value: any) => void;
-  }>({ editor: '', value: undefined, onChange: () => {} });
   const [showFullNav, setShowFullNav] = useState(false);
+  const [errorState, setError] = useState<Error>();
+  const [domain, setDomain] = useState<Domain>();
+  const [editing, setEditing] = useState(false);
+  const [editorState, setEditorState] = useState(editor.defaultState);
+  const [page, setPage] = useState(pageContext.defaultState);
+  const [footer, setFooter] = useState(pageContext.defaultState);
 
   const context = useMemo(
     () => ({
-      editing,
-      toggleEditing: () => {
-        setEditing(!editing);
-      },
-      editorState,
-      showEditor: (
-        editor: string,
-        value: any,
-        onChange: (value: any) => void
-      ) => {
-        if (!editing) return;
-        const internalOnChange = (changedValue: any) => {
-          setEditorState({
-            editor,
-            onChange: internalOnChange,
-            value: changedValue,
-          });
-          onChange(changedValue);
-        };
-        setEditorState({
-          editor,
-          value,
-          onChange: internalOnChange,
-        });
-      },
+      ...editor.Context({
+        editing,
+        setEditing,
+        editorState,
+        setEditorState,
+      }),
+      api: Api(),
+      domain,
+      ...pageContext.Context({ page, setPage }),
+      ...footerContext.Context({ footer, setFooter, initFooter: initFooter }),
     }),
-    [editing, editorState]
+    [editing, editorState, page, footer, domain]
   );
+
+  useEffect(() => {
+    context.api.app.domain
+      .loadForCurrentHost()
+      .then((domain) => {
+        setDomain(domain);
+      })
+      .catch(setError);
+  }, []);
 
   return (
     <div>
       <Whppt.Provider value={context}>
-        <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
+        <div className={`whppt-app ${lightMode ? "whppt-lightMode" : ""}`}>
           <WhpptMainNav
             lightMode={lightMode}
             showFullNav={showFullNav}
@@ -63,10 +72,16 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors }) => {
             setShowFullNav={() => setShowFullNav(!showFullNav)}
           />
           <WhpptFullScreenPopup showFullNav={showFullNav} />
-          <div className="whppt-app__content">
-            <div>{children}</div>
-            <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
-          </div>
+          {errorState ? (
+            error(errorState)
+          ) : (
+            <div>
+              <div className="whppt-app__content">
+                <div>{children}</div>
+                <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
+              </div>
+            </div>
+          )}
         </div>
       </Whppt.Provider>
     </div>
