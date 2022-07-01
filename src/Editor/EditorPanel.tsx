@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, useContext } from "react";
-import { Whppt } from "./Context";
+import React, { FC, ReactElement } from "react";
+import { useWhppt } from "../Context";
 
 export type WhpptAppEditorsArg = ({
   editor,
@@ -16,6 +16,6 @@ export type WhpptEditorPanelArgs = {
 };
 
 export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
-  const { editorState } = useContext(Whppt);
+  const { editorState } = useWhppt();
   return <div className="whppt-editor-panel">{editors(editorState)}</div>;
 };

@@ -1,8 +1,8 @@
-import React, { FC, useContext } from "react";
-import { Whppt } from "../Context";
+import React, { FC } from "react";
+import { useWhppt } from "../Context";
 
 export const WhpptMainNav: FC = ({}) => {
-  const { toggleEditing } = useContext(Whppt);
+  const { toggleEditing } = useWhppt();
 
   return (
     <div className="whppt-main-nav">
