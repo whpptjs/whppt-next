@@ -34,6 +34,9 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [editing, setEditing] = useState(false);
   const [editorState, setEditorState] = useState(editor.defaultState);
   const [page, setPage] = useState(pageContext.defaultState);
+  const [pageSettings, setPageSettings] = useState(
+    pageContext.defaultPageSettingsState
+  );
   const [footer, setFooter] = useState(pageContext.defaultState);
 
   const context = useMemo(
@@ -46,10 +49,15 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       }),
       api: Api(),
       domain,
-      ...pageContext.Context({ page, setPage }),
+      ...pageContext.Context({
+        page,
+        setPage,
+        pageSettings,
+        setPageSettings,
+      }),
       ...footerContext.Context({ footer, setFooter, initFooter: initFooter }),
     }),
-    [editing, editorState, page, footer, domain]
+    [editing, editorState, page, footer, domain, pageSettings]
   );
 
   useEffect(() => {

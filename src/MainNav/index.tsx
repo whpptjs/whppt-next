@@ -10,7 +10,7 @@ export const WhpptMainNav: FC<{
   showFullNav: boolean;
   setShowFullNav: Function;
 }> = ({ lightMode, setLightMode, showFullNav, setShowFullNav }) => {
-  const { toggleEditing, editing } = useWhppt();
+  const { toggleEditing, editing, togglePageSettings } = useWhppt();
 
   const items = [
     {
@@ -95,7 +95,7 @@ export const WhpptMainNav: FC<{
       label: "Open Page Settings",
       icon: "page-settings",
       // action: () => this.doEditInModal('pageSettings'),
-      action: () => toggleEditing(),
+      action: togglePageSettings,
       order: 1000,
       group: "page",
       groupOrder: 200,
