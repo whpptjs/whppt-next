@@ -1,12 +1,12 @@
 import React, { FC, useState } from "react";
-import { WhpptInput } from "../../ui/components/Input";
+import { WhpptInput } from "../ui/components/Input";
 
 import {
   WhpptCheckbox,
   WhpptButton,
   WhpptTextArea,
   WhpptTab,
-} from "../../ui/components";
+} from "../ui/components";
 
 export const Seo: FC<WhpptTab> = () => {
   const [title, setTitle] = useState("");

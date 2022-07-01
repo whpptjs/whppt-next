@@ -2,10 +2,10 @@ import React, { FC } from "react";
 import { useWhppt } from "../../Context";
 import { WhpptTabs, WhpptTab } from "../../ui/components";
 
-import { Seo } from "./Seo";
-import { OpenGraph } from "./OpenGraph";
+import { Seo } from "../../CommonSettings/Seo";
+import { OpenGraph } from "../../CommonSettings/OpenGraph";
 import { General } from "./General";
-import { Twitter } from "./Twitter";
+import { Twitter } from "../../CommonSettings/Twitter";
 
 export type WhpptSelectedType = string;
 
