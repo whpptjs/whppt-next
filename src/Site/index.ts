@@ -1,2 +1,2 @@
 // TODO: Site settings + context
-export const placeholder = {};
+export const Site = {};
