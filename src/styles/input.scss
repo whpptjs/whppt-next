@@ -8,7 +8,7 @@
                @apply text-whpptDarkMode;
             }
             input {
-                @apply border-whpptDarkBorder text-black;
+                @apply text-black;
             }
         }
     }
@@ -23,7 +23,7 @@
     .whppt-input {
         
         &-info {
-            @apply opacity-70;
+            @apply opacity-70 text-sm mt-2;
         }
         &-error {
             @apply text-red-500;
@@ -36,7 +36,7 @@
         }
         input, textarea {
             @apply bg-transparent;
-            @apply border-2 border-whpptLightBorder border-opacity-70 rounded-lg text-white;
+            @apply border-2 border-whpptStandard border-opacity-70 rounded-lg text-white;
             &:hover{
                 @apply border-opacity-100
             } 
