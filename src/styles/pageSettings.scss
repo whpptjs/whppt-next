@@ -6,10 +6,18 @@
   }
   }
 }
+
 .whppt-form {
   @apply flex px-10 py-2;
   display: flex;
   gap: 1rem;
+  &-split {
+    display: flex;
+    gap: 1rem;
+&--even{
+  @apply w-1/2
+}
+  }
 
  &-section{
   @apply px-6 py-4 bg-whpptDarkMode;
