@@ -26,6 +26,10 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
   const secondNumber = total < page * perPage ? total : page * perPage;
   const shownItems = `${firstNumber} - ${secondNumber}`;
 
+  const handleClick = (newPage) => {
+    changePage(newPage);
+  }
+
   return (
     <div className={`whppt-pagination ${dark ? 'whppt-pagination--dark' : ''}`}>
       <div className="whppt-pagination__per-page">
@@ -46,10 +50,10 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
       </div>
 
       <div className="whppt-pagination__buttons">
-        <button disabled={page <= 1} onClick={() => changePage(page - 1)}>
+        <button type="button" disabled={page <= 1} onClick={() => handleClick(page - 1)}>
           <WhpptIcon is="previous"></WhpptIcon>
         </button>
-        <button disabled={page === total} onClick={() => changePage(page + 1)}>
+        <button type="button" disabled={page === total} onClick={() => handleClick(page + 1)}>
           <WhpptIcon is="next"></WhpptIcon>
         </button>
       </div>
