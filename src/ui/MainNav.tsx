@@ -10,7 +10,7 @@ export const WhpptMainNav: FC<{
   showFullNav: boolean;
   setShowFullNav: Function;
 }> = ({ lightMode, setLightMode, showFullNav, setShowFullNav }) => {
-  const { toggleEditing, editing, togglePageSettings } = useWhppt();
+  const { toggleEditing, editing, togglePageSettings, toggleSiteSettings } = useWhppt();
 
   const items = [
     {
@@ -86,6 +86,7 @@ export const WhpptMainNav: FC<{
       label: "Open Site Settings",
       icon: "settings",
       // action: () => this.doEditInModal('siteSettings'),
+      action: toggleSiteSettings,
       order: 900,
       group: "site",
       groupOrder: 300,

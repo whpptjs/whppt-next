@@ -15,7 +15,7 @@ import { Domain } from "./App/Model/Domain";
 export type WhpptAppOptions = {
   children: ReactElement[];
   editors: WhpptAppEditorsArg;
-  error: (error: Error) => ReactElement;
+  error?: (error: Error) => ReactElement;
   initNav?: (nav: any) => void;
   initFooter?: (footer: Footer) => void;
 };
