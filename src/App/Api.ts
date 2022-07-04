@@ -1,6 +1,6 @@
 import { Domain } from "../App/Model";
 import { WhpptHttp } from "../Api/Http";
-import { HttpError } from "src/HttpError";
+import { HttpError } from "../HttpError";
 
 export type AppApi = {
   domain: {
@@ -25,6 +25,7 @@ export const AppApi: AppApiConstructor = ({ http }) => {
           });
       },
       list() {
+        console.log("🚀 ~ file: Api.ts ~ line 28 ~ list ~ Domain");
         return http.secure.getJson<Domain[]>({ path: "/config/loadDomains" });
       },
       save(domain: Domain) {

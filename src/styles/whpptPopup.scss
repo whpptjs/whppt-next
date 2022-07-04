@@ -35,9 +35,6 @@
     }
 
     &__contents{
-        input, textarea{
-            @apply text-whpptDarkMode border-2 border-whpptDarkMode w-full p-3 rounded;
-        }
 
         textarea{
           resize: none;

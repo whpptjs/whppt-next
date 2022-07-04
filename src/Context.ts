@@ -1,10 +1,12 @@
 import { createContext, useContext } from "react";
 import { Api } from "./Api";
+import * as app from "./App/Context";
 import * as editor from "./Editor/Context";
 import * as page from "./Page/Context";
 import * as footer from "./Footer/Context";
 
 export const Whppt = createContext({
+  ...app.Context(app.defaultArgs),
   ...editor.Context(editor.defaultArgs),
   ...page.Context(page.defaultArgs),
   ...footer.Context(footer.defaultArgs),
