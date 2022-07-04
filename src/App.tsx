@@ -1,21 +1,21 @@
-import React, { FC, ReactElement, useEffect, useMemo, useState } from "react";
-import { Whppt } from "./Context";
-import type { WhpptAppEditorsArg } from "./Editor/EditorPanel";
-import { WhpptEditorPanel } from "./Editor/EditorPanel";
-import { SettingsPanel } from "./ui/SettingsPanel";
-import { WhpptMainNav } from "./ui/MainNav";
-import { Api } from "./Api";
-import * as editor from "./Editor/Context";
-import * as pageContext from "./Page/Context";
-import * as footerContext from "./Footer/Context";
+import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
+import { Whppt } from './Context';
+import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
+import { WhpptEditorPanel } from './Editor/EditorPanel';
+import { SettingsPanel } from './ui/SettingsPanel';
+import { WhpptMainNav } from './ui/MainNav';
+import { Api } from './Api';
+import * as editor from './Editor/Context';
+import * as appContext from './App/Context';
+import * as pageContext from './Page/Context';
+import * as footerContext from './Footer/Context';
 import * as siteContext from "./Site/Context";
-import { Footer } from "./Models";
-import { Domain } from "./App/Model/Domain";
+import { Footer } from './Models';
 
 export type WhpptAppOptions = {
   children: ReactElement[];
   editors: WhpptAppEditorsArg;
-  error?: (error: Error) => ReactElement;
+  error: (error: Error) => ReactElement;
   initNav?: (nav: any) => void;
   initFooter?: (footer: Footer) => void;
 };
@@ -31,10 +31,13 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
   const [errorState, setError] = useState<Error>();
-  const [domain, setDomain] = useState<Domain>();
   const [editing, setEditing] = useState(false);
   const [editorState, setEditorState] = useState(editor.defaultState);
+  const [domain, setDomain] = useState(appContext.defaultState);
   const [page, setPage] = useState(pageContext.defaultState);
+  const [appSettings, setAppSettings] = useState(
+    appContext.defaultAppSettingsState
+  );
   const [pageSettings, setPageSettings] = useState(
     pageContext.defaultPageSettingsState
   );
@@ -51,6 +54,12 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         setEditorState,
       }),
       api: Api(),
+      ...appContext.Context({
+        domain,
+        setDomain,
+        appSettings,
+        setAppSettings,
+      }),
       domain,
       ...pageContext.Context({
         page,
@@ -66,22 +75,20 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         setSiteSettings,
       })
     }),
-    [editing, editorState, page, footer, domain, pageSettings, site, siteSettings]
+    [editing, editorState, page, footer, domain, pageSettings, appSettings, siteSettings]
   );
 
   useEffect(() => {
     context.api.app.domain
       .loadForCurrentHost()
-      .then((domain) => {
-        setDomain(domain);
-      })
-      .catch(setError);
+      .then((domain) => setDomain(domain))
+      .catch((err) => setError(err));
   }, []);
 
   return (
     <div>
       <Whppt.Provider value={context}>
-        <div className={`whppt-app ${lightMode ? "whppt-lightMode" : ""}`}>
+        <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
           <WhpptMainNav
             lightMode={lightMode}
             showFullNav={showFullNav}
@@ -92,11 +99,9 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
           {errorState ? (
             error(errorState)
           ) : (
-            <div>
-              <div className="whppt-app__content">
-                <div>{children}</div>
-                <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
-              </div>
+            <div className="whppt-app__content">
+              <div>{children}</div>
+              <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
             </div>
           )}
         </div>

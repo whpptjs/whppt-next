@@ -1,13 +1,14 @@
-import React, { FC } from "react";
-import { useWhppt } from "../Context";
-import { PageSettings } from "../Page/Settings/index";
+import React, { FC } from 'react';
+import { AppSettings } from '../App/Settings';
+import { useWhppt } from '../Context';
+import { PageSettings } from '../Page/Settings';
 import { SiteSettings } from "../Site/Settings/index";
 
 export const SettingsPanel: FC<{ showFullNav: boolean }> = ({
   showFullNav,
 }) => {
-  const { pageSettings, siteSettings } = useWhppt();
-  const showPanel = [pageSettings, siteSettings].some(setting => setting.visible)
+  const { pageSettings, siteSettings, appSettings } = useWhppt();
+  const showPanel = [pageSettings, siteSettings, appSettings].some(setting => setting.visible);
 
   return (
     <div
@@ -17,6 +18,7 @@ export const SettingsPanel: FC<{ showFullNav: boolean }> = ({
     >
       <div className="whppt-popup__contents">
         {pageSettings.visible ? <PageSettings /> : <></>}
+        {appSettings.visible ? <AppSettings /> : <></>}
         {siteSettings.visible ? <SiteSettings /> : <></>}
       </div>
     </div>

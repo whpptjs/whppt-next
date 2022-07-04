@@ -26,33 +26,31 @@
     top:0;
     
     &--active {
-        @apply border-l-2 border-whpptDarkMode block pl-20 ;
+        @apply border-l-2 border-whpptDarkMode block pl-24 ;
         width: 100%;
         &.whppt-popup--fullNav{
-            @apply pl-56;
+            @apply pl-64;
         }
 
     }
 
     &__contents{
-        input, textarea{
-            @apply text-whpptDarkMode border-2 border-whpptDarkMode w-full p-3 rounded;
-        }
 
         textarea{
           resize: none;
         }
 
-        &--left{ @apply w-2/12 border-r border-whpptLightMode h-full
+        &--left{ @apply w-3/12 border-r border-whpptLightMode h-full
         }
-        &--right{ @apply w-10/12 p-5 h-full}
+        &--right{ @apply w-9/12 p-5 h-full}
+
     }
     &__tabs{
         min-height: 74px;
         @apply px-10 flex w-full 
     }
     &__tab {
-        @apply h-full mr-5  w-full text-left ;
+        @apply h-full mr-5  w-full text-left text-lg ;
         &--inline {
             @apply inline-block
         }

@@ -1,0 +1,89 @@
+.whppt-lightMode {
+  .whppt-select {
+    &__input  .whppt-select__icon{
+      @apply text-whpptDarkMode;
+    }
+    &__menu {
+      ul {
+        @apply bg-whpptLightBorder;
+        .whppt-select__menu-item--active {
+          @apply bg-whpptLightMode
+        }
+        li {
+          @apply text-whpptDarkMode;
+          &:hover {
+            @apply bg-whpptLightMode
+          }
+        }
+      }
+    }
+  }
+}
+
+.whppt-select {
+  position: relative;
+
+  &__input {
+    position: relative;
+    .whppt-select__icon{
+      @apply absolute right-0 top-0 bottom-0;
+      @apply flex items-center;
+      pointer-events: none;
+      padding: 0 0.5rem;
+    }
+  }
+
+  &__menu {
+    left: 0;
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+
+    &--up {
+      bottom: 0;
+    }
+
+    &--down {
+      top: 0;
+    }
+
+    ul {
+      @apply border border-whpptStandard rounded-lg;
+      @apply bg-whpptDarkBorder;
+      @apply m-0 list-none;
+
+      .whppt-select__menu-item--active {
+        @apply bg-whpptDarkMode
+      }
+      
+      li {
+        @apply p-3;
+        @apply text-whpptLightMode cursor-pointer rounded-lg;
+        
+        &:hover {
+          @apply bg-whpptDarkMode
+        }
+      }
+
+    }
+  }
+
+  &--dense {
+    .whppt-select__input {
+      input {
+        padding: 0.5rem;
+      }
+    }
+
+    .whppt-select__menu {
+      ul {
+        padding: 0.25rem 0;
+
+        li {
+          padding: 0.5rem;
+        }
+      }
+    }
+  }
+
+}

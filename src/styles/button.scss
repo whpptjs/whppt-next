@@ -7,8 +7,8 @@
 
 .whppt-button {
   @apply text-whpptLightMode flex items-center z-10;
-  @apply text-base tracking-widest	;
-  @apply py-3 px-4 border-whpptActive border rounded-full;
+  @apply text-base tracking-wide	;
+  @apply py-3 px-6 border-whpptActive border rounded-full;
   background-color: transparent;
   position: relative;
   overflow: hidden;

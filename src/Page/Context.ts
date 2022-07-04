@@ -36,12 +36,7 @@ export const Context = ({
     page,
     setPage,
     pageSettings,
-    togglePageSettings: () => {
-      console.log("-------", pageSettings);
-      setPageSettings({ ...pageSettings, visible: !pageSettings.visible });
-    },
-    changePageSettingsActiveTab: (activeTab: string) => {
-      setPageSettings({ ...pageSettings, activeTab });
-    },
+    togglePageSettings: () => setPageSettings({ ...pageSettings, visible: !pageSettings.visible }),
+    changePageSettingsActiveTab: (activeTab: string) =>setPageSettings({ ...pageSettings, activeTab }),
   };
 };

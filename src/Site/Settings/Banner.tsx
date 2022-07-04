@@ -4,7 +4,7 @@ import { WhpptInput } from  '../../ui/components/Input';
 import { WhpptButton } from '../../ui/components/Button';
 
 export const Banner: FC<WhpptTab> = () => {
-  const [banner, setBanner] = useState();
+  const [banner, setBanner] = useState('');
 
   const publish = () => {
   }

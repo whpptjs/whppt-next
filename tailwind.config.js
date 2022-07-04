@@ -11,6 +11,7 @@ module.exports = {
         whpptActive: '#3B86FF',
         whpptLightBorder: '#F0F0F7',
         whpptDarkBorder: '#292929',
+        whpptStandard: '#9998BA',
       },
     },
   },
