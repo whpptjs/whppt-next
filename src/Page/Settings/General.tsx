@@ -1,15 +1,15 @@
-import React, { FC, useState } from "react";
-import { WhpptInput } from "../../ui/components/Input";
-import { WhpptButton, WhpptTab, WhpptCheckbox } from "../../ui/components";
+import React, { FC, useState } from 'react';
+import { WhpptInput } from '../../ui/components/Input';
+import { WhpptButton, WhpptTab, WhpptCheckbox } from '../../ui/components';
 
 export const General: FC<WhpptTab> = () => {
-  const [slug, setSlug] = useState("");
-  const [pageType, setPageType] = useState("");
-  const [pageTemplate, setPageTemplate] = useState("");
+  const [slug, setSlug] = useState('');
+  const [pageType, setPageType] = useState('');
+  const [pageTemplate, setPageTemplate] = useState('');
   const [hideFromXML, setHideFromXML] = useState(false);
 
-  const error = "";
-  const info = "";
+  const error = '';
+  const info = '';
 
   const submit = () => {};
 
@@ -43,7 +43,7 @@ export const General: FC<WhpptTab> = () => {
             label="Page Slug"
             type="text"
             error={error}
-            info={info}
+            info="Please enter a value"
             value={slug}
             onChange={setSlug}
           />

@@ -7,7 +7,7 @@ export type SiteApiConstructor = ({ http }: { http: WhpptHttp }) => SiteApi;
 export const SiteApi: SiteApiConstructor = ({ http }) => {
   return {
     loadFromSlug: (slug) => {
-      return http.secure.postJson<Site>({ path: slug });
+      return http.secure.getJson<Site>({ path: slug });
     },
   };
 };
