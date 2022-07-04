@@ -100,7 +100,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     )
                   }
                 </tr>)
-              : <tr>
+              : <tr className="whppt-table--no-data">
                   <td colSpan={headers.length}>
                     No results found
                   </td>

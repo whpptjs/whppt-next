@@ -6,7 +6,9 @@ import { Seo } from "../../CommonSettings/Seo";
 import { OpenGraph } from "../../CommonSettings/OpenGraph";
 import { General } from "./General";
 import { Twitter } from "../../CommonSettings/Twitter";
-import { Redirects } from "../Settings/Redirects";
+import { Redirects } from "./Redirects";
+import { Files } from "./Files";
+import { Banner } from "./Banner";
 
 export type WhpptSelectedType = string;
 
@@ -19,6 +21,8 @@ export const SiteSettings: FC = () => {
     { name: "open-graph", label: "Open Graph" },
     { name: "twitter", label: "Twitter" },
     { name: "redirects", label: "Redirects" },
+    { name: "files", label: "Files" },
+    { name: "banner", label: "Banner" }
   ];
 
   return (
@@ -34,6 +38,8 @@ export const SiteSettings: FC = () => {
         <OpenGraph name="open-graph" label="Open Graph" />
         <Twitter name="twitter" label="Twitter" />
         <Redirects name="redirects" label="Redirects" />
+        <Files name="files" label="Files" />
+        <Banner name="banner" label="Banner" />
       </WhpptTab>
     </div>
   );

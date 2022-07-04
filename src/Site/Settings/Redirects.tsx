@@ -1,12 +1,28 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTab } from '../../ui/components';
 import { WhpptTable } from '../../ui/components/Table';
 
 export const Redirects: FC<WhpptTab> = () => {
+  const headers = [
+    { text: 'Actions', align: 'start', value: 'actions' },
+    { text: 'Name', align: 'start', value: 'name' },
+    { text: 'From', align: 'start', value: 'from' },
+    { text: 'To', align: 'start', value: 'to' },
+    { text: 'Published', align: 'start', value: 'published' },
+    { text: 'Published At', align: 'start', value: 'publishedAt' },
+    { text: 'Last Modified', align: 'start', value: 'lastmod' },
+    { text: 'Created At', align: 'start', value: 'createdAt' },
+  ] as any;
 
-  const items = [
-    {
+  const [searchRedirects, setSearchRedirects] = useState('');
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    //TODO: update items after fetch
+
+    //Then set the items witth the result
+    setItems([{
       _id: 1,
       domainId: 'testDomain',
       name: 'testName.testName.testName.com',
@@ -27,19 +43,8 @@ export const Redirects: FC<WhpptTab> = () => {
       createdAt: '01-01-2022',
       published: '01-01-2022',
       publishedAt: '01-01-2022',
-    }
-  ] as any;
-
-  const headers = [
-    { text: 'Actions', align: 'start', value: 'actions' },
-    { text: 'Name', align: 'start', value: 'name' },
-    { text: 'From', align: 'start', value: 'from' },
-    { text: 'To', align: 'start', value: 'to' },
-    { text: 'Published', align: 'start', value: 'published' },
-    { text: 'Published At', align: 'start', value: 'publishedAt' },
-    { text: 'Last Modified', align: 'start', value: 'lastmod' },
-    { text: 'Created At', align: 'start', value: 'createdAt' },
-  ] as any;
+    }]);
+  },[searchRedirects]);
 
   return (
     <form className="whppt-form whppt-site-settings">
@@ -54,7 +59,7 @@ export const Redirects: FC<WhpptTab> = () => {
           placeholder={"about-us"}
           label={"Search"}
           value={""}
-          onChange={(e) => (console.log('from Redirects page', e))}
+          onChange={setSearchRedirects}
           info={"Search the from field or the to field"}
           error={""}
           type="text"

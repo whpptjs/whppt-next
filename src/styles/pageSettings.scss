@@ -47,6 +47,10 @@
 .whppt-site-setings__actions {
   display: flex;
   gap: 1rem;
+
+  &.right {
+    justify-content: right;
+  }
 }
 
 .whppt-site-setings__ruler {
