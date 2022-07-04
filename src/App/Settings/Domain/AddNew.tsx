@@ -6,7 +6,7 @@ export const DomainAddNewForm: FC = () => {
   const { api } = useWhppt();
   const [newDomain, setNewDomain] = useState({
     name: '',
-    hostnames: [],
+    hostNames: [],
     published: false,
     createdAt: new Date(),
   });
@@ -16,7 +16,7 @@ export const DomainAddNewForm: FC = () => {
     api.app.domain.save(newDomain).then(() => {
       setNewDomain({
         name: '',
-        hostnames: [],
+        hostNames: [],
         published: false,
         createdAt: new Date(),
       });
@@ -43,11 +43,11 @@ export const DomainAddNewForm: FC = () => {
           </div>
           <div className="whppt-form-split--even">
             <WhpptInput
-              value={newDomain.hostnames.join(',')}
-              onChange={(hostnames: string) => {
+              value={newDomain.hostNames.join(',')}
+              onChange={(hostNames: string) => {
                 setNewDomain({
                   ...newDomain,
-                  hostnames: hostnames.split(',').map((h) => h.trim()),
+                  hostNames: hostNames.split(',').map((h) => h.trim()),
                 });
               }}
               id={'newDomainhostnames'}

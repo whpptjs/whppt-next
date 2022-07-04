@@ -5,7 +5,9 @@ export const DomainsList: FC<{ domains: Domain[] }> = ({ domains }) => {
   return (
     <section className="whppt-form-section ">
       {domains.map((domain, domainKey) => (
-        <div key={domainKey}>{domain.name}</div>
+        <div key={domainKey}>
+          <div>{domain.name}</div>
+        </div>
       ))}
     </section>
   );
