@@ -1,15 +1,15 @@
-import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
-import { Whppt } from './Context';
-import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
-import { WhpptEditorPanel } from './Editor/EditorPanel';
-import { SettingsPanel } from './ui/SettingsPanel';
-import { WhpptMainNav } from './ui/MainNav';
-import { Api } from './Api';
-import * as editor from './Editor/Context';
-import * as pageContext from './Page/Context';
-import * as footerContext from './Footer/Context';
-import { Footer } from './Models';
-import { Domain } from './App/Model/Domain';
+import React, { FC, ReactElement, useEffect, useMemo, useState } from "react";
+import { Whppt } from "./Context";
+import type { WhpptAppEditorsArg } from "./Editor/EditorPanel";
+import { WhpptEditorPanel } from "./Editor/EditorPanel";
+import { SettingsPanel } from "./ui/SettingsPanel";
+import { WhpptMainNav } from "./ui/MainNav";
+import { Api } from "./Api";
+import * as editor from "./Editor/Context";
+import * as pageContext from "./Page/Context";
+import * as footerContext from "./Footer/Context";
+import { Footer } from "./Models";
+import { Domain } from "./App/Model/Domain";
 
 export type WhpptAppOptions = {
   children: ReactElement[];
@@ -70,7 +70,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   return (
     <div>
       <Whppt.Provider value={context}>
-        <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
+        <div className={`whppt-app ${lightMode ? "whppt-lightMode" : ""}`}>
           <WhpptMainNav
             lightMode={lightMode}
             showFullNav={showFullNav}
@@ -78,14 +78,14 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
             setShowFullNav={() => setShowFullNav(!showFullNav)}
           />
           <SettingsPanel showFullNav={showFullNav} />
-          {/* {errorState ? (
+          {errorState ? (
             error(errorState)
-          ) : ( */}
-          <div className="whppt-app__content">
-            <div>{children}</div>
-            <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
-          </div>
-          {/* )} */}
+          ) : (
+            <div className="whppt-app__content">
+              <div>{children}</div>
+              <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
+            </div>
+          )}
         </div>
       </Whppt.Provider>
     </div>

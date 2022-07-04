@@ -1,5 +1,6 @@
 import { Domain } from "../App/Model";
 import { WhpptHttp } from "../Api/Http";
+import { HttpError } from "src/HttpError";
 
 export type AppApi = {
   domain: {
@@ -19,7 +20,7 @@ export const AppApi: AppApiConstructor = ({ http }) => {
             path: "/config/loadDomainForClient",
           })
           .then((domain) => {
-            if (!domain) throw new Error("Domain not found");
+            if (!domain) throw HttpError.notFound("Domain not found");
             return domain;
           });
       },

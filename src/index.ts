@@ -1,3 +1,4 @@
+export * from "./HttpError";
 export * from "./Editor";
 export * from "./Context";
 export * from "./App";
