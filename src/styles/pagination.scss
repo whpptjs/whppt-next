@@ -1,0 +1,46 @@
+.whppt-pagination {
+  display: flex;
+  align-items: center;
+
+  &__buttons {
+    display: flex;
+
+    button:nth-child(1) {
+      margin-right: 0.5rem;
+    }
+
+    svg {
+      color: $gray-800;
+    }
+  }
+
+  &--dark {
+    color: white;
+
+    .whppt-pagination__buttons {
+
+      button {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+
+      svg {
+        color: white;
+      }
+    }
+
+    .whppt-pagination__results {
+      color: white;
+    }
+  }
+
+  &__per-page {
+  }
+
+  &__results {
+    text-align: center;
+    width: 8rem;
+    margin: 0 0.5rem;
+    color: $gray-800;
+  }
+}

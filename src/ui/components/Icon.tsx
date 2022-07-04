@@ -29,6 +29,8 @@ import { WhpptIconRightAlign } from "../../icons/RightAlign";
 import { WhpptIconCenterAlign } from "../../icons/CenterAlign";
 import { WhpptIconBin } from "../../icons/Bin";
 import { WhpptIconDuplicate } from "../../icons/Duplicate";
+import { WhpptIconNext } from "../../icons/Next";
+import { WhpptIconPrevious } from "../../icons/Previous";
 
 export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === "pointer") return <WhpptIconPointer></WhpptIconPointer>;
@@ -63,5 +65,7 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
     return <WhpptIconCenterAlign></WhpptIconCenterAlign>;
   if (is === "bin") return <WhpptIconBin></WhpptIconBin>;
   if (is === "duplicate") return <WhpptIconDuplicate></WhpptIconDuplicate>;
+  if (is === 'next') return <WhpptIconNext></WhpptIconNext>
+  if (is === 'previous') return <WhpptIconPrevious></WhpptIconPrevious>
   return <div></div>;
 };
