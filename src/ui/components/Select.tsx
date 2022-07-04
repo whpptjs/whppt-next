@@ -11,7 +11,7 @@ type WhpptSelectProps = {
   onChange: any;
   direction?: string;
   items: object[];
-  value: string;
+  value: string | number;
 };
 
 export const WhpptSelect: FC<WhpptSelectProps> = ({

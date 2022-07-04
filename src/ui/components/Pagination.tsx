@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { WhpptIcon } from './Icon';
+import { WhpptSelect } from '../../ui/components/Select';
 
 type WhpptPagintionProps = {
   page: number
@@ -7,7 +8,8 @@ type WhpptPagintionProps = {
   perPage: number
   perPageItems: any[]
   dark: boolean
-  direction: 'up' | 'down'
+  direction?: 'up' | 'down'
+  changePage: (page: any) => any
 }
 
 export const WhpptPagination: FC<WhpptPagintionProps> = ({
@@ -16,7 +18,8 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
   perPage,
   perPageItems,
   dark,
-  direction
+  direction,
+  changePage
 }) => {
 
   const firstNumber = page * perPage - perPage + 1;
@@ -27,7 +30,14 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
     <div className={`whppt-pagination ${dark ? 'whppt-pagination--dark' : ''}`}>
       <div className="whppt-pagination__per-page">
         <div className="whppt-pagination__per-page-select">
-          select {perPage} {perPageItems} {direction}
+        <WhpptSelect
+          id={''}
+          label={''}
+          value={perPage}
+          items={perPageItems}
+          onChange={() => console.log('select')}
+          direction={direction}
+        />
         </div>
       </div>
 
@@ -36,10 +46,10 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
       </div>
 
       <div className="whppt-pagination__buttons">
-        <button className="">
+        <button disabled={page <= 1} onClick={() => changePage(page - 1)}>
           <WhpptIcon is="previous"></WhpptIcon>
         </button>
-        <button className="">
+        <button disabled={page === total} onClick={() => changePage(page + 1)}>
           <WhpptIcon is="next"></WhpptIcon>
         </button>
       </div>

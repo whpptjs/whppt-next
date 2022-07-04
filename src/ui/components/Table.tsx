@@ -13,6 +13,7 @@ type WhpptTableProps = {
   fixedHeader: boolean
   page: number
   total: number
+  setCurrentPage: (page: any) => void
 }
 
 export const WhpptTable: FC<WhpptTableProps> = ({
@@ -26,7 +27,8 @@ export const WhpptTable: FC<WhpptTableProps> = ({
   height,
   fixedHeader,
   page,
-  total
+  total,
+  setCurrentPage
 }) => {
   const tableContainerHeight = typeof height === 'number' ? `${height}px` : height;
   const [internalItems, setInternalItems] = useState([]);
@@ -80,7 +82,8 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                       perPageItems={[5, 10, 25, 50, 100]}
                       total={total}
                       dark={true}
-                      direction={"up"}
+                      direction={"down"}
+                      changePage={setCurrentPage}
                     />
                   </div>
                 </td>
