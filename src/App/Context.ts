@@ -22,7 +22,7 @@ export type AppContextArgs = {
 export const defaultArgs = {
   domain: {
     name: "",
-    hostnames: [],
+    hostNames: [],
     createdAt: new Date(),
     published: false,
   },

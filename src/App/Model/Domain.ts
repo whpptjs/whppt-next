@@ -1,7 +1,7 @@
 export type Domain = {
   _id?: string;
   name: string;
-  hostnames: string[];
+  hostNames: string[];
   createdAt: Date;
   updatedAt?: Date;
   published: boolean;

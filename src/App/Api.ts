@@ -19,6 +19,7 @@ export const AppApi: AppApiConstructor = ({ http }) => {
             path: "/config/loadDomainForClient",
           })
           .then((domain) => {
+            console.log("🚀 ~ file: Api.ts ~ line 22 ~ .then ~ domain", domain)
             if (!domain) throw new Error("Domain not found");
             return domain;
           });
