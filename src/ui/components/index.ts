@@ -7,5 +7,6 @@ export * from "./WhpptTabs";
 export * from "./Icon";
 export * from "./Select";
 export * from "./Input";
+export * from "./Table";
 
 

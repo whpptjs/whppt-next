@@ -15,6 +15,25 @@
 .whppt-table {
   @apply w-full;
 
+  &__actions{
+    @apply flex;
+  }
+  &__action{
+    @apply w-4 h-4 mr-3 relative;
+    svg {
+      @apply w-full
+    }
+    &--info{
+      left:150%;
+      top:-50%;
+      @apply absolute p-2  bg-whpptDarkMode text-whpptLightMode hidden;
+      @apply border-whpptStandard rounded border z-10;
+   }
+  }
+  &__action:hover .whppt-table__action--info{
+    @apply block
+  }
+
   &__container {
     overflow: visible;
     border-radius: 0.25rem;
@@ -56,11 +75,11 @@
     tbody {
       tr {
         @apply hover:bg-whpptDarkBorder;
+        @apply border-b-2 border-opacity-60 border-whpptStandard;
   
       }
       
       td {
-        @apply border-b-2 border-opacity-60 border-whpptStandard;
         @apply py-4 px-6;
         white-space: nowrap;
         @apply text-sm ;

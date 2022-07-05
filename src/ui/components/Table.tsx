@@ -1,4 +1,5 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
+import { WhpptIcon } from './Icon';
 import { WhpptPagination } from './Pagination';
 
 type WhpptTableProps = {
@@ -8,6 +9,7 @@ type WhpptTableProps = {
   hideHeaders: boolean;
   hideFooters: boolean;
   items: any[];
+  actions?: any[];
   height: string | number;
   fixedHeader: boolean;
   page: number;
@@ -27,27 +29,11 @@ export const WhpptTable: FC<WhpptTableProps> = ({
   page,
   total,
   setCurrentPage,
+  actions,
 }) => {
   const tableContainerHeight =
     typeof height === 'number' ? `${height}px` : height;
-  const [internalItems, setInternalItems] = useState([]);
-  const perPageItems = [{ text: '5'}, { text: '10'}, { text: '25'}, { text: '50'}, { text: '100'}];
-
-  useEffect(() => {
-    const headersValues = headers.map((h) => h.value);
-
-    const internalItems = items.map((item) => {
-      const internalItem = {};
-
-      for (const value of headersValues) {
-        internalItem[value] = item[value];
-      }
-
-      return internalItem;
-    });
-
-    setInternalItems(internalItems);
-  }, [items]);
+    const perPageItems = [{ text: '5'}, { text: '10'}, { text: '25'}, { text: '50'}, { text: '100'}];
 
   return (
     <div className={`whppt-table ${dense ? 'whppt-table--dense' : ''}`}>
@@ -63,6 +49,18 @@ export const WhpptTable: FC<WhpptTableProps> = ({
               }
             >
               <tr>
+                {actions && actions.length && (
+                  <th
+                    className={
+                      headers[0].align
+                        ? `whppt-table__header--${headers[0].align}`
+                        : ''
+                    }
+                    key="whppt-table-actions"
+                  >
+                    Actions
+                  </th>
+                )}
                 {headers.map((header, index) => (
                   <th
                     className={
@@ -98,14 +96,37 @@ export const WhpptTable: FC<WhpptTableProps> = ({
           )}
 
           <tbody>
-            {internalItems.length ? (
-              internalItems.map((item, index: number) => (
+            {items.length ? (
+              items.map((item, index: number) => (
                 <tr key={index}>
-                  {Object.values(item).map(
-                    (value: string | number, index: number) => (
-                      <td key={index}>{value}</td>
-                    )
+                  {actions && actions.length && (
+                    <td
+                      key={`${index}-actions`}
+                      className="whppt-table__actions"
+                    >
+                      {actions.map((action) => (
+                        <div>
+                          {(!action.show || action.show(item)) && (
+                            <button
+                              className="whppt-table__action"
+                              onClick={() => action.action(item)}
+                            >
+                              <WhpptIcon is={action.icon} />
+                              {action.info && (
+                                <div className="whppt-table__action--info">
+                                  {action.info}
+                                </div>
+                              )}
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </td>
                   )}
+
+                  {headers.map((header, _index) => (
+                    <td key={_index}>{item[header.value]}</td>
+                  ))}
                 </tr>
               ))
             ) : (
