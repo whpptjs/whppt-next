@@ -15,6 +15,7 @@ type WhpptTableProps = {
   page: number;
   total: number;
   setCurrentPage: (page: any) => void;
+  setPerPage: (page: any) => void;
 };
 
 export const WhpptTable: FC<WhpptTableProps> = ({
@@ -29,6 +30,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
   page,
   total,
   setCurrentPage,
+  setPerPage,
   actions,
 }) => {
   const tableContainerHeight =
@@ -88,6 +90,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                       dark={true}
                       direction={'down'}
                       changePage={setCurrentPage}
+                      setPerPage={setPerPage}
                     />
                   </div>
                 </td>

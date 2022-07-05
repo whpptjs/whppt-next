@@ -10,6 +10,7 @@ type WhpptPagintionProps = {
   dark: boolean;
   direction?: 'up' | 'down';
   changePage: (page: any) => any;
+  setPerPage: (page: any) => any;
 }
 
 export const WhpptPagination: FC<WhpptPagintionProps> = ({
@@ -19,7 +20,8 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
   perPageItems,
   dark,
   direction,
-  changePage
+  changePage,
+  setPerPage
 }) => {
 
   const firstNumber = page * perPage - perPage + 1;
@@ -28,6 +30,10 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
 
   const handleClick = (newPage) => {
     changePage(newPage);
+  }
+
+  const handlePerPageChange = (page) => {
+    setPerPage(page.text);
   }
 
   return (
@@ -39,7 +45,7 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
             label={''}
             value={perPage}
             items={perPageItems}
-            onChange={() => console.log('select')}
+            onChange={handlePerPageChange}
             direction={direction}
           />
         </div>

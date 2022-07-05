@@ -23,7 +23,7 @@ export const Redirects: FC<WhpptTab> = () => {
   const [newRedirectName, setNewRedirectName] = useState('');
   const [newFromDomain, setNewFromDomain] = useState('');
   const [newToDomain, setNewToDomain] = useState('');
-
+  const [perPage, setPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -140,10 +140,11 @@ export const Redirects: FC<WhpptTab> = () => {
           hideFooters={false}
           hideHeaders={false}
           page={currentPage}
-          perPage={5}
+          perPage={perPage}
           height={''}
           fixedHeader={false}
           setCurrentPage={handlePageChange}
+          setPerPage={setPerPage}
         />
       </section>
     </form>
