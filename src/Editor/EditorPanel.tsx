@@ -18,7 +18,7 @@ export type WhpptEditorPanelArgs = {
 export type WhpptEditorPanel = FC<WhpptEditorPanelArgs>;
 
 export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
-  const { editorState, editing } = useWhppt();
+  const { editorState, editing, hideEditor } = useWhppt();
 
   return (
     <div
@@ -29,7 +29,7 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
       <div className="whppt-editor__content-wrapper">
         <div className="whppt-editor__header">
           Whppt Editor
-          <button className="whppt-editor__header--button">
+          <button className="whppt-editor__header--button" onClick={hideEditor}>
             <WhpptIcon is="close"></WhpptIcon>
           </button>
         </div>

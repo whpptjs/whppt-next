@@ -7,16 +7,15 @@ import { WhpptMainNav } from "./ui/MainNav";
 import { Api } from "./Api";
 import * as editor from "./Editor/Context";
 import * as appContext from "./App/Context";
+import * as siteContext from "./Site/Context";
 import * as pageContext from "./Page/Context";
-import * as footerContext from "./Footer/Context";
-import { Footer } from "./Models";
 
 export type WhpptAppOptions = {
-  children: ReactElement[];
+  children: ReactElement[] | ReactElement;
   editors: WhpptAppEditorsArg;
   error: (error: Error) => ReactElement;
-  initNav?: (nav: any) => void;
-  initFooter?: (footer: Footer) => void;
+  initNav?: (nav: any) => any;
+  initFooter?: (footer: any) => any;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
@@ -24,7 +23,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   children,
   editors,
   error,
-  // initNav,
+  initNav,
   initFooter,
 }) => {
   const [lightMode, setLightMode] = useState(false);
@@ -40,7 +39,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [pageSettings, setPageSettings] = useState(
     pageContext.defaultPageSettingsState
   );
-  const [footer, setFooter] = useState(pageContext.defaultState);
+  const [nav, setNav] = useState(siteContext.defaultNavState);
+  const [footer, setFooter] = useState(siteContext.defaultFooterState);
 
   const context = useMemo(
     () => ({
@@ -64,15 +64,33 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         pageSettings,
         setPageSettings,
       }),
-      ...footerContext.Context({ footer, setFooter, initFooter: initFooter }),
+      ...siteContext.Context({
+        nav,
+        setNav,
+        initNav,
+        footer,
+        setFooter,
+        initFooter,
+      }),
     }),
-    [editing, editorState, page, footer, domain, pageSettings, appSettings]
+    [editing, editorState, page, footer, nav, domain, pageSettings, appSettings]
   );
 
   useEffect(() => {
     context.api.app.domain
       .loadForCurrentHost()
-      .then((domain) => setDomain(domain))
+      .then((domain) => {
+        setDomain(domain);
+        return Promise.all([context.api.site.footer.load({ domain })]).then(
+          ([footer]) => {
+            setFooter({
+              ...footer,
+              content: context.initFooter(footer?.content || {}),
+            });
+            // setNav(nav);
+          }
+        );
+      })
       .catch((err) => setError(err));
   }, []);
 
