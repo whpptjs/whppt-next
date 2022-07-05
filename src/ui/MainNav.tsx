@@ -85,7 +85,10 @@ export const WhpptMainNav: FC<{
       key: 'config-settings',
       label: 'Open Config Settings',
       icon: 'globe',
-      action: toggleAppSettings,
+      action: () => {
+        togglePageSettings(false);
+        toggleAppSettings();
+      },
       isActive: appSettings.visible,
       order: 800,
       group: 'config',
@@ -107,7 +110,10 @@ export const WhpptMainNav: FC<{
       label: 'Open Page Settings',
       icon: 'page-settings',
       // action: () => this.doEditInModal('pageSettings'),
-      action: togglePageSettings,
+      action: () => {
+        toggleAppSettings(false);
+        togglePageSettings();
+      },
       isActive: pageSettings.visible,
       order: 1000,
       group: 'page',
