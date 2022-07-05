@@ -1,18 +1,29 @@
+.whppt-lightMode {
+  .whppt-table {
+    table {
+      @apply bg-whpptLightMode text-whpptDarkMode;
+    tbody {
+
+        tr {
+          @apply hover:bg-whpptLightBorder;;
+        }
+    }
+    }
+  }
+}
+
 .whppt-table {
-  width: 100%;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  @apply w-full;
 
   &__container {
     overflow: auto;
     border-radius: 0.25rem;
-    width: 100%;
+    @apply w-full;
   }
 
   &__headers--fixed {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
+    @apply absolute top-0 left-0;
+    @apply w-full;
   }
 
   &__footer {
@@ -31,27 +42,28 @@
   table {
     min-width: 100%;
     border-collapse: collapse;
-    border-style: solid;
-    border-width: 1px;
-    border-color: '#edf2f7';
-    background-color: transparent;
+    @apply border-2 border-opacity-60 border-whpptStandard bg-whpptDarkMode text-whpptLightMode rounded; 
+
 
     thead th {
       padding: 0.75rem 1.5rem;
-      border-bottom: 2px solid #edf2f7;
-      font-size: 0.75rem;
+      @apply border-b-2 border-opacity-60 border-whpptStandard;
+      @apply text-sm uppercase;
       font-weight: 600;
-      text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-
+    
     tbody {
-
+      tr {
+        @apply hover:bg-whpptDarkBorder;
+  
+      }
+      
       td {
-        border-bottom: 1px solid #edf2f7;
-        padding: 1rem 1.5rem;
+        @apply border-b-2 border-opacity-60 border-whpptStandard;
+        @apply py-4 px-6;
         white-space: nowrap;
-        font-size: 0.75rem;
+        @apply text-sm ;
       }
     }
   }
@@ -66,49 +78,14 @@
     }
   }
 
-  &--dark {
-    .whppt-table__container {
-      border-style: solid;
-      border-width: 1px;
-      border-color: #a0aec0;
-
-      table {
-        thead th {
-          border-bottom: 2px solid #edf2f7;
-          color: #edf2f7;
-        }
-
-        tbody {
-          td {
-            border-bottom: 1px solid #a0aec0;
-          }
-        }
-
-        .whppt-table__footer {
-          color: white;
-          background-color: transparent;
-
-          tr td {
-            padding: 0.75rem 1.5rem;
-          }
-        }
-      }
-
-      table thead th,
-      table tbody td {
-        color: white;
-      }
-    }
-  }
-
   &--dense {
     .whppt-table__container {
       thead th {
-        padding: 0.5rem 0.75rem;
+        @apply py-3 px-6
       }
 
       tbody td {
-        padding: 0.5rem 0.75rem;
+        @apply py-3 px-6
       }
     }
   }
