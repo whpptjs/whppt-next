@@ -1,4 +1,4 @@
-import { Site } from "src/Site/Site";
+import { Site } from 'src/Site/Site';
 
 export const defaultState = {} as Site;
 
@@ -9,7 +9,7 @@ export type SiteSettingsState = {
 
 export const defaultSiteSettingsState = {
   visible: false,
-  activeTab: "general",
+  activeTab: 'general',
 };
 
 export type SiteContextArgs = {
@@ -36,10 +36,11 @@ export const Context = ({
     site,
     setSite,
     siteSettings,
-    toggleSiteSettings: () => {
-      console.log("-------", siteSettings);
-      setSiteSettings({ ...siteSettings, visible: !siteSettings.visible });
-    },
+    toggleSiteSettings: (visible?: boolean) =>
+      setSiteSettings({
+        ...siteSettings,
+        visible: typeof visible === 'boolean' ? visible : !siteSettings.visible,
+      }),
     changeSiteSettingsActiveTab: (activeTab: string) => {
       setSiteSettings({ ...siteSettings, activeTab });
     },

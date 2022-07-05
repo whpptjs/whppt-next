@@ -37,7 +37,7 @@ export const Context = ({ domain, setDomain,appSettings,setAppSettings }: AppCon
     setDomain,
     appSettings,
     setAppSettings,
-    toggleAppSettings: () => setAppSettings({ ...appSettings, visible: !appSettings.visible }),
+    toggleAppSettings: (visible?:boolean) => setAppSettings({ ...appSettings, visible: typeof visible=== 'boolean' ? visible : !appSettings.visible }),
     changeAppSettingsActiveTab: (activeTab: string) =>setAppSettings({ ...appSettings, activeTab }),
   };
 };

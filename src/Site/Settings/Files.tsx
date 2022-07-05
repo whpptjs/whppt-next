@@ -8,20 +8,20 @@ export const Files: FC<WhpptTab> = () => {
   const headers = [
     { text: 'Name', align: 'start', value: 'name' },
     { text: 'Description', align: 'start', value: 'description' },
-    { text: 'Actions', align: 'start', value: 'actions' }
+    { text: 'Actions', align: 'start', value: 'actions' },
   ] as any;
 
   const items = [
     {
       name: 'testName.testName.testName.com',
       description: 'description 1',
-      actions: ['action1']
+      actions: ['action1'],
     },
     {
       name: 'testName.testName.testName.com',
       description: 'description 2',
-      actions: ['action2']
-    }
+      actions: ['action2'],
+    },
   ] as any;
 
   const [description, setDescription] = useState('');
@@ -29,37 +29,34 @@ export const Files: FC<WhpptTab> = () => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-  }
+  };
 
-  const selectFile = () => {
-  }
+  const selectFile = () => {};
 
-  const upload = () => {
-  }
+  const upload = () => {};
 
   return (
     <form className="whppt-form whppt-site-settings">
       <section className="whppt-form-section whppt-form-section--bottom-gap">
         <WhpptInput
-          id={"Decription"}
-          placeholder={"Enter File Description"}
-          label={"File Description"}
+          id={'Decription'}
+          placeholder={'Enter File Description'}
+          label={'File Description'}
           value={description}
           onChange={setDescription}
-          info={""}
-          error={""}
+          info={''}
+          error={''}
           type="text"
         />
 
         <div className="whppt-site-setings__actions right">
-          <WhpptButton text={"Select File"} onClick={selectFile} />
-          <WhpptButton text={"Upload"} onClick={upload} />
+          <WhpptButton text={'Select File'} onClick={selectFile} />
+          <WhpptButton text={'Upload'} onClick={upload} />
         </div>
       </section>
 
       <section className="whppt-form-section">
         <WhpptTable
-          dark={true}
           hideFooters={false}
           items={items}
           headers={headers}
@@ -74,5 +71,5 @@ export const Files: FC<WhpptTab> = () => {
         />
       </section>
     </form>
-  )
-}
+  );
+};
