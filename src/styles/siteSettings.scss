@@ -1,0 +1,39 @@
+.whppt-site-settings {
+  display: flex;
+  flex-direction: column;
+
+  &__new-redirect-input {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.whppt-site-settings__new-redirect-icon {
+  @apply w-12 h-12 flex;
+}
+
+.whppt-site-settings__new-redirect-input {
+  @apply flex items-center justify-between;
+  cursor: pointer
+}
+
+.whppt-site-setings__actions {
+  display: flex;
+  gap: 1rem;
+
+  &.right {
+    justify-content: right;
+  }
+}
+
+.whppt-site-setings__ruler {
+  margin: 1rem 0;
+}
+
+.whppt-section__domain-inputs {
+  @apply flex items-center gap-x-12;
+
+  & > * {
+    flex: 1 1 0;
+  }
+}
