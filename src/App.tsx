@@ -41,6 +41,9 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   );
   const [nav, setNav] = useState(siteContext.defaultNavState);
   const [footer, setFooter] = useState(siteContext.defaultFooterState);
+  const [siteSettings, setSiteSettings] = useState(
+    siteContext.defaultSiteSettingsState
+  );
 
   const context = useMemo(
     () => ({
@@ -65,6 +68,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         setPageSettings,
       }),
       ...siteContext.Context({
+        siteSettings,
+        setSiteSettings,
         nav,
         setNav,
         initNav,
@@ -73,7 +78,17 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         initFooter,
       }),
     }),
-    [editing, editorState, page, footer, nav, domain, pageSettings, appSettings]
+    [
+      editing,
+      editorState,
+      page,
+      footer,
+      nav,
+      domain,
+      pageSettings,
+      appSettings,
+      siteSettings,
+    ]
   );
 
   useEffect(() => {

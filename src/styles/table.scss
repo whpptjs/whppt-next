@@ -1,0 +1,99 @@
+.whppt-lightMode {
+  .whppt-table {
+    table {
+      @apply bg-whpptLightMode text-whpptDarkMode;
+    tbody {
+
+        tr {
+          @apply hover:bg-whpptLightBorder;;
+        }
+    }
+    }
+  }
+}
+
+.whppt-table {
+  @apply w-full;
+
+  &__container {
+    overflow: auto;
+    border-radius: 0.25rem;
+    @apply w-full;
+  }
+
+  &__headers--fixed {
+    @apply absolute top-0 left-0;
+    @apply w-full;
+  }
+
+  &__footer {
+    background-color: transparent;
+
+    tr td {
+      padding: 0.75rem 1.5rem;
+
+      .whppt-table__pagination {
+        width: 100%;
+        display: flex;
+      }
+    }
+  }
+
+  table {
+    min-width: 100%;
+    border-collapse: collapse;
+    @apply border-2 border-opacity-60 border-whpptStandard bg-whpptDarkMode text-whpptLightMode rounded; 
+
+
+    thead th {
+      padding: 0.75rem 1.5rem;
+      @apply border-b-2 border-opacity-60 border-whpptStandard;
+      @apply text-sm uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    
+    tbody {
+      tr {
+        @apply hover:bg-whpptDarkBorder;
+  
+      }
+      
+      td {
+        @apply border-b-2 border-opacity-60 border-whpptStandard;
+        @apply py-4 px-6;
+        white-space: nowrap;
+        @apply text-sm ;
+      }
+    }
+  }
+
+  &__header {
+    &--start {
+      text-align: left;
+    }
+
+    &--end {
+      text-align: right;
+    }
+  }
+
+  &--dense {
+    .whppt-table__container {
+      thead th {
+        @apply py-3 px-6
+      }
+
+      tbody td {
+        @apply py-3 px-6
+      }
+    }
+  }
+
+  &--no-data {
+    td {
+      padding: 2rem;
+      text-align: center;
+    }
+  }
+}

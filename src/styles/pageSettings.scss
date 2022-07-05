@@ -42,3 +42,25 @@
     }
   }
 }
+.whppt-form-heading {
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+.whppt-site-settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.whppt-site-setings__actions {
+  display: flex;
+  gap: 1rem;
+
+  &.right {
+    justify-content: right;
+  }
+}
+
+.whppt-site-setings__ruler {
+  margin: 1rem 0;
+}

@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
-import { WhpptInput } from "../../ui/components/Input";
-import { WhpptButton, WhpptTextArea, WhpptTab } from "../../ui/components";
+import { WhpptInput } from "../ui/components/Input";
+import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
 
 export const OpenGraph: FC<WhpptTab> = () => {
   const [title, setTitle] = useState("");
