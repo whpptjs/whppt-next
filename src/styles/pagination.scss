@@ -8,10 +8,6 @@
     button:nth-child(1) {
       margin-right: 0.5rem;
     }
-
-    svg {
-      color: $gray-800;
-    }
   }
 
   &--dark {
@@ -34,13 +30,13 @@
     }
   }
 
-  &__per-page {
+  &__per-page * {
+    @apply cursor-pointer;
   }
 
   &__results {
     text-align: center;
     width: 8rem;
     margin: 0 0.5rem;
-    color: $gray-800;
   }
 }

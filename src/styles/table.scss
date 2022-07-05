@@ -16,7 +16,7 @@
   @apply w-full;
 
   &__container {
-    overflow: auto;
+    overflow: visible;
     border-radius: 0.25rem;
     @apply w-full;
   }

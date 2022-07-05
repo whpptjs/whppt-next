@@ -3,13 +3,13 @@ import { WhpptIcon } from './Icon';
 import { WhpptSelect } from '../../ui/components/Select';
 
 type WhpptPagintionProps = {
-  page: number
-  total: number
-  perPage: number
-  perPageItems: any[]
-  dark: boolean
-  direction?: 'up' | 'down'
-  changePage: (page: any) => any
+  page: number;
+  total: number;
+  perPage: number;
+  perPageItems: any[];
+  dark: boolean;
+  direction?: 'up' | 'down';
+  changePage: (page: any) => any;
 }
 
 export const WhpptPagination: FC<WhpptPagintionProps> = ({
@@ -34,14 +34,14 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
     <div className={`whppt-pagination ${dark ? 'whppt-pagination--dark' : ''}`}>
       <div className="whppt-pagination__per-page">
         <div className="whppt-pagination__per-page-select">
-        <WhpptSelect
-          id={''}
-          label={''}
-          value={perPage}
-          items={perPageItems}
-          onChange={() => console.log('select')}
-          direction={direction}
-        />
+          <WhpptSelect
+            id={''}
+            label={''}
+            value={perPage}
+            items={perPageItems}
+            onChange={() => console.log('select')}
+            direction={direction}
+          />
         </div>
       </div>
 

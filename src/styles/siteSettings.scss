@@ -9,7 +9,15 @@
 }
 
 .whppt-site-settings__new-redirect-icon {
-  @apply w-12 h-12 flex;
+  @apply w-12 h-12 flex transition-transform ease-in-out delay-150;
+
+  &.up {
+    @apply transform rotate-180;
+  }
+
+  &.down {
+    @apply transform rotate-0;
+  }
 }
 
 .whppt-site-settings__new-redirect-input {

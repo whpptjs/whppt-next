@@ -31,6 +31,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
   const tableContainerHeight =
     typeof height === 'number' ? `${height}px` : height;
   const [internalItems, setInternalItems] = useState([]);
+  const perPageItems = [{ text: '5'}, { text: '10'}, { text: '25'}, { text: '50'}, { text: '100'}];
 
   useEffect(() => {
     const headersValues = headers.map((h) => h.value);
@@ -84,7 +85,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     <WhpptPagination
                       page={page}
                       perPage={perPage}
-                      perPageItems={[5, 10, 25, 50, 100]}
+                      perPageItems={perPageItems}
                       total={total}
                       dark={true}
                       direction={'down'}
