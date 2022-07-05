@@ -10,10 +10,6 @@ export const WhpptEditDomain: FC<{ domain: Domain; callback: () => void }> = ({
   const { api } = useWhppt();
 
   const [domainToEdit, setDomain] = useState(domain);
-  console.log(
-    '🚀 ~ file: WhpptEditDomain.tsx ~ line 13 ~ domainToEdit',
-    domainToEdit
-  );
 
   const save = () => {
     api.app.domain.save(domainToEdit).then(() => {
