@@ -18,7 +18,7 @@ export const WhpptMainNav: FC<{
     siteSettings,
     togglePageSettings,
     toggleAppSettings,
-    toggleSiteSettings
+    toggleSiteSettings,
   } = useWhppt();
 
   const items = [
@@ -86,6 +86,7 @@ export const WhpptMainNav: FC<{
       label: 'Open Config Settings',
       icon: 'globe',
       action: () => {
+        toggleSiteSettings(false);
         togglePageSettings(false);
         toggleAppSettings();
       },
@@ -100,7 +101,11 @@ export const WhpptMainNav: FC<{
       icon: 'settings',
       // action: () => this.doEditInModal('siteSettings'),
       isActive: siteSettings.visible,
-      action: toggleSiteSettings,
+      action: () => {
+        toggleAppSettings(false);
+        togglePageSettings(false);
+        toggleSiteSettings();
+      },
       order: 900,
       group: 'site',
       groupOrder: 300,
@@ -112,6 +117,7 @@ export const WhpptMainNav: FC<{
       // action: () => this.doEditInModal('pageSettings'),
       action: () => {
         toggleAppSettings(false);
+        toggleSiteSettings(false);
         togglePageSettings();
       },
       isActive: pageSettings.visible,
