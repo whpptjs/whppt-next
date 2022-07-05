@@ -47,7 +47,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
     });
 
     setInternalItems(internalItems);
-  }, items);
+  }, [items]);
 
   return (
     <div className={`whppt-table ${dark ? 'whppt-table--dark' : ''} ${dense ? 'whppt-table--dense': ''}`}>
