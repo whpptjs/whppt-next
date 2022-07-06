@@ -39,6 +39,13 @@ export const Context = ({
       setEditing(!editing);
     },
     editorState,
+    hideEditor: () => {
+      setEditorState({
+        editor: "",
+        onChange: () => {},
+        value: undefined,
+      });
+    },
     showEditor: (
       editor: string,
       value: any,
