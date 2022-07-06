@@ -14,6 +14,7 @@ export const DomainsList: FC<{ domains: Domain[]; requery: () => void }> = ({
   ] as any;
   const [currentPage, setCurrentPage] = useState(1);
   const [editDomain, setEditDomain] = useState({} as Domain);
+  const [perPage, setPerPage] = useState(5);
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -36,10 +37,11 @@ export const DomainsList: FC<{ domains: Domain[]; requery: () => void }> = ({
           hideFooters={false}
           hideHeaders={false}
           page={currentPage}
-          perPage={5}
+          perPage={perPage}
           height={''}
           fixedHeader={false}
           setCurrentPage={handlePageChange}
+          setPerPage={setPerPage}
           actions={[
             {
               icon: 'edit',

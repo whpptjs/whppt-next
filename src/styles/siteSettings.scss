@@ -1,0 +1,43 @@
+.whppt-site-settings {
+  @apply flex flex-col;
+
+  &__new-redirect-input {
+    @apply flex items-center;
+  }
+}
+
+.whppt-site-settings__new-redirect-icon {
+  @apply w-12 h-12 flex transition-transform ease-out;
+
+  &.up {
+    @apply transform rotate-180;
+  }
+
+  &.down {
+    @apply transform rotate-0;
+  }
+}
+
+.whppt-site-settings__new-redirect-input {
+  @apply flex items-center justify-between cursor-pointer;
+}
+
+.whppt-site-setings__actions {
+  @apply flex gap-4;
+
+  &.right {
+    @apply justify-end;
+  }
+}
+
+.whppt-site-setings__ruler {
+  margin: 1rem 0;
+}
+
+.whppt-section__domain-inputs {
+  @apply flex items-center gap-x-12;
+
+  & > * {
+    flex: 1 1 0;
+  }
+}
