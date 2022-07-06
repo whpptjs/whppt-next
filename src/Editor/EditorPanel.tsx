@@ -6,12 +6,12 @@ export type WhpptAppEditorsArg = ({
   editor,
   value,
   onChange,
-  initalValue,
+  options,
 }: {
   editor: string;
   value: any;
   onChange: (value: any) => void;
-  initalValue?: any;
+  options?: any;
 }) => ReactElement;
 
 export type WhpptEditorPanelArgs = {

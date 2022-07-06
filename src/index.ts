@@ -11,5 +11,5 @@ export * from "./editors/List";
 export type WhpptEditorArgs = {
   value: any | string;
   onChange: (value: any | string) => void;
-  initalValue?: any;
+  options?: any;
 };

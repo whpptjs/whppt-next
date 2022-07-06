@@ -1,21 +1,18 @@
 import React, { FC, ReactElement } from 'react';
+import { ListEditorOptions } from '../editors/List';
 import { useWhppt } from '../Context';
-export * from './ListEditor';
-export * from './RichTextEditor';
-export * from './PlainTextEditor';
-export * from './FormattedTextEditor';
 
-export const Editor: FC<{
-  is: string;
+export const ListEditor: FC<{
   value: any;
   onChange: (value: any) => void;
+  options: ListEditorOptions;
   children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
-}> = ({ children, is, value, onChange }) => {
+}> = ({ children, value, options, onChange }) => {
   const { editing, showEditor } = useWhppt();
   return (
     <div
       className="whppt-editor-selector"
-      onClick={() => showEditor(is, value, onChange, undefined)}
+      onClick={() => showEditor('list', value, onChange, options)}
     >
       {children({ isEditing: editing })}
     </div>
