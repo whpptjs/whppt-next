@@ -113,19 +113,29 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
     <div>
       <Whppt.Provider value={context}>
         <div className={`whppt-app ${lightMode ? "whppt-lightMode" : ""}`}>
-          <WhpptMainNav
-            lightMode={lightMode}
-            showFullNav={showFullNav}
-            setLightMode={() => setLightMode(!lightMode)}
-            setShowFullNav={() => setShowFullNav(!showFullNav)}
-          />
-          <SettingsPanel showFullNav={showFullNav} />
+          {process.env.NEXT_PUBLIC_DRAFT === "true" ? (
+            <>
+              <WhpptMainNav
+                lightMode={lightMode}
+                showFullNav={showFullNav}
+                setLightMode={() => setLightMode(!lightMode)}
+                setShowFullNav={() => setShowFullNav(!showFullNav)}
+              />
+              <SettingsPanel showFullNav={showFullNav} />
+            </>
+          ) : (
+            <></>
+          )}
           {errorState ? (
             error(errorState)
           ) : (
             <div className="whppt-app__content">
               <div>{children}</div>
-              <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
+              {process.env.NEXT_PUBLIC_DRAFT === "true" ? (
+                <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
+              ) : (
+                <></>
+              )}
             </div>
           )}
         </div>
