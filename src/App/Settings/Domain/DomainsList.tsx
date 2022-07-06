@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Domain } from 'src/App/Model';
+import { Domain } from '../../Model';
 import { useWhppt } from '../../../Context';
 import { WhpptTable } from '../../../ui/components';
 import { WhpptEditDomain } from './WhpptEditDomain';
@@ -10,7 +10,7 @@ export const DomainsList: FC<{ domains: Domain[]; requery: () => void }> = ({
 }) => {
   const headers = [
     { text: 'Name', align: 'start', value: 'name' },
-    { text: 'Hosts', align: 'start', value: 'hostNames' },
+    { text: 'Hosts', align: 'start', value: 'hostNameValue' },
   ] as any;
   const [currentPage, setCurrentPage] = useState(1);
   const [editDomain, setEditDomain] = useState({} as Domain);

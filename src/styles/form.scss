@@ -1,0 +1,55 @@
+.whppt-form{
+    &-actions{
+        @apply flex;
+        &--action{
+            @apply mr-2
+        }
+    }
+}
+.whppt-lightMode {
+    .whppt-form {
+      &-section{
+        @apply bg-whpptLightMode;
+      }
+    }
+}
+    
+.whppt-form {
+    @apply flex px-10 py-2;
+    display: flex;
+    gap: 1rem;
+    &-split {
+    display: flex;
+    gap: 1rem;
+    &--even{
+        @apply w-1/2
+    }
+    }
+
+    &-section{
+        @apply px-6 py-4 bg-whpptDarkMode;
+        &--bottom-gap{
+            @apply mb-5
+        }
+    }
+
+
+    .whppt-form-slug-placeholder {
+        height: 52px;
+        display: flex;
+        align-items: center;
+    }
+
+    &-page-settings{
+        &__actions{
+            @apply flex flex-col w-2/12;
+        }
+        &__form{
+            @apply w-6/12
+        }
+    }
+}
+.whppt-form-heading {
+    font-weight: bold;
+    font-size: 2.5rem;
+}

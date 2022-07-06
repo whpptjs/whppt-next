@@ -1,5 +1,7 @@
 import React, { FC, useState } from 'react';
-import { Domain } from '../../../App/Model';
+import { Formik } from 'formik';
+
+import { Domain } from '../../Model';
 import { useWhppt } from '../../../Context';
 import { WhpptInput, WhpptButton } from '../../../ui/components';
 
@@ -8,60 +10,92 @@ export const WhpptEditDomain: FC<{ domain: Domain; callback: () => void }> = ({
   callback,
 }) => {
   const { api } = useWhppt();
+  const getValue = () => {
+    return (domain.hostNames && domain.hostNames.join(',')) || '';
+  };
 
-  const [domainToEdit, setDomain] = useState(domain);
+  const [domainToEdit] = useState({
+    ...domain,
+    hostNames: getValue(),
+  });
 
-  const save = () => {
-    api.app.domain.save(domainToEdit).then(() => {
-      setDomain({} as Domain);
+  const save = (domain: Domain) => {
+    return api.app.domain.save(domain).then(() => {
       callback();
     });
   };
-  const getValue = () => {
-    return domainToEdit.hostNames && domainToEdit.hostNames.join(',');
-  };
   return (
     <section className="whppt-form-section whppt-form-section--bottom-gap">
-      <form>
-        <h4>Edit domain</h4>
-        <div className="whppt-form-split">
-          <div className="whppt-form-split--even">
-            <WhpptInput
-              value={domainToEdit.name}
-              onChange={(name: string) => {
-                setDomain({ ...domainToEdit, name });
-              }}
-              id={'editDomainName'}
-              label={'Name'}
-              info={''}
-              error={''}
-              type={'text'}
-            />
-          </div>
-          <div className="whppt-form-split--even">
-            <WhpptInput
-              value={getValue()}
-              onChange={(hostNames: string) => {
-                setDomain({
-                  ...domainToEdit,
-                  hostNames: hostNames.split(',').map((h) => h.trim()),
-                });
-              }}
-              id={'editDomainhostnames'}
-              label={'Host names'}
-              info={
-                'Comma seperate items without the www eg: whppt.com,sveltestudios.com'
-              }
-              error={''}
-              type={'text'}
-            />
-          </div>
-        </div>
-        <div>
-          <WhpptButton text="Save" icon="save" onClick={save} />
-          <WhpptButton text="Cancel" onClick={callback} />
-        </div>
-      </form>
+      <Formik
+        initialValues={domainToEdit}
+        validate={(values) => {
+          const errors = {} as any;
+          if (!values.name) {
+            errors.name = 'Required';
+          }
+          if (!values.hostNames) {
+            errors.hostNames = 'Required';
+          }
+          return errors;
+        }}
+        onSubmit={(values, { resetForm }) => {
+          save({
+            ...values,
+            hostNames: values.hostNames.split(',').map((h) => h.trim()),
+          }).then(() => {
+            resetForm();
+          });
+        }}
+      >
+        {(props) => (
+          <form onSubmit={props.handleSubmit}>
+            <h4>Edit domain</h4>
+            <div className="whppt-form-split">
+              <div className="whppt-form-split--even">
+                <WhpptInput
+                  value={props.values.name}
+                  onChangeEvent={props.handleChange}
+                  onChange={() => {}}
+                  id={'newDomainName'}
+                  label={'Name'}
+                  info={''}
+                  error={props.errors.name}
+                  type={'text'}
+                  name="name"
+                />
+              </div>
+              <div className="whppt-form-split--even">
+                <WhpptInput
+                  value={props.values.hostNames}
+                  onChangeEvent={props.handleChange}
+                  onChange={() => {}}
+                  id={'newDomainhostnames'}
+                  label={'Host names'}
+                  info={
+                    'Comma seperate items without the www eg: whppt.com,sveltestudios.com'
+                  }
+                  error={props.errors.hostNames}
+                  type={'text'}
+                  name="hostNames"
+                />
+              </div>
+            </div>
+            <div className="form-actions">
+              <div className="form-actions--action">
+                <WhpptButton
+                  type="submit"
+                  text="Save"
+                  icon="save"
+                  onClick={() => props.handleSubmit}
+                />
+              </div>
+              <div>
+                <WhpptButton text="Cancel" onClick={callback} />
+              </div>
+            </div>
+          </form>
+        )}
+      </Formik>
     </section>
   );
 };
