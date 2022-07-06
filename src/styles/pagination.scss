@@ -1,6 +1,5 @@
 .whppt-pagination {
-  display: flex;
-  align-items: center;
+  @apply flex items-center;
 
   &__buttons {
     display: flex;

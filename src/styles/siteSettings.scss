@@ -1,10 +1,8 @@
 .whppt-site-settings {
-  display: flex;
-  flex-direction: column;
+  @apply flex flex-col;
 
   &__new-redirect-input {
-    display: flex;
-    align-items: center;
+    @apply flex items-center;
   }
 }
 
@@ -21,16 +19,14 @@
 }
 
 .whppt-site-settings__new-redirect-input {
-  @apply flex items-center justify-between;
-  cursor: pointer
+  @apply flex items-center justify-between cursor-pointer;
 }
 
 .whppt-site-setings__actions {
-  display: flex;
-  gap: 1rem;
+  @apply flex gap-4;
 
   &.right {
-    justify-content: right;
+    @apply justify-end;
   }
 }
 
