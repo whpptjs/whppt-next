@@ -1,23 +1,21 @@
-import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
-import { Whppt } from './Context';
-import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
-import { WhpptEditorPanel } from './Editor/EditorPanel';
-import { SettingsPanel } from './ui/SettingsPanel';
-import { WhpptMainNav } from './ui/MainNav';
-import { Api } from './Api';
-import * as editor from './Editor/Context';
-import * as appContext from './App/Context';
-import * as pageContext from './Page/Context';
-import * as footerContext from './Footer/Context';
+import React, { FC, ReactElement, useEffect, useMemo, useState } from "react";
+import { Whppt } from "./Context";
+import type { WhpptAppEditorsArg } from "./Editor/EditorPanel";
+import { WhpptEditorPanel } from "./Editor/EditorPanel";
+import { SettingsPanel } from "./ui/SettingsPanel";
+import { WhpptMainNav } from "./ui/MainNav";
+import { Api } from "./Api";
+import * as editor from "./Editor/Context";
+import * as appContext from "./App/Context";
 import * as siteContext from "./Site/Context";
-import { Footer } from './Models';
+import * as pageContext from "./Page/Context";
 
 export type WhpptAppOptions = {
-  children: ReactElement[];
+  children: ReactElement[] | ReactElement;
   editors: WhpptAppEditorsArg;
   error: (error: Error) => ReactElement;
-  initNav?: (nav: any) => void;
-  initFooter?: (footer: Footer) => void;
+  initNav?: (nav: any) => any;
+  initFooter?: (footer: any) => any;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
@@ -25,7 +23,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   children,
   editors,
   error,
-  // initNav,
+  initNav,
   initFooter,
 }) => {
   const [lightMode, setLightMode] = useState(false);
@@ -41,9 +39,11 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [pageSettings, setPageSettings] = useState(
     pageContext.defaultPageSettingsState
   );
-  const [footer, setFooter] = useState(pageContext.defaultState);
-  const [site, setSite] = useState(siteContext.defaultState);
-  const [siteSettings, setSiteSettings] = useState(siteContext.defaultSiteSettingsState);
+  const [nav, setNav] = useState(siteContext.defaultNavState);
+  const [footer, setFooter] = useState(siteContext.defaultFooterState);
+  const [siteSettings, setSiteSettings] = useState(
+    siteContext.defaultSiteSettingsState
+  );
 
   const context = useMemo(
     () => ({
@@ -67,41 +67,75 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         pageSettings,
         setPageSettings,
       }),
-      ...footerContext.Context({ footer, setFooter, initFooter: initFooter }),
       ...siteContext.Context({
-        site,
-        setSite,
         siteSettings,
         setSiteSettings,
-      })
+        nav,
+        setNav,
+        initNav,
+        footer,
+        setFooter,
+        initFooter,
+      }),
     }),
-    [editing, editorState, page, footer, domain, pageSettings, appSettings, siteSettings]
+    [
+      editing,
+      editorState,
+      page,
+      footer,
+      nav,
+      domain,
+      pageSettings,
+      appSettings,
+      siteSettings,
+    ]
   );
 
   useEffect(() => {
     context.api.app.domain
       .loadForCurrentHost()
-      .then((domain) => setDomain(domain))
+      .then((domain) => {
+        setDomain(domain);
+        return Promise.all([context.api.site.footer.load({ domain })]).then(
+          ([footer]) => {
+            setFooter({
+              ...footer,
+              content: context.initFooter(footer?.content || {}),
+            });
+            // setNav(nav);
+          }
+        );
+      })
       .catch((err) => setError(err));
   }, []);
 
   return (
     <div>
       <Whppt.Provider value={context}>
-        <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
-          <WhpptMainNav
-            lightMode={lightMode}
-            showFullNav={showFullNav}
-            setLightMode={() => setLightMode(!lightMode)}
-            setShowFullNav={() => setShowFullNav(!showFullNav)}
-          />
-          <SettingsPanel showFullNav={showFullNav} />
+        <div className={`whppt-app ${lightMode ? "whppt-lightMode" : ""}`}>
+          {process.env.NEXT_PUBLIC_DRAFT === "true" ? (
+            <>
+              <WhpptMainNav
+                lightMode={lightMode}
+                showFullNav={showFullNav}
+                setLightMode={() => setLightMode(!lightMode)}
+                setShowFullNav={() => setShowFullNav(!showFullNav)}
+              />
+              <SettingsPanel showFullNav={showFullNav} />
+            </>
+          ) : (
+            <></>
+          )}
           {errorState ? (
             error(errorState)
           ) : (
             <div className="whppt-app__content">
               <div>{children}</div>
-              <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
+              {process.env.NEXT_PUBLIC_DRAFT === "true" ? (
+                <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
+              ) : (
+                <></>
+              )}
             </div>
           )}
         </div>
