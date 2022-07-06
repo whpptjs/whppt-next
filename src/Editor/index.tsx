@@ -9,7 +9,6 @@ export const Editor: FC<{
   children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
 }> = ({ children, is, value, initalValue, onChange }) => {
   const { editing, showEditor } = useWhppt();
-  console.log('🚀 ~ file: index.tsx ~ line 11 ~ initalValue', initalValue);
   return (
     <div
       className="whppt-editor-selector"

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useId } from 'react';
 import { WhpptIcon } from './Icon';
 import { WhpptPagination } from './Pagination';
 
@@ -33,6 +33,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
   setPerPage,
   actions,
 }) => {
+  const tableId = useId();
   const tableContainerHeight =
     typeof height === 'number' ? `${height}px` : height;
     const perPageItems = [{ text: '5'}, { text: '10'}, { text: '25'}, { text: '50'}, { text: '100'}];
@@ -68,7 +69,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     className={
                       header.align ? `whppt-table__header--${header.align}` : ''
                     }
-                    key={index}
+                    key={`header_${tableId}_${index}`}
                   >
                     {header.text}
                   </th>
@@ -101,14 +102,14 @@ export const WhpptTable: FC<WhpptTableProps> = ({
           <tbody>
             {items.length ? (
               items.map((item, index: number) => (
-                <tr key={index}>
+                <tr key={`${tableId}_${index}_row`}>
                   {actions && actions.length && (
                     <td
-                      key={`${index}-actions`}
+                      key={`${tableId}_${index}-actions`}
                       className="whppt-table__actions"
                     >
-                      {actions.map((action) => (
-                        <div>
+                      {actions.map((action, actionIndex) => (
+                        <div key={`${tableId}_${actionIndex}_action`}>
                           {(!action.show || action.show(item)) && (
                             <button
                               className="whppt-table__action"
@@ -128,7 +129,9 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                   )}
 
                   {headers.map((header, _index) => (
-                    <td key={_index}>{item[header.value]}</td>
+                    <td key={`${tableId}_value_${_index}`}>
+                      {item[header.value]}
+                    </td>
                   ))}
                 </tr>
               ))

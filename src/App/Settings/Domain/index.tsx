@@ -11,7 +11,12 @@ export const Domain: FC<WhpptTab> = () => {
 
   useEffect(() => {
     api.app.domain.list().then((domains) => {
-      setDomains(domains);
+      setDomains(
+        domains.map((d) => ({
+          ...d,
+          hostNameValue: d.hostNames && d.hostNames.join(', '),
+        }))
+      );
     });
     // .catch((err) => setError(err));
   }, []);
