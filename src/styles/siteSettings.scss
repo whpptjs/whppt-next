@@ -9,7 +9,7 @@
 }
 
 .whppt-site-settings__new-redirect-icon {
-  @apply w-12 h-12 flex transition-transform ease-in-out delay-150;
+  @apply w-12 h-12 flex transition-transform ease-out;
 
   &.up {
     @apply transform rotate-180;
