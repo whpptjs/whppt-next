@@ -1,15 +1,17 @@
-import React, { FC, ReactElement } from "react";
-import { WhpptIcon } from "../ui/components/Icon";
-import { useWhppt } from "../Context";
+import React, { FC, ReactElement } from 'react';
+import { WhpptIcon } from '../ui/components/Icon';
+import { useWhppt } from '../Context';
 
 export type WhpptAppEditorsArg = ({
   editor,
   value,
   onChange,
+  initalValue,
 }: {
   editor: string;
   value: any;
   onChange: (value: any) => void;
+  initalValue?: any;
 }) => ReactElement;
 
 export type WhpptEditorPanelArgs = {
@@ -23,7 +25,7 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
   return (
     <div
       className={`whppt-editor ${
-        editorState.editor && editing ? "whppt-editor--active" : ""
+        editorState.editor && editing ? 'whppt-editor--active' : ''
       }`}
     >
       <div className="whppt-editor__content-wrapper">
