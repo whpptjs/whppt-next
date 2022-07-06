@@ -8,6 +8,8 @@ export type WhpptInputArgs = WhpptEditorArgs & {
   error: string;
   type: 'text' | 'number' | 'checkbox';
   placeholder?: string;
+  name?: string;
+  onChangeEvent?: (event) => void;
 };
 
 export const WhpptInput: FC<WhpptInputArgs> = ({
@@ -19,6 +21,8 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
   placeholder,
   value,
   onChange,
+  name,
+  onChangeEvent,
 }) => {
   const _value = `${value}`;
   return (
@@ -31,7 +35,11 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
           type={type}
           value={_value}
           placeholder={placeholder || ''}
-          onChange={(e) => onChange(e.target.value)}
+          name={name}
+          onChange={(e) => {
+            if (onChangeEvent) return onChangeEvent(e);
+            onChange(e.target.value);
+          }}
         ></input>
       </div>
       <p className="whppt-input-info">{info}</p>
