@@ -7,7 +7,7 @@ export type PageApiConstructor = ({ http }: { http: WhpptHttp }) => PageApi;
 export const PageApi: PageApiConstructor = ({ http }) => {
   return {
     loadFromSlug: (slug) => {
-      return http.secure.getJson<PageData>({ path: slug });
+      return http.secure.getJson<PageData>({ path: `/page/load?slug=${slug}` });
     },
     delete(page: PageData) {
       return http.secure.postJson({
