@@ -19,7 +19,7 @@ export type SiteContextArgs<N, F> = {
 };
 
 export const defaultArgs = {
-  nav: {},
+  nav: { domainId: "" },
   setNav: () => {},
   initNav: () => ({}),
   footer: { domainId: "" },
