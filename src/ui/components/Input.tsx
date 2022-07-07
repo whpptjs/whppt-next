@@ -6,7 +6,7 @@ export type WhpptInputArgs = WhpptEditorArgs & {
   label: string;
   info: string;
   error: string;
-  type: 'text' | 'number' | 'checkbox';
+  type: 'text' | 'number' | 'file';
   placeholder?: string;
   name?: string;
   onChangeEvent?: (event) => void;
