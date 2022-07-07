@@ -1,13 +1,21 @@
-import React, { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { ListEditorOptions } from "../editors/List";
 import { useWhppt } from "../Context";
 
-export const ListEditor: FC<{
-  value: any;
-  onChange: (value: any) => void;
-  addNew: <T>() => T;
+export type ListEditorProps<T extends object> = {
+  value: T[];
+  onChange: (value: T[]) => void;
+  addNew: () => T;
+  displayName?: (item: T) => string;
   children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
-}> = ({ children, value, addNew, onChange }) => {
+};
+
+export const ListEditor = <T extends object>({
+  children,
+  value,
+  addNew,
+  onChange,
+}: ListEditorProps<T>) => {
   const { editing, showEditor } = useWhppt();
   const options = { addNew } as ListEditorOptions;
   return (

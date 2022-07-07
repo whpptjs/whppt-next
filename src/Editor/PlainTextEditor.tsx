@@ -5,11 +5,11 @@ import { useWhppt } from "../Context";
 export const PlainTextEditor: FC<{
   value: any;
   onChange: (value: any) => void;
-  label: string;
+  label?: string;
   children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
 }> = ({ children, value, label, onChange }) => {
   const { editing, showEditor } = useWhppt();
-  const options = { label } as BasicEditorOptions;
+  const options = { label: label || "Plain Text" } as BasicEditorOptions;
   return (
     <div
       className="whppt-editor-selector"
