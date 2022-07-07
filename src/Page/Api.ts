@@ -1,4 +1,4 @@
-import { PageData } from "./Page";
+import { PageData } from "./Model/Page";
 import { WhpptHttp } from "../Api/Http";
 
 export type PageApi = { loadFromSlug: (slug: string) => Promise<PageData> };
@@ -8,6 +8,12 @@ export const PageApi: PageApiConstructor = ({ http }) => {
   return {
     loadFromSlug: (slug) => {
       return http.secure.getJson<PageData>({ path: slug });
+    },
+    delete(page: PageData) {
+      return http.secure.postJson({
+        path: "/page/deletePage",
+        data: { _id: page._id },
+      });
     },
   };
 };

@@ -1,4 +1,4 @@
-import { PageData } from "src/Page/Page";
+import { PageData } from "src/Page/Model/Page";
 
 export const defaultState = {} as PageData;
 
@@ -20,7 +20,7 @@ export type PageContextArgs = {
 };
 
 export const defaultArgs = {
-  page: { seo: "" },
+  page: { _id: "" },
   setPage: () => {},
   pageSettings: defaultPageSettingsState,
   setPageSettings: () => {},

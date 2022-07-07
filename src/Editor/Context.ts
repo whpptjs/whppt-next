@@ -2,7 +2,7 @@ export type EditorState = {
   editor: string;
   value: any;
   onChange: (value: any) => void;
-  options?:any
+  options:any
 };
 
 export const defaultState = {
@@ -34,8 +34,8 @@ export const Context = ({
 }: EditorContextArgs) => {
   return {
     editing,
-    toggleEditing: () => {
-      setEditing(!editing);
+    toggleEditing: (value?:boolean) => {
+      setEditing( value === undefined ? !editing: value);
     },
     editorState,
     hideEditor: () => {
@@ -43,13 +43,14 @@ export const Context = ({
         editor: "",
         onChange: () => {},
         value: undefined,
+        options:undefined
       });
     },
     showEditor: (
       editor: string,
       value: any,
       onChange: (value: any) => void,
-      options?:any
+      options:any
     ) => {
       // if (!editing) return;
       const internalOnChange = (changedValue: any) => {

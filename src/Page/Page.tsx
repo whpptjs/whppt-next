@@ -2,10 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { useWhppt } from "../Context";
-
-export type PageData = { seo: string };
-
-export const PageData = (values) => values as PageData;
+import { PageData } from "./Model/Page";
 
 export type WhpptPageProps<T extends PageData> = {
   children: ({
