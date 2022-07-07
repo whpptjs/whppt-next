@@ -2,15 +2,14 @@ export type EditorState = {
   editor: string;
   value: any;
   onChange: (value: any) => void;
-  initalValue?:any
-
+  options?:any
 };
 
 export const defaultState = {
   editor: "",
   value: {},
   onChange: () => {},
-  initalValue:{}
+  options:{}
 } as EditorState;
 
 export type EditorContextArgs = {
@@ -50,7 +49,7 @@ export const Context = ({
       editor: string,
       value: any,
       onChange: (value: any) => void,
-      initalValue?:any
+      options?:any
     ) => {
       // if (!editing) return;
       const internalOnChange = (changedValue: any) => {
@@ -58,7 +57,7 @@ export const Context = ({
           editor,
           onChange: internalOnChange,
           value: changedValue,
-          initalValue
+          options
         });
         onChange(changedValue);
       };
@@ -67,7 +66,7 @@ export const Context = ({
         editor,
         value,
         onChange: internalOnChange,
-        initalValue
+        options
       });
     },
   };

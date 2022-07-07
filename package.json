@@ -26,7 +26,7 @@
     "test": "jest",
     "watch": "run-p watch:*",
     "watch:js": "rm -rf dist && rm -rf types && tsc --watch",
-    "watch:css": "postcss src/styles/index.scss -o styles/base.css -w",
+    "watch:css": "rm -rf styles && postcss src/styles/index.scss -o styles/base.css -w",
     "build": "run-p build:*",
     "build:js": "rm -rf dist && rm -rf types && tsc",
     "build:css": "NODE_ENV=production postcss src/styles/index.scss -o styles/base.css",
@@ -40,6 +40,7 @@
     "@tiptap/react": "^2.0.0-beta.113",
     "@tiptap/starter-kit": "^2.0.0-beta.189",
     "formik": "^2.2.9",
+    "nanoid": "^4.0.0",
     "postcss": "^8.4.14",
     "postcss-cli": "^9.1.0",
     "react": "^18.2.0"

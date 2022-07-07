@@ -1,4 +1,5 @@
 export type Nav<T> = {
-  content?: T;
+  domainId: string;
   lastModiefied?: Date;
+  content?: T;
 };
