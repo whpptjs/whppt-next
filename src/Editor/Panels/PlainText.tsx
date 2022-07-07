@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { WhpptInput } from '../ui/components/Input';
-import { WhpptEditorArgs } from '..';
+import { WhpptInput } from '../../ui/components';
+import { WhpptEditorArgs } from '../EditorArgs';
 
 export type BasicEditorOptions = {
   label: string;

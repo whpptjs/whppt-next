@@ -23,6 +23,8 @@ export const WhpptMainNav: FC<{
     api,
     toggleSiteSettings,
     showEditor,
+    editorState,
+    hideEditor,
   } = useWhppt();
 
   const items = [
@@ -30,7 +32,13 @@ export const WhpptMainNav: FC<{
       key: 'select',
       label: 'Select Component',
       icon: 'pointer',
-      action: () => toggleEditing(),
+      action: () => {
+        toggleEditing();
+        hideEditor();
+        toggleAppSettings(false);
+        togglePageSettings(false);
+        toggleSiteSettings(false);
+      },
       isActive: editing,
       order: 200,
       group: 'page',
@@ -40,7 +48,14 @@ export const WhpptMainNav: FC<{
       key: 'new-page',
       label: 'Create New Page',
       icon: 'new-page',
-      action: () => showEditor('newPage', undefined, undefined, undefined),
+      isActive: editorState.editor === 'newPage',
+      action: () => {
+        toggleEditing(false);
+        toggleAppSettings(false);
+        togglePageSettings(false);
+        toggleSiteSettings(false);
+        showEditor('newPage', undefined, undefined, undefined);
+      },
       order: 300,
       group: 'page',
       groupOrder: 200,
@@ -49,9 +64,6 @@ export const WhpptMainNav: FC<{
       key: 'save',
       label: 'Save Page',
       icon: 'save',
-
-      // disabled: !this.page || !this.page._id,
-      // action: this.savePage,
       order: 400,
       group: 'page',
       groupOrder: 200,
@@ -60,7 +72,6 @@ export const WhpptMainNav: FC<{
       key: 'nav',
       label: 'Save Navigation',
       icon: 'nav',
-      // action: () => this.saveNav(),
       order: 500,
       group: 'site',
       groupOrder: 300,
@@ -93,7 +104,9 @@ export const WhpptMainNav: FC<{
       action: () => {
         toggleSiteSettings(false);
         togglePageSettings(false);
+        toggleEditing(false);
         toggleAppSettings();
+        hideEditor();
       },
       isActive: appSettings.visible,
       order: 800,
@@ -104,12 +117,13 @@ export const WhpptMainNav: FC<{
       key: 'site-settings',
       label: 'Open Site Settings',
       icon: 'settings',
-      // action: () => this.doEditInModal('siteSettings'),
       isActive: siteSettings.visible,
       action: () => {
         toggleAppSettings(false);
         togglePageSettings(false);
+        toggleEditing(false);
         toggleSiteSettings();
+        hideEditor();
       },
       order: 900,
       group: 'site',
@@ -119,11 +133,12 @@ export const WhpptMainNav: FC<{
       key: 'page-settings',
       label: 'Open Page Settings',
       icon: 'page-settings',
-      // action: () => this.doEditInModal('pageSettings'),
       action: () => {
         toggleAppSettings(false);
         toggleSiteSettings(false);
         togglePageSettings();
+        toggleEditing(false);
+        hideEditor();
       },
       isActive: pageSettings.visible,
       order: 1000,
@@ -138,7 +153,7 @@ export const WhpptMainNav: FC<{
       group: 'config',
       groupOrder: 400,
     },
-
+    //TODO pass menuItems in from client website
     // ...this.$whppt.menuItems.map(i => ({ ...i, action: this.runAction(i.action) })),
   ];
 

@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { WhpptIcon } from '../ui/components/Icon';
 import { useWhppt } from '../Context';
-import { WhpptNewPageEditor } from '../editors/NewPage';
+import { WhpptNewPageEditor } from './Panels';
 
 export type WhpptAppEditorsArg = ({
   editor,
@@ -12,7 +12,7 @@ export type WhpptAppEditorsArg = ({
   editor: string;
   value: any;
   onChange: (value: any) => void;
-  options?: any;
+  options: any;
 }) => ReactElement;
 
 export type WhpptEditorPanelArgs = {
@@ -21,17 +21,12 @@ export type WhpptEditorPanelArgs = {
 export type WhpptEditorPanel = FC<WhpptEditorPanelArgs>;
 
 export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
-  const { editorState, editing, hideEditor } = useWhppt();
-
-  const checkIfAppEditor = () => {
-    if (editorState.editor === 'newPage') return <WhpptNewPageEditor />;
-    return { editors(editorState); };
-  };
+  const { editorState, hideEditor } = useWhppt();
 
   return (
     <div
       className={`whppt-editor ${
-        editorState.editor && editing ? 'whppt-editor--active' : ''
+        editorState.editor ? 'whppt-editor--active' : ''
       }`}
     >
       <div className="whppt-editor__content-wrapper">
@@ -42,8 +37,11 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
           </button>
         </div>
         <div className="whppt-editor__content">
-          {editorState.editor === 'newPage' && <WhpptNewPageEditor />}
-          {editors(editorState)}
+          {editorState.editor === 'newPage' ? (
+            <WhpptNewPageEditor />
+          ) : (
+            editors(editorState)
+          )}
         </div>
       </div>
     </div>

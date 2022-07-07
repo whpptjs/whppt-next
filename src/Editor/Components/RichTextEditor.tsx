@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from 'react';
-import { useWhppt } from '../Context';
+import { useWhppt } from '../../Context';
 
 export const RichTextEditor: FC<{
   value: any;
