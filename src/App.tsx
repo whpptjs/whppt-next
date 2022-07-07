@@ -92,19 +92,24 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   );
 
   useEffect(() => {
+    console.log(
+      "🚀 ~ file: App.tsx ~ line 102 ~ .then ~ context.api.site.nav",
+      context.api.site
+    );
     context.api.app.domain
       .loadForCurrentHost()
       .then((domain) => {
         setDomain(domain);
-        return Promise.all([context.api.site.footer.load({ domain })]).then(
-          ([footer]) => {
-            setFooter({
-              ...footer,
-              content: context.initFooter(footer?.content || {}),
-            });
-            // setNav(nav);
-          }
-        );
+        return Promise.all([
+          context.api.site.footer.load({ domain }),
+          context.api.site.nav.load({ domain }),
+        ]).then(([footer, nav]) => {
+          setFooter({
+            ...footer,
+            content: context.initFooter(footer?.content || {}),
+          });
+          setNav({ ...nav, content: context.initNav(nav?.content || {}) });
+        });
       })
       .catch((err) => setError(err));
   }, []);
