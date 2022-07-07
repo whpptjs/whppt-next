@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 import { useRouter } from "next/router";
 import { trim } from "lodash";
 
