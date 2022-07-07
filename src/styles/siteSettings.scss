@@ -31,13 +31,13 @@
 }
 
 .whppt-site-setings__ruler {
-  margin: 1rem 0;
+  @apply my-4;
 }
 
 .whppt-section__domain-inputs {
-  @apply flex items-center gap-x-12;
+  @apply flex items-start gap-x-12;
 
   & > * {
-    flex: 1 1 0;
+    @apply flex-1;
   }
 }

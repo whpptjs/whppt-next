@@ -31,13 +31,11 @@
    }
   }
   &__action:hover .whppt-table__action--info{
-    @apply block
+    @apply block;
   }
 
   &__container {
-    overflow: visible;
-    border-radius: 0.25rem;
-    @apply w-full;
+    @apply w-full overflow-auto rounded;
   }
 
   &__headers--fixed {
@@ -46,30 +44,26 @@
   }
 
   &__footer {
-    background-color: transparent;
+    @apply bg-whpptDarkMode;
 
     tr td {
-      padding: 0.75rem 1.5rem;
+      @apply py-3 px-6;
 
       .whppt-table__pagination {
-        width: 100%;
-        display: flex;
+        @apply flex w-full;
       }
     }
   }
 
   table {
-    min-width: 100%;
-    border-collapse: collapse;
-    @apply border-2 border-opacity-60 border-whpptStandard bg-whpptDarkMode text-whpptLightMode rounded; 
+    @apply min-w-full;
+    @apply border-2 border-opacity-60 border-whpptStandard bg-whpptDarkMode text-whpptLightMode rounded border-collapse;
 
 
     thead th {
-      padding: 0.75rem 1.5rem;
+      @apply py-3 px-6;
       @apply border-b-2 border-opacity-60 border-whpptStandard;
-      @apply text-sm uppercase;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      @apply text-sm uppercase font-semibold tracking-wider;
     }
     
     tbody {
@@ -81,19 +75,18 @@
       
       td {
         @apply py-4 px-6;
-        white-space: nowrap;
-        @apply text-sm ;
+        @apply text-sm whitespace-nowrap;
       }
     }
   }
 
   &__header {
     &--start {
-      text-align: left;
+      @apply text-right;
     }
 
     &--end {
-      text-align: right;
+      @apply text-right;
     }
   }
 
@@ -111,8 +104,7 @@
 
   &--no-data {
     td {
-      padding: 2rem;
-      text-align: center;
+      @apply text-center p-8;
     }
   }
 }

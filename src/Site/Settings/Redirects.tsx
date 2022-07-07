@@ -3,6 +3,7 @@ import { WhpptInput } from '../../ui/components/Input';
 import { WhpptIcon, WhpptTab } from '../../ui/components';
 import { WhpptTable } from '../../ui/components/Table';
 import { WhpptButton } from '../../ui/components/Button';
+import { useWhppt } from '../../Context';
 
 export const Redirects: FC<WhpptTab> = () => {
   const headers = [
@@ -12,55 +13,60 @@ export const Redirects: FC<WhpptTab> = () => {
     { text: 'To', align: 'start', value: 'to' },
     { text: 'Published', align: 'start', value: 'published' },
     { text: 'Published At', align: 'start', value: 'publishedAt' },
-    { text: 'Last Modified', align: 'start', value: 'lastmod' },
+    { text: 'Last Modified', align: 'start', value: 'updatedAt' },
     { text: 'Created At', align: 'start', value: 'createdAt' },
   ] as any;
 
-  const [searchRedirects, setSearchRedirects] = useState('');
+  const { api, domain } = useWhppt();
+
+  const [errorState, setError] = useState<Error>();
+
   const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [searchRedirects, setSearchRedirects] = useState('');
 
   const [isAddingRedirect, setIsAddingRedirect] = useState(false);
+
   const [newRedirectName, setNewRedirectName] = useState('');
   const [newFromDomain, setNewFromDomain] = useState('');
   const [newToDomain, setNewToDomain] = useState('');
+
   const [perPage, setPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    //TODO: update items after fetch
+    api.site.redirect
+      .load({ page: currentPage, size: perPage, domainId: domain._id, search: searchRedirects})
+      .then(({redirects, total}) => {
+        Array.isArray(redirects) && setItems(redirects);
+        total && setTotal(total);
+      })
+      .catch((err) => setError(err));
+  },[searchRedirects, currentPage, perPage]);
 
-    //Then set the items witth the result
-    setItems([
-      {
-        _id: 1,
-        domainId: 'testDomain',
-        name: 'testName.testName.testName.com',
-        from: 'testFrom.testFrom.testFrom.com',
-        to: 'testTo',
-        lastmod: '01-01-2022',
-        createdAt: '01-01-2022',
-        published: '01-01-2022',
-        publishedAt: '01-01-2022',
-      },
-      {
-        _id: 1,
-        domainId: 'testDomain',
-        name: 'testName.testName.testName.com',
-        from: 'testFrom.testFrom.testFrom.com',
-        to: 'testTo',
-        lastmod: '01-01-2022',
-        createdAt: '01-01-2022',
-        published: '01-01-2022',
-        publishedAt: '01-01-2022',
-      },
-    ]);
-  }, [searchRedirects]);
+  const addRedirect = () => {
+    const newRedirect = {
+      name: newRedirectName,
+      to: newToDomain,
+      from: newFromDomain,
+      domainId: domain._id
+    };
 
-  const addRedirect = () => {};
+    api.site.redirect
+      .save(newRedirect)
+      .then(redirect => redirect && resetInputs())
+      .catch((err) => setError(err));
+  };
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
+
+  const resetInputs = () => {
+    setNewRedirectName('');
+    setNewFromDomain('');
+    setNewToDomain('');
+  }
 
   return (
     <form className='whppt-form whppt-site-settings'>
@@ -125,17 +131,17 @@ export const Redirects: FC<WhpptTab> = () => {
           id={'Redirect filter'}
           placeholder={'about-us'}
           label={'Search'}
-          value={''}
+          value={searchRedirects}
           onChange={setSearchRedirects}
           info={'Search the from field or the to field'}
-          error={''}
+          error={errorState && errorState.message}
           type="text"
         />
 
         <WhpptTable
           dense={true}
           items={items}
-          total={10}
+          total={total}
           headers={headers}
           hideFooters={false}
           hideHeaders={false}
