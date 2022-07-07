@@ -15,7 +15,6 @@ export type SiteNavApiConstructor = ({
 export const SiteNavApi: SiteNavApiConstructor = ({ http }) => {
   return {
     load: ({ domain }) => {
-      console.log("🚀 ~ file: nav.ts ~ line 18 ~ domain", domain);
       if (!domain && domain._id) throw new Error("Invalid Domain");
 
       return http.secure.getJson<Nav<any>>({

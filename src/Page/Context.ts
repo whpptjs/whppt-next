@@ -1,6 +1,6 @@
-import { Page } from "src/Page/Page";
+import { PageData } from "src/Page/Page";
 
-export const defaultState = {} as Page;
+export const defaultState = {} as PageData;
 
 export type PageSettingsState = {
   visible: boolean;
@@ -13,14 +13,14 @@ export const defaultPageSettingsState = {
 };
 
 export type PageContextArgs = {
-  page: Page;
-  setPage: (val: Page) => void;
+  page: PageData;
+  setPage: (val: PageData) => void;
   pageSettings: PageSettingsState;
   setPageSettings: (val: PageSettingsState) => void;
 };
 
 export const defaultArgs = {
-  page: {},
+  page: { seo: "" },
   setPage: () => {},
   pageSettings: defaultPageSettingsState,
   setPageSettings: () => {},
@@ -36,7 +36,12 @@ export const Context = ({
     page,
     setPage,
     pageSettings,
-    togglePageSettings: (visible?:boolean) => setPageSettings({ ...pageSettings, visible: typeof visible=== 'boolean' ? visible : !pageSettings.visible  }),
-    changePageSettingsActiveTab: (activeTab: string) =>setPageSettings({ ...pageSettings, activeTab }),
+    togglePageSettings: (visible?: boolean) =>
+      setPageSettings({
+        ...pageSettings,
+        visible: typeof visible === "boolean" ? visible : !pageSettings.visible,
+      }),
+    changePageSettingsActiveTab: (activeTab: string) =>
+      setPageSettings({ ...pageSettings, activeTab }),
   };
 };
