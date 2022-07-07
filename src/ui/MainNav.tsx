@@ -20,6 +20,7 @@ export const WhpptMainNav: FC<{
     toggleAppSettings,
     domain,
     footer,
+    nav,
     api,
     toggleSiteSettings,
   } = useWhppt();
@@ -59,7 +60,7 @@ export const WhpptMainNav: FC<{
       key: "nav",
       label: "Save Navigation",
       icon: "nav",
-      // action: () => this.saveNav(),
+      action: () => api.site.nav.save({ domain, nav }),
       order: 500,
       group: "site",
       groupOrder: 300,

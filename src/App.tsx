@@ -92,10 +92,6 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   );
 
   useEffect(() => {
-    console.log(
-      "🚀 ~ file: App.tsx ~ line 102 ~ .then ~ context.api.site.nav",
-      context.api.site
-    );
     context.api.app.domain
       .loadForCurrentHost()
       .then((domain) => {
