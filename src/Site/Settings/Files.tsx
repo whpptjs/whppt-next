@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import { WhpptTab } from '../../ui/components';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTable } from '../../ui/components/Table';
 import { WhpptButton } from '../../ui/components/Button';
+import { useWhppt } from '../../Context';
 
 export const Files: FC<WhpptTab> = () => {
   const headers = [
@@ -11,30 +12,51 @@ export const Files: FC<WhpptTab> = () => {
     { text: 'Actions', align: 'start', value: 'actions' },
   ] as any;
 
-  const items = [
-    {
-      name: 'testName.testName.testName.com',
-      description: 'description 1',
-      actions: ['action1'],
-    },
-    {
-      name: 'testName.testName.testName.com',
-      description: 'description 2',
-      actions: ['action2'],
-    },
-  ] as any;
+  const { api } = useWhppt();
 
+  const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
   const [description, setDescription] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
+  const [errorState, setError] = useState<Error>();
+  const [fileData, setFileData] = useState<File>(null);
+
+  const fileInputRef: { current: HTMLInputElement } = useRef();
+
+  useEffect(() => {
+    api.site.files
+      .load({ page: currentPage, size: perPage })
+      .then(({files, total}) => {
+        Array.isArray(files) && setItems(files);
+        total && setTotal(total);
+      })
+      .catch((err) => setError(err));
+  }, [currentPage, perPage]);
 
   const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
-  const selectFile = () => {};
+  const openFileInput = () => {
+    fileInputRef &&
+    fileInputRef.current &&
+    fileInputRef.current.click();
+  }
 
-  const upload = () => {};
+  const selectFile = (event) => {
+    const fileUploaded = event.target.files[0];
+    setFileData(fileUploaded);
+  };
+
+  const upload = () => {
+    const formData = new FormData();
+    formData.append('file', fileData);
+    formData.append('description', description);
+
+    api.site.files
+      .save(formData);
+  };
 
   return (
     <form className="whppt-form whppt-site-settings">
@@ -46,12 +68,15 @@ export const Files: FC<WhpptTab> = () => {
           value={description}
           onChange={setDescription}
           info={''}
-          error={''}
+          error={errorState && errorState.message}
           type="text"
         />
 
         <div className="whppt-site-setings__actions right">
-          <WhpptButton text={'Select File'} onClick={selectFile} />
+          <div>
+            <WhpptButton text={(fileData && fileData.name) || 'Select File'} onClick={openFileInput}/>
+            <input type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={selectFile} />
+          </div>
           <WhpptButton text={'Upload'} onClick={upload} />
         </div>
       </section>
@@ -64,7 +89,7 @@ export const Files: FC<WhpptTab> = () => {
           hideHeaders={false}
           page={currentPage}
           perPage={perPage}
-          total={10}
+          total={total}
           dense={true}
           height={''}
           fixedHeader={false}
