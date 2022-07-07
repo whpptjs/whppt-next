@@ -2,15 +2,15 @@
   @apply flex items-center;
 
   &__buttons {
-    display: flex;
+    @apply flex;
 
     button:nth-child(1) {
-      margin-right: 0.5rem;
+      @apply mr-2;
     }
   }
 
   &--dark {
-    color: white;
+    @apply text-whpptLightMode;
 
     .whppt-pagination__buttons {
 
@@ -20,12 +20,12 @@
       }
 
       svg {
-        color: white;
+        @apply text-whpptLightMode;
       }
     }
 
     .whppt-pagination__results {
-      color: white;
+      @apply text-whpptLightMode;
     }
   }
 
@@ -34,8 +34,6 @@
   }
 
   &__results {
-    text-align: center;
-    width: 8rem;
-    margin: 0 0.5rem;
+    @apply text-center mx-2 w-32;
   }
 }
