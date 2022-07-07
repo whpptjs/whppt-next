@@ -1,4 +1,4 @@
-import { Page } from "src/Page/Page";
+import { Page } from "src/Page/Model/Page";
 
 export const defaultState = {} as Page;
 
@@ -20,7 +20,7 @@ export type PageContextArgs = {
 };
 
 export const defaultArgs = {
-  page: {},
+  page: {_id:''},
   setPage: () => {},
   pageSettings: defaultPageSettingsState,
   setPageSettings: () => {},

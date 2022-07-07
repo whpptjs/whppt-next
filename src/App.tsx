@@ -1,14 +1,14 @@
-import React, { FC, ReactElement, useEffect, useMemo, useState } from "react";
-import { Whppt } from "./Context";
-import type { WhpptAppEditorsArg } from "./Editor/EditorPanel";
-import { WhpptEditorPanel } from "./Editor/EditorPanel";
-import { SettingsPanel } from "./ui/SettingsPanel";
-import { WhpptMainNav } from "./ui/MainNav";
-import { Api } from "./Api";
-import * as editor from "./Editor/Context";
-import * as appContext from "./App/Context";
-import * as siteContext from "./Site/Context";
-import * as pageContext from "./Page/Context";
+import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
+import { Whppt } from './Context';
+import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
+import { WhpptEditorPanel } from './Editor/EditorPanel';
+import { SettingsPanel } from './ui/SettingsPanel';
+import { WhpptMainNav } from './ui/MainNav';
+import { Api } from './Api';
+import * as editor from './Editor/Context';
+import * as appContext from './App/Context';
+import * as siteContext from './Site/Context';
+import * as pageContext from './Page/Context';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -112,8 +112,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   return (
     <div>
       <Whppt.Provider value={context}>
-        <div className={`whppt-app ${lightMode ? "whppt-lightMode" : ""}`}>
-          {process.env.NEXT_PUBLIC_DRAFT === "true" ? (
+        <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
+          {process.env.NEXT_PUBLIC_DRAFT === 'true' ? (
             <>
               <WhpptMainNav
                 lightMode={lightMode}
@@ -131,7 +131,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
           ) : (
             <div className="whppt-app__content">
               <div>{children}</div>
-              {process.env.NEXT_PUBLIC_DRAFT === "true" ? (
+              {process.env.NEXT_PUBLIC_DRAFT === 'true' ? (
                 <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
               ) : (
                 <></>

@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { WhpptIcon } from '../ui/components/Icon';
 import { useWhppt } from '../Context';
+import { WhpptNewPageEditor } from '../editors/NewPage';
 
 export type WhpptAppEditorsArg = ({
   editor,
@@ -22,6 +23,11 @@ export type WhpptEditorPanel = FC<WhpptEditorPanelArgs>;
 export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
   const { editorState, editing, hideEditor } = useWhppt();
 
+  const checkIfAppEditor = () => {
+    if (editorState.editor === 'newPage') return <WhpptNewPageEditor />;
+    return { editors(editorState); };
+  };
+
   return (
     <div
       className={`whppt-editor ${
@@ -35,7 +41,10 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
             <WhpptIcon is="close"></WhpptIcon>
           </button>
         </div>
-        <div className="whppt-editor__content">{editors(editorState)}</div>
+        <div className="whppt-editor__content">
+          {editorState.editor === 'newPage' && <WhpptNewPageEditor />}
+          {editors(editorState)}
+        </div>
       </div>
     </div>
   );

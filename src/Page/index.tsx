@@ -1,8 +1,8 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { FC, ReactElement, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
-import { useWhppt } from "../Context";
-import { Page } from "./Page";
+import { useWhppt } from '../Context';
+import { Page } from './Model/Page';
 
 export const WhpptPage: FC<{
   children: (page: Page, setPage: (page: Page) => void) => ReactElement;
@@ -10,7 +10,7 @@ export const WhpptPage: FC<{
   const { api, page, setPage } = useWhppt();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
     setLoading(true);
