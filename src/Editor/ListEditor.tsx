@@ -14,10 +14,11 @@ export const ListEditor = <T extends object>({
   children,
   value,
   addNew,
+  displayName,
   onChange,
 }: ListEditorProps<T>) => {
   const { editing, showEditor } = useWhppt();
-  const options = { addNew } as ListEditorOptions;
+  const options = { addNew, displayName } as ListEditorOptions;
   return (
     <div
       className="whppt-editor-selector"
