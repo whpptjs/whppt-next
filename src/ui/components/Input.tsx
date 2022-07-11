@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import { WhpptEditorArgs } from '../..';
 
-export type WhpptInputArgs = WhpptEditorArgs & {
+export type WhpptInputArgs = {
   id: string;
   label: string;
   info: string;
@@ -10,6 +9,8 @@ export type WhpptInputArgs = WhpptEditorArgs & {
   placeholder?: string;
   name?: string;
   onChangeEvent?: (event) => void;
+  onChange?: (value: string) => void;
+  value: string;
 };
 
 export const WhpptInput: FC<WhpptInputArgs> = ({

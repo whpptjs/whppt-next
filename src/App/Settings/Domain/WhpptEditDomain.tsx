@@ -55,7 +55,6 @@ export const WhpptEditDomain: FC<{ domain: Domain; callback: () => void }> = ({
                 <WhpptInput
                   value={props.values.name}
                   onChangeEvent={props.handleChange}
-                  onChange={() => {}}
                   id={'newDomainName'}
                   label={'Name'}
                   info={''}
@@ -68,7 +67,6 @@ export const WhpptEditDomain: FC<{ domain: Domain; callback: () => void }> = ({
                 <WhpptInput
                   value={props.values.hostNames}
                   onChangeEvent={props.handleChange}
-                  onChange={() => {}}
                   id={'newDomainhostnames'}
                   label={'Host names'}
                   info={

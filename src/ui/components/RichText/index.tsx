@@ -3,15 +3,16 @@ import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import React, { FC } from 'react';
-import { WhpptEditorArgs } from '../../..';
 import { WhpptMenuBar } from './MenuBar';
 
-export type WhpptRichTextArgs = WhpptEditorArgs & {
+export type WhpptRichTextArgs = {
   id: string;
   label: string;
   info: string;
   error: string;
   formatOptionsOnly: boolean;
+  value: string;
+  onChange: (value: string) => void;
 };
 
 export const WhpptRichText: FC<WhpptRichTextArgs> = ({

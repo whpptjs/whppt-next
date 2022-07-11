@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-import { WhpptEditorArgs } from '../..';
 
-export type WhpptTextAreaArgs = WhpptEditorArgs & {
+export type WhpptTextAreaArgs = {
   id: string;
   label: string;
   info: string;
   error: string;
+  value: string;
+  onChange: (value: string) => void;
 };
 
 export const WhpptTextArea: FC<WhpptTextAreaArgs> = ({
