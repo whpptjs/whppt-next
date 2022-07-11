@@ -2,10 +2,10 @@ import React, { FC } from "react";
 import { useWhppt } from "../../Context";
 import { WhpptTabs, WhpptTab } from "../../ui/components";
 
-import { Seo } from "../../CommonSettings/Seo";
-import { OpenGraph } from "../../CommonSettings/OpenGraph";
 import { General } from "./General";
-import { Twitter } from "../../CommonSettings/Twitter";
+import { SettingsOpenGraph } from "./SettingsOpenGraph";
+import { SettingsSeo } from "./SettingsSeo";
+import { SettingsTwitter } from "./SettingsTwitter";
 import { Redirects } from "./Redirects";
 import { Files } from "./Files";
 import { Banner } from "./Banner";
@@ -34,9 +34,9 @@ export const SiteSettings: FC = () => {
       />
       <WhpptTab selectedTab={siteSettings.activeTab}>
         <General name="general" label="General" />
-        <Seo name="s-e-o" label="Seo" />
-        <OpenGraph name="open-graph" label="Open Graph" />
-        <Twitter name="twitter" label="Twitter" />
+        <SettingsSeo name="s-e-o" label="Seo" />
+        <SettingsOpenGraph name="open-graph" label="Open Graph" />
+        <SettingsTwitter name="twitter" label="Twitter" />
         <Redirects name="redirects" label="Redirects" />
         <Files name="files" label="Files" />
         <Banner name="banner" label="Banner" />

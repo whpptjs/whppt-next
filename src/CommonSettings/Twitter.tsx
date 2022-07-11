@@ -1,18 +1,14 @@
 import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
+import { splitKeywords } from "../helpers";
 
-export const Twitter: FC<WhpptTab> = () => {
+type TwitterProps = WhpptTab & { save: (title, keywords, description) => void };
+
+export const Twitter: FC<TwitterProps> = ({ save }) => {
   const [title, setTitle] = useState("");
   const [keyWords, setKeywords] = useState("");
   const [description, setDescription] = useState("");
-
-  const submit = () => {
-    // TODO: Deal with meta data keywords.
-    //const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
-    //const twitterSettings = { title, description, keywords: keyWordsArray};
-    //setPage(...page, twitterSettings)
-  };
 
   const error = "";
   const info = "";
@@ -24,7 +20,7 @@ export const Twitter: FC<WhpptTab> = () => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={submit}
+            onClick={() => save(title, splitKeywords(keyWords), description)}
             disabled={!title || !keyWords || !description}
           />
         </div>

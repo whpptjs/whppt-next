@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
+import { splitKeywords } from "../helpers";
 
 import {
   WhpptButton,
@@ -7,7 +8,9 @@ import {
   WhpptTab,
 } from "../ui/components";
 
-export const Seo: FC<WhpptTab> = () => {
+type SeoProps = WhpptTab & { save: (title, keywords, description) => void }
+
+export const Seo: FC<SeoProps> = ({ save }) => {
   const [title, setTitle] = useState("");
   const [keyWords, setKeywords] = useState("");
   const [description, setDescription] = useState("");
@@ -17,21 +20,6 @@ export const Seo: FC<WhpptTab> = () => {
   const error = "";
   const info = "";
 
-  const submit = () => {
-    // const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
-    // const seoSettings = {
-    //   title,
-    //   keyWords,
-    //   description,
-    //   priority: {
-    //     priorityLevel,
-    //     changeFrequency
-    //   },
-    //   hideFromXML
-    // }
-    // setPage(...page, seoSettings)
-  };
-
   return (
     <form className="whppt-form">
       <section className="whppt-form-page-settings__actions">
@@ -39,7 +27,7 @@ export const Seo: FC<WhpptTab> = () => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={submit}
+            onClick={() => save(title, splitKeywords(keyWords), description)}
             disabled={
               !title ||
               !keyWords ||

@@ -1,4 +1,4 @@
-export type SiteSettings = {
+export type PageSettings = {
   visible: boolean;
   activeTab: string;
   settings: {
@@ -20,4 +20,4 @@ export type SiteSettings = {
   }
 };
 
-export const SiteSettings = (values) => values as SiteSettings;
+export const PageSettings = (values) => values as PageSettings;

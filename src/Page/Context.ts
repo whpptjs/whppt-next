@@ -1,22 +1,35 @@
 import { PageData } from "src/Page/Model/Page";
+import { PageSettings } from "./Model/PageSettings";
 
 export const defaultState = {} as PageData;
-
-export type PageSettingsState = {
-  visible: boolean;
-  activeTab: string;
-};
 
 export const defaultPageSettingsState = {
   visible: false,
   activeTab: "general",
+  settings: {
+    twitter: {
+      title: "",
+      description: "",
+      keywords: []
+    },
+    seo: {
+      title: "",
+      description: "",
+      keywords: []
+    },
+    og: {
+      title: "",
+      description: "",
+      keywords: []
+    }
+  }
 };
 
 export type PageContextArgs = {
   page: PageData;
   setPage: (val: PageData) => void;
-  pageSettings: PageSettingsState;
-  setPageSettings: (val: PageSettingsState) => void;
+  pageSettings: PageSettings;
+  setPageSettings: (val: PageSettings) => void;
 };
 
 export const defaultArgs = {
@@ -36,6 +49,7 @@ export const Context = ({
     page,
     setPage,
     pageSettings,
+    setPageSettings,
     togglePageSettings: (visible?: boolean) =>
       setPageSettings({
         ...pageSettings,

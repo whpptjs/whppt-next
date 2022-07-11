@@ -2,10 +2,10 @@ import React, { FC } from "react";
 import { useWhppt } from "../../Context";
 import { WhpptTabs, WhpptTab } from "../../ui/components";
 
-import { Seo } from "../../CommonSettings/Seo";
-import { OpenGraph } from "../../CommonSettings/OpenGraph";
 import { General } from "./General";
-import { Twitter } from "../../CommonSettings/Twitter";
+import { PageOpenGraph } from "./PageOpenGraph";
+import { PageSeo } from "./PageSeo";
+import { PageTwitter } from "./PageTwitter";
 
 export type WhpptSelectedType = string;
 
@@ -28,9 +28,9 @@ export const PageSettings: FC = () => {
       />
       <WhpptTab selectedTab={pageSettings.activeTab}>
         <General name="general" label="General" />
-        <Seo name="s-e-o" label="Seo" />
-        <OpenGraph name="open-graph" label="Open Graph" />
-        <Twitter name="twitter" label="Twitter" />
+        <PageSeo name="s-e-o" label="Seo" />
+        <PageOpenGraph name="open-graph" label="Open Graph" />
+        <PageTwitter name="twitter" label="Twitter" />
       </WhpptTab>
     </div>
   );

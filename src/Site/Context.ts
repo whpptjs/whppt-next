@@ -3,6 +3,23 @@ import { Footer, Nav, SiteSettings } from "./Model";
 export const defaultSiteSettingsState = {
   visible: false,
   activeTab: "general",
+  settings: {
+    twitter: {
+      title: "",
+      description: "",
+      keywords: []
+    },
+    seo: {
+      title: "",
+      description: "",
+      keywords: []
+    },
+    og: {
+      title: "",
+      description: "",
+      keywords: []
+    }
+  }
 };
 export const defaultNavState = {} as Nav<any>;
 export const defaultFooterState = {} as Footer<any>;
