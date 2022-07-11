@@ -1,5 +1,5 @@
-export type Page = {
-    _id:string
+export type PageData = {
+  _id: string;
 };
 
-export const Page = (values) => values as Page;
+export const Page = (values) => values as PageData;
