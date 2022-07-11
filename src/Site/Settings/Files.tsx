@@ -55,7 +55,7 @@ export const Files: FC<WhpptTab> = () => {
     formData.append('description', description);
 
     api.site.files
-      .save(formData);
+      .saveFile(formData);
   };
 
   return (
