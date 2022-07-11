@@ -1,35 +1,38 @@
 import { PageData } from "src/Page/Model/Page";
 import { PageSettings } from "./Model/PageSettings";
+import { SettingsData } from '../CommonSettings/Model/SettingsData';
 
 export const defaultState = {} as PageData;
 
 export const defaultPageSettingsState = {
   visible: false,
   activeTab: "general",
-  settings: {
-    twitter: {
-      title: "",
-      description: "",
-      keywords: []
-    },
-    seo: {
-      title: "",
-      description: "",
-      keywords: []
-    },
-    og: {
-      title: "",
-      description: "",
-      keywords: []
-    }
-  }
 };
+export const defaultPageSettingsData = {
+  twitter: {
+    title: "",
+    description: "",
+    keywords: []
+  },
+  seo: {
+    title: "",
+    description: "",
+    keywords: []
+  },
+  og: {
+    title: "",
+    description: "",
+    keywords: []
+  }
+}
 
 export type PageContextArgs = {
   page: PageData;
   setPage: (val: PageData) => void;
   pageSettings: PageSettings;
   setPageSettings: (val: PageSettings) => void;
+  pageSettingsData: SettingsData;
+  setPageSettingsData: (settingsData: SettingsData) => void;
 };
 
 export const defaultArgs = {
@@ -37,6 +40,8 @@ export const defaultArgs = {
   setPage: () => {},
   pageSettings: defaultPageSettingsState,
   setPageSettings: () => {},
+  pageSettingsData: defaultPageSettingsData,
+  setPageSettingsData: () => {},
 } as PageContextArgs;
 
 export const Context = ({
@@ -44,12 +49,16 @@ export const Context = ({
   setPage,
   pageSettings,
   setPageSettings,
+  pageSettingsData,
+  setPageSettingsData,
 }: PageContextArgs) => {
   return {
     page,
     setPage,
     pageSettings,
     setPageSettings,
+    pageSettingsData,
+    setPageSettingsData,
     togglePageSettings: (visible?: boolean) =>
       setPageSettings({
         ...pageSettings,

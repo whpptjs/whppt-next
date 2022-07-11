@@ -1,8 +1,8 @@
 import React from 'react';
-import { useWhppt } from '../../Context';
-import { OpenGraph } from '../../CommonSettings/OpenGraph'
+import { useWhppt } from '../../../Context';
+import { OpenGraph } from '../../../CommonSettings/OpenGraph'
 
-export const SettingsOpenGraph = ({ name, label }) => {
+export const PageOpenGraph = ({ name, label }) => {
   const { siteSettings, setSiteSettings } = useWhppt();
 
   const save = (title, keywords, description) => {
@@ -11,4 +11,4 @@ export const SettingsOpenGraph = ({ name, label }) => {
   }
 
   return <OpenGraph name={name} label={label} save={save}/>
-};
+}

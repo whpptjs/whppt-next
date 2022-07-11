@@ -1,17 +1,28 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
 import { splitKeywords } from "../helpers";
 
-type OpenGraphProps = WhpptTab & { save: (title, keywords, description) => void }
+type OpenGraphProps = WhpptTab & {
+  save: (title, keywords, description) => void;
+  loadedOgData: any;
+};
 
-export const OpenGraph: FC<OpenGraphProps> = ({ save }) => {
+export const OpenGraph: FC<OpenGraphProps> = ({ save, loadedOgData }) => {
   const [title, setTitle] = useState("");
   const [keyWords, setKeywords] = useState("");
   const [description, setDescription] = useState("");
 
   const error = "";
   const info = "";
+
+  useEffect(() => {
+    if (loadedOgData) {
+      setTitle(loadedOgData.title);
+      setKeywords(loadedOgData.keywords.join(','));
+      setDescription(loadedOgData.description);
+    }
+  }, []);
 
   return (
     <form className="whppt-form">

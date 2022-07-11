@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { splitKeywords } from "../helpers";
 
@@ -8,9 +8,12 @@ import {
   WhpptTab,
 } from "../ui/components";
 
-type SeoProps = WhpptTab & { save: (title, keywords, description) => void }
+type SeoProps = WhpptTab & {
+  save: (title, keywords, description) => void;
+  loadedSeoData: any;
+}
 
-export const Seo: FC<SeoProps> = ({ save }) => {
+export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
   const [title, setTitle] = useState("");
   const [keyWords, setKeywords] = useState("");
   const [description, setDescription] = useState("");
@@ -19,6 +22,14 @@ export const Seo: FC<SeoProps> = ({ save }) => {
 
   const error = "";
   const info = "";
+
+  useEffect(() => {
+    if (loadedSeoData) {
+      setTitle(loadedSeoData.title);
+      setKeywords(loadedSeoData.keywords.join(','));
+      setDescription(loadedSeoData.description);
+    }
+  }, []);
 
   return (
     <form className="whppt-form">

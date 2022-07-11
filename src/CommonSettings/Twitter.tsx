@@ -1,17 +1,28 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
 import { splitKeywords } from "../helpers";
 
-type TwitterProps = WhpptTab & { save: (title, keywords, description) => void };
+type TwitterProps = WhpptTab & {
+  save: (title, keywords, description) => void
+  loadedTwitterData: any;
+};
 
-export const Twitter: FC<TwitterProps> = ({ save }) => {
+export const Twitter: FC<TwitterProps> = ({ save, loadedTwitterData }) => {
   const [title, setTitle] = useState("");
   const [keyWords, setKeywords] = useState("");
   const [description, setDescription] = useState("");
 
   const error = "";
   const info = "";
+
+  useEffect(() => {
+    if (loadedTwitterData) {
+      setTitle(loadedTwitterData.title);
+      setKeywords(loadedTwitterData.keywords.join(','));
+      setDescription(loadedTwitterData.description);
+    }
+  }, []);
 
   return (
     <form className="whppt-form">

@@ -1,24 +1,25 @@
 import { Footer, Nav, SiteSettings } from "./Model";
+import { SettingsData } from '../CommonSettings/Model/SettingsData';
 
 export const defaultSiteSettingsState = {
   visible: false,
-  activeTab: "general",
-  settings: {
-    twitter: {
-      title: "",
-      description: "",
-      keywords: []
-    },
-    seo: {
-      title: "",
-      description: "",
-      keywords: []
-    },
-    og: {
-      title: "",
-      description: "",
-      keywords: []
-    }
+  activeTab: "general"
+};
+export const defaultSettingsData = {
+  twitter: {
+    title: "",
+    description: "",
+    keywords: []
+  },
+  seo: {
+    title: "",
+    description: "",
+    keywords: []
+  },
+  og: {
+    title: "",
+    description: "",
+    keywords: []
   }
 };
 export const defaultNavState = {} as Nav<any>;
@@ -33,6 +34,8 @@ export type SiteContextArgs<N, F> = {
   initFooter: (footer: F) => F;
   siteSettings: SiteSettings;
   setSiteSettings: (siteSettings: SiteSettings) => void;
+  settingsData: SettingsData;
+  setSettingsData: (settingsData: SettingsData) => void;
 };
 
 export const defaultArgs = {
@@ -44,6 +47,8 @@ export const defaultArgs = {
   initFooter: () => {},
   siteSettings: defaultSiteSettingsState,
   setSiteSettings: () => {},
+  settingsData: defaultSettingsData,
+  setSettingsData: () => {},
 } as SiteContextArgs<any, any>;
 
 export const Context = <N, F>(args: SiteContextArgs<N, F>) => {
