@@ -1,4 +1,5 @@
 import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
+// import Cookies from 'js-cookie';
 import { Whppt } from './Context';
 import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
 import { WhpptEditorPanel } from './Editor/EditorPanel';
@@ -9,6 +10,7 @@ import * as editor from './Editor/Context';
 import * as appContext from './App/Context';
 import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
+// import * as securityContext from './Security/Context';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -44,6 +46,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [siteSettings, setSiteSettings] = useState(
     siteContext.defaultSiteSettingsState
   );
+  // const [user, setUser] = useState(securityContext.defaultState);
 
   const context = useMemo(
     () => ({
@@ -77,6 +80,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         setFooter,
         initFooter,
       }),
+      // ...securityContext.Context({ user, setUser }),
     }),
     [
       editing,
@@ -92,10 +96,17 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   );
 
   useEffect(() => {
-    context.api.app.domain
-      .loadForCurrentHost()
-      .then((domain) => {
+    //get cookie
+    //load me
+    // const token = Cookies.get('authToken');
+
+    Promise.all([
+      context.api.app.domain.loadForCurrentHost(),
+      // context.api.security.verify(token),
+    ])
+      .then(([domain]) => {
         setDomain(domain);
+        // setUser(user);
         return Promise.all([
           context.api.site.footer.load({ domain }),
           context.api.site.nav.load({ domain }),

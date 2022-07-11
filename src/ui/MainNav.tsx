@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import Cookies from 'js-cookie';
 import { groupBy, sortBy } from 'lodash';
 import { WhpptIcon } from './components/Icon';
 import { useWhppt } from '../Context';
@@ -109,6 +110,7 @@ export const WhpptMainNav: FC<{
         toggleEditing(false);
         toggleAppSettings();
         hideEditor();
+        Cookies.set('authToken', 'THIS IS A TEST');
       },
       isActive: appSettings.visible,
       order: 800,
