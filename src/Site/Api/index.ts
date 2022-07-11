@@ -1,4 +1,4 @@
-import { WhpptHttp } from "../../Api/Http";
+import { WhpptHttp, WhpptStorageHttp } from "../../Api/Http";
 import { SiteFooterApi } from "./footer";
 import { SiteNavApi } from "./nav";
 import { SiteRedirectApi } from "./redirect";
@@ -10,13 +10,13 @@ export type SiteApi = {
   redirect: SiteRedirectApi;
   files: SiteFileApi;
 };
-export type SiteApiConstructor = ({ http }: { http: WhpptHttp }) => SiteApi;
+export type SiteApiConstructor = ({ http, storageHttp }: { http: WhpptHttp, storageHttp: WhpptStorageHttp }) => SiteApi;
 
-export const SiteApi: SiteApiConstructor = ({ http }) => {
+export const SiteApi: SiteApiConstructor = ({ http, storageHttp }) => {
   return {
     footer: SiteFooterApi({ http }),
     nav: SiteNavApi({ http }),
     redirect: SiteRedirectApi({ http }),
-    files: SiteFileApi({ http })
+    files: SiteFileApi({ http, storageHttp })
   };
 };
