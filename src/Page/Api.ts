@@ -1,13 +1,14 @@
 import { PageData } from "./Model/Page";
 import { WhpptHttp } from "../Api/Http";
+import { Domain } from "../App/Model";
 
-export type PageApi = { loadFromSlug: (slug: string) => Promise<PageData> };
+export type PageApi = { loadFromSlug: ({ slug, collection, domain}: {slug: string, collection:string, domain:Domain}) => Promise<PageData> };
 export type PageApiConstructor = ({ http }: { http: WhpptHttp }) => PageApi;
 
 export const PageApi: PageApiConstructor = ({ http }) => {
   return {
-    loadFromSlug: (slug) => {
-      return http.secure.getJson<PageData>({ path: `/page/load?slug=${slug}` });
+    loadFromSlug: ({slug, collection = 'Page',domain}) => {
+      return http.secure.getJson<PageData>({ path: `/page/load?slug=${slug}&collection=${collection}&domainId=${domain._id}` });
     },
     delete(page: PageData) {
       return http.secure.postJson({
