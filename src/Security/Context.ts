@@ -3,7 +3,6 @@ import { User } from "./Model";
 export type SecurityContextArgs = {
   user: User;
   setUser: (user:User) => void
-
 };
 
 export const defaultArgs = {
@@ -11,7 +10,8 @@ export const defaultArgs = {
   setUser: () => {}
 } as SecurityContextArgs;
 
-export const defaultState = {}
+export const defaultState = {} as User
+
 
 export const Context = ({user,setUser}: SecurityContextArgs) => {
   return {

@@ -5,6 +5,7 @@ import { useWhppt } from '../Context';
 import { PageData } from './Model/Page';
 
 export type WhpptPageProps<T extends PageData> = {
+  collection?: string;
   children: ({
     page,
     setPage,
@@ -15,9 +16,10 @@ export type WhpptPageProps<T extends PageData> = {
 };
 
 export const WhpptPage = <T extends PageData = PageData>({
+  collection,
   children,
 }: WhpptPageProps<T>) => {
-  const { api, page, setPage } = useWhppt();
+  const { api, page, setPage, domain } = useWhppt();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -25,7 +27,7 @@ export const WhpptPage = <T extends PageData = PageData>({
   useEffect(() => {
     setLoading(true);
     api.page
-      .loadFromSlug(router.pathname)
+      .loadFromSlug({ slug: router.pathname, collection, domain })
       .then((loadedPage) => {
         console.log('🚀  loadedPage', loadedPage);
         setPage(loadedPage);
@@ -40,7 +42,6 @@ export const WhpptPage = <T extends PageData = PageData>({
   }, []);
 
   if (loading) return <div>Page is loading</div>;
-  console.log('🚀 ~ file: Page.tsx ~ line 42 ~ error', error);
   if (error) return <div className="whppt-error">{error} test</div>;
 
   return page ? (

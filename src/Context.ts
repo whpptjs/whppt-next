@@ -3,12 +3,12 @@ import { Api } from "./Api";
 import * as app from "./App/Context";
 import * as editor from "./Editor/Context";
 import * as site from "./Site/Context";
-// import * as security from "./Security/Context";
+import * as security from "./Security/Context";
 import * as page from "./Page/Context";
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
-  // ...security.Context(security.defaultArgs),
+  ...security.Context(security.defaultArgs),
   ...app.Context(app.defaultArgs),
   ...site.Context(site.defaultArgs),
   ...page.Context(page.defaultArgs),

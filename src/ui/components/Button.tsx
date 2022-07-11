@@ -7,6 +7,7 @@ type WhpptButtonProps = {
   onClick: () => void;
   disabled?: boolean;
   type?: 'button' | 'submit';
+  secondary?: boolean;
 };
 
 export const WhpptButton: FC<WhpptButtonProps> = ({
@@ -15,10 +16,15 @@ export const WhpptButton: FC<WhpptButtonProps> = ({
   onClick,
   disabled,
   type,
+  secondary,
 }) => {
   return (
     <button
-      className="whppt-button"
+      className={
+        secondary
+          ? 'whppt-secondary-button whppt-button--defaults'
+          : 'whppt-button whppt-button--defaults'
+      }
       onClick={onClick}
       type={type || 'button'}
       disabled={disabled}

@@ -27,7 +27,12 @@ export const WhpptMainNav: FC<{
     showEditor,
     editorState,
     hideEditor,
+    setUser,
   } = useWhppt();
+  const logout = () => {
+    Cookies.remove('authToken');
+    api.security.verify().then((user) => setUser(user));
+  };
 
   const items = [
     {
@@ -228,7 +233,10 @@ export const WhpptMainNav: FC<{
         </div>
 
         <div>
-          <button className="whppt-main-nav-group__nav-item">
+          <button
+            className="whppt-main-nav-group__nav-item"
+            onClick={() => logout()}
+          >
             <div className="whppt-main-nav__icon">
               <WhpptIcon is={'logout'}></WhpptIcon>
             </div>
