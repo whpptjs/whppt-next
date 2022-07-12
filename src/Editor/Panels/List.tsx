@@ -1,29 +1,28 @@
-import React, { FC } from 'react';
-import { nanoid } from 'nanoid';
+import React, { FC } from "react";
+import { nanoid } from "nanoid";
 
-import { WhpptEditorArgs } from '../EditorArgs';
-import { WhpptButton } from '../../ui/components';
+import { EditorArgs } from "../EditorArgs";
+import { WhpptButton } from "../../ui/components";
+import { EditorOptions } from "../EditorOptions";
 
-export type ListEditorOptions = {
+export type ListEditorOptions = EditorOptions & {
   addNew: () => any;
   displayName?: (item: any) => string;
 };
 
-export const WhpptListEditor: FC<WhpptEditorArgs> = ({
+export const WhpptListEditor: FC<EditorArgs<any[], ListEditorOptions>> = ({
   value,
   onChange,
   options,
 }) => {
-  const typedOptions = options as ListEditorOptions;
-
   return (
     <div className="whppt-richtext-editor">
       <div className="whppt-contents__actions">
         <WhpptButton
-          text={'Add To List'}
+          text={"Add To List"}
           icon="add"
           onClick={() => {
-            const newItem = typedOptions.addNew();
+            const newItem = options.addNew();
             onChange([...value, { _id: nanoid(), ...newItem }]);
           }}
         ></WhpptButton>
