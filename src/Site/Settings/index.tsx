@@ -8,7 +8,7 @@ import { SiteSeo } from "./SiteSeo";
 import { SiteTwitter } from "./SiteTwitter";
 import { Redirects } from "./Redirects";
 import { Files } from "./Files";
-import { Banner } from "./Banner";
+//import { Banner } from "./Banner";
 
 export type WhpptSelectedType = string;
 
@@ -47,7 +47,7 @@ export const SiteSettings: FC = () => {
         <SiteTwitter name="twitter" label="Twitter" />
         <Redirects name="redirects" label="Redirects" />
         <Files name="files" label="Files" />
-        <Banner name="banner" label="Banner" />
+        {/* <Banner name="banner" label="Banner" /> */}
       </WhpptTab>
     </div>
   );
