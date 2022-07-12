@@ -8,6 +8,8 @@ export type SettingsData = {
     title: string;
     description: string;
     keywords: string[];
+    priority: string;
+    frequency: string;
   },
   og: {
     title: string;

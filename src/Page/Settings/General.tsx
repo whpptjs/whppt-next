@@ -1,17 +1,28 @@
 import React, { FC, useState } from 'react';
-import { WhpptInput } from '../../../ui/components/Input';
-import { WhpptButton, WhpptTab, WhpptCheckbox } from '../../../ui/components';
+import { WhpptInput } from '../../ui/components/Input';
+import { WhpptButton, WhpptTab, WhpptCheckbox } from '../../ui/components';
+import { useWhppt } from '../../Context';
+import { formatSlug } from '../../helpers';
 
 export const General: FC<WhpptTab> = () => {
+  const { domain } = useWhppt();
+
   const [slug, setSlug] = useState('');
-  const [pageType, setPageType] = useState('');
-  const [pageTemplate, setPageTemplate] = useState('');
   const [hideFromXML, setHideFromXML] = useState(false);
 
-  const error = '';
-  const info = '';
+  const submit = () => {
+    if (!slug) console.log('toast Missing Field: Slug');
 
-  const submit = () => {};
+    if (!(domain && domain._id)) console.log('toast No domain found');
+
+    const newPage = {
+      slug: formatSlug(slug),
+      domainId: domain._id,
+      template: "generic"
+    }
+
+    console.log(newPage)
+  };
 
   const duplicatePage = () => {};
 
@@ -42,35 +53,13 @@ export const General: FC<WhpptTab> = () => {
             id="whppt-plaintext-input"
             label="Page Slug"
             type="text"
-            error={error}
+            error=""
             info="Please enter a value"
             value={slug}
             onChange={setSlug}
           />
 
           <WhpptButton text="Save New Slug" icon="" onClick={() => {}} />
-        </section>
-
-        <section className="whppt-form-section whppt-form-section--bottom-gap">
-          <WhpptInput
-            id="whppt-plaintext-input"
-            label="Page Type"
-            type="text"
-            error={error}
-            info={info}
-            value={pageType}
-            onChange={setPageType}
-          />
-          <WhpptInput
-            id="whppt-plaintext-input"
-            label="Template"
-            type="text"
-            error={error}
-            info={info}
-            value={pageTemplate}
-            onChange={setPageTemplate}
-          />
-          <WhpptButton text="Change Page Type" icon="" onClick={submit} />
         </section>
 
         <section className="whppt-form-section">

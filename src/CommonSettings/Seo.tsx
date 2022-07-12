@@ -9,7 +9,7 @@ import {
 } from "../ui/components";
 
 type SeoProps = WhpptTab & {
-  save: (title, keywords, description) => void;
+  save: (title, keywords, description, priority, frequency) => void;
   loadedSeoData: any;
 }
 
@@ -17,8 +17,8 @@ export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
   const [title, setTitle] = useState("");
   const [keyWords, setKeywords] = useState("");
   const [description, setDescription] = useState("");
-  const [priorityLevel, setPriorityLevel] = useState("");
-  const [changeFrequency, setChangeFrequency] = useState("");
+  const [priority, setPriority] = useState("");
+  const [frequency, setFrequency] = useState("");
 
   const error = "";
   const info = "";
@@ -28,6 +28,8 @@ export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
       setTitle(loadedSeoData.title);
       setKeywords(loadedSeoData.keywords.join(','));
       setDescription(loadedSeoData.description);
+      setPriority(loadedSeoData.priority);
+      setFrequency(loadedSeoData.frequency);
     }
   }, []);
 
@@ -38,13 +40,13 @@ export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={() => save(title, splitKeywords(keyWords), description)}
+            onClick={() => save(title, splitKeywords(keyWords), description, priority, frequency)}
             disabled={
               !title ||
               !keyWords ||
               !description ||
-              !priorityLevel ||
-              !changeFrequency
+              !priority ||
+              !frequency
             }
           />
         </div>
@@ -81,19 +83,21 @@ export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
           id="whppt-plaintext-input"
           label="Priority"
           type="text"
+          placeholder="Set page priority"
           error={error}
           info={info}
-          value={priorityLevel}
-          onChange={setPriorityLevel}
+          value={priority}
+          onChange={setPriority}
         />
         <WhpptInput
           id="whppt-plaintext-input"
           label=""
           type="text"
+          placeholder="Set page frequency"
           error={error}
           info={info}
-          value={changeFrequency}
-          onChange={setChangeFrequency}
+          value={frequency}
+          onChange={setFrequency}
         />
       </section>
     </form>

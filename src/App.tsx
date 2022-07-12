@@ -49,6 +49,9 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [settingsData, setSettingsData] = useState(
     siteContext.defaultSettingsData
   );
+  const [pageSettingsData, setPageSettingsData] = useState(
+    pageContext.defaultPageSettingsData
+  );
   const [user, setUser] = useState(securityContext.defaultState);
 
   const context = useMemo(
@@ -72,6 +75,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         setPage,
         pageSettings,
         setPageSettings,
+        pageSettingsData,
+        setPageSettingsData,
       }),
       ...siteContext.Context({
         siteSettings,

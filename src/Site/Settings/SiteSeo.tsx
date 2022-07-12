@@ -5,8 +5,8 @@ import { Seo } from '../../CommonSettings/Seo';
 export const SiteSeo = ({ name, label}) => {
   const { api, domain, settingsData, setSettingsData } = useWhppt();
 
-  const save = (title, keywords, description) => {
-    const settings = { ...settingsData, seo: { title, keywords, description} }
+  const save = (title, keywords, description, priority, frequency) => {
+    const settings = { ...settingsData, seo: { title, keywords, description, priority, frequency } }
 
     api.site.settings
       .save({settings, domain});

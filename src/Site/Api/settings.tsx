@@ -3,7 +3,7 @@ import { WhpptHttp } from "../../Api/Http";
 
 export type SiteSettingsApi = {
   load: ({ domain }) => Promise<SettingsData>;
-  save: ({domain, settings: SettingsData}) => Promise<SettingsData>
+  save: ({domain, settings: SettingsData}) => Promise<any>
 };
 export type SiteSettingsApiConstructor = ({
   http,
@@ -21,7 +21,7 @@ export const SiteSettingsApi: SiteSettingsApiConstructor = ({http}) => ({
     if (!settings) throw new Error("Invalid settings");
 
     return http.secure
-      .postJson<any>({
+      .postJson({
         path: "/siteSettings/saveSiteSettings",
         data: {
           siteSettings: {

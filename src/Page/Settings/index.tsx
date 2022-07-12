@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { useWhppt } from "../../../Context";
-import { WhpptTabs, WhpptTab } from "../../../ui/components";
+import { useWhppt } from "../../Context";
+import { WhpptTabs, WhpptTab } from "../../ui/components";
 
 import { General } from "./General";
 import { PageOpenGraph } from "./PageOpenGraph";

@@ -24,12 +24,16 @@ export const WhpptPage = <T extends PageData = PageData>({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const getSlug = () => {
+    return router.pathname === "/" ? "" : router.pathname;
+  }
+
   useEffect(() => {
     setLoading(true);
     setError('');
 
     api.page
-      .loadFromSlug({ slug: router.pathname, collection, domain })
+      .loadFromSlug({ slug: getSlug(), collection, domain })
       .then((loadedPage) => {
         setPage(loadedPage);
       })

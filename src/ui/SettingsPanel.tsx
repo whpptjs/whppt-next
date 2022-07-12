@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { AppSettings } from '../App/Settings';
 import { useWhppt } from '../Context';
-import { PageSettings } from '../Page/Model/Settings';
+import { PageSettings } from '../Page/Settings';
 import { SiteSettings } from "../Site/Settings/index";
 
 export const SettingsPanel: FC<{ showFullNav: boolean }> = ({

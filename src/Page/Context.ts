@@ -17,7 +17,9 @@ export const defaultPageSettingsData = {
   seo: {
     title: "",
     description: "",
-    keywords: []
+    keywords: [],
+    priority: "",
+    frequency: ""
   },
   og: {
     title: "",
