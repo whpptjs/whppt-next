@@ -3,7 +3,10 @@ import { WhpptHttp } from "../../Api/Http";
 
 export type SiteSettingsApi = {
   load: ({ domain }) => Promise<SettingsData>;
-  save: ({domain, settings: SettingsData}) => Promise<any>
+  save: ({domain, settings: SettingsData}) => Promise<any>;
+  publish: ({ settings}) => Promise<any>;
+  publishNav: ({nav}) => Promise<any>;
+  publishFooter: ({footer}) => Promise<any>;
 };
 export type SiteSettingsApiConstructor = ({
   http,
@@ -32,4 +35,31 @@ export const SiteSettingsApi: SiteSettingsApiConstructor = ({http}) => ({
       })
       .then((settings) => settings);
   },
+  publish: async (settings) => {
+    return http.secure
+      .postJson({
+        path: "/siteSettings/publishSiteSettings",
+        data: {
+          siteSettings: settings
+        }
+      });
+  },
+  publishNav: async ({nav}) => {
+    return http.secure
+      .postJson({
+        path: "/site/publishNav",
+        data: {
+          nav: nav
+        }
+      });
+  },
+  publishFooter: async ({footer}) => {
+    return  http.secure
+      .postJson({
+        path: "/site/publishFooter",
+        data: {
+          footer: footer
+        }
+      });
+  }
 });
