@@ -11,7 +11,6 @@ const http = Http(process.env.NEXT_PUBLIC_BASE_API_URL);
 const storageHttp = StorageHttp(process.env.NEXT_PUBLIC_STORE_API);
 
 export const Api: WhpptApiConstructor = () => {
-  console.log('NEXT_PUBLIC_STORE_API', process.env.NEXT_PUBLIC_STORE_API)
   return {
     app: AppApi({ http }),
     site: SiteApi({ http, storageHttp }),
