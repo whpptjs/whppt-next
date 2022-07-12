@@ -2,13 +2,18 @@ import React, { FC, ReactElement } from "react";
 import { useRouter } from "next/router";
 import { trim } from "lodash";
 
-export type WhpptLinkData = { text: string; href: string };
+export type WhpptLinkData = {
+  type: "page" | "external" | "anchor" | "file";
+  text: string;
+  href: string;
+};
 
 export const WhpptLink: FC<{
   link: WhpptLinkData;
   className?: string;
+  editing: boolean;
   children?: ReactElement | ReactElement[] | string;
-}> = ({ link, className, children }) => {
+}> = ({ link, className, children, editing }) => {
   const router = useRouter();
 
   // TODO: Write tests
@@ -22,6 +27,7 @@ export const WhpptLink: FC<{
   return (
     <a
       href={link.href}
+      onClick={editing ? (e) => e.preventDefault() : undefined}
       className={[
         router.pathname == link.href ? "exact-active" : "",
         linkHref.startsWith(pathname) && pathname !== "" ? "active" : "",

@@ -1,14 +1,8 @@
-import React, { FC } from 'react';
-import { WhpptInput } from '../../ui/components';
-import { WhpptEditorArgs } from '../EditorArgs';
+import React, { FC } from "react";
+import { WhpptInput } from "../../ui/components";
+import { EditorArgs } from "../EditorArgs";
 
-export type BasicEditorOptions = {
-  label: string;
-  info?: string;
-  error?: string;
-};
-
-export const WhpptPlaintextEditor: FC<WhpptEditorArgs> = ({
+export const WhpptPlaintextEditor: FC<EditorArgs<string>> = ({
   value,
   onChange,
   options,
