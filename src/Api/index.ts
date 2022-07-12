@@ -10,7 +10,6 @@ export type WhpptApiConstructor = () => WhpptApi;
 const http = Http(process.env.NEXT_PUBLIC_BASE_API_URL);
 
 export const Api: WhpptApiConstructor = () => {
-  console.log('NEXT_PUBLIC_STORE_API', process.env.NEXT_PUBLIC_STORE_API);
   return {
     app: AppApi({ http }),
     site: SiteApi({ http }),
