@@ -1,5 +1,5 @@
-import { Domain } from "src/App/Model";
-import { Nav } from "src/Site/Model";
+import { Nav } from "../Model";
+import { Domain } from "../..//App/Model";
 import { WhpptHttp } from "../../Api/Http";
 
 export type SiteNavApi = {
@@ -25,7 +25,7 @@ export const SiteNavApi: SiteNavApiConstructor = ({ http }) => {
       if (!domain && domain._id) throw new Error("Invalid Domain");
 
       return http.secure
-        .postJson<{ nav: Nav<any> }>({
+        .postJson<{ nav: Nav<any> }, { nav: Nav<any> }>({
           path: "/site/saveNav",
           data: {
             nav: {
