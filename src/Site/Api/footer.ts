@@ -1,5 +1,5 @@
-import { Domain } from "src/App/Model";
-import { Footer } from "src/Site/Model";
+import { Domain } from "../../App/Model";
+import { Footer } from "../Model";
 import { WhpptHttp } from "../../Api/Http";
 
 export type SiteFooterApi = {
@@ -25,7 +25,7 @@ export const SiteFooterApi: SiteFooterApiConstructor = ({ http }) => {
       if (!domain && domain._id) throw new Error("Invalid Domain");
 
       return http.secure
-        .postJson<{ footer: Footer<any> }>({
+        .postJson<{ footer: Footer<any> }, { footer: Footer<any> }>({
           path: "/site/saveFooter",
           data: {
             footer: {
