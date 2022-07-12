@@ -1,9 +1,10 @@
-import slugify from 'slugify';
 import React, { FC, useState } from 'react';
 import { Formik } from 'formik';
 
 import { WhpptButton, WhpptInput } from '../../ui/components';
 import { useWhppt } from '../../Context';
+
+import { formatSlug } from '../../helpers';
 
 export const WhpptNewPageEditor: FC = () => {
   const { api, domain } = useWhppt();
@@ -13,16 +14,7 @@ export const WhpptNewPageEditor: FC = () => {
   });
   const [error, setError] = useState('');
 
-  const formatSlug = (slug) => {
-    if (slug.startsWith('/')) slug = slug.replace(/^(\/*)/, '');
 
-    slug = slug.replace(/\/{2,}/g, '/');
-
-    slug = slugify(slug, { remove: /[*+~.()'"!:@]/g, lower: true });
-    slug = slug.replace(/[#?]/g, '');
-
-    return slug;
-  };
 
   const createPage = (values) => {
     const page = {

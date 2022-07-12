@@ -83,9 +83,9 @@ export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
           id="whppt-plaintext-input"
           label="Priority"
           type="text"
-          placeholder="Set page priority"
+          placeholder=""
           error={error}
-          info={info}
+          info={"Set page priority"}
           value={priority}
           onChange={setPriority}
         />
@@ -93,9 +93,9 @@ export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
           id="whppt-plaintext-input"
           label=""
           type="text"
-          placeholder="Set page frequency"
+          placeholder=""
           error={error}
-          info={info}
+          info={"Set page frequency"}
           value={frequency}
           onChange={setFrequency}
         />

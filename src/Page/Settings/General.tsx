@@ -5,29 +5,39 @@ import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
 
 export const General: FC<WhpptTab> = () => {
-  const { domain } = useWhppt();
+  const { domain, api, page } = useWhppt();
 
   const [slug, setSlug] = useState('');
+  const [slugError, setSlugError] = useState('');
+  const [validSlug, setValidSlug] = useState('');
+
   const [hideFromXML, setHideFromXML] = useState(false);
 
-  const submit = () => {
-    if (!slug) console.log('toast Missing Field: Slug');
+  const saveSlug = () => {
+    const formattedSlug = formatSlug(slug);
+    api.page
+      .checkSlug({ slug: formattedSlug, domain})
+      .then((_page) => {
+        _page
+          ? setSlugError('Slug taken')
+          : setValidSlug(formattedSlug);
+      });
+  }
 
-    if (!(domain && domain._id)) console.log('toast No domain found');
-
+  const duplicatePage = () => {
     const newPage = {
-      slug: formatSlug(slug),
+      slug: validSlug,
       domainId: domain._id,
-      template: "generic"
+      pageType: 'page',
     }
 
-    console.log(newPage)
+    api.page
+      .create({page: {...newPage, _id: undefined}});
   };
 
-  const duplicatePage = () => {};
-
-  const deletePage = () => {};
-
+  const deletePage = () => {
+    api.page.delete(page);
+  };
 
   const handleCheckBox = () => {
     setHideFromXML(!hideFromXML);
@@ -40,6 +50,7 @@ export const General: FC<WhpptTab> = () => {
           <WhpptButton
             text="Duplicate Page"
             icon="duplicate"
+            disabled={!validSlug}
             onClick={duplicatePage}
           />
         </div>
@@ -53,13 +64,13 @@ export const General: FC<WhpptTab> = () => {
             id="whppt-plaintext-input"
             label="Page Slug"
             type="text"
-            error=""
-            info="Please enter a value"
+            error={slugError}
+            info={`Slug: ${formatSlug(slug)}`}
             value={slug}
             onChange={setSlug}
           />
 
-          <WhpptButton text="Save New Slug" icon="" onClick={() => {}} />
+          <WhpptButton text="Save New Slug" icon="" disabled={!slug} onClick={saveSlug} />
         </section>
 
         <section className="whppt-form-section">
