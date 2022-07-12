@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import Cookies from 'js-cookie';
 import { groupBy, sortBy } from 'lodash';
 import { WhpptIcon } from './components/Icon';
 import { useWhppt } from '../Context';
@@ -26,7 +27,12 @@ export const WhpptMainNav: FC<{
     showEditor,
     editorState,
     hideEditor,
+    setUser,
   } = useWhppt();
+  const logout = () => {
+    Cookies.remove('authToken');
+    api.security.verify().then((user) => setUser(user));
+  };
 
   const items = [
     {
@@ -109,6 +115,7 @@ export const WhpptMainNav: FC<{
         toggleEditing(false);
         toggleAppSettings();
         hideEditor();
+        Cookies.set('authToken', 'THIS IS A TEST');
       },
       isActive: appSettings.visible,
       order: 800,
@@ -226,7 +233,10 @@ export const WhpptMainNav: FC<{
         </div>
 
         <div>
-          <button className="whppt-main-nav-group__nav-item">
+          <button
+            className="whppt-main-nav-group__nav-item"
+            onClick={() => logout()}
+          >
             <div className="whppt-main-nav__icon">
               <WhpptIcon is={'logout'}></WhpptIcon>
             </div>

@@ -9,6 +9,8 @@ import * as editor from './Editor/Context';
 import * as appContext from './App/Context';
 import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
+import * as securityContext from './Security/Context';
+import { WhpptLogin } from './ui/Login';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -44,6 +46,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [siteSettings, setSiteSettings] = useState(
     siteContext.defaultSiteSettingsState
   );
+  const [user, setUser] = useState(securityContext.defaultState);
 
   const context = useMemo(
     () => ({
@@ -77,6 +80,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         setFooter,
         initFooter,
       }),
+      ...securityContext.Context({ user, setUser }),
     }),
     [
       editing,
@@ -88,14 +92,18 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       pageSettings,
       appSettings,
       siteSettings,
+      user,
     ]
   );
 
   useEffect(() => {
-    context.api.app.domain
-      .loadForCurrentHost()
-      .then((domain) => {
+    Promise.all([
+      context.api.app.domain.loadForCurrentHost(),
+      context.api.security.verify(),
+    ])
+      .then(([domain, user]) => {
         setDomain(domain);
+        setUser(user);
         return Promise.all([
           context.api.site.footer.load({ domain }),
           context.api.site.nav.load({ domain }),
@@ -110,19 +118,31 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       .catch((err) => setError(err));
   }, []);
 
+  const checkWhpptUser = () => {
+    //TODO work this out better
+    if (user._id === 'guest') return false;
+    return true;
+  };
+
   return (
     <div>
       <Whppt.Provider value={context}>
         <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
           {process.env.NEXT_PUBLIC_DRAFT === 'true' ? (
             <>
-              <WhpptMainNav
-                lightMode={lightMode}
-                showFullNav={showFullNav}
-                setLightMode={() => setLightMode(!lightMode)}
-                setShowFullNav={() => setShowFullNav(!showFullNav)}
-              />
-              <SettingsPanel showFullNav={showFullNav} />
+              {checkWhpptUser() ? (
+                <>
+                  <WhpptMainNav
+                    lightMode={lightMode}
+                    showFullNav={showFullNav}
+                    setLightMode={() => setLightMode(!lightMode)}
+                    setShowFullNav={() => setShowFullNav(!showFullNav)}
+                  />
+                  <SettingsPanel showFullNav={showFullNav} />
+                </>
+              ) : (
+                <WhpptLogin />
+              )}
             </>
           ) : (
             <></>
