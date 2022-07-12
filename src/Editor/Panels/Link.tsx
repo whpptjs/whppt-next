@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { WhpptInput } from "../../ui/components";
+import { WhpptInput, WhpptLinkData } from "../../ui/components";
 import { EditorArgs } from "../EditorArgs";
 
-export const WhpptPlaintextEditor: FC<EditorArgs<string>> = ({
+export const WhpptLinkEditor: FC<EditorArgs<WhpptLinkData>> = ({
   value,
   onChange,
   options,
@@ -15,8 +15,8 @@ export const WhpptPlaintextEditor: FC<EditorArgs<string>> = ({
         type="text"
         error={options.error}
         info={options.info}
-        value={value}
-        onChange={onChange}
+        value={value.text}
+        onChange={(text) => onChange({ ...value, text })}
       />
     </div>
   );
