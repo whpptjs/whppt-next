@@ -4,28 +4,26 @@
   }
 }
 
-
-.whppt-button {
+.whppt-button--defaults {
   @apply text-whpptLightMode flex items-center z-10;
-  @apply text-base tracking-wide	;
-  @apply py-3 px-6 border-whpptActive border rounded-full;
-  background-color: transparent;
-  position: relative;
-  overflow: hidden;
-  transition: .5s;
+  @apply text-base tracking-wide;
+  @apply py-3 px-6;
   margin: .5rem 0;
-
   &:disabled {
     @apply opacity-30;
   }
-
   &:disabled::before, &:disabled::after {
     display: none;
   }
-
   &--text{
     @apply mr-3
   }
+}
+
+.whppt-button {
+  @apply border-whpptActive border rounded-full;
+  @apply bg-transparent relative overflow-hidden;
+  transition: .5s;
 }
 
  .whppt-button::before, .whppt-button::after {
@@ -65,3 +63,10 @@
   filter: brightness(.8);
  }
  
+
+ .whppt-secondary-button {
+  @apply py-3 px-6 border-b border-transparent;
+  &:hover{
+    @apply border-whpptActive;
+  }
+ }
