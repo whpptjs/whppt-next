@@ -1,7 +1,7 @@
+import { EditorOptions } from "./EditorOptions";
 
-export type WhpptEditorArgs = {
-    value: any | string;
-    onChange: (value: any | string) => void;
-    options: any;
-  };
-  
+export type EditorArgs<T, O extends EditorOptions = EditorOptions> = {
+  value: T;
+  onChange: (value: T) => void;
+  options?: O;
+};

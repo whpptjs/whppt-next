@@ -9,7 +9,7 @@ export type SiteRedirectApi = {
     domainId: string;
     search?: string;
   }) => Promise<{redirects: Redirect[], total: number}>;
-  save: (redirect: Redirect) => Promise<{redirect: Redirect}>
+  save: (redirect: Redirect) => Promise<Redirect>
 };
 export type SiteRedirectApiConstructor = ({
   http,
@@ -20,14 +20,14 @@ export type SiteRedirectApiConstructor = ({
 export const SiteRedirectApi: SiteRedirectApiConstructor = ({http}) => ({
   load: ({ page, size, domainId, search }) => {
     return http.secure.getJson<{redirects: Redirect[], total: number}>({
-      path: `/siteSettings/loadRedirects?domainId=${domainId}&page=${page}&size=${size}&sarch=${search}`,
+      path: `/siteSettings/loadRedirects?domainId=${domainId}&page=${page}&size=${size}&search=${search}`,
     });
   },
   save: (redirect: Redirect) => {
     if (!redirect) throw new Error("Invalid redirect");
 
     return http.secure
-      .postJson<{redirect: Redirect}>({
+      .postJson<{redirect: Redirect},Redirect>({
         path: "/siteSettings/saveRedirect",
         data: {
           redirect: {...redirect}

@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { WhpptEditorArgs } from '../EditorArgs';
-import { WhpptRichText } from '../../ui/components';
+import React, { FC } from "react";
+import { EditorArgs } from "../EditorArgs";
+import { WhpptRichText } from "../../ui/components";
 
-export const WhpptRichtextEditor: FC<WhpptEditorArgs> = ({
+export const WhpptRichtextEditor: FC<EditorArgs<string>> = ({
   value,
   onChange,
 }) => {

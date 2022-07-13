@@ -26,20 +26,21 @@ export const WhpptPage = <T extends PageData = PageData>({
 
   useEffect(() => {
     setLoading(true);
+    setError('');
+    if (!domain._id) return;
+    console.log('🚀 ~ file: Page.tsx ~ line 42 ~ useEffect ~ router', router);
     api.page
       .loadFromSlug({ slug: router.pathname, collection, domain })
       .then((loadedPage) => {
-        console.log('🚀  loadedPage', loadedPage);
         setPage(loadedPage);
       })
       .catch((err) => {
-        console.log('🚀 ~  ~ err', err);
         setError(err.message);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [domain]);
 
   if (loading) return <div>Page is loading</div>;
   if (error) return <div className="whppt-error">{error} test</div>;

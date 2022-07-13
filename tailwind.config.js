@@ -13,6 +13,9 @@ module.exports = {
         whpptDarkBorder: '#292929',
         whpptStandard: '#9998BA',
       },
+      minWidth: {
+        400: '400px',
+      },
     },
   },
   plugins: [],

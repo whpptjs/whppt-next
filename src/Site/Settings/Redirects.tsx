@@ -7,14 +7,12 @@ import { useWhppt } from '../../Context';
 
 export const Redirects: FC<WhpptTab> = () => {
   const headers = [
-    { text: 'Actions', align: 'start', value: 'actions' },
-    { text: 'Name', align: 'start', value: 'name' },
-    { text: 'From', align: 'start', value: 'from' },
-    { text: 'To', align: 'start', value: 'to' },
-    { text: 'Published', align: 'start', value: 'published' },
-    { text: 'Published At', align: 'start', value: 'publishedAt' },
-    { text: 'Last Modified', align: 'start', value: 'updatedAt' },
-    { text: 'Created At', align: 'start', value: 'createdAt' },
+    { text: 'Actions', value: 'actions' },
+    { text: 'Name', value: 'left' },
+    { text: 'From', value: 'from' },
+    { text: 'To', value: 'to' },
+    { text: 'Published', value: 'published' },
+    { text: 'Published At', value: 'publishedAt' },
   ] as any;
 
   const { api, domain } = useWhppt();
@@ -35,26 +33,38 @@ export const Redirects: FC<WhpptTab> = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    requery();
+  }, [searchRedirects, currentPage, perPage]);
+
+  const requery = () => {
     api.site.redirect
-      .load({ page: currentPage, size: perPage, domainId: domain._id, search: searchRedirects})
-      .then(({redirects, total}) => {
+      .load({
+        page: currentPage,
+        size: perPage,
+        domainId: domain._id,
+        search: searchRedirects,
+      })
+      .then(({ redirects, total }) => {
         Array.isArray(redirects) && setItems(redirects);
         total && setTotal(total);
       })
       .catch((err) => setError(err));
-  },[searchRedirects, currentPage, perPage]);
+  };
 
   const addRedirect = () => {
     const newRedirect = {
       name: newRedirectName,
       to: newToDomain,
       from: newFromDomain,
-      domainId: domain._id
+      domainId: domain._id,
     };
 
     api.site.redirect
       .save(newRedirect)
-      .then(redirect => redirect && resetInputs())
+      .then((redirect) => {
+        requery();
+        redirect && resetInputs();
+      })
       .catch((err) => setError(err));
   };
 
@@ -66,23 +76,30 @@ export const Redirects: FC<WhpptTab> = () => {
     setNewRedirectName('');
     setNewFromDomain('');
     setNewToDomain('');
-  }
+  };
 
   return (
-    <form className='whppt-form whppt-site-settings'>
-      <section className='whppt-form-section whppt-form-section--bottom-gap'>
-        <div className='whppt-site-settings__new-redirect-input' onClick={() => setIsAddingRedirect(!isAddingRedirect)}>
+    <form className="whppt-form whppt-site-settings">
+      <section className="whppt-form-section whppt-form-section--bottom-gap">
+        <div
+          className="whppt-site-settings__new-redirect-input"
+          onClick={() => setIsAddingRedirect(!isAddingRedirect)}
+        >
           <p>Add New Redirect</p>
-          <button type='button'>
-            <div className={`whppt-site-settings__new-redirect-icon ${isAddingRedirect ? 'up' : 'down'}`}>
-              <WhpptIcon is='down'/>
+          <button type="button">
+            <div
+              className={`whppt-site-settings__new-redirect-icon ${
+                isAddingRedirect ? 'up' : 'down'
+              }`}
+            >
+              <WhpptIcon is="down" />
             </div>
           </button>
         </div>
-        <hr/>
+        <hr />
 
-        {isAddingRedirect &&
-          <div className='transition-height duration-500 ease-in-out'>
+        {isAddingRedirect && (
+          <div className="transition-height duration-500 ease-in-out">
             <WhpptInput
               id={'setting-redirects-name'}
               placeholder={''}
@@ -93,14 +110,16 @@ export const Redirects: FC<WhpptTab> = () => {
               error={''}
               type="text"
             />
-            <div className='whppt-section__domain-inputs'>
+            <div className="whppt-section__domain-inputs">
               <WhpptInput
                 id={'setting-redirects-from'}
                 placeholder={'From page'}
                 label={'From'}
                 value={newFromDomain}
                 onChange={setNewFromDomain}
-                info={'Example: /my-page. When visiting this page, users will be sent to the To URL instead.'}
+                info={
+                  'Example: /my-page. When visiting this page, users will be sent to the To URL instead.'
+                }
                 error={''}
                 type="text"
               />
@@ -110,23 +129,25 @@ export const Redirects: FC<WhpptTab> = () => {
                 label={'To'}
                 value={newToDomain}
                 onChange={setNewToDomain}
-                info={'Example: /another-page or https://www.whppt.org. Users will be sent to this URL when visiting the From Page.'}
+                info={
+                  'Example: /another-page or https://www.whppt.org. Users will be sent to this URL when visiting the From Page.'
+                }
                 error={''}
                 type="text"
               />
             </div>
 
             <WhpptButton
-              icon=''
-              text='Add Redirect'
+              icon=""
+              text="Add Redirect"
               onClick={addRedirect}
               disabled={!newRedirectName || !newFromDomain || !newToDomain}
             />
           </div>
-        }
+        )}
       </section>
 
-      <section className='whppt-form-section'>
+      <section className="whppt-form-section">
         <WhpptInput
           id={'Redirect filter'}
           placeholder={'about-us'}

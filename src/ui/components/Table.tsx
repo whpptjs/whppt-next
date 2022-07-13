@@ -36,7 +36,13 @@ export const WhpptTable: FC<WhpptTableProps> = ({
   const tableId = useId();
   const tableContainerHeight =
     typeof height === 'number' ? `${height}px` : height;
-  const perPageItems = [{ text: '5'}, { text: '10'}, { text: '25'}, { text: '50'}, { text: '100'}];
+  const perPageItems = [
+    { text: '5' },
+    { text: '10' },
+    { text: '25' },
+    { text: '50' },
+    { text: '100' },
+  ];
 
   return (
     <div className={`whppt-table ${dense ? 'whppt-table--dense' : ''}`}>
@@ -57,7 +63,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     className={
                       headers[0].align
                         ? `whppt-table__header--${headers[0].align}`
-                        : ''
+                        : 'whppt-table__header--left'
                     }
                     key="whppt-table-actions"
                   >
@@ -67,7 +73,9 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                 {headers.map((header, index) => (
                   <th
                     className={
-                      header.align ? `whppt-table__header--${header.align}` : ''
+                      header.align
+                        ? `whppt-table__header--${header.align}`
+                        : 'whppt-table__header--left'
                     }
                     key={`header_${tableId}_${index}`}
                   >
