@@ -17,7 +17,6 @@ export const General: FC<WhpptTab> = () => {
 
   const deletePage = () => {};
 
-
   const handleCheckBox = () => {
     setHideFromXML(!hideFromXML);
   };
@@ -75,10 +74,9 @@ export const General: FC<WhpptTab> = () => {
 
         <section className="whppt-form-section">
           <WhpptCheckbox
-              dark={false}
-              label={"HIDE THIS PAGE FROM THE SITEMAP XML?"}
-              value={"hide-from-xml"}
-              onChange={() => handleCheckBox()}
+            label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
+            value={'hide-from-xml'}
+            onChange={() => handleCheckBox()}
           />
         </section>
       </div>

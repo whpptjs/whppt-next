@@ -1,9 +1,10 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Cookies from 'js-cookie';
 import { groupBy, sortBy } from 'lodash';
 import { WhpptIcon } from './components/Icon';
 import { useWhppt } from '../Context';
 import { ToggleWhpptIcon } from '../icons/Toggle';
+import { SavePagePopup } from './Popups/SavePage';
 
 export const WhpptMainNav: FC<{
   lightMode: boolean;
@@ -11,6 +12,7 @@ export const WhpptMainNav: FC<{
   showFullNav: boolean;
   setShowFullNav: Function;
 }> = ({ lightMode, setLightMode, showFullNav, setShowFullNav }) => {
+  const [confirmationPopup, setConfirmationPopup] = useState('');
   const {
     toggleEditing,
     editing,
@@ -74,6 +76,9 @@ export const WhpptMainNav: FC<{
       order: 400,
       group: 'page',
       groupOrder: 200,
+      action: () => {
+        setConfirmationPopup('save');
+      },
     },
     {
       key: 'nav',
@@ -171,92 +176,101 @@ export const WhpptMainNav: FC<{
   ]);
 
   return (
-    <div
-      className={`whppt-main-nav ${
-        showFullNav ? 'whppt-main-nav--show-full-nav' : ''
-      }`}
-    >
+    <div>
+      {confirmationPopup && (
+        <>
+          {confirmationPopup === 'save' && (
+            <SavePagePopup callback={() => setConfirmationPopup('')} />
+          )}
+        </>
+      )}
       <div
-        className={`whppt-main-nav-contents  ${
-          showFullNav ? 'whppt-main-nav-contents--show-full-nav' : ''
+        className={`whppt-main-nav ${
+          showFullNav ? 'whppt-main-nav--show-full-nav' : ''
         }`}
       >
-        <div>
-          <button
-            onClick={() => setShowFullNav()}
-            className="whppt-main-nav__logo"
-          >
-            <div className="whppt-main-nav__icon">
-              <WhpptIcon is="bruce"></WhpptIcon>
-            </div>
-            {showFullNav && (
-              <div className="whppt-main-nav__whppt-label">Whppt</div>
-            )}
-          </button>
+        <div
+          className={`whppt-main-nav-contents  ${
+            showFullNav ? 'whppt-main-nav-contents--show-full-nav' : ''
+          }`}
+        >
           <div>
-            {groupedItems.map((navItems) => {
-              return (
-                <div className="whppt-main-nav-group" key={navItems[0].group}>
-                  <div className="whppt-main-nav-group--title">
-                    {navItems[0].group}
-                  </div>
-                  <ul className="whppt-main-nav-group__content">
-                    {navItems.map((item) => {
-                      return (
-                        <li key={item.key}>
-                          <button
-                            disabled={item.disabled}
-                            className={`whppt-main-nav-group__nav-item ${
-                              item.isActive
-                                ? 'whppt-main-nav-group__nav-item--active'
-                                : ''
-                            }`}
-                            onClick={() => item.action && item.action()}
-                          >
-                            <div className="whppt-main-nav__icon">
-                              <WhpptIcon is={item.icon}></WhpptIcon>
-                            </div>
-                            {showFullNav && (
-                              <div className="whppt-main-nav-group__label">
-                                {item.label}
-                              </div>
-                            )}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div>
-          <button
-            className="whppt-main-nav-group__nav-item"
-            onClick={() => logout()}
-          >
-            <div className="whppt-main-nav__icon">
-              <WhpptIcon is={'logout'}></WhpptIcon>
-            </div>
-            {showFullNav && (
-              <div className="whppt-main-nav-group__label">Log Out</div>
-            )}
-          </button>
-          <button
-            onClick={() => setLightMode()}
-            className="whppt-main-nav-group__toggle"
-          >
-            <div className="whppt-main-nav__icon">
-              <ToggleWhpptIcon active={lightMode} />
-            </div>
-            {showFullNav && (
-              <div className="whppt-main-nav-group__toggle--label ">
-                {lightMode ? 'Light Mode' : 'Dark Mode'}
+            <button
+              onClick={() => setShowFullNav()}
+              className="whppt-main-nav__logo"
+            >
+              <div className="whppt-main-nav__icon">
+                <WhpptIcon is="bruce"></WhpptIcon>
               </div>
-            )}
-          </button>
+              {showFullNav && (
+                <div className="whppt-main-nav__whppt-label">Whppt</div>
+              )}
+            </button>
+            <div>
+              {groupedItems.map((navItems) => {
+                return (
+                  <div className="whppt-main-nav-group" key={navItems[0].group}>
+                    <div className="whppt-main-nav-group--title">
+                      {navItems[0].group}
+                    </div>
+                    <ul className="whppt-main-nav-group__content">
+                      {navItems.map((item) => {
+                        return (
+                          <li key={item.key}>
+                            <button
+                              disabled={item.disabled}
+                              className={`whppt-main-nav-group__nav-item ${
+                                item.isActive
+                                  ? 'whppt-main-nav-group__nav-item--active'
+                                  : ''
+                              }`}
+                              onClick={() => item.action && item.action()}
+                            >
+                              <div className="whppt-main-nav__icon">
+                                <WhpptIcon is={item.icon}></WhpptIcon>
+                              </div>
+                              {showFullNav && (
+                                <div className="whppt-main-nav-group__label">
+                                  {item.label}
+                                </div>
+                              )}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <button
+              className="whppt-main-nav-group__nav-item"
+              onClick={() => logout()}
+            >
+              <div className="whppt-main-nav__icon">
+                <WhpptIcon is={'logout'}></WhpptIcon>
+              </div>
+              {showFullNav && (
+                <div className="whppt-main-nav-group__label">Log Out</div>
+              )}
+            </button>
+            <button
+              onClick={() => setLightMode()}
+              className="whppt-main-nav-group__toggle"
+            >
+              <div className="whppt-main-nav__icon">
+                <ToggleWhpptIcon active={lightMode} />
+              </div>
+              {showFullNav && (
+                <div className="whppt-main-nav-group__toggle--label ">
+                  {lightMode ? 'Light Mode' : 'Dark Mode'}
+                </div>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>
