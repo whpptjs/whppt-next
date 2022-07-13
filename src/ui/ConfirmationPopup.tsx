@@ -3,14 +3,18 @@ import { WhpptIcon } from './components';
 
 export const ConfirmationPopup: FC<{
   header: string;
+  close: () => void;
   children: ReactElement;
-}> = ({ header, children }) => {
+}> = ({ header, close, children }) => {
   return (
     <div className="whppt-confirmation-popup">
       <div className="whppt-confirmation-popup-content">
         <div className="whppt-confirmation-popup-content__header">
           {header}
-          <button className="whppt-confirmation-popup-content__header--action">
+          <button
+            onClick={() => close()}
+            className="whppt-confirmation-popup-content__header--action"
+          >
             <WhpptIcon is="close" />
           </button>
         </div>

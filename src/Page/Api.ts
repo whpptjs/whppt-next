@@ -5,7 +5,7 @@ import { Domain } from "../App/Model";
 export type PageApi = { 
   loadFromSlug: ({ slug, collection, domain}: {slug: string, collection:string, domain:Domain}) => Promise<PageData>,
   checkSlug: ({ slug, collection, domain}: {slug: string, collection?:string, domain:Domain}) => Promise<PageData>,
-  create: ({ page, collection}: {page: PageData, collection?:string}) => Promise<PageData>,
+  save: ({ page,publish, collection}: {page: PageData,publish?:boolean, collection?:string}) => Promise<PageData>,
  };
 export type PageApiConstructor = ({ http }: { http: WhpptHttp }) => PageApi;
 
@@ -27,10 +27,10 @@ export const PageApi: PageApiConstructor = ({ http }) => {
         data: { slug, collection, domainId: domain._id },
       });
     },
-    create({page, collection='pages'}) {
+    save({page,publish=false, collection='pages'}) {
       return http.secure.postJson({
         path: "/page/save",
-        data: { page,collection},
+        data: { page, collection, publish},
       });
     },
   };
