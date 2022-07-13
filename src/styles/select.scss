@@ -51,6 +51,8 @@
       @apply border border-whpptStandard rounded-lg;
       @apply bg-whpptDarkBorder;
       @apply m-0 list-none;
+      @apply fixed;
+      width: 230px;
 
       .whppt-select__menu-item--active {
         @apply bg-whpptDarkMode

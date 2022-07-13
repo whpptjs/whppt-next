@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Formik } from 'formik';
+// import { useRouter } from 'next/router';
 
 import { WhpptButton, WhpptInput } from '../../ui/components';
 import { useWhppt } from '../../Context';
@@ -8,6 +9,7 @@ import { formatSlug } from '../../helpers';
 
 export const WhpptNewPageEditor: FC = () => {
   const { api, domain } = useWhppt();
+  // const router = useRouter();
 
   const [page] = useState({
     slug: '',
@@ -25,7 +27,13 @@ export const WhpptNewPageEditor: FC = () => {
     };
     return api.page.checkSlug({ slug: page.slug, domain }).then((_page) => {
       if (_page) return setError('Slug Taken');
-      return api.page.create({ page }).then((createdPage) => {});
+      return api.page.create({ page }).then((createdPage) => {
+        console.log(
+          '🚀 ~ file: NewPage.tsx ~ line 39 ~ returnapi.page.create ~ createdPage',
+          createdPage
+        );
+        // router.push(createdPage.slug)
+      });
     });
     // .catch(() => {
     //   setError(true);

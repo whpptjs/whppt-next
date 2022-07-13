@@ -15,24 +15,19 @@ export const General: FC<WhpptTab> = () => {
 
   const saveSlug = () => {
     const formattedSlug = formatSlug(slug);
-    api.page
-      .checkSlug({ slug: formattedSlug, domain})
-      .then((_page) => {
-        _page
-          ? setSlugError('Slug taken')
-          : setValidSlug(formattedSlug);
-      });
-  }
+    api.page.checkSlug({ slug: formattedSlug, domain }).then((_page) => {
+      _page ? setSlugError('Slug taken') : setValidSlug(formattedSlug);
+    });
+  };
 
   const duplicatePage = () => {
     const newPage = {
       slug: validSlug,
       domainId: domain._id,
       pageType: 'page',
-    }
+    };
 
-    api.page
-      .create({page: {...newPage, _id: undefined}});
+    api.page.create({ page: { ...newPage, _id: undefined } });
   };
 
   const deletePage = () => {
@@ -70,15 +65,19 @@ export const General: FC<WhpptTab> = () => {
             onChange={setSlug}
           />
 
-          <WhpptButton text="Save New Slug" icon="" disabled={!slug} onClick={saveSlug} />
+          <WhpptButton
+            text="Save New Slug"
+            icon=""
+            disabled={!slug}
+            onClick={saveSlug}
+          />
         </section>
 
         <section className="whppt-form-section">
           <WhpptCheckbox
-              dark={false}
-              label={"HIDE THIS PAGE FROM THE SITEMAP XML?"}
-              value={"hide-from-xml"}
-              onChange={() => handleCheckBox()}
+            label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
+            value={'hide-from-xml'}
+            onChange={() => handleCheckBox()}
           />
         </section>
       </div>

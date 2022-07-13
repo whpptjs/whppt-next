@@ -31,7 +31,8 @@ export const WhpptPage = <T extends PageData = PageData>({
   useEffect(() => {
     setLoading(true);
     setError('');
-
+    if (!domain._id) return;
+    console.log('🚀 ~ file: Page.tsx ~ line 42 ~ useEffect ~ router', router);
     api.page
       .loadFromSlug({ slug: getSlug(), collection, domain })
       .then((loadedPage) => {

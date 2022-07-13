@@ -1,21 +1,16 @@
 .whppt-pagination {
-  display: flex;
-  align-items: center;
+  @apply flex items-center;
 
   &__buttons {
-    display: flex;
+    @apply flex;
 
     button:nth-child(1) {
-      margin-right: 0.5rem;
-    }
-
-    svg {
-      color: $gray-800;
+      @apply mr-2;
     }
   }
 
   &--dark {
-    color: white;
+    @apply text-whpptLightMode;
 
     .whppt-pagination__buttons {
 
@@ -25,22 +20,20 @@
       }
 
       svg {
-        color: white;
+        @apply text-whpptLightMode;
       }
     }
 
     .whppt-pagination__results {
-      color: white;
+      @apply text-whpptLightMode;
     }
   }
 
-  &__per-page {
+  &__per-page * {
+    @apply cursor-pointer;
   }
 
   &__results {
-    text-align: center;
-    width: 8rem;
-    margin: 0 0.5rem;
-    color: $gray-800;
+    @apply text-center mx-2 w-32;
   }
 }
