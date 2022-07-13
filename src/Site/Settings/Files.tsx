@@ -27,24 +27,22 @@ export const Files: FC<WhpptTab> = () => {
   useEffect(() => {
     api.site.files
       .load({ page: currentPage, size: perPage })
-      .then(({files, total}) => {
+      .then(({ files, total }) => {
         Array.isArray(files) && setItems(files);
         total && setTotal(total);
       })
-      .catch((err) => setError(err));
+      .catch(err => setError(err));
   }, [currentPage, perPage]);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
   const openFileInput = () => {
-    fileInputRef &&
-    fileInputRef.current &&
-    fileInputRef.current.click();
-  }
+    fileInputRef && fileInputRef.current && fileInputRef.current.click();
+  };
 
-  const selectFile = (event) => {
+  const selectFile = event => {
     const fileUploaded = event.target.files[0];
     setFileData(fileUploaded);
   };
@@ -54,8 +52,7 @@ export const Files: FC<WhpptTab> = () => {
     formData.append('file', fileData);
     formData.append('description', description);
 
-    api.site.files
-      .saveFile(formData);
+    api.site.files.saveFile(formData);
   };
 
   return (
@@ -74,7 +71,7 @@ export const Files: FC<WhpptTab> = () => {
 
         <div className="whppt-site-setings__actions right">
           <div>
-            <WhpptButton text={(fileData && fileData.name) || 'Select File'} onClick={openFileInput}/>
+            <WhpptButton text={(fileData && fileData.name) || 'Select File'} onClick={openFileInput} />
             <input type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={selectFile} />
           </div>
           <WhpptButton text={'Upload'} onClick={upload} />

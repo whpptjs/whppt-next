@@ -15,14 +15,7 @@ export type WhpptRichTextArgs = {
   onChange: (value: string) => void;
 };
 
-export const WhpptRichText: FC<WhpptRichTextArgs> = ({
-  id,
-  label,
-  info,
-  value,
-  onChange,
-  formatOptionsOnly,
-}) => {
+export const WhpptRichText: FC<WhpptRichTextArgs> = ({ id, label, info, value, onChange, formatOptionsOnly }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,

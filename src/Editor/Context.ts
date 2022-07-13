@@ -2,14 +2,14 @@ export type EditorState = {
   editor: string;
   value: any;
   onChange: (value: any) => void;
-  options:any
+  options: any;
 };
 
 export const defaultState = {
-  editor: "",
+  editor: '',
   value: {},
   onChange: () => {},
-  options:{}
+  options: {},
 } as EditorState;
 
 export type EditorContextArgs = {
@@ -26,39 +26,29 @@ export const defaultArgs = {
   setEditorState: () => {},
 } as EditorContextArgs;
 
-export const Context = ({
-  editing,
-  setEditing,
-  editorState,
-  setEditorState,
-}: EditorContextArgs) => {
+export const Context = ({ editing, setEditing, editorState, setEditorState }: EditorContextArgs) => {
   return {
     editing,
-    toggleEditing: (value?:boolean) => {
-      setEditing( value === undefined ? !editing: value);
+    toggleEditing: (value?: boolean) => {
+      setEditing(value === undefined ? !editing : value);
     },
     editorState,
     hideEditor: () => {
       setEditorState({
-        editor: "",
+        editor: '',
         onChange: () => {},
         value: undefined,
-        options:undefined
+        options: undefined,
       });
     },
-    showEditor: (
-      editor: string,
-      value: any,
-      onChange: (value: any) => void,
-      options:any
-    ) => {
+    showEditor: (editor: string, value: any, onChange: (value: any) => void, options: any) => {
       // if (!editing) return;
       const internalOnChange = (changedValue: any) => {
         setEditorState({
           editor,
           onChange: internalOnChange,
           value: changedValue,
-          options
+          options,
         });
         onChange(changedValue);
       };
@@ -67,7 +57,7 @@ export const Context = ({
         editor,
         value,
         onChange: internalOnChange,
-        options
+        options,
       });
     },
   };

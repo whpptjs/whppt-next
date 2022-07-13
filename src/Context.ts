@@ -1,10 +1,10 @@
-import { createContext, useContext } from "react";
-import { Api } from "./Api";
-import * as app from "./App/Context";
-import * as editor from "./Editor/Context";
-import * as site from "./Site/Context";
-import * as security from "./Security/Context";
-import * as page from "./Page/Context";
+import { createContext, useContext } from 'react';
+import { Api } from './Api';
+import * as app from './App/Context';
+import * as editor from './Editor/Context';
+import * as site from './Site/Context';
+import * as security from './Security/Context';
+import * as page from './Page/Context';
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
@@ -15,7 +15,7 @@ export const Whppt = createContext({
   api: Api(),
 });
 
-Whppt.displayName = "WhpptContext";
+Whppt.displayName = 'WhpptContext';
 
 export const useWhppt = () => {
   return useContext(Whppt);
@@ -39,7 +39,6 @@ export const useWhpptFooter: <T>() => {
   const whppt = useContext(Whppt);
   return {
     footer: whppt.footer?.content || {},
-    setFooter: (footer: T) =>
-      whppt.setFooter({ ...whppt.footer, content: footer }),
+    setFooter: (footer: T) => whppt.setFooter({ ...whppt.footer, content: footer }),
   };
 };

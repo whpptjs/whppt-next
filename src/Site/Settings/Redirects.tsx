@@ -48,7 +48,7 @@ export const Redirects: FC<WhpptTab> = () => {
         Array.isArray(redirects) && setItems(redirects);
         total && setTotal(total);
       })
-      .catch((err) => setError(err));
+      .catch(err => setError(err));
   };
 
   const addRedirect = () => {
@@ -61,14 +61,14 @@ export const Redirects: FC<WhpptTab> = () => {
 
     api.site.redirect
       .save(newRedirect)
-      .then((redirect) => {
+      .then(redirect => {
         requery();
         redirect && resetInputs();
       })
-      .catch((err) => setError(err));
+      .catch(err => setError(err));
   };
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
 
@@ -81,17 +81,10 @@ export const Redirects: FC<WhpptTab> = () => {
   return (
     <form className="whppt-form whppt-site-settings">
       <section className="whppt-form-section whppt-form-section--bottom-gap">
-        <div
-          className="whppt-site-settings__new-redirect-input"
-          onClick={() => setIsAddingRedirect(!isAddingRedirect)}
-        >
+        <div className="whppt-site-settings__new-redirect-input" onClick={() => setIsAddingRedirect(!isAddingRedirect)}>
           <p>Add New Redirect</p>
           <button type="button">
-            <div
-              className={`whppt-site-settings__new-redirect-icon ${
-                isAddingRedirect ? 'up' : 'down'
-              }`}
-            >
+            <div className={`whppt-site-settings__new-redirect-icon ${isAddingRedirect ? 'up' : 'down'}`}>
               <WhpptIcon is="down" />
             </div>
           </button>
@@ -117,9 +110,7 @@ export const Redirects: FC<WhpptTab> = () => {
                 label={'From'}
                 value={newFromDomain}
                 onChange={setNewFromDomain}
-                info={
-                  'Example: /my-page. When visiting this page, users will be sent to the To URL instead.'
-                }
+                info={'Example: /my-page. When visiting this page, users will be sent to the To URL instead.'}
                 error={''}
                 type="text"
               />
@@ -129,20 +120,13 @@ export const Redirects: FC<WhpptTab> = () => {
                 label={'To'}
                 value={newToDomain}
                 onChange={setNewToDomain}
-                info={
-                  'Example: /another-page or https://www.whppt.org. Users will be sent to this URL when visiting the From Page.'
-                }
+                info={'Example: /another-page or https://www.whppt.org. Users will be sent to this URL when visiting the From Page.'}
                 error={''}
                 type="text"
               />
             </div>
 
-            <WhpptButton
-              icon=""
-              text="Add Redirect"
-              onClick={addRedirect}
-              disabled={!newRedirectName || !newFromDomain || !newToDomain}
-            />
+            <WhpptButton icon="" text="Add Redirect" onClick={addRedirect} disabled={!newRedirectName || !newFromDomain || !newToDomain} />
           </div>
         )}
       </section>

@@ -10,25 +10,13 @@ type WhpptButtonProps = {
   secondary?: boolean;
 };
 
-export const WhpptButton: FC<WhpptButtonProps> = ({
-  text,
-  icon,
-  onClick,
-  disabled,
-  type,
-  secondary,
-}) => {
+export const WhpptButton: FC<WhpptButtonProps> = ({ text, icon, onClick, disabled, type, secondary }) => {
   return (
     <button
-      className={
-        secondary
-          ? 'whppt-secondary-button whppt-button--defaults'
-          : 'whppt-button whppt-button--defaults'
-      }
+      className={secondary ? 'whppt-secondary-button whppt-button--defaults' : 'whppt-button whppt-button--defaults'}
       onClick={onClick}
       type={type || 'button'}
-      disabled={disabled}
-    >
+      disabled={disabled}>
       <div className={icon ? 'whppt-button--text' : ''}>{text}</div>
       {icon && <WhpptIcon is={icon} />}
     </button>
