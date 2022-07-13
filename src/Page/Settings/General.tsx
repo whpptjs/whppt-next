@@ -1,21 +1,38 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptButton, WhpptTab, WhpptCheckbox } from '../../ui/components';
+import { useWhppt } from '../../Context';
+import { formatSlug } from '../../helpers';
 
 export const General: FC<WhpptTab> = () => {
+  const { domain, api, page } = useWhppt();
+
   const [slug, setSlug] = useState('');
-  const [pageType, setPageType] = useState('');
-  const [pageTemplate, setPageTemplate] = useState('');
+  const [slugError, setSlugError] = useState('');
+  const [validSlug, setValidSlug] = useState('');
+
   const [hideFromXML, setHideFromXML] = useState(false);
 
-  const error = '';
-  const info = '';
+  const saveSlug = () => {
+    const formattedSlug = formatSlug(slug);
+    api.page.checkSlug({ slug: formattedSlug, domain }).then((_page) => {
+      _page ? setSlugError('Slug taken') : setValidSlug(formattedSlug);
+    });
+  };
 
-  const submit = () => {};
+  const duplicatePage = () => {
+    const newPage = {
+      slug: validSlug,
+      domainId: domain._id,
+      pageType: 'page',
+    };
 
-  const duplicatePage = () => {};
+    api.page.create({ page: { ...newPage, _id: undefined } });
+  };
 
-  const deletePage = () => {};
+  const deletePage = () => {
+    api.page.delete(page);
+  };
 
   const handleCheckBox = () => {
     setHideFromXML(!hideFromXML);
@@ -28,6 +45,7 @@ export const General: FC<WhpptTab> = () => {
           <WhpptButton
             text="Duplicate Page"
             icon="duplicate"
+            disabled={!validSlug}
             onClick={duplicatePage}
           />
         </div>
@@ -41,35 +59,18 @@ export const General: FC<WhpptTab> = () => {
             id="whppt-plaintext-input"
             label="Page Slug"
             type="text"
-            error={error}
-            info="Please enter a value"
+            error={slugError}
+            info={`Slug: ${formatSlug(slug)}`}
             value={slug}
             onChange={setSlug}
           />
 
-          <WhpptButton text="Save New Slug" icon="" onClick={() => {}} />
-        </section>
-
-        <section className="whppt-form-section whppt-form-section--bottom-gap">
-          <WhpptInput
-            id="whppt-plaintext-input"
-            label="Page Type"
-            type="text"
-            error={error}
-            info={info}
-            value={pageType}
-            onChange={setPageType}
+          <WhpptButton
+            text="Save New Slug"
+            icon=""
+            disabled={!slug}
+            onClick={saveSlug}
           />
-          <WhpptInput
-            id="whppt-plaintext-input"
-            label="Template"
-            type="text"
-            error={error}
-            info={info}
-            value={pageTemplate}
-            onChange={setPageTemplate}
-          />
-          <WhpptButton text="Change Page Type" icon="" onClick={submit} />
         </section>
 
         <section className="whppt-form-section">

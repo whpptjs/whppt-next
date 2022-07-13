@@ -19,10 +19,14 @@ export const WhpptPage = <T extends PageData = PageData>({
   collection,
   children,
 }: WhpptPageProps<T>) => {
-  const { api, page, setPage, domain } = useWhppt();
+  const { api, page, setPage, setPageSettingsData, domain } = useWhppt();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const getSlug = () => {
+    return router.pathname === "/" ? "" : router.pathname;
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -30,9 +34,10 @@ export const WhpptPage = <T extends PageData = PageData>({
     if (!domain._id) return;
     console.log('🚀 ~ file: Page.tsx ~ line 42 ~ useEffect ~ router', router);
     api.page
-      .loadFromSlug({ slug: router.pathname, collection, domain })
+      .loadFromSlug({ slug: getSlug(), collection, domain })
       .then((loadedPage) => {
         setPage(loadedPage);
+        setPageSettingsData(loadedPage.settings);
       })
       .catch((err) => {
         setError(err.message);

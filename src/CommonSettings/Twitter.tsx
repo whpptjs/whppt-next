@@ -1,18 +1,17 @@
 import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
+import { splitKeywords } from "../helpers";
+import { TwitterData } from "./Model/SettingsData";
 
-export const Twitter: FC<WhpptTab> = () => {
-  const [title, setTitle] = useState("");
-  const [keyWords, setKeywords] = useState("");
-  const [description, setDescription] = useState("");
+type TwitterProps = WhpptTab & TwitterData & {
+  save: (title, keywords, description) => void;
+};
 
-  const submit = () => {
-    // TODO: Deal with meta data keywords.
-    //const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
-    //const twitterSettings = { title, description, keywords: keyWordsArray};
-    //setPage(...page, twitterSettings)
-  };
+export const Twitter: FC<TwitterProps> = ({ save, ...props }) => {
+  const [title, setTitle] = useState(props.title || "");
+  const [keyWords, setKeywords] = useState((props.keywords && props.keywords.join(', ')) || "");
+  const [description, setDescription] = useState(props.description || "");
 
   const error = "";
   const info = "";
@@ -24,8 +23,7 @@ export const Twitter: FC<WhpptTab> = () => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={submit}
-            disabled={!title || !keyWords || !description}
+            onClick={() => save(title, splitKeywords(keyWords), description)}
           />
         </div>
       </section>

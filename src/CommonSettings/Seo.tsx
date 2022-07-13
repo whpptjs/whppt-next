@@ -1,5 +1,7 @@
 import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
+import { splitKeywords } from "../helpers";
+import { SeoData } from "./Model/SettingsData";
 
 import {
   WhpptButton,
@@ -7,30 +9,19 @@ import {
   WhpptTab,
 } from "../ui/components";
 
-export const Seo: FC<WhpptTab> = () => {
-  const [title, setTitle] = useState("");
-  const [keyWords, setKeywords] = useState("");
-  const [description, setDescription] = useState("");
-  const [priorityLevel, setPriorityLevel] = useState("");
-  const [changeFrequency, setChangeFrequency] = useState("");
+type SeoProps = WhpptTab & SeoData & {
+  save: (title, keywords, description, priority, frequency) => void;
+}
+
+export const Seo: FC<SeoProps> = ({ save, ...props }) => {
+  const [title, setTitle] = useState(props.title || "");
+  const [keyWords, setKeywords] = useState(props.keywords && props.keywords.join(', ') || "");
+  const [description, setDescription] = useState(props.description || "");
+  const [priority, setPriority] = useState(props.priority || "");
+  const [frequency, setFrequency] = useState(props.frequency || "");
 
   const error = "";
   const info = "";
-
-  const submit = () => {
-    // const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
-    // const seoSettings = {
-    //   title,
-    //   keyWords,
-    //   description,
-    //   priority: {
-    //     priorityLevel,
-    //     changeFrequency
-    //   },
-    //   hideFromXML
-    // }
-    // setPage(...page, seoSettings)
-  };
 
   return (
     <form className="whppt-form">
@@ -39,14 +30,7 @@ export const Seo: FC<WhpptTab> = () => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={submit}
-            disabled={
-              !title ||
-              !keyWords ||
-              !description ||
-              !priorityLevel ||
-              !changeFrequency
-            }
+            onClick={() => save(title, splitKeywords(keyWords), description, priority, frequency)}
           />
         </div>
       </section>
@@ -82,19 +66,21 @@ export const Seo: FC<WhpptTab> = () => {
           id="whppt-plaintext-input"
           label="Priority"
           type="text"
+          placeholder=""
           error={error}
-          info={info}
-          value={priorityLevel}
-          onChange={setPriorityLevel}
+          info={"Set page priority"}
+          value={priority}
+          onChange={setPriority}
         />
         <WhpptInput
           id="whppt-plaintext-input"
           label=""
           type="text"
+          placeholder=""
           error={error}
-          info={info}
-          value={changeFrequency}
-          onChange={setChangeFrequency}
+          info={"Set page frequency"}
+          value={frequency}
+          onChange={setFrequency}
         />
       </section>
     </form>

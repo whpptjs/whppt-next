@@ -1,19 +1,19 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useWhppt } from "../../Context";
 import { WhpptTabs, WhpptTab } from "../../ui/components";
 
-import { Seo } from "../../CommonSettings/Seo";
-import { OpenGraph } from "../../CommonSettings/OpenGraph";
 import { General } from "./General";
-import { Twitter } from "../../CommonSettings/Twitter";
+import { SiteOpenGraph } from "./SiteOpenGraph";
+import { SiteSeo } from "./SiteSeo";
+import { SiteTwitter } from "./SiteTwitter";
 import { Redirects } from "./Redirects";
 import { Files } from "./Files";
-import { Banner } from "./Banner";
+//import { Banner } from "./Banner";
 
 export type WhpptSelectedType = string;
 
 export const SiteSettings: FC = () => {
-  const { siteSettings, changeSiteSettingsActiveTab } = useWhppt();
+  const { api, domain, siteSettings, changeSiteSettingsActiveTab, setSettingsData } = useWhppt();
 
   const tabs: Array<WhpptTab> = [
     { name: "general", label: "General" },
@@ -22,8 +22,16 @@ export const SiteSettings: FC = () => {
     { name: "twitter", label: "Twitter" },
     { name: "redirects", label: "Redirects" },
     { name: "files", label: "Files" },
-    { name: "banner", label: "Banner" }
+    // { name: "banner", label: "Banner" }
   ];
+
+  useEffect(() => {
+    api.site.settings
+      .load({domain})
+      .then((settings) => {
+        setSettingsData(settings);
+      });
+  }, []);
 
   return (
     <div>
@@ -34,12 +42,12 @@ export const SiteSettings: FC = () => {
       />
       <WhpptTab selectedTab={siteSettings.activeTab}>
         <General name="general" label="General" />
-        <Seo name="s-e-o" label="Seo" />
-        <OpenGraph name="open-graph" label="Open Graph" />
-        <Twitter name="twitter" label="Twitter" />
+        <SiteSeo name="s-e-o" label="Seo" />
+        <SiteOpenGraph name="open-graph" label="Open Graph" />
+        <SiteTwitter name="twitter" label="Twitter" />
         <Redirects name="redirects" label="Redirects" />
         <Files name="files" label="Files" />
-        <Banner name="banner" label="Banner" />
+        {/* <Banner name="banner" label="Banner" /> */}
       </WhpptTab>
     </div>
   );

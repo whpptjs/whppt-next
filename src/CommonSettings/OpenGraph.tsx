@@ -1,17 +1,17 @@
 import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
+import { splitKeywords } from "../helpers";
+import { OpenGraphData } from "./Model/SettingsData";
 
-export const OpenGraph: FC<WhpptTab> = () => {
-  const [title, setTitle] = useState("");
-  const [keyWords, setKeywords] = useState("");
-  const [description, setDescription] = useState("");
+type OpenGraphProps = WhpptTab & OpenGraphData & {
+  save: (title, keywords, description) => void;
+};
 
-  const submit = () => {
-    //const keyWordsArray = keyWords.replace(/ +/g, '').split(','); TODO: Move to helper and import?
-    //const openGraphSettings = { title, description, keywords: keyWordsArray};
-    //setPage(...page, openGraphSettings)
-  };
+export const OpenGraph: FC<OpenGraphProps> = ({ save, ...props }) => {
+  const [title, setTitle] = useState(props.title || "");
+  const [keyWords, setKeywords] = useState((props.keywords && props.keywords.join(', ')) || "");
+  const [description, setDescription] = useState(props.description || "");
 
   const error = "";
   const info = "";
@@ -23,8 +23,7 @@ export const OpenGraph: FC<WhpptTab> = () => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={submit}
-            disabled={!title || !keyWords || !description}
+            onClick={() => save(title, splitKeywords(keyWords), description)}
           />
         </div>
       </section>
