@@ -3,9 +3,10 @@ import { WhpptInput } from "../ui/components/Input";
 import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
 import { splitKeywords } from "../helpers";
 import { OpenGraphData } from "./Model/SettingsData";
+import { toast } from 'react-toastify';
 
 type OpenGraphProps = WhpptTab & OpenGraphData & {
-  save: (title, keywords, description) => void;
+  save: (title, keywords, description) => Promise<unknown>;
 };
 
 export const OpenGraph: FC<OpenGraphProps> = ({ save, ...props }) => {
@@ -16,6 +17,16 @@ export const OpenGraph: FC<OpenGraphProps> = ({ save, ...props }) => {
   const error = "";
   const info = "";
 
+  const confirm = () => {
+    const update = save(title, splitKeywords(keyWords), description);
+
+    toast.promise(update, {
+      pending: 'Saving...',
+      success: 'Open Graph settings saved',
+      error: 'Open Graph settings failed saving 🤯',
+    });
+  };
+
   return (
     <form className="whppt-form">
       <section className="whppt-form-page-settings__actions">
@@ -23,7 +34,7 @@ export const OpenGraph: FC<OpenGraphProps> = ({ save, ...props }) => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={() => save(title, splitKeywords(keyWords), description)}
+            onClick={confirm}
           />
         </div>
       </section>

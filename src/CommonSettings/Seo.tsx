@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { splitKeywords } from "../helpers";
 import { SeoData } from "./Model/SettingsData";
+import { toast } from 'react-toastify';
 
 import {
   WhpptButton,
@@ -10,7 +11,7 @@ import {
 } from "../ui/components";
 
 type SeoProps = WhpptTab & SeoData & {
-  save: (title, keywords, description, priority, frequency) => void;
+  save: (title, keywords, description, priority, frequency) => Promise<unknown>;
 }
 
 export const Seo: FC<SeoProps> = ({ save, ...props }) => {
@@ -23,6 +24,16 @@ export const Seo: FC<SeoProps> = ({ save, ...props }) => {
   const error = "";
   const info = "";
 
+  const confirm = () => {
+    const update = save(title, splitKeywords(keyWords), description, priority, frequency);
+
+    toast.promise(update, {
+      pending: 'Saving...',
+      success: 'Seo settings saved',
+      error: 'Seo settings failed saving 🤯',
+    });
+  };
+
   return (
     <form className="whppt-form">
       <section className="whppt-form-page-settings__actions">
@@ -30,7 +41,7 @@ export const Seo: FC<SeoProps> = ({ save, ...props }) => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={() => save(title, splitKeywords(keyWords), description, priority, frequency)}
+            onClick={confirm}
           />
         </div>
       </section>

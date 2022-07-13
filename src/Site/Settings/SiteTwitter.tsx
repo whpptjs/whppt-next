@@ -8,13 +8,10 @@ export const SiteTwitter = ({ name, label}) => {
   const save = (title, keywords, description) => {
     const settings = { ...settingsData, twitter: { title, keywords, description} }
 
-    api.site.settings
+    return api.site.settings
       .save({ settings, domain })
       .then(() => {
         setSettingsData(settings);
-      })
-      .catch(() => {
-        console.log('ERROR!');
       });
   }
 

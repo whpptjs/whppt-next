@@ -9,13 +9,10 @@ export const PageSeo = ({ name, label }) => {
     const settings = { ...pageSettingsData, seo: { title, keywords, description, priority, frequency }};
     const updatedPage = {...page, settings: {...settings}};
 
-    api.page
+    return api.page
       .create({ page: { ...updatedPage }})
       .then(() => {
         setPageSettingsData(settings);
-      })
-      .catch(() => {
-        console.log('ERROR!');
       });
   }
 

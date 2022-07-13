@@ -8,13 +8,10 @@ export const SiteSeo = ({ name, label}) => {
   const save = (title, keywords, description, priority, frequency) => {
     const settings = { ...settingsData, seo: { title, keywords, description, priority, frequency} };
 
-    api.site.settings
+    return api.site.settings
       .save({ settings, domain })
       .then(() => {
         setSettingsData(settings);
-      })
-      .catch(() => {
-        console.log('ERROR!');
       });
   }
 

@@ -3,6 +3,7 @@ import { WhpptInput } from '../../ui/components/Input';
 import { WhpptButton, WhpptTab, WhpptCheckbox } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
+import { toast } from 'react-toastify';
 
 export const General: FC<WhpptTab> = () => {
   const { domain, api, page } = useWhppt();
@@ -15,8 +16,14 @@ export const General: FC<WhpptTab> = () => {
 
   const saveSlug = () => {
     const formattedSlug = formatSlug(slug);
-    api.page.checkSlug({ slug: formattedSlug, domain }).then((_page) => {
+    const slugCheck = api.page.checkSlug({ slug: formattedSlug, domain }).then((_page) => {
       _page ? setSlugError('Slug taken') : setValidSlug(formattedSlug);
+    });
+
+    toast.promise(slugCheck, {
+      pending: 'Checking slug...',
+      success: 'Slug saved',
+      error: 'Slug asve failed 🤯',
     });
   };
 
@@ -27,11 +34,23 @@ export const General: FC<WhpptTab> = () => {
       pageType: 'page',
     };
 
-    api.page.create({ page: { ...newPage, _id: undefined } });
+    const pageDulpicate = api.page.create({ page: { ...newPage, _id: undefined } });
+
+    toast.promise(pageDulpicate, {
+      pending: 'Duplicating page...',
+      success: 'Page Duplicated',
+      error: 'Page duplicate failed 🤯',
+    });
   };
 
   const deletePage = () => {
-    api.page.delete(page);
+    const pageDelete = api.page.delete(page);
+
+    toast.promise(pageDelete, {
+      pending: 'Deleting Page...',
+      success: 'Page deleted',
+      error: 'Page delete failed 🤯',
+    });
   };
 
   const handleCheckBox = () => {

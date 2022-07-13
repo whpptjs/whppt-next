@@ -2,23 +2,42 @@ import React, { FC } from 'react';
 import { Heading } from '../../ui/components/Heading';
 import { WhpptButton, WhpptTab } from "../../ui/components";
 import { useWhppt } from '../../Context';
+import { toast } from 'react-toastify';
 
 export const General: FC<WhpptTab> = () => {
   const { api, settingsData, nav, footer } = useWhppt();
 
   const publishSettings = () => {
-    api.site.settings
+    const publish = api.site.settings
       .publish({settings: settingsData});
+    
+    toast.promise(publish, {
+      pending: 'Publishing Site settings...',
+      success: 'Site settings published',
+      error: 'Publishing Site settings failed 🤯',
+    });
   }
 
   const publishNav = () => {
-    api.site.settings
+    const publish = api.site.settings
       .publishNav({nav});
+
+    toast.promise(publish, {
+      pending: 'Publishing Site Nav...',
+      success: 'Site Nav published',
+      error: 'Publishing Nav failed 🤯',
+    });
   }
 
   const publishFooter = () => {
-    api.site.settings
+    const publish = api.site.settings
       .publishFooter({footer});
+
+    toast.promise(publish, {
+      pending: 'Publishing Site Footer...',
+      success: 'Site Footer published',
+      error: 'Publishing Footer failed 🤯',
+    });
   }
 
   const saveNewSlug = () => {

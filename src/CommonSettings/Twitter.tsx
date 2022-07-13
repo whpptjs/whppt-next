@@ -3,9 +3,10 @@ import { WhpptInput } from "../ui/components/Input";
 import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
 import { splitKeywords } from "../helpers";
 import { TwitterData } from "./Model/SettingsData";
+import { toast } from 'react-toastify';
 
 type TwitterProps = WhpptTab & TwitterData & {
-  save: (title, keywords, description) => void;
+  save: (title, keywords, description) => Promise<unknown>;
 };
 
 export const Twitter: FC<TwitterProps> = ({ save, ...props }) => {
@@ -16,6 +17,16 @@ export const Twitter: FC<TwitterProps> = ({ save, ...props }) => {
   const error = "";
   const info = "";
 
+  const confirm = () => {
+    const update = save(title, splitKeywords(keyWords), description);
+
+    toast.promise(update, {
+      pending: 'Saving...',
+      success: 'Twitter settings saved',
+      error: 'Twitter settings failed saving 🤯',
+    });
+  };
+
   return (
     <form className="whppt-form">
       <section className="whppt-form-page-settings__actions">
@@ -23,7 +34,7 @@ export const Twitter: FC<TwitterProps> = ({ save, ...props }) => {
           <WhpptButton
             icon=""
             text="Save Settings"
-            onClick={() => save(title, splitKeywords(keyWords), description)}
+            onClick={confirm}
           />
         </div>
       </section>
