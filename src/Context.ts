@@ -5,6 +5,7 @@ import * as editor from "./Editor/Context";
 import * as site from "./Site/Context";
 import * as security from "./Security/Context";
 import * as page from "./Page/Context";
+import * as dashboard from "./Dashboard/Context"
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
@@ -12,6 +13,7 @@ export const Whppt = createContext({
   ...app.Context(app.defaultArgs),
   ...site.Context(site.defaultArgs),
   ...page.Context(page.defaultArgs),
+  ...dashboard.Context(dashboard.defaultArgs),
   api: Api(),
 });
 

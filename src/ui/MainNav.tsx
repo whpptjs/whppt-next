@@ -28,6 +28,8 @@ export const WhpptMainNav: FC<{
     editorState,
     hideEditor,
     setUser,
+    dashboard,
+    toggleDashboard
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
@@ -45,6 +47,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleSiteSettings(false);
+        toggleDashboard(false);
       },
       isActive: editing,
       order: 200,
@@ -61,6 +64,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleSiteSettings(false);
+        toggleDashboard(false);
         showEditor('newPage', undefined, undefined, undefined);
       },
       order: 300,
@@ -113,6 +117,7 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
+        toggleDashboard(false);
         toggleAppSettings();
         hideEditor();
         Cookies.set('authToken', 'THIS IS A TEST');
@@ -131,6 +136,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
+        toggleDashboard(false);
         toggleSiteSettings();
         hideEditor();
       },
@@ -147,6 +153,7 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings();
         toggleEditing(false);
+        toggleDashboard(false);
         hideEditor();
       },
       isActive: pageSettings.visible,
@@ -157,6 +164,15 @@ export const WhpptMainNav: FC<{
     {
       key: 'dashboard',
       label: 'Open Dashboard',
+      action: () => {
+        toggleSiteSettings(false);
+        togglePageSettings(false);
+        toggleEditing(false);
+        toggleAppSettings(false);
+        toggleDashboard();
+        hideEditor();
+      },
+      isActive: dashboard.visible,
       icon: 'dashboard',
       order: 1100,
       group: 'config',

@@ -2,6 +2,12 @@ import React, { FC, useId } from 'react';
 import { WhpptIcon } from './Icon';
 import { WhpptPagination } from './Pagination';
 
+export type WhpptTableHeader = {
+  text: string;
+  align: string;
+  value: string;
+};
+
 type WhpptTableProps = {
   headers: any[];
   perPage: number;

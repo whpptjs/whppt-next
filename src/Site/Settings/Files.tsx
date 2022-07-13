@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { WhpptTab } from '../../ui/components';
 import { WhpptInput } from '../../ui/components/Input';
-import { WhpptTable } from '../../ui/components/Table';
+import { WhpptTable, WhpptTableHeader } from '../../ui/components/Table';
 import { WhpptButton } from '../../ui/components/Button';
 
 export const Files: FC<WhpptTab> = () => {
@@ -9,7 +9,7 @@ export const Files: FC<WhpptTab> = () => {
     { text: 'Name', align: 'start', value: 'name' },
     { text: 'Description', align: 'start', value: 'description' },
     { text: 'Actions', align: 'start', value: 'actions' },
-  ] as any;
+  ] as WhpptTableHeader[];
 
   const items = [
     {

@@ -26,7 +26,7 @@ export const SiteSettings: FC = () => {
   ];
 
   return (
-    <div>
+    <>
       <WhpptTabs
         tabs={tabs}
         selectTab={changeSiteSettingsActiveTab}
@@ -41,6 +41,6 @@ export const SiteSettings: FC = () => {
         <Files name="files" label="Files" />
         <Banner name="banner" label="Banner" />
       </WhpptTab>
-    </div>
+    </>
   );
 };

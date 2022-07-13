@@ -5,12 +5,14 @@ import { WhpptEditorPanel } from './Editor/EditorPanel';
 import { SettingsPanel } from './ui/SettingsPanel';
 import { WhpptMainNav } from './ui/MainNav';
 import { Api } from './Api';
+import { WhpptLogin } from './ui/Login';
+
 import * as editor from './Editor/Context';
 import * as appContext from './App/Context';
 import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
-import { WhpptLogin } from './ui/Login';
+import * as dashboardContext from './Dashboard/Context';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -46,6 +48,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [siteSettings, setSiteSettings] = useState(
     siteContext.defaultSiteSettingsState
   );
+  const [dashboard, setDashboard] = useState(dashboardContext.defaulDashboardState);
   const [user, setUser] = useState(securityContext.defaultState);
 
   const context = useMemo(
@@ -80,6 +83,10 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         setFooter,
         initFooter,
       }),
+      ...dashboardContext.Context({
+        dashboard,
+        setDashboard
+      }),
       ...securityContext.Context({ user, setUser }),
     }),
     [
@@ -93,6 +100,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       appSettings,
       siteSettings,
       user,
+      dashboard
     ]
   );
 
