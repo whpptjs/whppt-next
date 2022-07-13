@@ -5,7 +5,7 @@ export type WhpptInputArgs = {
   label: string;
   info: string;
   error: string;
-  type: 'text' | 'number' | 'file';
+  type: 'text' | 'number' | 'file' | 'password' | 'email';
   placeholder?: string;
   name?: string;
   onChangeEvent?: (event) => void;
