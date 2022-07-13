@@ -1,28 +1,20 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
 import { splitKeywords } from "../helpers";
+import { TwitterData } from "./Model/SettingsData";
 
-type TwitterProps = WhpptTab & {
-  save: (title, keywords, description) => void
-  loadedTwitterData: any;
+type TwitterProps = WhpptTab & TwitterData & {
+  save: (title, keywords, description) => void;
 };
 
-export const Twitter: FC<TwitterProps> = ({ save, loadedTwitterData }) => {
-  const [title, setTitle] = useState("");
-  const [keyWords, setKeywords] = useState("");
-  const [description, setDescription] = useState("");
+export const Twitter: FC<TwitterProps> = ({ save, ...props }) => {
+  const [title, setTitle] = useState(props.title || "");
+  const [keyWords, setKeywords] = useState((props.keywords && props.keywords.join(', ')) || "");
+  const [description, setDescription] = useState(props.description || "");
 
   const error = "";
   const info = "";
-
-  useEffect(() => {
-    if (loadedTwitterData) {
-      setTitle(loadedTwitterData.title);
-      setKeywords(loadedTwitterData.keywords.join(','));
-      setDescription(loadedTwitterData.description);
-    }
-  }, []);
 
   return (
     <form className="whppt-form">
@@ -32,7 +24,6 @@ export const Twitter: FC<TwitterProps> = ({ save, loadedTwitterData }) => {
             icon=""
             text="Save Settings"
             onClick={() => save(title, splitKeywords(keyWords), description)}
-            disabled={!title || !keyWords || !description}
           />
         </div>
       </section>

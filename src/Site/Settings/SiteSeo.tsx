@@ -6,13 +6,28 @@ export const SiteSeo = ({ name, label}) => {
   const { api, domain, settingsData, setSettingsData } = useWhppt();
 
   const save = (title, keywords, description, priority, frequency) => {
-    const settings = { ...settingsData, seo: { title, keywords, description, priority, frequency } }
+    const settings = { ...settingsData, seo: { title, keywords, description, priority, frequency} };
 
     api.site.settings
-      .save({settings, domain});
-
-    setSettingsData(settings);
+      .save({ settings, domain })
+      .then(() => {
+        setSettingsData(settings);
+      })
+      .catch(() => {
+        console.log('ERROR!');
+      });
   }
 
-  return <Seo name={name} label={label} save={save} loadedSeoData={settingsData && settingsData.seo} />
+  return (
+    <Seo
+      name={name}
+      label={label}
+      save={save}
+      title={settingsData.seo && settingsData.seo.title}
+      keywords={settingsData.seo && settingsData.seo.keywords}
+      description={settingsData.seo && settingsData.seo.description}
+      priority={settingsData.seo && settingsData.seo.priority}
+      frequency={settingsData.seo && settingsData.seo.frequency}
+    />
+  );
 };

@@ -10,10 +10,23 @@ export const PageTwitter = ({ name, label }) => {
     const updatedPage = {...page, settings: {...settings}};
 
     api.page
-      .create({ page: { ...updatedPage }});
-
-    setPageSettingsData(settings);
+      .create({ page: { ...updatedPage }})
+      .then(() => {
+        setPageSettingsData(settings);
+      })
+      .catch(() => {
+        console.log('ERROR!');
+      });
   }
 
-  return <Twitter name={name} label={label} save={save} loadedTwitterData={pageSettingsData && pageSettingsData.twitter} />
-}
+  return (
+    <Twitter
+      name={name}
+      label={label}
+      save={save}
+      title={pageSettingsData.twitter && pageSettingsData.twitter.title}
+      keywords={pageSettingsData.twitter && pageSettingsData.twitter.keywords}
+      description={pageSettingsData.twitter && pageSettingsData.twitter.description}
+     />
+  );
+};

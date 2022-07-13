@@ -10,10 +10,25 @@ export const PageSeo = ({ name, label }) => {
     const updatedPage = {...page, settings: {...settings}};
 
     api.page
-      .create({ page: { ...updatedPage }});
-
-    setPageSettingsData(settings);
+      .create({ page: { ...updatedPage }})
+      .then(() => {
+        setPageSettingsData(settings);
+      })
+      .catch(() => {
+        console.log('ERROR!');
+      });
   }
 
-  return <Seo name={name} label={label} save={save} loadedSeoData={pageSettingsData && pageSettingsData.seo} />
+  return (
+    <Seo
+      name={name}
+      label={label}
+      save={save}
+      title={pageSettingsData.seo && pageSettingsData.seo.title}
+      keywords={pageSettingsData.seo && pageSettingsData.seo.keywords}
+      description={pageSettingsData.seo && pageSettingsData.seo.description}
+      priority={pageSettingsData.seo && pageSettingsData.seo.priority}
+      frequency={pageSettingsData.seo && pageSettingsData.seo.frequency}
+     />
+  );
 };

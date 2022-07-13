@@ -1,6 +1,7 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import { WhpptInput } from "../ui/components/Input";
 import { splitKeywords } from "../helpers";
+import { SeoData } from "./Model/SettingsData";
 
 import {
   WhpptButton,
@@ -8,30 +9,19 @@ import {
   WhpptTab,
 } from "../ui/components";
 
-type SeoProps = WhpptTab & {
+type SeoProps = WhpptTab & SeoData & {
   save: (title, keywords, description, priority, frequency) => void;
-  loadedSeoData: any;
 }
 
-export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
-  const [title, setTitle] = useState("");
-  const [keyWords, setKeywords] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const [frequency, setFrequency] = useState("");
+export const Seo: FC<SeoProps> = ({ save, ...props }) => {
+  const [title, setTitle] = useState(props.title || "");
+  const [keyWords, setKeywords] = useState(props.keywords && props.keywords.join(', ') || "");
+  const [description, setDescription] = useState(props.description || "");
+  const [priority, setPriority] = useState(props.priority || "");
+  const [frequency, setFrequency] = useState(props.frequency || "");
 
   const error = "";
   const info = "";
-
-  useEffect(() => {
-    if (loadedSeoData) {
-      setTitle(loadedSeoData.title);
-      setKeywords(loadedSeoData.keywords.join(','));
-      setDescription(loadedSeoData.description);
-      setPriority(loadedSeoData.priority);
-      setFrequency(loadedSeoData.frequency);
-    }
-  }, []);
 
   return (
     <form className="whppt-form">
@@ -41,13 +31,6 @@ export const Seo: FC<SeoProps> = ({ save, loadedSeoData }) => {
             icon=""
             text="Save Settings"
             onClick={() => save(title, splitKeywords(keyWords), description, priority, frequency)}
-            disabled={
-              !title ||
-              !keyWords ||
-              !description ||
-              !priority ||
-              !frequency
-            }
           />
         </div>
       </section>

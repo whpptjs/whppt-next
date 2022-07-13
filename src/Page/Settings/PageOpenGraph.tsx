@@ -6,14 +6,27 @@ export const PageOpenGraph = ({ name, label }) => {
   const { api, page, pageSettingsData, setPageSettingsData } = useWhppt();
 
   const save = (title, keywords, description) => {
-    const settings = { ...pageSettingsData, og: { title, keywords, description }}
+    const settings = { ...pageSettingsData, og: { title, keywords, description }};
     const updatedPage = {...page, settings: {...settings}};
 
     api.page
-      .create({ page: { ...updatedPage }});
-
-    setPageSettingsData(settings);
+      .create({ page: { ...updatedPage }})
+      .then(() => {
+        setPageSettingsData(settings);
+      })
+      .catch(() => {
+        console.log('ERROR!');
+      });
   }
 
-  return <OpenGraph name={name} label={label} save={save} loadedOgData={pageSettingsData && pageSettingsData.og} />
+  return (
+    <OpenGraph
+      name={name}
+      label={label}
+      save={save}
+      title={pageSettingsData.og && pageSettingsData.og.title}
+      keywords={pageSettingsData.og && pageSettingsData.og.keywords}
+      description={pageSettingsData.og && pageSettingsData.og.description}
+    />
+  )
 }
