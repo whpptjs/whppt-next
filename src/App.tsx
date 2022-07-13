@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
 import { Whppt } from './Context';
+import { ToastContainer } from 'react-toastify';
 import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
 import { WhpptEditorPanel } from './Editor/EditorPanel';
 import { SettingsPanel } from './ui/SettingsPanel';
@@ -143,6 +144,18 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
               ) : (
                 <WhpptLogin />
               )}
+              <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme={'colored'}
+              />
             </>
           ) : (
             <></>

@@ -19,7 +19,6 @@ export const WhpptLogin = () => {
     return api.security
       .login(values)
       .then((_user) => {
-        console.log('🚀 ~ file: index.tsx ~ line 22 ~ .then ~ _user', _user);
         setUser(_user);
       })
       .catch(() => {

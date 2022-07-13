@@ -1,4 +1,5 @@
 @import "./fonts.css";
+@import "react-toastify/dist/ReactToastify.css";
 @import "./tailwind.scss";
 @import "./mainNav.scss";
 @import "./editorPanel.scss";
@@ -11,8 +12,10 @@
 @import "./table.scss";
 @import "./pagination.scss";
 @import "./select.scss";
+@import "./siteSettings.scss";
 @import "./form.scss";
 @import "./login.scss";
+@import "./confirmationPopup.scss";
 
 .whppt-app{
     display: flex;
@@ -22,4 +25,8 @@
 }
 .hidden {
     display: none;
+}
+
+.whppt-error {
+    @apply text-red-500
 }

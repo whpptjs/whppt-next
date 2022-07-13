@@ -26,6 +26,7 @@ export const Files: FC<WhpptTab> = () => {
 
   const [description, setDescription] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -62,12 +63,13 @@ export const Files: FC<WhpptTab> = () => {
           headers={headers}
           hideHeaders={false}
           page={currentPage}
-          perPage={5}
+          perPage={perPage}
           total={10}
           dense={true}
           height={''}
           fixedHeader={false}
           setCurrentPage={handlePageChange}
+          setPerPage={setPerPage}
         />
       </section>
     </form>
