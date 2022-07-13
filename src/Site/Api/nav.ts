@@ -4,7 +4,7 @@ import { WhpptHttp } from "../../Api/Http";
 
 export type SiteNavApi = {
   load: ({ domain }) => Promise<Nav<any>>;
-  save: (args: { domain: Domain; nav: Nav<any> }) => Promise<Nav<any>>;
+  save: (args: { domain: Domain; nav: Nav<any>,publish:boolean }) => Promise<Nav<any>>;
 };
 export type SiteNavApiConstructor = ({
   http,
@@ -21,17 +21,18 @@ export const SiteNavApi: SiteNavApiConstructor = ({ http }) => {
         path: `/site/loadNav?domainId=${domain._id}`,
       });
     },
-    save: ({ domain, nav }) => {
+    save: ({ domain, nav, publish }) => {
       if (!domain && domain._id) throw new Error("Invalid Domain");
 
       return http.secure
-        .postJson<{ nav: Nav<any> }, { nav: Nav<any> }>({
+        .postJson<{ nav: Nav<any>, publish:boolean }, { nav: Nav<any> }>({
           path: "/site/saveNav",
           data: {
             nav: {
               domainId: domain._id,
               ...nav,
             },
+            publish
           },
         })
         .then((response) => response.nav);

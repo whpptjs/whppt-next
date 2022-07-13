@@ -5,6 +5,8 @@ import { WhpptIcon } from './components/Icon';
 import { useWhppt } from '../Context';
 import { ToggleWhpptIcon } from '../icons/Toggle';
 import { SavePagePopup } from './Popups/SavePage';
+import { SaveNavPopup } from './Popups/SaveNav';
+import { SaveFooterPopup } from './Popups/SaveFooter';
 
 export const WhpptMainNav: FC<{
   lightMode: boolean;
@@ -21,9 +23,6 @@ export const WhpptMainNav: FC<{
     siteSettings,
     togglePageSettings,
     toggleAppSettings,
-    domain,
-    footer,
-    nav,
     api,
     toggleSiteSettings,
     showEditor,
@@ -84,7 +83,9 @@ export const WhpptMainNav: FC<{
       key: 'nav',
       label: 'Save Navigation',
       icon: 'nav',
-      action: () => api.site.nav.save({ domain, nav }),
+      action: () => {
+        setConfirmationPopup('nav');
+      },
       order: 500,
       group: 'site',
       groupOrder: 300,
@@ -95,20 +96,10 @@ export const WhpptMainNav: FC<{
       icon: 'footer',
       group: 'site',
       groupOrder: 300,
-      //TODO: Handle the api error for save footer. Probably need to move it to the context an toast the message
-      action: () => api.site.footer.save({ domain, footer }),
+      action: () => {
+        setConfirmationPopup('footer');
+      },
       order: 600,
-    },
-    {
-      key: 'publishPage',
-      label: 'Publish Page',
-      icon: 'publish',
-      // icon: this.hasPublishableChanges ? 'publish-with-notification' : 'publish',
-      // disabled: !this.page || !this.page._id,
-      // action: () => this.doEditInModal('publishSettings'),
-      order: 700,
-      group: 'page',
-      groupOrder: 200,
     },
     {
       key: 'config-settings',
@@ -181,6 +172,12 @@ export const WhpptMainNav: FC<{
         <>
           {confirmationPopup === 'save' && (
             <SavePagePopup callback={() => setConfirmationPopup('')} />
+          )}
+          {confirmationPopup === 'nav' && (
+            <SaveNavPopup callback={() => setConfirmationPopup('')} />
+          )}
+          {confirmationPopup === 'footer' && (
+            <SaveFooterPopup callback={() => setConfirmationPopup('')} />
           )}
         </>
       )}

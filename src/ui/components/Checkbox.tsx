@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
+import { WhpptIcon } from './Icon';
 
 type WhpptCheckboxProps = {
   label: string;
-  value: string | ReadonlyArray<string> | number | undefined;
+  value: string;
   onChange: () => void;
 };
 
@@ -14,7 +15,13 @@ export const WhpptCheckbox: FC<WhpptCheckboxProps> = ({
   return (
     <div className="whppt-checkbox">
       <label>
-        <input type="checkbox" value={value} onChange={onChange} />
+        <input
+          className="whppt-checkbox--input"
+          type="checkbox"
+          value={value}
+          onChange={onChange}
+        />
+        <WhpptIcon is={value === 'true' ? 'checkBoxChecked' : 'checkBox'} />
         <span className="whppt-checkbox__label">{label}</span>
         <span className="whppt-checkbox__checkmark"></span>
       </label>

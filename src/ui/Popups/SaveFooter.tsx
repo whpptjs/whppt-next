@@ -5,18 +5,18 @@ import { useWhppt } from '../../Context';
 import { WhpptButton, WhpptCheckbox } from '../components';
 import { ConfirmationPopup } from '../ConfirmationPopup';
 
-export const SavePagePopup: FC<{ callback: () => void }> = ({ callback }) => {
+export const SaveFooterPopup: FC<{ callback: () => void }> = ({ callback }) => {
   const [publish, setPublish] = useState(false);
-  const { api, page } = useWhppt();
+  const { api, footer, domain } = useWhppt();
 
   const confirm = () => {
-    const save = api.page.save({ page, publish }).then(() => {
+    const save = api.site.footer.save({ footer, domain, publish }).then(() => {
       callback();
     });
     toast.promise(save, {
       pending: 'Saving...',
-      success: `Page ${publish ? 'Published' : 'Saved'}`,
-      error: `Page Failed To ${publish ? 'Publish' : 'Save'} 🤯`,
+      success: `Footer ${publish ? 'Published' : 'Saved'}`,
+      error: `Footer Failed To ${publish ? 'Publish' : 'Save'} 🤯`,
     });
   };
 
@@ -24,10 +24,10 @@ export const SavePagePopup: FC<{ callback: () => void }> = ({ callback }) => {
     <ConfirmationPopup close={() => callback()} header="Are you sure?">
       <div>
         <div className="whppt-confirmation-popup-content__children--message">
-          Are you sure you want to save this page?
+          Are you sure you want to save the sites footer?
         </div>
         <WhpptCheckbox
-          label={'Publish page aswell'}
+          label={'Publish footer aswell'}
           value={`${publish}`}
           onChange={() => setPublish(!publish)}
         ></WhpptCheckbox>
