@@ -15,6 +15,7 @@ type WhpptTableProps = {
   page: number;
   total: number;
   setCurrentPage: (page: any) => void;
+  setPerPage: (page: any) => void;
 };
 
 export const WhpptTable: FC<WhpptTableProps> = ({
@@ -29,11 +30,19 @@ export const WhpptTable: FC<WhpptTableProps> = ({
   page,
   total,
   setCurrentPage,
+  setPerPage,
   actions,
 }) => {
   const tableId = useId();
   const tableContainerHeight =
     typeof height === 'number' ? `${height}px` : height;
+  const perPageItems = [
+    { text: '5' },
+    { text: '10' },
+    { text: '25' },
+    { text: '50' },
+    { text: '100' },
+  ];
 
   return (
     <div className={`whppt-table ${dense ? 'whppt-table--dense' : ''}`}>
@@ -54,7 +63,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     className={
                       headers[0].align
                         ? `whppt-table__header--${headers[0].align}`
-                        : ''
+                        : 'whppt-table__header--left'
                     }
                     key="whppt-table-actions"
                   >
@@ -64,7 +73,9 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                 {headers.map((header, index) => (
                   <th
                     className={
-                      header.align ? `whppt-table__header--${header.align}` : ''
+                      header.align
+                        ? `whppt-table__header--${header.align}`
+                        : 'whppt-table__header--left'
                     }
                     key={`header_${tableId}_${index}`}
                   >
@@ -83,11 +94,12 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     <WhpptPagination
                       page={page}
                       perPage={perPage}
-                      perPageItems={[5, 10, 25, 50, 100]}
+                      perPageItems={perPageItems}
                       total={total}
                       dark={true}
                       direction={'down'}
                       changePage={setCurrentPage}
+                      setPerPage={setPerPage}
                     />
                   </div>
                 </td>

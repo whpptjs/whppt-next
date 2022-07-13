@@ -9,11 +9,12 @@ export const DomainsList: FC<{ domains: Domain[]; requery: () => void }> = ({
   requery,
 }) => {
   const headers = [
-    { text: 'Name', align: 'start', value: 'name' },
-    { text: 'Hosts', align: 'start', value: 'hostNameValue' },
+    { text: 'Name', align: 'left', value: 'name' },
+    { text: 'Hosts', align: 'left', value: 'hostNameValue' },
   ] as any;
   const [currentPage, setCurrentPage] = useState(1);
   const [editDomain, setEditDomain] = useState({} as Domain);
+  const [perPage, setPerPage] = useState(5);
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -36,10 +37,11 @@ export const DomainsList: FC<{ domains: Domain[]; requery: () => void }> = ({
           hideFooters={false}
           hideHeaders={false}
           page={currentPage}
-          perPage={5}
+          perPage={perPage}
           height={''}
           fixedHeader={false}
           setCurrentPage={handlePageChange}
+          setPerPage={setPerPage}
           actions={[
             {
               icon: 'edit',
