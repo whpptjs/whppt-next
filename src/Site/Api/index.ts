@@ -1,8 +1,8 @@
-import { WhpptHttp } from "../../Api/Http";
-import { SiteFooterApi } from "./footer";
-import { SiteNavApi } from "./nav";
-import { SitemapApi } from "./sitemap";
-import { SiteRedirectApi } from "./redirect";
+import { WhpptHttp } from '../../Api/Http';
+import { SiteFooterApi } from './footer';
+import { SiteNavApi } from './nav';
+import { SitemapApi } from './sitemap';
+import { SiteRedirectApi } from './redirect';
 
 export type SiteApi = {
   footer: SiteFooterApi;

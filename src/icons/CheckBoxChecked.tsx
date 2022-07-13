@@ -1,12 +1,7 @@
 import React, { FC } from 'react';
 export const WhpptIconCheckBoxChecked: FC = ({}) => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="30.001"
-      height="30"
-      viewBox="0 0 30.001 30"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="30.001" height="30" viewBox="0 0 30.001 30">
       <path
         id="Exclusion_2"
         data-name="Exclusion 2"

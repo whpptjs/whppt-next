@@ -18,7 +18,7 @@ export const WhpptLogin = () => {
     setError(false);
     return api.security
       .login(values)
-      .then((_user) => {
+      .then(_user => {
         setUser(_user);
       })
       .catch(() => {
@@ -34,7 +34,7 @@ export const WhpptLogin = () => {
       <h2 className="whppt-login--header">Whppt CMS</h2>
       <Formik
         initialValues={userToLogin}
-        validate={(values) => {
+        validate={values => {
           const errors = {} as any;
           if (!values.username) {
             errors.username = 'Required';
@@ -44,21 +44,20 @@ export const WhpptLogin = () => {
           }
           return errors;
         }}
-        onSubmit={(values) => {
+        onSubmit={values => {
           login(values);
-        }}
-      >
-        {(props) => (
-          <form onSubmit={props.handleSubmit}>
+        }}>
+        {({ handleSubmit, values, handleChange, errors }) => (
+          <form onSubmit={handleSubmit}>
             <WhpptInput
               id={'login_username'}
               label={'Username / Email*'}
               info={''}
               type={'text'}
               name={'username'}
-              value={props.values.username}
-              onChangeEvent={props.handleChange}
-              error={props.errors.username}
+              value={values.username}
+              onChangeEvent={handleChange}
+              error={errors.username}
             />
             <WhpptInput
               id={'login_password'}
@@ -66,23 +65,15 @@ export const WhpptLogin = () => {
               label={'Password*'}
               info={''}
               type={'password'}
-              value={props.values.password}
-              onChangeEvent={props.handleChange}
-              error={props.errors.password}
+              value={values.password}
+              onChangeEvent={handleChange}
+              error={errors.password}
             />
-            {error && (
-              <div className="whppt-login--error">
-                Opps, We couldn't find you
-              </div>
-            )}
+            {error && <div className="whppt-login--error">Opps, We could not find you</div>}
 
             <div className="whppt-login--actions">
               <div>
-                <WhpptButton
-                  text={'Login'}
-                  type="submit"
-                  onClick={() => props.handleSubmit}
-                />
+                <WhpptButton text={'Login'} type="submit" onClick={() => handleSubmit} />
               </div>
               <WhpptButton
                 text={'Forgotten Password'}

@@ -1,17 +1,8 @@
 import React, { FC } from 'react';
 export const WhpptIconDuplicate: FC = ({}) => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="13.705"
-      height="13.705"
-      viewBox="0 0 13.705 13.705"
-    >
-      <g
-        id="Icon_feather-copy"
-        data-name="Icon feather-copy"
-        transform="translate(-2.5 -2.5)"
-      >
+    <svg xmlns="http://www.w3.org/2000/svg" width="13.705" height="13.705" viewBox="0 0 13.705 13.705">
+      <g id="Icon_feather-copy" data-name="Icon feather-copy" transform="translate(-2.5 -2.5)">
         <path
           id="Path_364"
           data-name="Path 364"

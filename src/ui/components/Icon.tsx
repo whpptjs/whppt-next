@@ -48,8 +48,7 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'globe') return <WhpptIconGlobe></WhpptIconGlobe>;
   if (is === 'settings') return <WhpptIconSettings></WhpptIconSettings>;
   if (is === 'edit') return <WhpptIconEdit></WhpptIconEdit>;
-  if (is === 'page-settings')
-    return <WhpptIconPageSettings></WhpptIconPageSettings>;
+  if (is === 'page-settings') return <WhpptIconPageSettings></WhpptIconPageSettings>;
   if (is === 'dashboard') return <WhpptIconDashboard></WhpptIconDashboard>;
   if (is === 'logout') return <WhpptIconLogout></WhpptIconLogout>;
   if (is === 'bruce') return <WhpptIconBruce></WhpptIconBruce>;
@@ -68,15 +67,13 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'paragraph') return <WhpptIconParagraph></WhpptIconParagraph>;
   if (is === 'left-align') return <WhpptIconLeftAlign></WhpptIconLeftAlign>;
   if (is === 'right-align') return <WhpptIconRightAlign></WhpptIconRightAlign>;
-  if (is === 'center-align')
-    return <WhpptIconCenterAlign></WhpptIconCenterAlign>;
+  if (is === 'center-align') return <WhpptIconCenterAlign></WhpptIconCenterAlign>;
   if (is === 'bin') return <WhpptIconBin></WhpptIconBin>;
   if (is === 'duplicate') return <WhpptIconDuplicate></WhpptIconDuplicate>;
   if (is === 'next') return <WhpptIconNext></WhpptIconNext>;
   if (is === 'previous') return <WhpptIconPrevious></WhpptIconPrevious>;
   if (is === 'down') return <WhpptIconDown></WhpptIconDown>;
-  if (is === 'checkBoxChecked')
-    return <WhpptIconCheckBoxChecked></WhpptIconCheckBoxChecked>;
+  if (is === 'checkBoxChecked') return <WhpptIconCheckBoxChecked></WhpptIconCheckBoxChecked>;
   if (is === 'checkBox') return <WhpptIconCheckBox></WhpptIconCheckBox>;
   return <div></div>;
 };

@@ -1,32 +1,32 @@
-@import "./fonts.css";
-@import "react-toastify/dist/ReactToastify.css";
-@import "./tailwind.scss";
-@import "./mainNav.scss";
-@import "./editorPanel.scss";
-@import "./input.scss";
-@import "./richText.scss";
-@import "./whpptPopup.scss";
-@import "./checkbox.scss";
-@import "./button.scss";
-@import "./pageSettings.scss";
-@import "./table.scss";
-@import "./pagination.scss";
-@import "./select.scss";
-@import "./siteSettings.scss";
-@import "./form.scss";
-@import "./login.scss";
-@import "./confirmationPopup.scss";
+@import './fonts.css';
+@import 'react-toastify/dist/ReactToastify.css';
+@import './tailwind.scss';
+@import './mainNav.scss';
+@import './editorPanel.scss';
+@import './input.scss';
+@import './richText.scss';
+@import './whpptPopup.scss';
+@import './checkbox.scss';
+@import './button.scss';
+@import './pageSettings.scss';
+@import './table.scss';
+@import './pagination.scss';
+@import './select.scss';
+@import './siteSettings.scss';
+@import './form.scss';
+@import './login.scss';
+@import './confirmationPopup.scss';
 
-.whppt-app{
-    display: flex;
-    &__content{
-        @apply flex-1
-    }
+.whppt-app {
+  display: flex;
+  &__content {
+    @apply flex-1;
+  }
 }
 .hidden {
-    display: none;
+  display: none;
 }
 
 .whppt-error {
-    @apply text-red-500
+  @apply text-red-500;
 }

@@ -1,8 +1,8 @@
-import { Footer, Nav, SiteSettings } from "./Model";
+import { Footer, Nav, SiteSettings } from './Model';
 
 export const defaultSiteSettingsState = {
   visible: false,
-  activeTab: "general",
+  activeTab: 'general',
 };
 export const defaultNavState = {} as Nav<any>;
 export const defaultFooterState = {} as Footer<any>;
@@ -19,10 +19,10 @@ export type SiteContextArgs<N, F> = {
 };
 
 export const defaultArgs = {
-  nav: { domainId: "" },
+  nav: { domainId: '' },
   setNav: () => {},
   initNav: () => ({}),
-  footer: { domainId: "" },
+  footer: { domainId: '' },
   setFooter: () => {},
   initFooter: () => {},
   siteSettings: defaultSiteSettingsState,
@@ -37,8 +37,7 @@ export const Context = <N, F>(args: SiteContextArgs<N, F>) => {
     toggleSiteSettings: (visible?: boolean) =>
       args.setSiteSettings({
         ...args.siteSettings,
-        visible:
-          typeof visible === "boolean" ? visible : !args.siteSettings.visible,
+        visible: typeof visible === 'boolean' ? visible : !args.siteSettings.visible,
       }),
     changeSiteSettingsActiveTab: (activeTab: string) => {
       args.setSiteSettings({ ...args.siteSettings, activeTab });

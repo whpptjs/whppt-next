@@ -1,7 +1,5 @@
 .whppt-lightMode {
-
 }
-
 
 .whppt-login {
   @apply text-whpptLightMode fixed inset-0 flex flex-col justify-center items-center bg-whpptDarkBorder;
@@ -12,11 +10,10 @@
     @apply mb-10;
     @apply text-4xl;
   }
-  &--actions{
+  &--actions {
     @apply flex flex-col items-center;
-
   }
-  &--error{
+  &--error {
     @apply my-2  text-red-500;
   }
 }

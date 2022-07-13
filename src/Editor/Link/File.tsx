@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import { WhpptLinkData, WhpptTab } from "../../ui/components";
-import { EditorArgs } from "../EditorArgs";
+import React, { FC } from 'react';
+import { WhpptLinkData, WhpptTab } from '../../ui/components';
+import { EditorArgs } from '../EditorArgs';
 
 export const FileLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = (
   {

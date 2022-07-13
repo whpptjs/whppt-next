@@ -10,18 +10,18 @@ export const Domain: FC<WhpptTab> = () => {
   const [domains, setDomains] = useState([]);
 
   useEffect(() => {
-    api.app.domain.list().then((domains) => {
+    api.app.domain.list().then(domains => {
       setDomains(
-        domains.map((d) => ({
+        domains.map(d => ({
           ...d,
           hostNameValue: d.hostNames && d.hostNames.join(', '),
         }))
       );
     });
     // .catch((err) => setError(err));
-  }, []);
+  }, [api.app.domain]);
   const requery = () => {
-    api.app.domain.list().then((domains) => {
+    api.app.domain.list().then(domains => {
       setDomains(domains);
     });
   };

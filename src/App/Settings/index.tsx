@@ -13,11 +13,7 @@ export const AppSettings: FC = () => {
 
   return (
     <div>
-      <WhpptTabs
-        tabs={tabs}
-        selectTab={changeAppSettingsActiveTab}
-        selectedTab={appSettings.activeTab}
-      />
+      <WhpptTabs tabs={tabs} selectTab={changeAppSettingsActiveTab} selectedTab={appSettings.activeTab} />
       <WhpptTab selectedTab={appSettings.activeTab}>
         <Domain name="domain" label="Domains" />
         <></>

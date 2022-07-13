@@ -32,7 +32,7 @@ export const WhpptMainNav: FC<{
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
-    api.security.verify().then((user) => setUser(user));
+    api.security.verify().then(user => setUser(user));
   };
 
   const items = [
@@ -162,75 +162,43 @@ export const WhpptMainNav: FC<{
     // ...this.$whppt.menuItems.map(i => ({ ...i, action: this.runAction(i.action) })),
   ];
 
-  const groupedItems = sortBy(groupBy(sortBy(items, ['order']), 'group'), [
-    'groupOrder',
-  ]);
+  const groupedItems = sortBy(groupBy(sortBy(items, ['order']), 'group'), ['groupOrder']);
 
   return (
     <div>
       {confirmationPopup && (
         <>
-          {confirmationPopup === 'save' && (
-            <SavePagePopup callback={() => setConfirmationPopup('')} />
-          )}
-          {confirmationPopup === 'nav' && (
-            <SaveNavPopup callback={() => setConfirmationPopup('')} />
-          )}
-          {confirmationPopup === 'footer' && (
-            <SaveFooterPopup callback={() => setConfirmationPopup('')} />
-          )}
+          {confirmationPopup === 'save' && <SavePagePopup callback={() => setConfirmationPopup('')} />}
+          {confirmationPopup === 'nav' && <SaveNavPopup callback={() => setConfirmationPopup('')} />}
+          {confirmationPopup === 'footer' && <SaveFooterPopup callback={() => setConfirmationPopup('')} />}
         </>
       )}
-      <div
-        className={`whppt-main-nav ${
-          showFullNav ? 'whppt-main-nav--show-full-nav' : ''
-        }`}
-      >
-        <div
-          className={`whppt-main-nav-contents  ${
-            showFullNav ? 'whppt-main-nav-contents--show-full-nav' : ''
-          }`}
-        >
+      <div className={`whppt-main-nav ${showFullNav ? 'whppt-main-nav--show-full-nav' : ''}`}>
+        <div className={`whppt-main-nav-contents  ${showFullNav ? 'whppt-main-nav-contents--show-full-nav' : ''}`}>
           <div>
-            <button
-              onClick={() => setShowFullNav()}
-              className="whppt-main-nav__logo"
-            >
+            <button onClick={() => setShowFullNav()} className="whppt-main-nav__logo">
               <div className="whppt-main-nav__icon">
                 <WhpptIcon is="bruce"></WhpptIcon>
               </div>
-              {showFullNav && (
-                <div className="whppt-main-nav__whppt-label">Whppt</div>
-              )}
+              {showFullNav && <div className="whppt-main-nav__whppt-label">Whppt</div>}
             </button>
             <div>
-              {groupedItems.map((navItems) => {
+              {groupedItems.map(navItems => {
                 return (
                   <div className="whppt-main-nav-group" key={navItems[0].group}>
-                    <div className="whppt-main-nav-group--title">
-                      {navItems[0].group}
-                    </div>
+                    <div className="whppt-main-nav-group--title">{navItems[0].group}</div>
                     <ul className="whppt-main-nav-group__content">
-                      {navItems.map((item) => {
+                      {navItems.map(item => {
                         return (
                           <li key={item.key}>
                             <button
                               disabled={item.disabled}
-                              className={`whppt-main-nav-group__nav-item ${
-                                item.isActive
-                                  ? 'whppt-main-nav-group__nav-item--active'
-                                  : ''
-                              }`}
-                              onClick={() => item.action && item.action()}
-                            >
+                              className={`whppt-main-nav-group__nav-item ${item.isActive ? 'whppt-main-nav-group__nav-item--active' : ''}`}
+                              onClick={() => item.action && item.action()}>
                               <div className="whppt-main-nav__icon">
                                 <WhpptIcon is={item.icon}></WhpptIcon>
                               </div>
-                              {showFullNav && (
-                                <div className="whppt-main-nav-group__label">
-                                  {item.label}
-                                </div>
-                              )}
+                              {showFullNav && <div className="whppt-main-nav-group__label">{item.label}</div>}
                             </button>
                           </li>
                         );
@@ -243,29 +211,17 @@ export const WhpptMainNav: FC<{
           </div>
 
           <div>
-            <button
-              className="whppt-main-nav-group__nav-item"
-              onClick={() => logout()}
-            >
+            <button className="whppt-main-nav-group__nav-item" onClick={() => logout()}>
               <div className="whppt-main-nav__icon">
                 <WhpptIcon is={'logout'}></WhpptIcon>
               </div>
-              {showFullNav && (
-                <div className="whppt-main-nav-group__label">Log Out</div>
-              )}
+              {showFullNav && <div className="whppt-main-nav-group__label">Log Out</div>}
             </button>
-            <button
-              onClick={() => setLightMode()}
-              className="whppt-main-nav-group__toggle"
-            >
+            <button onClick={() => setLightMode()} className="whppt-main-nav-group__toggle">
               <div className="whppt-main-nav__icon">
                 <ToggleWhpptIcon active={lightMode} />
               </div>
-              {showFullNav && (
-                <div className="whppt-main-nav-group__toggle--label ">
-                  {lightMode ? 'Light Mode' : 'Dark Mode'}
-                </div>
-              )}
+              {showFullNav && <div className="whppt-main-nav-group__toggle--label ">{lightMode ? 'Light Mode' : 'Dark Mode'}</div>}
             </button>
           </div>
         </div>

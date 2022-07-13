@@ -1,6 +1,6 @@
-import { compact } from "lodash";
-import { Domain } from "../../App/Model";
-import { WhpptHttp } from "../../Api/Http";
+import { compact } from 'lodash';
+import { Domain } from '../../App/Model';
+import { WhpptHttp } from '../../Api/Http';
 export type SitemapData = {
   slug: string;
   updatedAt: Date;
@@ -34,26 +34,12 @@ export type SitemapResult = {
 export type SitemapApi = {
   load: (filter: SitemapFilter) => Promise<SitemapResult>;
 };
-export type SitemapApiConstructor = ({
-  http,
-}: {
-  http: WhpptHttp;
-}) => SitemapApi;
+export type SitemapApiConstructor = ({ http }: { http: WhpptHttp }) => SitemapApi;
 
 export const SitemapApi: SitemapApiConstructor = ({ http }) => {
   return {
-    load: ({
-      domain,
-      page,
-      size,
-      slug,
-      freq,
-      pageType,
-      priority,
-      lastModTo,
-      lastModFrom,
-    }) => {
-      if (!domain && domain._id) throw new Error("Invalid Domain");
+    load: ({ domain, page, size, slug, freq, pageType, priority, lastModTo, lastModFrom }) => {
+      if (!domain && domain._id) throw new Error('Invalid Domain');
 
       const params = compact([
         domain._id && `domainId=${domain._id}`,
@@ -66,10 +52,10 @@ export const SitemapApi: SitemapApiConstructor = ({ http }) => {
         lastModTo && `lastModTo=${lastModTo}`,
         lastModFrom && `lastModFrom=${lastModFrom}`,
       ]);
-      console.log("🚀 ~ file: sitemap.ts ~ line 64 ~ params", params);
+      console.log('🚀 ~ file: sitemap.ts ~ line 64 ~ params', params);
 
       return http.secure.getJson<SitemapResult>({
-        path: `/site/loadSitemap?${params.join("&")}`,
+        path: `/site/loadSitemap?${params.join('&')}`,
       });
     },
   };

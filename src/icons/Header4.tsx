@@ -1,16 +1,7 @@
 import React, { FC } from 'react';
 export const WhpptIconHeader4: FC = ({}) => {
   return (
-    <svg
-      id="Layer_1"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      x="0px"
-      y="0px"
-      viewBox="0 0 512 512"
-      height="20"
-      width="20"
-    >
+    <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 512 512" height="20" width="20">
       <g>
         <path
           d="M68.27,221.86h136.54V119.46c0-18.87,15.27-34.14,34.14-34.14s34.14,15.27,34.14,34.14v273.08
