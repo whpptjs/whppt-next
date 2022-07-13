@@ -22,7 +22,7 @@ export const SiteSettings: FC = () => {
     { name: "twitter", label: "Twitter" },
     { name: "redirects", label: "Redirects" },
     { name: "files", label: "Files" },
-    { name: "banner", label: "Banner" }
+    // { name: "banner", label: "Banner" }
   ];
 
   useEffect(() => {

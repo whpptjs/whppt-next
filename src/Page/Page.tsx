@@ -19,7 +19,7 @@ export const WhpptPage = <T extends PageData = PageData>({
   collection,
   children,
 }: WhpptPageProps<T>) => {
-  const { api, page, setPage, domain } = useWhppt();
+  const { api, page, setPage, setPageSettingsData, domain } = useWhppt();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -36,6 +36,7 @@ export const WhpptPage = <T extends PageData = PageData>({
       .loadFromSlug({ slug: getSlug(), collection, domain })
       .then((loadedPage) => {
         setPage(loadedPage);
+        setPageSettingsData(loadedPage.settings);
       })
       .catch((err) => {
         setError(err.message);
