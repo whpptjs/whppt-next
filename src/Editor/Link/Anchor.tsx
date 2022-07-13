@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { WhpptInput, WhpptLinkData, WhpptTab } from "../../ui/components";
 import { EditorArgs } from "../EditorArgs";
 
-export const ExternalLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({
+export const AnchorLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({
   value,
   onChange,
 }) => {
@@ -21,10 +21,10 @@ export const ExternalLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({
 
         <WhpptInput
           id="whppt-editor-link-href"
-          label="External url to link to"
+          label="Anchor on the page to link to"
           type="text"
           error=""
-          info=""
+          info="eg. #anchor"
           value={value.text}
           onChange={(text) => onChange({ ...value, text })}
         />

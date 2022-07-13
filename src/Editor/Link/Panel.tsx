@@ -1,13 +1,14 @@
 import React, { FC } from "react";
 import { WhpptLinkData, WhpptTab, WhpptTabs } from "../../ui/components";
 import { EditorArgs } from "../EditorArgs";
+import { AnchorLinkTab } from "./Anchor";
 import { ExternalLinkTab } from "./External";
+import { FileLinkTab } from "./File";
 import { PageLinkTab } from "./Page";
 
 export const WhpptLinkEditor: FC<EditorArgs<WhpptLinkData>> = ({
   value,
   onChange,
-  options,
 }) => {
   const tabs: Array<WhpptTab> = [
     { name: "page", label: "Page" },
@@ -17,7 +18,7 @@ export const WhpptLinkEditor: FC<EditorArgs<WhpptLinkData>> = ({
   ];
 
   return (
-    <div className="whppt-plaintext-editor">
+    <div className="whppt-link-editor">
       <WhpptTabs
         tabs={tabs}
         selectedTab={value.type}
@@ -31,15 +32,25 @@ export const WhpptLinkEditor: FC<EditorArgs<WhpptLinkData>> = ({
           label="General"
           value={value}
           onChange={onChange}
-          options={options}
         ></PageLinkTab>
         <ExternalLinkTab
           name="external"
           label="External"
           value={value}
           onChange={onChange}
-          options={options}
         ></ExternalLinkTab>
+        <AnchorLinkTab
+          name="anchor"
+          label="Anchor"
+          value={value}
+          onChange={onChange}
+        ></AnchorLinkTab>
+        <FileLinkTab
+          name="file"
+          label="File"
+          value={value}
+          onChange={onChange}
+        ></FileLinkTab>
       </WhpptTab>
     </div>
   );
