@@ -17,20 +17,16 @@ export const Users: FC<WhpptTab> = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(null);
 
-  useEffect(() => {
-    
-  }, []);
-
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
-  }
+  };
 
   return (
     <form className="whppt-form">
       <WhpptTable
-        headers= {headers}
+        headers={headers}
         perPage={perPage}
-        dense= {true}
+        dense={true}
         hideHeaders={false}
         hideFooters={false}
         items={items}

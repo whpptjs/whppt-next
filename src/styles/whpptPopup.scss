@@ -1,68 +1,68 @@
 .whppt-lightMode {
-    .whppt-popup {
-        @apply bg-whpptLightBorder text-whpptDarkMode;
-        &--active {
-            @apply border-whpptDarkMode;
-        }   
-        &__header {
-            @apply border-whpptDarkMode;
-        }
-
-        &__contents{
-            &--left{ @apply border-whpptDarkMode }
-        }
+  .whppt-popup {
+    @apply bg-whpptLightBorder text-whpptDarkMode;
+    &--active {
+      @apply border-whpptDarkMode;
     }
+    &__header {
+      @apply border-whpptDarkMode;
+    }
+
+    &__contents {
+      &--left {
+        @apply border-whpptDarkMode;
+      }
+    }
+  }
 }
 
+.whppt-popup {
+  @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto;
+  position: fixed;
+  width: 0;
+  transition: width 0.3s ease;
+  right: 0;
+  height: 100vh;
+  z-index: 998;
+  top: 0;
 
-.whppt-popup  {
-    @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto ;
-    position: fixed;
-    width: 0;
-    transition: width 0.3s ease;
-    right:0;
-    height: 100vh;
-    z-index: 998;
-    top:0;
-    
+  &--active {
+    @apply border-l-2 border-whpptDarkMode block pl-24;
+    width: 100%;
+    &.whppt-popup--fullNav {
+      @apply pl-64;
+    }
+  }
+
+  &__contents {
+    textarea {
+      resize: none;
+    }
+
+    &--left {
+      @apply w-3/12 border-r border-whpptLightMode h-full;
+    }
+    &--right {
+      @apply w-9/12 p-5 h-full;
+    }
+  }
+  &__tabs {
+    min-height: 74px;
+    @apply px-10 flex w-full;
+  }
+  &__tab {
+    @apply h-full mr-5  w-full text-left text-lg;
+    &--inline {
+      @apply inline-block;
+    }
     &--active {
-        @apply border-l-2 border-whpptDarkMode block pl-24 ;
-        width: 100%;
-        &.whppt-popup--fullNav{
-            @apply pl-64;
-        }
-
+      @apply text-whpptActive;
+      .whppt-popup__tab--underline {
+        @apply border-whpptActive;
+      }
     }
-
-    &__contents{
-
-        textarea{
-          resize: none;
-        }
-
-        &--left{ @apply w-3/12 border-r border-whpptLightMode h-full
-        }
-        &--right{ @apply w-9/12 p-5 h-full}
-
+    &--underline {
+      @apply border-b-2 border-transparent;
     }
-    &__tabs{
-        min-height: 74px;
-        @apply px-10 flex w-full 
-    }
-    &__tab {
-        @apply h-full mr-5  w-full text-left text-lg ;
-        &--inline {
-            @apply inline-block
-        }
-        &--active {
-            @apply text-whpptActive ;
-            .whppt-popup__tab--underline{
-                @apply border-whpptActive 
-            }
-        }
-        &--underline{
-            @apply border-b-2 border-transparent 
-        }
-    }
- 
+  }
 }

@@ -1,19 +1,21 @@
 import slugify from 'slugify';
 import React, { FC, useState } from 'react';
 import { Formik } from 'formik';
+// import { useRouter } from 'next/router';
 
 import { WhpptButton, WhpptInput } from '../../ui/components';
 import { useWhppt } from '../../Context';
 
 export const WhpptNewPageEditor: FC = () => {
   const { api, domain } = useWhppt();
+  // const router = useRouter();
 
   const [page] = useState({
     slug: '',
   });
   const [error, setError] = useState('');
 
-  const formatSlug = (slug) => {
+  const formatSlug = slug => {
     if (slug.startsWith('/')) slug = slug.replace(/^(\/*)/, '');
 
     slug = slug.replace(/\/{2,}/g, '/');
@@ -24,16 +26,19 @@ export const WhpptNewPageEditor: FC = () => {
     return slug;
   };
 
-  const createPage = (values) => {
+  const createPage = values => {
     const page = {
       ...values,
       slug: formatSlug(values.slug),
       domainId: domain._id,
       pageType: 'page',
     };
-    return api.page.checkSlug({ slug: page.slug, domain }).then((_page) => {
+    return api.page.checkSlug({ slug: page.slug, domain }).then(_page => {
       if (_page) return setError('Slug Taken');
-      return api.page.create({ page }).then((createdPage) => {});
+      return api.page.save({ page }).then(createdPage => {
+        console.log('🚀 ~ file: NewPage.tsx ~ line 39 ~ returnapi.page.create ~ createdPage', createdPage);
+        // router.push(createdPage.slug)
+      });
     });
     // .catch(() => {
     //   setError(true);
@@ -44,35 +49,30 @@ export const WhpptNewPageEditor: FC = () => {
     <div className="">
       <Formik
         initialValues={page}
-        validate={(values) => {
+        validate={values => {
           const errors = {} as any;
           if (!values.slug) {
             errors.slug = 'Required';
           }
           return errors;
         }}
-        onSubmit={(values) => {
+        onSubmit={values => {
           createPage(values);
-        }}
-      >
-        {(props) => (
-          <form onSubmit={props.handleSubmit}>
+        }}>
+        {({ handleSubmit, values, errors, handleChange }) => (
+          <form onSubmit={handleSubmit}>
             <WhpptInput
               id={'new_page_slug'}
               label={'Slug*'}
-              info={`Slug: ${formatSlug(props.values.slug)}`}
+              info={`Slug: ${formatSlug(values.slug)}`}
               type={'text'}
               name={'slug'}
-              value={props.values.slug}
-              onChangeEvent={props.handleChange}
-              error={props.errors.slug}
+              value={values.slug}
+              onChangeEvent={handleChange}
+              error={errors.slug}
             />
             <div className="">
-              <WhpptButton
-                text={'Create'}
-                type="submit"
-                onClick={() => props.handleSubmit}
-              />
+              <WhpptButton text={'Create'} type="submit" onClick={() => handleSubmit} />
             </div>
             <div className="whppt-error">{error}</div>
           </form>

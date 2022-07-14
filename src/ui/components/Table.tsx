@@ -21,6 +21,7 @@ type WhpptTableProps = {
   page: number;
   total: number;
   setCurrentPage: (page: any) => void;
+  setPerPage: (page: any) => void;
 };
 
 export const WhpptTable: FC<WhpptTableProps> = ({
@@ -35,45 +36,31 @@ export const WhpptTable: FC<WhpptTableProps> = ({
   page,
   total,
   setCurrentPage,
+  setPerPage,
   actions,
 }) => {
   const tableId = useId();
-  const tableContainerHeight =
-    typeof height === 'number' ? `${height}px` : height;
+  const tableContainerHeight = typeof height === 'number' ? `${height}px` : height;
+  const perPageItems = [{ text: '5' }, { text: '10' }, { text: '25' }, { text: '50' }, { text: '100' }];
 
   return (
     <div className={`whppt-table ${dense ? 'whppt-table--dense' : ''}`}>
-      <div
-        className="whppt-table__container"
-        style={{ height: tableContainerHeight }}
-      >
+      <div className="whppt-table__container" style={{ height: tableContainerHeight }}>
         <table>
           {!hideHeaders && headers.length && (
-            <thead
-              className={
-                fixedHeader && height ? 'whppt-table__headers--fixed' : ''
-              }
-            >
+            <thead className={fixedHeader && height ? 'whppt-table__headers--fixed' : ''}>
               <tr>
                 {actions && actions.length && (
                   <th
-                    className={
-                      headers[0].align
-                        ? `whppt-table__header--${headers[0].align}`
-                        : ''
-                    }
-                    key="whppt-table-actions"
-                  >
+                    className={headers[0].align ? `whppt-table__header--${headers[0].align}` : 'whppt-table__header--left'}
+                    key="whppt-table-actions">
                     Actions
                   </th>
                 )}
                 {headers.map((header, index) => (
                   <th
-                    className={
-                      header.align ? `whppt-table__header--${header.align}` : ''
-                    }
-                    key={`header_${tableId}_${index}`}
-                  >
+                    className={header.align ? `whppt-table__header--${header.align}` : 'whppt-table__header--left'}
+                    key={`header_${tableId}_${index}`}>
                     {header.text}
                   </th>
                 ))}
@@ -89,11 +76,12 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     <WhpptPagination
                       page={page}
                       perPage={perPage}
-                      perPageItems={[5, 10, 25, 50, 100]}
+                      perPageItems={perPageItems}
                       total={total}
                       dark={true}
                       direction={'down'}
                       changePage={setCurrentPage}
+                      setPerPage={setPerPage}
                     />
                   </div>
                 </td>
@@ -106,23 +94,13 @@ export const WhpptTable: FC<WhpptTableProps> = ({
               items.map((item, index: number) => (
                 <tr key={`${tableId}_${index}_row`}>
                   {actions && actions.length && (
-                    <td
-                      key={`${tableId}_${index}-actions`}
-                      className="whppt-table__actions"
-                    >
+                    <td key={`${tableId}_${index}-actions`} className="whppt-table__actions">
                       {actions.map((action, actionIndex) => (
                         <div key={`${tableId}_${actionIndex}_action`}>
                           {(!action.show || action.show(item)) && (
-                            <button
-                              className="whppt-table__action"
-                              onClick={() => action.action(item)}
-                            >
+                            <button className="whppt-table__action" onClick={() => action.action(item)}>
                               <WhpptIcon is={action.icon} />
-                              {action.info && (
-                                <div className="whppt-table__action--info">
-                                  {action.info}
-                                </div>
-                              )}
+                              {action.info && <div className="whppt-table__action--info">{action.info}</div>}
                             </button>
                           )}
                         </div>
@@ -131,9 +109,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                   )}
 
                   {headers.map((header, _index) => (
-                    <td key={`${tableId}_value_${_index}`}>
-                      {item[header.value]}
-                    </td>
+                    <td key={`${tableId}_value_${_index}`}>{item[header.value]}</td>
                   ))}
                 </tr>
               ))

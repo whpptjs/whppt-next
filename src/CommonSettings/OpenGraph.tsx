@@ -1,11 +1,11 @@
-import React, { FC, useState } from "react";
-import { WhpptInput } from "../ui/components/Input";
-import { WhpptButton, WhpptTextArea, WhpptTab } from "../ui/components";
+import React, { FC, useState } from 'react';
+import { WhpptInput } from '../ui/components/Input';
+import { WhpptButton, WhpptTextArea, WhpptTab } from '../ui/components';
 
 export const OpenGraph: FC<WhpptTab> = () => {
-  const [title, setTitle] = useState("");
-  const [keyWords, setKeywords] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [keyWords, setKeywords] = useState('');
+  const [description, setDescription] = useState('');
 
   const submit = () => {
     //const keyWordsArray = keyWords.replace(/ +/g, '').split(','); TODO: Move to helper and import?
@@ -13,32 +13,19 @@ export const OpenGraph: FC<WhpptTab> = () => {
     //setPage(...page, openGraphSettings)
   };
 
-  const error = "";
-  const info = "";
+  const error = '';
+  const info = '';
 
   return (
     <form className="whppt-form">
       <section className="whppt-form-page-settings__actions">
         <div>
-          <WhpptButton
-            icon=""
-            text="Save Settings"
-            onClick={submit}
-            disabled={!title || !keyWords || !description}
-          />
+          <WhpptButton icon="" text="Save Settings" onClick={submit} disabled={!title || !keyWords || !description} />
         </div>
       </section>
 
       <section className="whppt-form-section whppt-form-page-settings__form">
-        <WhpptInput
-          id="whppt-plaintext-input"
-          label="Title"
-          type="text"
-          error={error}
-          info={info}
-          value={title}
-          onChange={setTitle}
-        />
+        <WhpptInput id="whppt-plaintext-input" label="Title" type="text" error={error} info={info} value={title} onChange={setTitle} />
         <WhpptInput
           id="whppt-plaintext-input"
           label="Keywords"

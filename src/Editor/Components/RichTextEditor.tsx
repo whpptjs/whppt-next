@@ -1,7 +1,7 @@
-import React, { FC, ReactElement } from "react";
-import { useWhppt } from "../../Context";
-import { EditorArgs } from "../EditorArgs";
-import { EditorOptions } from "../EditorOptions";
+import React, { FC, ReactElement } from 'react';
+import { useWhppt } from '../../Context';
+import { EditorArgs } from '../EditorArgs';
+import { EditorOptions } from '../EditorOptions';
 
 export const RichTextEditor: FC<
   EditorArgs<string> & {
@@ -14,12 +14,11 @@ export const RichTextEditor: FC<
     <div
       className="whppt-editor-selector"
       onClick={() =>
-        showEditor("richText", value, onChange, {
-          label: label || "Rich Text",
+        showEditor('richText', value, onChange, {
+          label: label || 'Rich Text',
           options,
         })
-      }
-    >
+      }>
       {children({ isEditing: editing })}
     </div>
   );

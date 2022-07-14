@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
 import { Whppt } from './Context';
+import { ToastContainer } from 'react-toastify';
 import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
 import { WhpptEditorPanel } from './Editor/EditorPanel';
 import { SettingsPanel } from './ui/SettingsPanel';
@@ -23,13 +24,7 @@ export type WhpptAppOptions = {
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
-export const WhpptApp: FC<WhpptAppOptions> = ({
-  children,
-  editors,
-  error,
-  initNav,
-  initFooter,
-}) => {
+export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNav, initFooter }) => {
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
   const [errorState, setError] = useState<Error>();
@@ -37,19 +32,16 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [editorState, setEditorState] = useState(editor.defaultState);
   const [domain, setDomain] = useState(appContext.defaultState);
   const [page, setPage] = useState(pageContext.defaultState);
-  const [appSettings, setAppSettings] = useState(
-    appContext.defaultAppSettingsState
-  );
-  const [pageSettings, setPageSettings] = useState(
-    pageContext.defaultPageSettingsState
-  );
+  const [appSettings, setAppSettings] = useState(appContext.defaultAppSettingsState);
+  const [pageSettings, setPageSettings] = useState(pageContext.defaultPageSettingsState);
   const [nav, setNav] = useState(siteContext.defaultNavState);
   const [footer, setFooter] = useState(siteContext.defaultFooterState);
-  const [siteSettings, setSiteSettings] = useState(
-    siteContext.defaultSiteSettingsState
-  );
+  const [siteSettings, setSiteSettings] = useState(siteContext.defaultSiteSettingsState);
   const [dashboard, setDashboard] = useState(dashboardContext.defaulDashboardState);
   const [user, setUser] = useState(securityContext.defaultState);
+  const api = useMemo(() => {
+    return Api();
+  }, []);
 
   const context = useMemo(
     () => ({
@@ -59,7 +51,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         editorState,
         setEditorState,
       }),
-      api: Api(),
+      api,
       ...appContext.Context({
         domain,
         setDomain,
@@ -85,46 +77,28 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       }),
       ...dashboardContext.Context({
         dashboard,
-        setDashboard
+        setDashboard,
       }),
       ...securityContext.Context({ user, setUser }),
     }),
-    [
-      editing,
-      editorState,
-      page,
-      footer,
-      nav,
-      domain,
-      pageSettings,
-      appSettings,
-      siteSettings,
-      user,
-      dashboard
-    ]
+    [api, editing, editorState, domain, appSettings, page, pageSettings, siteSettings, nav, initNav, footer, initFooter, user, dashboard]
   );
 
   useEffect(() => {
-    Promise.all([
-      context.api.app.domain.loadForCurrentHost(),
-      context.api.security.verify(),
-    ])
+    Promise.all([api.app.domain.loadForCurrentHost(), api.security.verify()])
       .then(([domain, user]) => {
         setDomain(domain);
         setUser(user);
-        return Promise.all([
-          context.api.site.footer.load({ domain }),
-          context.api.site.nav.load({ domain }),
-        ]).then(([footer, nav]) => {
+        return Promise.all([api.site.footer.load({ domain }), api.site.nav.load({ domain })]).then(([footer, nav]) => {
           setFooter({
             ...footer,
-            content: context.initFooter(footer?.content || {}),
+            content: initFooter(footer?.content || {}),
           });
-          setNav({ ...nav, content: context.initNav(nav?.content || {}) });
+          setNav({ ...nav, content: initNav(nav?.content || {}) });
         });
       })
-      .catch((err) => setError(err));
-  }, []);
+      .catch(err => setError(err));
+  }, [api, initFooter, initNav]);
 
   const checkWhpptUser = () => {
     //TODO work this out better
@@ -151,6 +125,18 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
               ) : (
                 <WhpptLogin />
               )}
+              <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme={'colored'}
+              />
             </>
           ) : (
             <></>
@@ -160,11 +146,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
           ) : (
             <div className="whppt-app__content">
               <div>{children}</div>
-              {process.env.NEXT_PUBLIC_DRAFT === 'true' ? (
-                <WhpptEditorPanel editors={editors}></WhpptEditorPanel>
-              ) : (
-                <></>
-              )}
+              {process.env.NEXT_PUBLIC_DRAFT === 'true' ? <WhpptEditorPanel editors={editors}></WhpptEditorPanel> : <></>}
             </div>
           )}
         </div>

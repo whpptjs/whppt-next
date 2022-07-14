@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement } from 'react';
 
 export type WhpptTab = {
   name: string;
@@ -11,9 +11,5 @@ type WhpptTabProps = {
 };
 
 export const WhpptTab: FC<WhpptTabProps> = ({ selectedTab, children }) => {
-  return (
-    <div>
-      {children.find((tab) => tab.props.name === selectedTab) || children[0]}
-    </div>
-  );
+  return <div>{children.find(tab => tab.props.name === selectedTab) || children[0]}</div>;
 };

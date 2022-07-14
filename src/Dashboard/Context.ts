@@ -5,7 +5,7 @@ export type DashboardState = {
 
 export const defaulDashboardState = {
   visible: false,
-  activeTab: "users",
+  activeTab: 'users',
 };
 
 export type DashboardContextArgs = {
@@ -15,15 +15,15 @@ export type DashboardContextArgs = {
 
 export const defaultArgs = {
   dashboard: defaulDashboardState,
-  setDashboard: () => { },
-}  as DashboardContextArgs;
+  setDashboard: () => {},
+} as DashboardContextArgs;
 
 export const Context = ({ dashboard, setDashboard }: DashboardContextArgs) => {
   return {
     dashboard,
     setDashboard,
-    toggleDashboard: (visible?:boolean) => {
-      setDashboard({ ...dashboard, visible: typeof visible=== 'boolean' ? visible : !dashboard.visible });
+    toggleDashboard: (visible?: boolean) => {
+      setDashboard({ ...dashboard, visible: typeof visible === 'boolean' ? visible : !dashboard.visible });
     },
     changeDashboardActiveTab: (activeTab: string) => setDashboard({ ...dashboard, activeTab }),
   };

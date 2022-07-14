@@ -13,18 +13,7 @@ export type WhpptInputArgs = {
   value: string;
 };
 
-export const WhpptInput: FC<WhpptInputArgs> = ({
-  id,
-  label,
-  info,
-  error,
-  type,
-  placeholder,
-  value,
-  onChange,
-  name,
-  onChangeEvent,
-}) => {
+export const WhpptInput: FC<WhpptInputArgs> = ({ id, label, info, error, type, placeholder, value, onChange, name, onChangeEvent }) => {
   const _value = `${value}`;
   return (
     <div className="whppt-plaintext">
@@ -37,11 +26,10 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
           value={_value}
           placeholder={placeholder || ''}
           name={name}
-          onChange={(e) => {
+          onChange={e => {
             if (onChangeEvent) return onChangeEvent(e);
             onChange(e.target.value);
-          }}
-        ></input>
+          }}></input>
       </div>
       <p className="whppt-input-info">{info}</p>
       <p className="whppt-input-error">{error}</p>
