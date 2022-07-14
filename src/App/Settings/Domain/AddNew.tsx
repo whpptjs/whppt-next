@@ -22,7 +22,7 @@ export const DomainAddNewForm: FC = () => {
       <h1>Sign Up</h1>
       <Formik
         initialValues={newDomain}
-        validate={(values) => {
+        validate={values => {
           const errors = {} as any;
           if (!values.name) {
             errors.name = 'Required';
@@ -35,49 +35,42 @@ export const DomainAddNewForm: FC = () => {
         onSubmit={(values, { resetForm }) => {
           addItem({
             ...values,
-            hostNames: values.hostNames.split(',').map((h) => h.trim()),
+            hostNames: values.hostNames.split(',').map(h => h.trim()),
           }).then(() => {
             resetForm();
           });
-        }}
-      >
-        {(props) => (
-          <form onSubmit={props.handleSubmit}>
+        }}>
+        {({ handleSubmit, values, errors, handleChange }) => (
+          <form onSubmit={handleSubmit}>
             <h4>Add a new domain</h4>
             <div className="whppt-form-split">
               <div className="whppt-form-split--even">
                 <WhpptInput
-                  value={props.values.name}
-                  onChangeEvent={props.handleChange}
+                  value={values.name}
+                  onChangeEvent={handleChange}
                   id={'newDomainName'}
                   label={'Name'}
                   info={''}
-                  error={props.errors.name}
+                  error={errors.name}
                   type={'text'}
                   name="name"
                 />
               </div>
               <div className="whppt-form-split--even">
                 <WhpptInput
-                  value={props.values.hostNames}
-                  onChangeEvent={props.handleChange}
+                  value={values.hostNames}
+                  onChangeEvent={handleChange}
                   id={'newDomainhostnames'}
                   label={'Host names'}
-                  info={
-                    'Comma seperate items without the www eg: whppt.com,sveltestudios.com'
-                  }
-                  error={props.errors.hostNames}
+                  info={'Comma seperate items without the www eg: whppt.com,sveltestudios.com'}
+                  error={errors.hostNames}
                   type={'text'}
                   name="hostNames"
                 />
               </div>
             </div>
             <div>
-              <WhpptButton
-                text="Add New Domain"
-                type="submit"
-                onClick={() => props.handleSubmit}
-              />
+              <WhpptButton text="Add New Domain" type="submit" onClick={() => handleSubmit} />
             </div>
           </form>
         )}

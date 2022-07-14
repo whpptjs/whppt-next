@@ -1,48 +1,51 @@
 .whppt-lightMode {
-    .whppt-label{
-        @apply text-whpptDarkMode;
+  .whppt-label {
+    @apply text-whpptDarkMode;
+  }
+  .whppt-input {
+    &-info {
+      @apply text-whpptDarkMode;
     }
-    .whppt-input {
-        &-info {
-            @apply text-whpptDarkMode;
-        }
-        input {
-            @apply text-black;
-        }
+    input {
+      @apply text-black;
     }
+  }
 }
 
-.whppt-label{
-    @apply my-2;
+.whppt-label {
+  @apply my-2;
 }
 
 .whppt-plaintext {
-    @apply mb-5;
+  @apply mb-5;
 }
 .whppt-input {
+  @apply w-full;
+  &-info {
+    @apply opacity-70 text-sm mt-2;
+  }
+  &-error {
+    @apply text-red-500;
+    input {
+      @apply border-red-800;
+      &:focus,
+      &:focus-visible {
+        @apply border-red-800;
+      }
+    }
+  }
+  input,
+  textarea {
     @apply w-full;
-    &-info {
-        @apply opacity-70 text-sm mt-2;
+    @apply p-3;
+    @apply bg-transparent;
+    @apply border-2 border-whpptStandard border-opacity-70 rounded-lg text-white;
+    &:hover {
+      @apply border-opacity-100;
     }
-    &-error {
-        @apply text-red-500;
-        input {
-            @apply border-red-800;
-            &:focus,&:focus-visible{
-                @apply border-red-800
-            } 
-        }
+    &:focus,
+    &:focus-visible {
+      @apply border-whpptActive border-opacity-100 outline-none caret-whpptActive;
     }
-    input, textarea {
-        @apply w-full;
-        @apply p-3;
-        @apply bg-transparent;
-        @apply border-2 border-whpptStandard border-opacity-70 rounded-lg text-white;
-        &:hover{
-            @apply border-opacity-100
-        } 
-        &:focus,&:focus-visible{
-            @apply border-whpptActive border-opacity-100 outline-none caret-whpptActive
-        } 
-    }
+  }
 }

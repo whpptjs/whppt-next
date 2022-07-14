@@ -16,7 +16,7 @@ export const General: FC<WhpptTab> = () => {
 
   const saveSlug = () => {
     const formattedSlug = formatSlug(slug);
-    const slugCheck = api.page.checkSlug({ slug: formattedSlug, domain }).then((_page) => {
+    const slugCheck = api.page.checkSlug({ slug: formattedSlug, domain }).then(_page => {
       _page ? setSlugError('Slug taken') : setValidSlug(formattedSlug);
     });
 
@@ -34,7 +34,7 @@ export const General: FC<WhpptTab> = () => {
       pageType: 'page',
     };
 
-    const pageDulpicate = api.page.create({ page: { ...newPage, _id: undefined } });
+    const pageDulpicate = api.page.save({ page: { ...newPage, _id: undefined } });
 
     toast.promise(pageDulpicate, {
       pending: 'Duplicating page...',
@@ -61,12 +61,7 @@ export const General: FC<WhpptTab> = () => {
     <form className="whppt-form">
       <section className="whppt-form-page-settings__actions">
         <div>
-          <WhpptButton
-            text="Duplicate Page"
-            icon="duplicate"
-            disabled={!validSlug}
-            onClick={duplicatePage}
-          />
+          <WhpptButton text="Duplicate Page" icon="duplicate" disabled={!validSlug} onClick={duplicatePage} />
         </div>
         <div>
           <WhpptButton text="Delete Page" icon="bin" onClick={deletePage} />
@@ -84,20 +79,11 @@ export const General: FC<WhpptTab> = () => {
             onChange={setSlug}
           />
 
-          <WhpptButton
-            text="Save New Slug"
-            icon=""
-            disabled={!slug}
-            onClick={saveSlug}
-          />
+          <WhpptButton text="Save New Slug" icon="" disabled={!slug} onClick={saveSlug} />
         </section>
 
         <section className="whppt-form-section">
-          <WhpptCheckbox
-            label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
-            value={'hide-from-xml'}
-            onChange={() => handleCheckBox()}
-          />
+          <WhpptCheckbox label={'HIDE THIS PAGE FROM THE SITEMAP XML?'} value={'hide-from-xml'} onChange={() => handleCheckBox()} />
         </section>
       </div>
     </form>

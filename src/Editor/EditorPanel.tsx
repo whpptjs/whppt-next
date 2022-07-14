@@ -24,11 +24,7 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
   const { editorState, hideEditor } = useWhppt();
 
   return (
-    <div
-      className={`whppt-editor ${
-        editorState.editor ? 'whppt-editor--active' : ''
-      }`}
-    >
+    <div className={`whppt-editor ${editorState.editor ? 'whppt-editor--active' : ''}`}>
       <div className="whppt-editor__content-wrapper">
         <div className="whppt-editor__header">
           Whppt Editor
@@ -36,13 +32,7 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
             <WhpptIcon is="close"></WhpptIcon>
           </button>
         </div>
-        <div className="whppt-editor__content">
-          {editorState.editor === 'newPage' ? (
-            <WhpptNewPageEditor />
-          ) : (
-            editors(editorState)
-          )}
-        </div>
+        <div className="whppt-editor__content">{editorState.editor === 'newPage' ? <WhpptNewPageEditor /> : editors(editorState)}</div>
       </div>
     </div>
   );

@@ -14,18 +14,7 @@ type WhpptSelectProps = {
   value: string | number;
 };
 
-export const WhpptSelect: FC<WhpptSelectProps> = ({
-  dense,
-  id,
-  label,
-  placeholder,
-  onChange,
-  direction,
-  items,
-  info,
-  error,
-  value,
-}) => {
+export const WhpptSelect: FC<WhpptSelectProps> = ({ dense, id, label, placeholder, onChange, direction, items, info, error, value }) => {
   const [showSelectItems, setSelectItems] = useState(false);
 
   function useOutsideAlerter(ref) {
@@ -49,7 +38,7 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = event => {
     event.preventDefault();
     if (event.key === 'Enter') {
       console.log('enter press here! ');
@@ -65,17 +54,12 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
     }
     //TODO make arrows work
   };
-  const setTextProp = (item) => {
+  const setTextProp = item => {
     return <div>{item.text}</div>;
   };
 
   return (
-    <div
-      ref={wrapperRef}
-      className={`${
-        dense ? 'whppt-select whppt-select--dense' : 'whppt-select'
-      }`}
-    >
+    <div ref={wrapperRef} className={`${dense ? 'whppt-select whppt-select--dense' : 'whppt-select'}`}>
       {label && (
         <div className="whppt-label">
           <label htmlFor={id}>{label}</label>
@@ -95,9 +79,7 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
           <WhpptIconCarrot />
         </div>
         {showSelectItems && (
-          <div
-            className={`whppt-select__menu whppt-select__menu--${direction}`}
-          >
+          <div className={`whppt-select__menu whppt-select__menu--${direction}`}>
             <ul role="listbox">
               {items.map((item, index) => (
                 <li
@@ -107,8 +89,7 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
                   onClick={() => {
                     setSelectItems(false);
                     onChange(item);
-                  }}
-                >
+                  }}>
                   {setTextProp(item)}
                 </li>
               ))}
@@ -117,9 +98,7 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
         )}
       </div>
       {info && <p className="whppt-input-info">{info}</p>}
-      {error && typeof error === 'string' && (
-        <span className="whppt-input-error">{error}</span>
-      )}
+      {error && typeof error === 'string' && <span className="whppt-input-error">{error}</span>}
       {error && Array.isArray(error) && (
         <div>
           {error.map((err, index) => (

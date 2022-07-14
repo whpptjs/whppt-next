@@ -1,19 +1,18 @@
 import React from 'react';
 import { Twitter } from '../../CommonSettings/Twitter';
 import { useWhppt } from '../../Context';
+import { WhpptTab } from '../../ui/components/WhpptTab';
 
-export const SiteTwitter = ({ name, label}) => {
+export const SiteTwitter = ({ name, label }: WhpptTab) => {
   const { api, domain, settingsData, setSettingsData } = useWhppt();
 
   const save = (title, keywords, description) => {
-    const settings = { ...settingsData, twitter: { title, keywords, description} }
+    const settings = { ...settingsData, twitter: { title, keywords, description } };
 
-    return api.site.settings
-      .save({ settings, domain })
-      .then(() => {
-        setSettingsData(settings);
-      });
-  }
+    return api.site.settings.save({ settings, domain }).then(() => {
+      setSettingsData(settings);
+    });
+  };
 
   return (
     <Twitter
@@ -23,5 +22,6 @@ export const SiteTwitter = ({ name, label}) => {
       title={settingsData.twitter && settingsData.twitter.title}
       keywords={settingsData.twitter && settingsData.twitter.keywords}
       description={settingsData.twitter && settingsData.twitter.description}
-     />
-  );};
+    />
+  );
+};

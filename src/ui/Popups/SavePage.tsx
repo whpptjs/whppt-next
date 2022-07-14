@@ -22,21 +22,11 @@ export const SavePagePopup: FC<{ callback: () => void }> = ({ callback }) => {
 
   return (
     <ConfirmationPopup close={() => callback()} header="Are you sure?">
-      <div className="">
-        <div className="whppt-confirmation-popup-content__children--message">
-          Are you sure you want to save this page?
-        </div>
-        <WhpptCheckbox
-          label={'Publish page aswell'}
-          value={`${publish}`}
-          onChange={() => setPublish(!publish)}
-        ></WhpptCheckbox>
+      <div>
+        <div className="whppt-confirmation-popup-content__children--message">Are you sure you want to save this page?</div>
+        <WhpptCheckbox label={'Publish page aswell'} value={`${publish}`} onChange={() => setPublish(!publish)}></WhpptCheckbox>
         <div className="whppt-confirmation-popup-content__children--actions">
-          <WhpptButton
-            secondary={true}
-            text={'Cancel'}
-            onClick={() => callback()}
-          />
+          <WhpptButton secondary={true} text={'Cancel'} onClick={() => callback()} />
           <WhpptButton text={'Confirm'} onClick={() => confirm()} />
         </div>
       </div>

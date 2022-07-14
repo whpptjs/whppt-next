@@ -1,19 +1,18 @@
 import React from 'react';
 import { useWhppt } from '../../Context';
-import { OpenGraph } from '../../CommonSettings/OpenGraph'
+import { OpenGraph } from '../../CommonSettings/OpenGraph';
+import { WhpptTab } from '../../ui/components/WhpptTab';
 
-export const SiteOpenGraph = ({ name, label }) => {
+export const SiteOpenGraph = ({ name, label }: WhpptTab) => {
   const { api, domain, settingsData, setSettingsData } = useWhppt();
 
   const save = (title, keywords, description) => {
-    const settings = { ...settingsData, og: { title, keywords, description} }
+    const settings = { ...settingsData, og: { title, keywords, description } };
 
-    return api.site.settings
-      .save({ settings, domain })
-      .then(() => {
-        setSettingsData(settings);
-      });
-  }
+    return api.site.settings.save({ settings, domain }).then(() => {
+      setSettingsData(settings);
+    });
+  };
 
   return (
     <OpenGraph

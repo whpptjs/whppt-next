@@ -4,10 +4,7 @@ import { useWhppt } from '../../../Context';
 import { WhpptTable } from '../../../ui/components';
 import { WhpptEditDomain } from './WhpptEditDomain';
 
-export const DomainsList: FC<{ domains: Domain[]; requery: () => void }> = ({
-  domains,
-  requery,
-}) => {
+export const DomainsList: FC<{ domains: Domain[]; requery: () => void }> = ({ domains, requery }) => {
   const headers = [
     { text: 'Name', align: 'left', value: 'name' },
     { text: 'Hosts', align: 'left', value: 'hostNameValue' },
@@ -15,7 +12,7 @@ export const DomainsList: FC<{ domains: Domain[]; requery: () => void }> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [editDomain, setEditDomain] = useState({} as Domain);
   const [perPage, setPerPage] = useState(5);
-  const handlePageChange = (newPage) => {
+  const handlePageChange = newPage => {
     setCurrentPage(newPage);
   };
   const { api } = useWhppt();

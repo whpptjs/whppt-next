@@ -1,32 +1,32 @@
-import { PageData } from "src/Page/Model/Page";
-import { PageSettings } from "./Model/PageSettings";
+import { PageData } from 'src/Page/Model/Page';
+import { PageSettings } from './Model/PageSettings';
 import { SettingsData } from '../CommonSettings/Model/SettingsData';
 
 export const defaultState = {} as PageData;
 
 export const defaultPageSettingsState = {
   visible: false,
-  activeTab: "general",
+  activeTab: 'general',
 };
 export const defaultPageSettingsData = {
   twitter: {
-    title: "",
-    description: "",
-    keywords: []
+    title: '',
+    description: '',
+    keywords: [],
   },
   seo: {
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     keywords: [],
-    priority: "",
-    frequency: ""
+    priority: '',
+    frequency: '',
   },
   og: {
-    title: "",
-    description: "",
-    keywords: []
-  }
-}
+    title: '',
+    description: '',
+    keywords: [],
+  },
+};
 
 export type PageContextArgs = {
   page: PageData;
@@ -38,7 +38,7 @@ export type PageContextArgs = {
 };
 
 export const defaultArgs = {
-  page: { _id: "" },
+  page: { _id: '' },
   setPage: () => {},
   pageSettings: defaultPageSettingsState,
   setPageSettings: () => {},
@@ -46,14 +46,7 @@ export const defaultArgs = {
   setPageSettingsData: () => {},
 } as PageContextArgs;
 
-export const Context = ({
-  page,
-  setPage,
-  pageSettings,
-  setPageSettings,
-  pageSettingsData,
-  setPageSettingsData,
-}: PageContextArgs) => {
+export const Context = ({ page, setPage, pageSettings, setPageSettings, pageSettingsData, setPageSettingsData }: PageContextArgs) => {
   return {
     page,
     setPage,
@@ -64,9 +57,8 @@ export const Context = ({
     togglePageSettings: (visible?: boolean) =>
       setPageSettings({
         ...pageSettings,
-        visible: typeof visible === "boolean" ? visible : !pageSettings.visible,
+        visible: typeof visible === 'boolean' ? visible : !pageSettings.visible,
       }),
-    changePageSettingsActiveTab: (activeTab: string) =>
-      setPageSettings({ ...pageSettings, activeTab }),
+    changePageSettingsActiveTab: (activeTab: string) => setPageSettings({ ...pageSettings, activeTab }),
   };
 };

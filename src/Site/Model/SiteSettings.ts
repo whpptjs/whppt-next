@@ -3,4 +3,4 @@ export type SiteSettings = {
   activeTab: string;
 };
 
-export const SiteSettings = (values) => values as SiteSettings;
+export const SiteSettings = values => values as SiteSettings;
