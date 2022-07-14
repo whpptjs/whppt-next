@@ -6,7 +6,7 @@ export type PageApi = {
   loadFromSlug: ({ slug, collection, domain }: { slug: string; collection: string; domain: Domain }) => Promise<PageData>;
   delete: (page: PageData) => Promise<any>;
   checkSlug: ({ slug, collection, domain }: { slug: string; collection?: string; domain: Domain }) => Promise<PageData>;
-  create: ({ page, collection }: { page: PageData; collection?: string }) => Promise<PageData>;
+  save: ({ page, publish, collection }: { page: PageData; publish?: boolean; collection?: string }) => Promise<PageData>;
 };
 
 export type PageApiConstructor = ({ http }: { http: WhpptHttp }) => PageApi;

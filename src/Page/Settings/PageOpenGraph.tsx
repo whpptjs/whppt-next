@@ -11,7 +11,7 @@ export const PageOpenGraph = ({ name, label }: WhpptTab) => {
     const updatedPage = { ...page, settings: { ...settings } };
 
     api.page
-      .create({ page: { ...updatedPage } })
+      .save({ page: { ...updatedPage } })
       .then(() => {
         setPageSettingsData(settings);
       })

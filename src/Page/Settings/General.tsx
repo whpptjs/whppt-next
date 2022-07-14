@@ -27,7 +27,7 @@ export const General: FC<WhpptTab> = () => {
       pageType: 'page',
     };
 
-    api.page.create({ page: { ...newPage, _id: undefined } });
+    api.page.save({ page: { ...newPage, _id: undefined } });
   };
 
   const deletePage = () => {
