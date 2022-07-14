@@ -15,9 +15,10 @@ export const DomainAddNewForm: FC<{ callback: () => void }> = ({ callback }) => 
   });
   const [addNewShow, setAddNewShow] = useState(false);
 
-  const addItem = (newDomain: Domain) => {
+  const addItem = (newDomain: Domain, resetForm) => {
     const save = api.app.domain.save(newDomain).then(() => {
       setAddNewShow(false);
+      resetForm();
       callback();
     });
     toast.promise(save, {
@@ -44,12 +45,13 @@ export const DomainAddNewForm: FC<{ callback: () => void }> = ({ callback }) => 
               return errors;
             }}
             onSubmit={(values, { resetForm }) => {
-              addItem({
-                ...values,
-                hostNames: values.hostNames.split(',').map(h => h.trim()),
-              }).then(() => {
-                resetForm();
-              });
+              addItem(
+                {
+                  ...values,
+                  hostNames: values.hostNames.split(',').map(h => h.trim()),
+                },
+                resetForm
+              );
             }}>
             {({ handleSubmit, values, errors, handleChange }) => (
               <form onSubmit={handleSubmit}>

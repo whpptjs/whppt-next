@@ -1,13 +1,13 @@
 import { Formik } from 'formik';
 import React, { FC, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useWhppt } from '../../../Context';
+// import { toast } from 'react-toastify';
+// import { useWhppt } from '../../../Context';
 import { User } from '../../../Security/Model';
 import { WhpptButton, WhpptInput } from '../../../ui/components';
 
 export const InviteNewUser: FC = () => {
   const [showForm, setShowForm] = useState(false);
-  const { api } = useWhppt();
+  // const { api } = useWhppt();
 
   const [newUser] = useState({
     name: '',
@@ -15,6 +15,8 @@ export const InviteNewUser: FC = () => {
   } as User);
 
   const addUser = (user: User, reset) => {
+    console.log('🚀 ~ file: InviteNewUser.tsx ~ line 18 ~ addUser ~ user', user);
+    console.log('🚀 ~ file: InviteNewUser.tsx ~ line 18 ~ addUser ~ reset', reset);
     // const save = api.app.user.save(user).then(() => reset());
     // toast.promise(save, {
     //   pending: 'Inviting...',
