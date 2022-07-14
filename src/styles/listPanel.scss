@@ -1,0 +1,23 @@
+.sortableHelper {
+  z-index: 100000;
+  @apply text-white;
+}
+
+.whppt-sortable-list {
+  @apply relative;
+  &--hide {
+    @apply absolute -right-96;
+  }
+  &__item {
+    @apply bg-whpptDarkBorder flex justify-between items-center p-3 my-2 cursor-move rounded;
+    &--flex {
+      @apply flex items-center;
+    }
+    &--icon {
+      @apply mr-2;
+      svg {
+        @apply w-10 h-10;
+      }
+    }
+  }
+}
