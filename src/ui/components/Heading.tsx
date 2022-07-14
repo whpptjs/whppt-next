@@ -5,5 +5,9 @@ type WhpptHeaderProps = {
 };
 
 export const Heading: FC<WhpptHeaderProps> = ({ text }) => {
-  return <h1 className="whppt-form-heading">{text}</h1>;
+  return (
+    <h1 className="whppt-form-heading" style={{ display: 'flex', width: '100%', alignItems: 'center', padding: '0.75rem 1.25rem' }}>
+      {text}
+    </h1>
+  );
 };

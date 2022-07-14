@@ -29,6 +29,8 @@ export const WhpptMainNav: FC<{
     editorState,
     hideEditor,
     setUser,
+    gallerySettings,
+    toggleGallerySettings,
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
@@ -62,6 +64,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleSiteSettings(false);
+        toggleGallerySettings(false);
         showEditor('newPage', undefined, undefined, undefined);
       },
       order: 300,
@@ -109,6 +112,7 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
+        toggleGallerySettings(false);
         toggleAppSettings();
         hideEditor();
         Cookies.set('authToken', 'THIS IS A TEST');
@@ -127,6 +131,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
+        toggleGallerySettings(false);
         toggleSiteSettings();
         hideEditor();
       },
@@ -143,6 +148,7 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings();
         toggleEditing(false);
+        toggleGallerySettings(false);
         hideEditor();
       },
       isActive: pageSettings.visible,
@@ -156,6 +162,23 @@ export const WhpptMainNav: FC<{
       icon: 'dashboard',
       order: 1100,
       group: 'config',
+      groupOrder: 400,
+    },
+    {
+      key: 'gallery',
+      label: 'Gallery',
+      icon: 'settings',
+      action: () => {
+        toggleAppSettings(false);
+        toggleSiteSettings(false);
+        togglePageSettings(false);
+        toggleEditing(false);
+        toggleGallerySettings();
+        hideEditor();
+      },
+      isActive: gallerySettings.visible,
+      order: 1200,
+      group: 'site',
       groupOrder: 400,
     },
     //TODO pass menuItems in from client website
