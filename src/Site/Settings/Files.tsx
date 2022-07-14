@@ -25,14 +25,23 @@ export const Files: FC<WhpptTab> = () => {
   const fileInputRef: { current: HTMLInputElement } = useRef();
 
   useEffect(() => {
+    requery();
+  }, [currentPage, perPage]);
+
+  const requery = () => {
     api.site.files
       .load({ page: currentPage, size: perPage })
       .then(({files, total}) => {
         Array.isArray(files) && setItems(files);
         total && setTotal(total);
       })
+<<<<<<< HEAD
       .catch((err) => setError(err));
   }, [currentPage, perPage]);
+=======
+      .catch(err => setError(err));
+  };
+>>>>>>> using new baseUrl
 
   const handlePageChange = newPage => {
     setCurrentPage(newPage);
@@ -54,8 +63,20 @@ export const Files: FC<WhpptTab> = () => {
     formData.append('file', fileData);
     formData.append('description', description);
 
+<<<<<<< HEAD
     api.site.files
       .saveFile(formData);
+=======
+    api.site.files.saveFile(formData).then(() => {
+      requery();
+      resetInputs();
+    });
+  };
+
+  const resetInputs = () => {
+    setDescription('');
+    setFileData(null);
+>>>>>>> using new baseUrl
   };
 
   return (
