@@ -1,3 +1,15 @@
+.whppt-lightMode {
+  .whppt-confirmation-popup {
+    @apply bg-whpptLightBorder;
+    .whppt-confirmation-popup-content {
+      @apply bg-whpptLightMode text-whpptDarkMode lg:min-w-400;
+      &__header {
+        @apply border-whpptDarkBorder;
+      }
+    }
+  }
+}
+
 .whppt-confirmation-popup {
   @apply absolute inset-0;
   @apply bg-whpptDarkBorder bg-opacity-40;

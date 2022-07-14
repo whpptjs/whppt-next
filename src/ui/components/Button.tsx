@@ -17,7 +17,7 @@ export const WhpptButton: FC<WhpptButtonProps> = ({ text, icon, onClick, disable
       onClick={onClick}
       type={type || 'button'}
       disabled={disabled}>
-      <div className={icon ? 'whppt-button--text' : ''}>{text}</div>
+      <div className={icon ? 'whppt-button--defaults--text' : ''}>{text}</div>
       {icon && <WhpptIcon is={icon} />}
     </button>
   );

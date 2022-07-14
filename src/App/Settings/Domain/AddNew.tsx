@@ -12,39 +12,39 @@ export const DomainAddNewForm: FC = () => {
     published: false,
     createdAt: new Date(),
   });
+  const [addNewShow, setAddNewShow] = useState(false);
 
   const addItem = (newDomain: Domain) => {
     return api.app.domain.save(newDomain);
   };
 
   return (
-    <section className="whppt-form-section whppt-form-section--bottom-gap">
-      <h1>Sign Up</h1>
-      <Formik
-        initialValues={newDomain}
-        validate={values => {
-          const errors = {} as any;
-          if (!values.name) {
-            errors.name = 'Required';
-          }
-          if (!values.hostNames) {
-            errors.hostNames = 'Required';
-          }
-          return errors;
-        }}
-        onSubmit={(values, { resetForm }) => {
-          addItem({
-            ...values,
-            hostNames: values.hostNames.split(',').map(h => h.trim()),
-          }).then(() => {
-            resetForm();
-          });
-        }}>
-        {({ handleSubmit, values, errors, handleChange }) => (
-          <form onSubmit={handleSubmit}>
-            <h4>Add a new domain</h4>
-            <div className="whppt-form-split">
-              <div className="whppt-form-split--even">
+    <>
+      {addNewShow ? (
+        <section className="whppt-form-section whppt-form-section--bottom-gap">
+          <Formik
+            initialValues={newDomain}
+            validate={values => {
+              const errors = {} as any;
+              if (!values.name) {
+                errors.name = 'Required';
+              }
+              if (!values.hostNames) {
+                errors.hostNames = 'Required';
+              }
+              return errors;
+            }}
+            onSubmit={(values, { resetForm }) => {
+              addItem({
+                ...values,
+                hostNames: values.hostNames.split(',').map(h => h.trim()),
+              }).then(() => {
+                resetForm();
+              });
+            }}>
+            {({ handleSubmit, values, errors, handleChange }) => (
+              <form onSubmit={handleSubmit}>
+                <h4>Add a new domain</h4>
                 <WhpptInput
                   value={values.name}
                   onChangeEvent={handleChange}
@@ -55,8 +55,6 @@ export const DomainAddNewForm: FC = () => {
                   type={'text'}
                   name="name"
                 />
-              </div>
-              <div className="whppt-form-split--even">
                 <WhpptInput
                   value={values.hostNames}
                   onChangeEvent={handleChange}
@@ -67,14 +65,19 @@ export const DomainAddNewForm: FC = () => {
                   type={'text'}
                   name="hostNames"
                 />
-              </div>
-            </div>
-            <div>
-              <WhpptButton text="Add New Domain" type="submit" onClick={() => handleSubmit} />
-            </div>
-          </form>
-        )}
-      </Formik>
-    </section>
+                <div className="whppt-form--flex-apart">
+                  <WhpptButton text="Cancel" secondary onClick={() => setAddNewShow(false)} />
+                  <WhpptButton text="Add New Domain" type="submit" onClick={() => handleSubmit} />
+                </div>
+              </form>
+            )}
+          </Formik>
+        </section>
+      ) : (
+        <div>
+          <WhpptButton text="Add New Domain" onClick={() => setAddNewShow(true)} />
+        </div>
+      )}
+    </>
   );
 };

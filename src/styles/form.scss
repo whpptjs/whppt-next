@@ -25,6 +25,9 @@
       @apply w-1/2;
     }
   }
+  &--flex-apart {
+    @apply flex justify-between items-center;
+  }
 
   &-section {
     @apply px-6 py-4 bg-whpptDarkMode;
@@ -44,7 +47,7 @@
       @apply flex flex-col w-2/12;
     }
     &__form {
-      @apply w-6/12;
+      @apply w-8/12 overflow-auto;
     }
   }
 }

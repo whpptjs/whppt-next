@@ -28,10 +28,11 @@ export const Domain: FC<WhpptTab> = () => {
 
   return (
     <div className="whppt-form">
-      <section className="whppt-form-page-settings__actions"></section>
+      <section className="whppt-form-page-settings__actions">
+        <DomainAddNewForm />
+      </section>
 
       <div className="whppt-form-page-settings__form">
-        <DomainAddNewForm />
         <DomainsList domains={domains} requery={requery} />
       </div>
     </div>
