@@ -3,23 +3,16 @@ import Cookies from 'js-cookie';
 
 export type WhpptGetOptions = { path: string };
 export type WhpptPostOptions<T> = { path: string; data: T };
-export type WhpptSaveFileOptions = { path: string; data: FormData };
+export type WhpptSaveFileOptions<FormData> = { path: string; data: FormData };
 
 export type WhpptHttpMethods = {
   getJson: <T>(options?: WhpptGetOptions) => Promise<T>;
   postJson: <T, R>(options?: WhpptPostOptions<T>) => Promise<R>;
-};
-
-export type WhpptStorageHttpMethods = {
-  saveFile: <T>(options: WhpptSaveFileOptions) => Promise<T>;
+  saveFile: <FormData>(options?: WhpptSaveFileOptions<FormData>) => Promise<Response>;
 };
 
 export type WhpptHttp = {
   secure: WhpptHttpMethods;
-};
-
-export type WhpptStorageHttp = {
-  secure: WhpptStorageHttpMethods;
 };
 
 const buildFullPath = (baseUrl: string, path: string) => {
@@ -57,21 +50,13 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         const json = await response.json();
         return json as R;
       },
-    },
-  };
-};
-
-export const StorageHttp: (baseUrl: string) => WhpptStorageHttp = baseUrl => {
-  return {
-    secure: {
-      saveFile: async <T>({ path, data }: WhpptSaveFileOptions) => {
+      saveFile: async <FormData>({ path, data }: WhpptSaveFileOptions<FormData>) => {
         const response = await fetch(buildFullPath(baseUrl, path), {
           method: 'POST',
-          body: data,
+          body: data as any,
         });
         if (response.status >= 400) throw new Error(await response.text());
-        const json = await response.json();
-        return json as T;
+        return response;
       },
     },
   };
