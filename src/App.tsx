@@ -80,7 +80,23 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
       }),
       ...securityContext.Context({ user, setUser }),
     }),
-    [api, editing, editorState, domain, appSettings, page, pageSettings, siteSettings, nav, initNav, footer, initFooter, user]
+    [
+      api,
+      editing,
+      editorState,
+      domain,
+      appSettings,
+      page,
+      pageSettings,
+      pageSettingsData,
+      settingsData,
+      siteSettings,
+      nav,
+      initNav,
+      footer,
+      initFooter,
+      user,
+    ]
   );
 
   useEffect(() => {

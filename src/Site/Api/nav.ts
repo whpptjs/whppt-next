@@ -14,7 +14,7 @@ export const SiteNavApi: SiteNavApiConstructor = ({ http }) => {
       if (!domain && domain._id) throw new Error('Invalid Domain');
 
       return http.secure.getJson<Nav<any>>({
-        path: `/site/loadNav?domainId=${domain._id}`,
+        path: `/api/site/loadNav?domainId=${domain._id}`,
       });
     },
     save: ({ domain, nav, publish }) => {
@@ -22,7 +22,7 @@ export const SiteNavApi: SiteNavApiConstructor = ({ http }) => {
 
       return http.secure
         .postJson<{ nav: Nav<any>; publish: boolean }, { nav: Nav<any> }>({
-          path: '/site/saveNav',
+          path: '/api/site/saveNav',
           data: {
             nav: {
               domainId: domain._id,
