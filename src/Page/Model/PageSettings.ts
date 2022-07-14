@@ -3,4 +3,4 @@ export type PageSettings = {
   activeTab: string;
 };
 
-export const PageSettings = (values) => values as PageSettings;
+export const PageSettings = values => values as PageSettings;

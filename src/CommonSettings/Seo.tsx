@@ -1,27 +1,24 @@
-import React, { FC, useState } from "react";
-import { WhpptInput } from "../ui/components/Input";
-import { splitKeywords } from "../helpers";
-import { SeoData } from "./Model/SettingsData";
+import React, { FC, useState } from 'react';
+import { WhpptInput } from '../ui/components/Input';
+import { splitKeywords } from '../helpers';
+import { SeoData } from './Model/SettingsData';
 
-import {
-  WhpptButton,
-  WhpptTextArea,
-  WhpptTab,
-} from "../ui/components";
+import { WhpptButton, WhpptTextArea, WhpptTab } from '../ui/components';
 
-type SeoProps = WhpptTab & SeoData & {
-  save: (title, keywords, description, priority, frequency) => void;
-}
+type SeoProps = WhpptTab &
+  SeoData & {
+    save: (title, keywords, description, priority, frequency) => void;
+  };
 
 export const Seo: FC<SeoProps> = ({ save, ...props }) => {
-  const [title, setTitle] = useState(props.title || "");
-  const [keyWords, setKeywords] = useState(props.keywords && props.keywords.join(', ') || "");
-  const [description, setDescription] = useState(props.description || "");
-  const [priority, setPriority] = useState(props.priority || "");
-  const [frequency, setFrequency] = useState(props.frequency || "");
+  const [title, setTitle] = useState(props.title || '');
+  const [keyWords, setKeywords] = useState((props.keywords && props.keywords.join(', ')) || '');
+  const [description, setDescription] = useState(props.description || '');
+  const [priority, setPriority] = useState(props.priority || '');
+  const [frequency, setFrequency] = useState(props.frequency || '');
 
-  const error = "";
-  const info = "";
+  const error = '';
+  const info = '';
 
   return (
     <form className="whppt-form">
@@ -36,15 +33,7 @@ export const Seo: FC<SeoProps> = ({ save, ...props }) => {
       </section>
 
       <section className="whppt-form-section whppt-form-page-settings__form whppt-form-section--bottom-gap">
-        <WhpptInput
-          id="whppt-plaintext-input"
-          label="Title"
-          type="text"
-          error={error}
-          info={info}
-          value={title}
-          onChange={setTitle}
-        />
+        <WhpptInput id="whppt-plaintext-input" label="Title" type="text" error={error} info={info} value={title} onChange={setTitle} />
         <WhpptInput
           id="whppt-plaintext-input"
           label="Keywords"
@@ -68,7 +57,7 @@ export const Seo: FC<SeoProps> = ({ save, ...props }) => {
           type="text"
           placeholder=""
           error={error}
-          info={"Set page priority"}
+          info={'Set page priority'}
           value={priority}
           onChange={setPriority}
         />
@@ -78,7 +67,7 @@ export const Seo: FC<SeoProps> = ({ save, ...props }) => {
           type="text"
           placeholder=""
           error={error}
-          info={"Set page frequency"}
+          info={'Set page frequency'}
           value={frequency}
           onChange={setFrequency}
         />

@@ -1,37 +1,30 @@
-import React, { FC } from "react";
-import { nanoid } from "nanoid";
+import React, { FC } from 'react';
+import { nanoid } from 'nanoid';
 
-import { EditorArgs } from "../EditorArgs";
-import { WhpptButton } from "../../ui/components";
-import { EditorOptions } from "../EditorOptions";
+import { EditorArgs } from '../EditorArgs';
+import { WhpptButton } from '../../ui/components';
+import { EditorOptions } from '../EditorOptions';
 
 export type ListEditorOptions = EditorOptions & {
   addNew: () => any;
   displayName?: (item: any) => string;
 };
 
-export const WhpptListEditor: FC<EditorArgs<any[], ListEditorOptions>> = ({
-  value,
-  onChange,
-  options,
-}) => {
+export const WhpptListEditor: FC<EditorArgs<any[], ListEditorOptions>> = ({ value, onChange, options }) => {
   return (
     <div className="whppt-richtext-editor">
       <div className="whppt-contents__actions">
         <WhpptButton
-          text={"Add To List"}
+          text={'Add To List'}
           icon="add"
           onClick={() => {
             const newItem = options.addNew();
             onChange([...value, { _id: nanoid(), ...newItem }]);
-          }}
-        ></WhpptButton>
+          }}></WhpptButton>
       </div>
       <ul>
         {(value as any[]).map((item, index) => (
-          <li key={item._id}>
-            {options.displayName ? options.displayName(item) : `Item ${index}`}
-          </li>
+          <li key={item._id}>{options.displayName ? options.displayName(item) : `Item ${index}`}</li>
         ))}
       </ul>
     </div>

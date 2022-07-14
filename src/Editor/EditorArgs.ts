@@ -1,4 +1,4 @@
-import { EditorOptions } from "./EditorOptions";
+import { EditorOptions } from './EditorOptions';
 
 export type EditorArgs<T, O extends EditorOptions = EditorOptions> = {
   value: T;

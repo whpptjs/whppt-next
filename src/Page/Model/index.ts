@@ -1,2 +1,2 @@
-export * from "./Page";
-export * from "./PageSettings";
+export * from './Page';
+export * from './PageSettings';

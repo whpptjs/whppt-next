@@ -1,31 +1,29 @@
 .whppt-lightMode {
-
 }
-.whppt-richtext-menu-border{
+.whppt-richtext-menu-border {
   @apply border-r pr-1 border-white;
   height: 20px;
 }
 
 .ProseMirror {
-    @apply border-whpptDarkMode border rounded text-whpptDarkMode;
-    @apply bg-whpptLightMode;
-    margin: 1em 0;
-    padding: 1rem 2rem 1rem 0.75rem;
-    overflow-y: auto;
-    line-height: 1.25;
-    height: 60vh;
-    min-height: 400px;
+  @apply border-whpptDarkMode border rounded text-whpptDarkMode;
+  @apply bg-whpptLightMode;
+  margin: 1em 0;
+  padding: 1rem 2rem 1rem 0.75rem;
+  overflow-y: auto;
+  line-height: 1.25;
+  height: 60vh;
+  min-height: 400px;
 }
 
 .whppt-richtext-menu-button {
-    @apply p-2 m-1 rounded ;
+  @apply p-2 m-1 rounded;
 }
-.whppt-richtext-menu-button.is-active{
-    @apply bg-whpptActive;
+.whppt-richtext-menu-button.is-active {
+  @apply bg-whpptActive;
 }
 
-.whppt-richtext{
-
+.whppt-richtext {
   ul,
   ol {
     padding: 0 1rem;
@@ -42,16 +40,16 @@
   em {
     font-weight: bolder;
   }
-  h1{
+  h1 {
     font-size: 48px;
   }
-  h2{
+  h2 {
     font-size: 40px;
   }
-  h3{
+  h3 {
     font-size: 32px;
   }
-  h4{
+  h4 {
     font-size: 28px;
   }
 }

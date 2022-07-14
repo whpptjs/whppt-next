@@ -1,29 +1,26 @@
-
-
 .whppt-confirmation-popup {
   @apply absolute inset-0;
   @apply bg-whpptDarkBorder bg-opacity-40;
   @apply flex items-center justify-center;
-  
+
   .whppt-confirmation-popup-content {
     @apply bg-whpptDarkMode text-white lg:min-w-400;
 
-    &__header{
+    &__header {
       @apply flex items-center justify-between text-xl p-4 border-b border-whpptLightBorder;
-      &--action{
+      &--action {
         @apply w-8 h-8 ml-4;
       }
     }
 
     &__children {
       @apply p-4;
-      &--message{
+      &--message {
         @apply mb-5;
       }
-      &--actions{
-        @apply flex justify-between items-center mt-10;
+      &--actions {
+        @apply flex justify-between items-center mt-5;
       }
     }
   }
 }
-

@@ -1,4 +1,4 @@
-import { Domain } from "./Model";
+import { Domain } from './Model';
 
 export const defaultState = {} as Domain;
 
@@ -9,7 +9,7 @@ export type AppSettingsState = {
 
 export const defaultAppSettingsState = {
   visible: false,
-  activeTab: "domain",
+  activeTab: 'domain',
 };
 
 export type AppContextArgs = {
@@ -21,23 +21,24 @@ export type AppContextArgs = {
 
 export const defaultArgs = {
   domain: {
-    name: "",
+    name: '',
     hostNames: [],
     createdAt: new Date(),
     published: false,
   },
-  setDomain: () => { },
+  setDomain: () => {},
   appSettings: defaultAppSettingsState,
-  setAppSettings: () => { },
-}  as AppContextArgs;
+  setAppSettings: () => {},
+} as AppContextArgs;
 
-export const Context = ({ domain, setDomain,appSettings,setAppSettings }: AppContextArgs) => {
+export const Context = ({ domain, setDomain, appSettings, setAppSettings }: AppContextArgs) => {
   return {
     domain,
     setDomain,
     appSettings,
     setAppSettings,
-    toggleAppSettings: (visible?:boolean) => setAppSettings({ ...appSettings, visible: typeof visible=== 'boolean' ? visible : !appSettings.visible }),
-    changeAppSettingsActiveTab: (activeTab: string) =>setAppSettings({ ...appSettings, activeTab }),
+    toggleAppSettings: (visible?: boolean) =>
+      setAppSettings({ ...appSettings, visible: typeof visible === 'boolean' ? visible : !appSettings.visible }),
+    changeAppSettingsActiveTab: (activeTab: string) => setAppSettings({ ...appSettings, activeTab }),
   };
 };

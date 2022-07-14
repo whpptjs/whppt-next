@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import { ListEditorOptions } from "../Panels";
-import { useWhppt } from "../../Context";
+import React, { ReactElement } from 'react';
+import { ListEditorOptions } from '../Panels';
+import { useWhppt } from '../../Context';
 
 export type ListEditorProps<T extends object> = {
   value: T[];
@@ -10,25 +10,18 @@ export type ListEditorProps<T extends object> = {
   children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
 };
 
-export const ListEditor = <T extends object>({
-  children,
-  value,
-  addNew,
-  displayName,
-  onChange,
-}: ListEditorProps<T>) => {
+export const ListEditor = <T extends object>({ children, value, addNew, displayName, onChange }: ListEditorProps<T>) => {
   const { editing, showEditor } = useWhppt();
   const options = { addNew, displayName } as ListEditorOptions;
   return (
     <div
       className="whppt-editor-selector"
-      onClick={(e) => {
+      onClick={e => {
         if (editing) {
-          showEditor("list", value, onChange, options);
+          showEditor('list', value, onChange, options);
           e.stopPropagation();
         }
-      }}
-    >
+      }}>
       {children({ isEditing: editing })}
     </div>
   );
