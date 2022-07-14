@@ -18,7 +18,6 @@ export const Domain: FC<WhpptTab> = () => {
         }))
       );
     });
-    // .catch((err) => setError(err));
   }, [api.app.domain]);
   const requery = () => {
     api.app.domain.list().then(domains => {
@@ -29,7 +28,7 @@ export const Domain: FC<WhpptTab> = () => {
   return (
     <div className="whppt-form">
       <section className="whppt-form-page-settings__actions">
-        <DomainAddNewForm />
+        <DomainAddNewForm callback={requery} />
       </section>
 
       <div className="whppt-form-page-settings__form">

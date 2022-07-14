@@ -120,7 +120,6 @@ export const WhpptMainNav: FC<{
         toggleAppSettings();
         hideEditor();
         setConfirmationPopup('');
-        Cookies.set('authToken', 'THIS IS A TEST');
       },
       isActive: appSettings.visible,
       order: 800,

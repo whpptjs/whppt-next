@@ -7,7 +7,7 @@
 .whppt-button--defaults {
   @apply text-whpptLightMode flex items-center z-10;
   @apply text-base tracking-wide;
-  @apply py-3 px-6;
+  @apply py-3;
   margin: 0.5rem 0;
   &:disabled {
     @apply opacity-30;
@@ -24,6 +24,7 @@
 .whppt-button {
   @apply border-whpptActive border rounded-full;
   @apply bg-transparent relative overflow-hidden;
+  @apply px-6;
   transition: 0.5s;
 }
 
@@ -67,7 +68,7 @@
 }
 
 .whppt-secondary-button {
-  @apply py-3 px-6 border-b border-transparent;
+  @apply border-b border-transparent;
   &:hover {
     @apply border-whpptActive;
   }

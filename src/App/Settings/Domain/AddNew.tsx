@@ -3,8 +3,9 @@ import { Formik } from 'formik';
 import { Domain } from '../../Model';
 import { useWhppt } from '../../../Context';
 import { WhpptInput, WhpptButton } from '../../../ui/components';
+import { toast } from 'react-toastify';
 
-export const DomainAddNewForm: FC = () => {
+export const DomainAddNewForm: FC<{ callback: () => void }> = ({ callback }) => {
   const { api } = useWhppt();
   const [newDomain] = useState({
     name: '',
@@ -15,7 +16,15 @@ export const DomainAddNewForm: FC = () => {
   const [addNewShow, setAddNewShow] = useState(false);
 
   const addItem = (newDomain: Domain) => {
-    return api.app.domain.save(newDomain);
+    const save = api.app.domain.save(newDomain).then(() => {
+      setAddNewShow(false);
+      callback();
+    });
+    toast.promise(save, {
+      pending: 'Saving...',
+      success: `Domain added`,
+      error: `Failed to add domain 🤯`,
+    });
   };
 
   return (
