@@ -13,7 +13,7 @@ export type SiteSettingsApiConstructor = ({ http }: { http: WhpptHttp }) => Site
 export const SiteSettingsApi: SiteSettingsApiConstructor = ({ http }) => ({
   load: async ({ domain }) => {
     return http.secure.getJson<SettingsData>({
-      path: `/siteSettings/loadSiteSettings?domainId=${domain._id}`,
+      path: `/api/siteSettings/loadSiteSettings?domainId=${domain._id}`,
     });
   },
   save: async ({ settings, domain }) => {
@@ -21,7 +21,7 @@ export const SiteSettingsApi: SiteSettingsApiConstructor = ({ http }) => ({
 
     return http.secure
       .postJson({
-        path: '/siteSettings/saveSiteSettings',
+        path: '/api/siteSettings/saveSiteSettings',
         data: {
           siteSettings: {
             domainId: domain._id,
@@ -33,7 +33,7 @@ export const SiteSettingsApi: SiteSettingsApiConstructor = ({ http }) => ({
   },
   publish: async settings => {
     return http.secure.postJson({
-      path: '/siteSettings/publishSiteSettings',
+      path: '/api/siteSettings/publishSiteSettings',
       data: {
         siteSettings: settings,
       },
@@ -41,7 +41,7 @@ export const SiteSettingsApi: SiteSettingsApiConstructor = ({ http }) => ({
   },
   publishNav: async ({ nav }) => {
     return http.secure.postJson({
-      path: '/site/publishNav',
+      path: '/api/site/publishNav',
       data: {
         nav: nav,
       },
@@ -49,7 +49,7 @@ export const SiteSettingsApi: SiteSettingsApiConstructor = ({ http }) => ({
   },
   publishFooter: async ({ footer }) => {
     return http.secure.postJson({
-      path: '/site/publishFooter',
+      path: '/api/site/publishFooter',
       data: {
         footer: footer,
       },

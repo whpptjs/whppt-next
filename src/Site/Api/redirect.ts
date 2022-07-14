@@ -15,7 +15,7 @@ export type SiteRedirectApiConstructor = ({ http }: { http: WhpptHttp }) => Site
 export const SiteRedirectApi: SiteRedirectApiConstructor = ({ http }) => ({
   load: ({ page, size, domainId, search }) => {
     return http.secure.getJson<{ redirects: Redirect[]; total: number }>({
-      path: `/siteSettings/loadRedirects?domainId=${domainId}&page=${page}&size=${size}&search=${search}`,
+      path: `/api/siteSettings/loadRedirects?domainId=${domainId}&page=${page}&size=${size}&search=${search}`,
     });
   },
   save: (redirect: Redirect) => {
@@ -23,7 +23,7 @@ export const SiteRedirectApi: SiteRedirectApiConstructor = ({ http }) => ({
 
     return http.secure
       .postJson<{ redirect: Redirect }, Redirect>({
-        path: '/siteSettings/saveRedirect',
+        path: '/api/siteSettings/saveRedirect',
         data: {
           redirect: { ...redirect },
         },
