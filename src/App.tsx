@@ -87,7 +87,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
             ...footer,
             content: initFooter(footer?.content || {}),
           });
-          setNav({ ...nav, content: initNav(nav?.content || {}) });
+          setNav({ ...nav });
+          // setNav({ ...nav, content: initNav(nav?.content || {}) });
         });
       })
       .catch(err => setError(err));

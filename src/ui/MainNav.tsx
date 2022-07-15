@@ -34,6 +34,7 @@ export const WhpptMainNav: FC<{
     Cookies.remove('authToken');
     api.security.verify().then(user => setUser(user));
   };
+  const showPanel = [pageSettings, siteSettings, appSettings].some(setting => setting.visible);
 
   const items = [
     {
@@ -62,6 +63,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleSiteSettings(false);
+        setConfirmationPopup('');
         showEditor('newPage', undefined, undefined, undefined);
       },
       order: 300,
@@ -75,14 +77,18 @@ export const WhpptMainNav: FC<{
       order: 400,
       group: 'page',
       groupOrder: 200,
+      isActive: confirmationPopup === 'page',
+      disabled: showPanel,
       action: () => {
-        setConfirmationPopup('save');
+        setConfirmationPopup('page');
       },
     },
     {
       key: 'nav',
       label: 'Save Navigation',
       icon: 'nav',
+      isActive: confirmationPopup === 'nav',
+      disabled: showPanel,
       action: () => {
         setConfirmationPopup('nav');
       },
@@ -96,6 +102,8 @@ export const WhpptMainNav: FC<{
       icon: 'footer',
       group: 'site',
       groupOrder: 300,
+      isActive: confirmationPopup === 'footer',
+      disabled: showPanel,
       action: () => {
         setConfirmationPopup('footer');
       },
@@ -111,7 +119,7 @@ export const WhpptMainNav: FC<{
         toggleEditing(false);
         toggleAppSettings();
         hideEditor();
-        Cookies.set('authToken', 'THIS IS A TEST');
+        setConfirmationPopup('');
       },
       isActive: appSettings.visible,
       order: 800,
@@ -128,6 +136,7 @@ export const WhpptMainNav: FC<{
         togglePageSettings(false);
         toggleEditing(false);
         toggleSiteSettings();
+        setConfirmationPopup('');
         hideEditor();
       },
       order: 900,
@@ -168,7 +177,7 @@ export const WhpptMainNav: FC<{
     <div>
       {confirmationPopup && (
         <>
-          {confirmationPopup === 'save' && <SavePagePopup callback={() => setConfirmationPopup('')} />}
+          {confirmationPopup === 'page' && <SavePagePopup callback={() => setConfirmationPopup('')} />}
           {confirmationPopup === 'nav' && <SaveNavPopup callback={() => setConfirmationPopup('')} />}
           {confirmationPopup === 'footer' && <SaveFooterPopup callback={() => setConfirmationPopup('')} />}
         </>
