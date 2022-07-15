@@ -1,11 +1,19 @@
 import React, { FC, ReactElement } from 'react';
 import { useRouter } from 'next/router';
 import { trim } from 'lodash';
+import { nanoid } from 'nanoid';
 
 export type WhpptLinkData = {
+  _id: string;
   type: 'page' | 'external' | 'anchor' | 'file';
   text: string;
   href: string;
+};
+
+export const WhpptLinkData = {
+  New(type: 'page' | 'external' | 'anchor' | 'file', text, href) {
+    return { _id: nanoid(), type, text, href };
+  },
 };
 
 export const WhpptLink: FC<{

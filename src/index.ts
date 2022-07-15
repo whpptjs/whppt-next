@@ -4,3 +4,4 @@ export * from './App';
 export * from './Page';
 export * from './Editor';
 export * from './ui/components';
+export * from './replaceInList';
