@@ -55,7 +55,7 @@ export const SitemapApi: SitemapApiConstructor = ({ http }) => {
       console.log('🚀 ~ file: sitemap.ts ~ line 64 ~ params', params);
 
       return http.secure.getJson<SitemapResult>({
-        path: `/site/loadSitemap?${params.join('&')}`,
+        path: `/api/site/loadSitemap?${params.join('&')}`,
       });
     },
   };

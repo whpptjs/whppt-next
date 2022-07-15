@@ -13,23 +13,23 @@ export const PageApi: PageApiConstructor = ({ http }) => {
   return {
     loadFromSlug: ({ slug, collection = 'pages', domain }) => {
       if (slug.startsWith('/')) slug = slug.replace(/^(\/*)/, '');
-      return http.secure.getJson<PageData>({ path: `/page/load?slug=${slug}&collection=${collection}&domainId=${domain._id}` });
+      return http.secure.getJson<PageData>({ path: `/api/page/load?slug=${slug}&collection=${collection}&domainId=${domain._id}` });
     },
     delete(page: PageData) {
       return http.secure.postJson({
-        path: '/page/deletePage',
+        path: '/api/page/deletePage',
         data: { _id: page._id },
       });
     },
     checkSlug({ slug, collection = 'pages', domain }) {
       return http.secure.postJson({
-        path: '/page/checkSlug',
+        path: '/api/page/checkSlug',
         data: { slug, collection, domainId: domain._id },
       });
     },
     save({ page, publish = false, collection = 'pages' }) {
       return http.secure.postJson({
-        path: '/page/save',
+        path: '/api/page/save',
         data: { page, collection, publish },
       });
     },

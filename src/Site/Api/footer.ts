@@ -14,7 +14,7 @@ export const SiteFooterApi: SiteFooterApiConstructor = ({ http }) => {
       if (!domain && domain._id) throw new Error('Invalid Domain');
 
       return http.secure.getJson<Footer<any>>({
-        path: `/site/loadFooter?domainId=${domain._id}`,
+        path: `/api/site/loadFooter?domainId=${domain._id}`,
       });
     },
     save: ({ domain, footer, publish }) => {
@@ -22,7 +22,7 @@ export const SiteFooterApi: SiteFooterApiConstructor = ({ http }) => {
 
       return http.secure
         .postJson<{ footer: Footer<any>; publish: boolean }, { footer: Footer<any> }>({
-          path: '/site/saveFooter',
+          path: '/api/site/saveFooter',
           data: {
             footer: {
               domainId: domain._id,
