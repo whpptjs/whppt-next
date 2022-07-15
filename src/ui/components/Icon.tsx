@@ -38,6 +38,7 @@ import { WhpptIconCheckBoxChecked } from '../../icons/CheckBoxChecked';
 import { WhpptIconCheckBox } from '../../icons/CheckBox';
 import { WhpptIconOrder } from '../../icons/Order';
 import { WhpptIconPlus } from '../../icons/Plus';
+import { WhpptIconCopy } from '../../icons/Copy';
 
 export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'pointer') return <WhpptIconPointer></WhpptIconPointer>;
@@ -79,5 +80,6 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'checkBox') return <WhpptIconCheckBox></WhpptIconCheckBox>;
   if (is === 'order') return <WhpptIconOrder></WhpptIconOrder>;
   if (is === 'plus') return <WhpptIconPlus></WhpptIconPlus>;
+  if (is === 'copy') return <WhpptIconCopy></WhpptIconCopy>;
   return <div></div>;
 };

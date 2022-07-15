@@ -18,6 +18,17 @@
   @apply flex px-10 py-2;
   display: flex;
   gap: 1rem;
+
+  &__user-invite {
+    @apply break-words contents text-left;
+    @apply ml-2;
+    svg {
+      @apply h-5 w-5;
+    }
+  }
+  &--bottom-gap {
+    @apply mb-5;
+  }
   &-split {
     display: flex;
     gap: 1rem;

@@ -7,10 +7,16 @@ import { WhpptHttp } from '../Api/Http';
 export type SecurityApi = {
   verify: () => Promise<User>;
   login: (loginArgs: LoginArgs) => Promise<User>;
+  setPassword: (loginArgs: SetPasswordArgs) => Promise<{}>;
 };
 export type LoginArgs = {
   username: string;
   password: string;
+};
+export type SetPasswordArgs = {
+  email: string;
+  password: string;
+  token: string;
 };
 export type SecurityApiConstructor = ({ http }: { http: WhpptHttp }) => SecurityApi;
 
@@ -25,9 +31,8 @@ export const SecurityApi: SecurityApiConstructor = ({ http }) => {
         return http.secure.getJson<{ user: User }>({ path: '/user/me' }).then(data => data.user);
       });
     },
-    // login(){},
-    // forgottenPassword(){},
-    // createUser(){},
-    // createUser(){},
+    setPassword(args) {
+      return http.secure.postJson<SetPasswordArgs, {}>({ path: '/user/setPassword', data: args });
+    },
   };
 };

@@ -51,7 +51,8 @@
     "react": "^18.2.0",
     "react-sortable-hoc": "^2.0.0",
     "react-toastify": "^9.0.5",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",

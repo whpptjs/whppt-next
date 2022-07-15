@@ -3,6 +3,10 @@
 
 .whppt-login {
   @apply text-whpptLightMode fixed inset-0 flex flex-col justify-center items-center bg-whpptDarkBorder;
+  z-index: 1001;
+  &--width {
+    @apply lg:w-4/12 flex flex-col justify-center items-center;
+  }
   &--logo {
     @apply w-32 h-32;
   }

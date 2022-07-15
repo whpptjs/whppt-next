@@ -12,6 +12,7 @@ import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
 import { WhpptLogin } from './ui/Login';
+import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -119,6 +120,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
               ) : (
                 <WhpptLogin />
               )}
+              <WhpptSetNewUserDetails />
               <ToastContainer
                 position="top-center"
                 autoClose={5000}
