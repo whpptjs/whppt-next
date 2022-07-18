@@ -25,7 +25,7 @@ export const GallerySettings: FC = () => {
         </WhpptTab>
       </div>
 
-      <div style={{ width: '30%' }}>sidebar</div>
+      {/* <div style={{ width: '30%' }}>sidebar</div> */}
     </div>
   );
 };

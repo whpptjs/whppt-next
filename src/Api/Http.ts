@@ -3,37 +3,18 @@ import Cookies from 'js-cookie';
 
 export type WhpptGetOptions = { path: string };
 export type WhpptPostOptions<T> = { path: string; data: T };
-<<<<<<< HEAD
 export type WhpptSaveFileOptions = { path: string, data: FormData};
-=======
-export type WhpptSaveFileOptions<FormData> = { path: string; data: FormData };
->>>>>>> using new baseUrl
 
 export type WhpptHttpMethods = {
   getJson: <T>(options?: WhpptGetOptions) => Promise<T>;
   postJson: <T, R>(options?: WhpptPostOptions<T>) => Promise<R>;
-<<<<<<< HEAD
-};
-
-export type WhpptStorageHttpMethods = {
-  saveFile: <T>(options: WhpptSaveFileOptions) => Promise<T>;
-}
-=======
   saveFile: <FormData>(options?: WhpptSaveFileOptions<FormData>) => Promise<Response>;
 };
->>>>>>> using new baseUrl
 
 export type WhpptHttp = {
   secure: WhpptHttpMethods;
 };
 
-<<<<<<< HEAD
-export type WhpptStorageHttp = {
-  secure: WhpptStorageHttpMethods;
-}
-
-=======
->>>>>>> using new baseUrl
 const buildFullPath = (baseUrl: string, path: string) => {
   const trimmedBaseUrl = baseUrl.endsWith('/') ? baseUrl.substring(0, baseUrl.length - 1) : baseUrl;
   const trimmedPath = path.startsWith('/') ? path.substring(1, path.length) : path;
@@ -69,26 +50,6 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         const json = await response.json();
         return json as R;
       },
-<<<<<<< HEAD
-    },
-  };
-};
-
-export const StorageHttp: (baseUrl: string) => WhpptStorageHttp = (baseUrl) => {
-  return {
-    secure: {
-      saveFile: async <T>({ path, data }: WhpptSaveFileOptions) => {
-        const response = await fetch(buildFullPath(baseUrl, path), {
-          method: "POST",
-          body: data,
-        });
-        if (response.status >= 400) throw new Error(await response.text());
-        const json = await response.json();
-        return json as T;
-      }
-    }
-  }
-=======
       saveFile: async <FormData>({ path, data }: WhpptSaveFileOptions<FormData>) => {
         const response = await fetch(buildFullPath(baseUrl, path), {
           method: 'POST',
@@ -99,5 +60,4 @@ export const StorageHttp: (baseUrl: string) => WhpptStorageHttp = (baseUrl) => {
       },
     },
   };
->>>>>>> using new baseUrl
 };

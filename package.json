@@ -53,6 +53,7 @@
     "postcss-cli": "^9.1.0",
     "react": "^18.2.0",
     "react-sortable-hoc": "^2.0.0",
+    "react-advanced-cropper": "^0.9.0",
     "react-toastify": "^9.0.5",
     "slugify": "^1.6.5",
     "yup": "^0.32.11"
