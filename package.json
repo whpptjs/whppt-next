@@ -1,6 +1,6 @@
 {
   "name": "@whppt/next",
-  "version": "0.0.2",
+  "version": "0.0.3-rc.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "types/index.d.ts",
@@ -33,6 +33,8 @@
     "build": "run-p build:*",
     "build:js": "rm -rf dist && rm -rf types && tsc",
     "build:css": "NODE_ENV=production postcss src/styles/index.scss -o styles/base.css",
+    "publish:rc": "yarn test && yarn build && standard-version --release-as patch --prerelease rc && yarn publish --tag rc && git push --follow-tags",
+    "publish:rc-dry": "yarn test && yarn build && standard-version --release-as patch --prerelease rc --dry-run",
     "publish:patch": "yarn test && yarn build && standard-version --release-as patch && yarn publish && git push --follow-tags",
     "publish:minor": "yarn test && yarn build && standard-version --release-as minor && yarn publish && git push --follow-tags",
     "publish:major": "yarn test && yarn build && standard-version --release-as major && yarn publish && git push --follow-tags"
