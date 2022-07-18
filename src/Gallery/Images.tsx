@@ -1,19 +1,18 @@
-import React, { FC, useEffect, useState, useRef } from 'react';
-import { WhpptButton, WhpptTab } from '../ui/components';
+import React, { FC, useEffect, useState } from 'react';
+import { WhpptTab } from '../ui/components';
 import { useWhppt } from '../Context';
 import { Image } from './Model/Image';
 import { CropperRef, Cropper, CropperPreview, CropperImage, CropperState } from 'react-advanced-cropper';
+import { WhpptImageUploader } from '../ui/components/ImageUploader';
+import { WhpptGalleryImage } from '../ui/components/GalleryImage';
 
 export const Images: FC<WhpptTab> = () => {
   const { api } = useWhppt();
   const [images, setImages] = useState<Image[]>([]);
-  const [imageData, setImageData] = useState(null);
   const [croppedImg, setCroppedImg] = useState('');
   const [coords, setCoords] = useState<any>(null);
   const [image, setImage] = useState<CropperImage | null>(null);
   const [state, setState] = useState<CropperState | null>(null);
-
-  const imageInputRef: { current: HTMLInputElement } = useRef();
 
   const requery = () => {
     api.gallery.images.loadGallery({ page: 1, size: 10 }).then(({ images }) => {
@@ -33,26 +32,23 @@ export const Images: FC<WhpptTab> = () => {
     }
   };
 
-  const openImageInput = () => {
-    imageInputRef && imageInputRef.current && imageInputRef.current.click();
-  };
-
-  const selectFile = event => {
-    const imageUploaded = event.target.files[0];
-    setImageData(imageUploaded);
-  };
-
-  const uploadImage = () => {
+  const uploadImage = imageData => {
     const formData = new FormData();
     formData.append('file', imageData);
 
-    api.gallery.images.save(formData).then(() => {
-      requery();
+    api.gallery.images.save(formData).then(image => {
+      setImages([image, ...images]);
     });
   };
 
   const getImgUrl = imgId => {
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/img/${imgId}`;
+  };
+
+  const remove = id => {
+    api.gallery.images.remove(id).then(() => {
+      setImages(images.filter(({ _id }) => _id !== id));
+    });
   };
 
   useEffect(() => {
@@ -64,6 +60,8 @@ export const Images: FC<WhpptTab> = () => {
       <section
         className="whppt-form-section whppt-form-section--bottom-gap"
         style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, 360px)', gap: '1rem', flex: '1 1 0' }}>
+        <WhpptImageUploader uploadImage={uploadImage} />
+
         {images &&
           images.map((img, index) =>
             index == 0 ? (
@@ -73,32 +71,22 @@ export const Images: FC<WhpptTab> = () => {
                 onChange={onCrop}
                 backgroundClassName={'whppt-cropper-background'}
                 stencilProps={{ aspectRatio: 9 / 5 }}
+                key={index}
               />
             ) : (
-              <div key={index}>
-                <img src={getImgUrl(img._id)} style={{ height: 200, width: 360, objectFit: 'cover' }} />
-                <p>{img.name}</p>
-              </div>
+              <WhpptGalleryImage key={img._id} url={getImgUrl(img._id)} remove={() => remove(img._id)} name={img.name} />
             )
           )}
-
-        <div className="whppt-site-setings__actions right" style={{ height: '5rem' }}>
-          <div>
-            <WhpptButton text={'Select Image'} onClick={openImageInput} />
-            <input type="file" style={{ display: 'none' }} ref={imageInputRef} onChange={selectFile} />
-          </div>
-          <WhpptButton text={'Upload'} onClick={uploadImage} />
-        </div>
       </section>
 
-      <section className="whppt-form-section whppt-form-section--bottom-gap" style={{ height: '500px', width: '500px' }}>
+      {/* <section className="whppt-form-section whppt-form-section--bottom-gap" style={{ height: '500px', width: '500px' }}>
         {croppedImg && (
           <>
             <CropperPreview image={image} state={state} className="whppt-cropped-preview" />
             <img src={croppedImg} style={{ display: 'none' }} />
           </>
         )}
-      </section>
+      </section> */}
     </div>
   );
 };

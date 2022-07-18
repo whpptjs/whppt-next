@@ -5,6 +5,7 @@ export type ImagesApi = {
   loadGallery: (args: { page: string | number; size: string | number }) => Promise<{ images: Image[] }>;
   save: (formData: FormData) => Promise<any>;
   load: (id: string) => Promise<Image>;
+  remove: (id: string) => Promise<any>;
 };
 export type ImagesApiConstructor = ({ http }: { http: WhpptHttp }) => ImagesApi;
 
@@ -22,7 +23,7 @@ export const ImagesApi: ImagesApiConstructor = ({ http }) => ({
         path: '/img/upload',
         data: formData,
       })
-      .then(image => image);
+      .then(res => res.json());
   },
   load: async (id: string) => {
     if (!id) throw new Error('Id of image is missing');
@@ -31,9 +32,12 @@ export const ImagesApi: ImagesApiConstructor = ({ http }) => ({
       path: `/img/${id}`,
     });
   },
-  // saveCroppedImage: async cropData => {
-  //   return http.secure.postJson({
-  //     path,
-  //   });
-  // },
+  remove: async (id: string) => {
+    if (!id) throw new Error('Id of image is missing');
+
+    return http.secure.postJson({
+      path: '/img/remove',
+      data: { id },
+    });
+  },
 });
