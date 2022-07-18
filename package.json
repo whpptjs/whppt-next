@@ -7,7 +7,8 @@
   "files": [
     "/dist",
     "/types",
-    "/styles"
+    "/styles",
+    "/fonts"
   ],
   "repository": "https://github.com/whpptjs/whppt-next.git",
   "author": "Svelte Team <info@sveltestudios.com>",
@@ -33,8 +34,8 @@
     "build": "run-p build:*",
     "build:js": "rm -rf dist && rm -rf types && tsc",
     "build:css": "NODE_ENV=production postcss src/styles/index.scss -o styles/base.css",
-    "publish:rc": "yarn test && yarn build && standard-version --release-as patch --prerelease rc && yarn publish --tag rc && git push --follow-tags",
-    "publish:rc-dry": "yarn test && yarn build && standard-version --release-as patch --prerelease rc --dry-run",
+    "publish:patch-rc-dry": "yarn test && yarn build && standard-version --release-as patch --prerelease rc --dry-run",
+    "publish:patch-rc": "yarn test && yarn build && standard-version --release-as patch --prerelease rc && yarn publish --tag rc && git push --follow-tags",
     "publish:patch": "yarn test && yarn build && standard-version --release-as patch && yarn publish && git push --follow-tags",
     "publish:minor": "yarn test && yarn build && standard-version --release-as minor && yarn publish && git push --follow-tags",
     "publish:major": "yarn test && yarn build && standard-version --release-as major && yarn publish && git push --follow-tags"
