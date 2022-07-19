@@ -24,6 +24,7 @@ export type WhpptAppOptions = {
 export type WhpptApp = FC<WhpptAppOptions>;
 
 export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNav, initFooter }) => {
+  const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
   const [errorState, setError] = useState<Error>();
@@ -101,6 +102,11 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
     return true;
   };
 
+  useEffect(() => {
+    const isDraft = process.env.NEXT_PUBLIC_DRAFT === 'true';
+    setRenderChildren(!isDraft || (user && user._id !== 'guest'));
+  }, [setRenderChildren, user]);
+
   return (
     <div>
       <Whppt.Provider value={context}>
@@ -141,7 +147,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
             error(errorState)
           ) : (
             <div className="whppt-app__content">
-              <div>{children}</div>
+              {renderChildren ? <div>{children}</div> : <></>}
               {process.env.NEXT_PUBLIC_DRAFT === 'true' ? <WhpptEditorPanel editors={editors}></WhpptEditorPanel> : <></>}
             </div>
           )}
