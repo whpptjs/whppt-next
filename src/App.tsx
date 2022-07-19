@@ -12,9 +12,7 @@ import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
 import * as galleryContext from './Gallery/Context';
-import * as imageEditorContext from './ImageEditor/Context';
 import { WhpptLogin } from './ui/Login';
-import { WhpptImageEditor } from './ImageEditor';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -40,7 +38,6 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
   const [siteSettings, setSiteSettings] = useState(siteContext.defaultSiteSettingsState);
   const [user, setUser] = useState(securityContext.defaultState);
   const [gallery, setGallery] = useState(galleryContext.defaultGallerySettingsState);
-  const [imageEditor, setImageEditor] = useState(imageEditorContext.defaultImageEditorState);
   const api = useMemo(() => {
     return Api();
   }, []);
@@ -82,28 +79,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
         gallery,
         setGallery,
       }),
-      ...imageEditorContext.Context({
-        imageEditor,
-        setImageEditor,
-      }),
     }),
-    [
-      api,
-      editing,
-      editorState,
-      domain,
-      appSettings,
-      page,
-      pageSettings,
-      siteSettings,
-      nav,
-      initNav,
-      footer,
-      initFooter,
-      user,
-      gallery,
-      imageEditor,
-    ]
+    [api, editing, editorState, domain, appSettings, page, pageSettings, siteSettings, nav, initNav, footer, initFooter, user, gallery]
   );
 
   useEffect(() => {
@@ -143,7 +120,6 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
                     setShowFullNav={() => setShowFullNav(!showFullNav)}
                   />
                   <SettingsPanel showFullNav={showFullNav} />
-                  {imageEditor.visible ? <WhpptImageEditor /> : <></>}
                 </>
               ) : (
                 <WhpptLogin />

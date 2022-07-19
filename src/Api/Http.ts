@@ -3,12 +3,25 @@ import Cookies from 'js-cookie';
 
 export type WhpptGetOptions = { path: string };
 export type WhpptPostOptions<T> = { path: string; data: T };
-export type WhpptSaveFileOptions<FormData> = { path: string; data: FormData };
+export type WhpptSaveFileOptions = { path: string; fileData: FormData };
+
+export type FileDetails = {
+  _id?: string;
+  name: string;
+  version?: string;
+  tags?: string[];
+  suggestedTags?: string[];
+  date?: Date;
+  defaultAlt?: string;
+  defaultCaption?: string;
+  uploadedOn?: string;
+  type?: string;
+};
 
 export type WhpptHttpMethods = {
   getJson: <T>(options?: WhpptGetOptions) => Promise<T>;
   postJson: <T, R>(options?: WhpptPostOptions<T>) => Promise<R>;
-  saveFile: <FormData>(options?: WhpptSaveFileOptions<FormData>) => Promise<Response>;
+  postFile: (options?: WhpptSaveFileOptions) => Promise<FileDetails>;
 };
 
 export type WhpptHttp = {
@@ -50,13 +63,14 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         const json = await response.json();
         return json as R;
       },
-      saveFile: async <FormData>({ path, data }: WhpptSaveFileOptions<FormData>) => {
+      postFile: async <R>({ path, fileData }: WhpptSaveFileOptions) => {
         const response = await fetch(buildFullPath(baseUrl, path), {
           method: 'POST',
-          body: data as any,
+          body: fileData as any,
         });
         if (response.status >= 400) throw new Error(await response.text());
-        return response;
+        const json = await response.json();
+        return json as R;
       },
     },
   };

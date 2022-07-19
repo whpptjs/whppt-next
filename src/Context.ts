@@ -6,7 +6,6 @@ import * as site from './Site/Context';
 import * as security from './Security/Context';
 import * as page from './Page/Context';
 import * as gallery from './Gallery/Context';
-import * as imageEditor from './ImageEditor/Context';
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
@@ -15,7 +14,6 @@ export const Whppt = createContext({
   ...site.Context(site.defaultArgs),
   ...page.Context(page.defaultArgs),
   ...gallery.Context(gallery.defaultArgs),
-  ...imageEditor.Context(imageEditor.defaultArgs),
   api: Api(),
 });
 

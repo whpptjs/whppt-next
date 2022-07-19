@@ -1,42 +1,55 @@
 import React, { FC, useEffect, useState } from 'react';
-import { WhpptTab } from '../ui/components';
 import { useWhppt } from '../Context';
-import { Image } from './Model/Image';
+import { FileDetails } from '../Api/Http';
 import { WhpptImageUploader } from '../ui/components/ImageUploader';
 import { WhpptGalleryImage } from '../ui/components/GalleryImage';
+import { GalleryTab } from './GalleryTab';
+import { ImageSettings } from './ImageSettings';
 
-export const Images: FC<WhpptTab> = () => {
-  const { api, imageEditor, setImageEditor, toggleGallery } = useWhppt();
-  const [images, setImages] = useState<Image[]>([]);
-
-  const requery = () => {
-    api.gallery.images.loadGallery({ page: 1, size: 10 }).then(({ images }) => {
-      setImages(images);
-    });
-  };
-
-  const uploadImage = imageData => {
-    const formData = new FormData();
-    formData.append('file', imageData);
-
-    api.gallery.images.save(formData).then(image => {
-      setImages([image, ...images]);
-    });
-  };
+export const Images: FC<GalleryTab> = ({ search, upload, save, remove }) => {
+  const { gallery, hideGallery } = useWhppt();
+  const [images, setImages] = useState<FileDetails[]>([]);
+  const [selectedImage, setSelectedImage] = useState<FileDetails>();
 
   const getImgUrl = imgId => {
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/img/${imgId}`;
   };
 
-  const remove = id => {
-    api.gallery.images.remove(id).then(() => {
-      setImages(images.filter(({ _id }) => _id !== id));
-    });
+  const uploadImage = newFile => {
+    upload(newFile).then(fileDetails => setImages([fileDetails, ...images]));
+  };
+
+  const useImage = () => {
+    gallery.use(selectedImage);
+    hideGallery();
   };
 
   useEffect(() => {
-    requery();
-  }, []);
+    //search('image').then(setImages);
+    setImages([
+      {
+        _id: 'u5sl5rg4b55',
+        version: 'v2',
+        uploadedOn: '2022-07-19T00:37:00.113Z',
+        name: 'Screenshot from 2022-07-18 07-57-01.png',
+        type: 'image/png',
+      },
+      {
+        _id: '1ao3l5qewn8w',
+        version: 'v2',
+        uploadedOn: '2022-07-18T07:15:16.577Z',
+        name: 'messi.jpg',
+        type: 'image/jpeg',
+      },
+      {
+        _id: '1ao3l5qdolxr',
+        version: 'v2',
+        uploadedOn: '2022-07-18T06:41:01.670Z',
+        name: 'kangaroo.jpeg',
+        type: 'image/jpeg',
+      },
+    ]);
+  }, [search]);
 
   return (
     <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
@@ -52,13 +65,20 @@ export const Images: FC<WhpptTab> = () => {
               url={getImgUrl(img._id)}
               remove={() => remove(img._id)}
               name={img.name}
-              onClick={() => {
-                setImageEditor({ ...imageEditor, visible: true, imageToCrop: img });
-                toggleGallery();
-              }}
+              onClick={() => setSelectedImage(img)}
             />
           ))}
       </section>
+
+      {selectedImage && (
+        <ImageSettings
+          useImage={useImage}
+          remove={() => {
+            remove(selectedImage._id);
+          }}
+          selectedImage={selectedImage}
+        />
+      )}
     </div>
   );
 };

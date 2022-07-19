@@ -30,8 +30,7 @@ export const WhpptMainNav: FC<{
     hideEditor,
     setUser,
     gallery,
-    toggleGallery,
-    toggleImageEditor,
+    showGallery,
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
@@ -65,7 +64,6 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleSiteSettings(false);
-        toggleGallery(false);
         showEditor('newPage', undefined, undefined, undefined);
       },
       order: 300,
@@ -113,7 +111,6 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
-        toggleGallery(false);
         toggleAppSettings();
         hideEditor();
         Cookies.set('authToken', 'THIS IS A TEST');
@@ -132,7 +129,6 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
-        toggleGallery(false);
         toggleSiteSettings();
         hideEditor();
       },
@@ -149,7 +145,6 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings();
         toggleEditing(false);
-        toggleGallery(false);
         hideEditor();
       },
       isActive: pageSettings.visible,
@@ -174,7 +169,12 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
-        toggleGallery();
+        showGallery({
+          limitType: 'image',
+          use: fileDetails => {
+            //open editor with fileDetails
+          },
+        });
         hideEditor();
       },
       isActive: gallery.visible,
@@ -182,24 +182,22 @@ export const WhpptMainNav: FC<{
       group: 'site',
       groupOrder: 400,
     },
-    {
-      key: 'imageEditor',
-      label: 'Image Editor',
-      icon: 'settings',
-      action: () => {
-        toggleAppSettings(false);
-        toggleSiteSettings(false);
-        togglePageSettings(false);
-        toggleEditing(false);
-        toggleGallery(false);
-        toggleImageEditor();
-        hideEditor();
-      },
-      isActive: gallery.visible,
-      order: 1200,
-      group: 'site',
-      groupOrder: 400,
-    },
+    // {
+    //   key: 'imageEditor',
+    //   label: 'Image Editor',
+    //   icon: 'settings',
+    //   action: () => {
+    //     toggleAppSettings(false);
+    //     toggleSiteSettings(false);
+    //     togglePageSettings(false);
+    //     toggleEditing(false);
+    //     hideEditor();
+    //   },
+    //   isActive: gallery.visible,
+    //   order: 1200,
+    //   group: 'site',
+    //   groupOrder: 400,
+    // },
     //TODO pass menuItems in from client website
     // ...this.$whppt.menuItems.map(i => ({ ...i, action: this.runAction(i.action) })),
   ];
