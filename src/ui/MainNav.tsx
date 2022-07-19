@@ -217,6 +217,24 @@ export const WhpptMainNav: FC<{
       group: 'config',
       groupOrder: 400,
     },
+    {
+      key: 'imageEditor',
+      label: 'Image Editor',
+      icon: 'settings',
+      action: () => {
+        toggleAppSettings(false);
+        toggleSiteSettings(false);
+        togglePageSettings(false);
+        toggleEditing(false);
+        toggleGallery(false);
+        toggleImageEditor();
+        hideEditor();
+      },
+      isActive: gallery.visible,
+      order: 1200,
+      group: 'site',
+      groupOrder: 400,
+    },
     ...menuItems({ closeAllWhpptPanels }),
   ] as MenuItem[];
 

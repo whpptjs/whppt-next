@@ -12,6 +12,7 @@ import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
 import * as settingsContext from './Settings/Context';
+import * as imageEditorContext from './ImageEditor/Context';
 import { WhpptLogin } from './ui/Login';
 import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
 
@@ -40,6 +41,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
   const [pageSettingsData, setPageSettingsData] = useState(pageContext.defaultPageSettingsData);
   const [user, setUser] = useState(securityContext.defaultState);
   const [settingsPanel, setSettingsPanel] = useState(settingsContext.defaultSettingsPanelState);
+  const [imageEditor, setImageEditor] = useState(imageEditorContext.defaultImageEditorState);
   const api = useMemo(() => {
     return Api();
   }, []);
@@ -76,9 +78,28 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
       }),
       ...securityContext.Context({ user, setUser }),
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
+      ...imageEditorContext.Context({
+        imageEditor,
+        setImageEditor,
+      }),
       contentTree,
     }),
-    [api, editing, editorState, domain, page, settingsPanel, pageSettingsData, settingsData, nav, initNav, footer, initFooter, user]
+    [
+      api,
+      editing,
+      editorState,
+      domain,
+      page,
+      settingsPanel,
+      pageSettingsData,
+      settingsData,
+      nav,
+      initNav,
+      footer,
+      initFooter,
+      user,
+      imageEditor,
+    ]
   );
 
   useEffect(() => {

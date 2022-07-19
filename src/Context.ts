@@ -8,6 +8,7 @@ import * as security from './Security/Context';
 import * as page from './Page/Context';
 import * as settings from './Settings/Context';
 import * as gallery from './Gallery/Context';
+import * as imageEditor from './ImageEditor/Context';
 import { ContentTreeNode } from './ui/Content';
 import { PageData } from './Page';
 
@@ -26,6 +27,7 @@ export const Whppt = createContext({
   ...page.Context(page.defaultArgs),
   ...settings.Context(settings.defaultArgs),
   ...gallery.Context(gallery.defaultArgs),
+  ...imageEditor.Context(imageEditor.defaultArgs),
   api: Api(),
   contentTree,
 });
