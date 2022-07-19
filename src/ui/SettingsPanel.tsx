@@ -3,11 +3,11 @@ import { AppSettings } from '../App/Settings';
 import { useWhppt } from '../Context';
 import { PageSettings } from '../Page/Settings';
 import { SiteSettings } from '../Site/Settings';
-import { GallerySettings } from '../Gallery';
+import { Gallery } from '../Gallery';
 
 export const SettingsPanel: FC<{ showFullNav: boolean }> = ({ showFullNav }) => {
-  const { pageSettings, siteSettings, appSettings, gallerySettings } = useWhppt();
-  const showPanel = [pageSettings, siteSettings, appSettings, gallerySettings].some(setting => setting.visible);
+  const { pageSettings, siteSettings, appSettings, gallery } = useWhppt();
+  const showPanel = [pageSettings, siteSettings, appSettings, gallery].some(setting => setting.visible);
 
   return (
     <div
@@ -18,7 +18,7 @@ export const SettingsPanel: FC<{ showFullNav: boolean }> = ({ showFullNav }) => 
         {pageSettings.visible ? <PageSettings /> : <></>}
         {appSettings.visible ? <AppSettings /> : <></>}
         {siteSettings.visible ? <SiteSettings /> : <></>}
-        {gallerySettings.visible ? <GallerySettings /> : <></>}
+        {gallery.visible ? <Gallery /> : <></>}
       </div>
     </div>
   );

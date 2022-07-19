@@ -29,8 +29,9 @@ export const WhpptMainNav: FC<{
     editorState,
     hideEditor,
     setUser,
-    gallerySettings,
-    toggleGallerySettings,
+    gallery,
+    toggleGallery,
+    toggleImageEditor,
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
@@ -64,7 +65,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleSiteSettings(false);
-        toggleGallerySettings(false);
+        toggleGallery(false);
         showEditor('newPage', undefined, undefined, undefined);
       },
       order: 300,
@@ -112,7 +113,7 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
-        toggleGallerySettings(false);
+        toggleGallery(false);
         toggleAppSettings();
         hideEditor();
         Cookies.set('authToken', 'THIS IS A TEST');
@@ -131,7 +132,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
-        toggleGallerySettings(false);
+        toggleGallery(false);
         toggleSiteSettings();
         hideEditor();
       },
@@ -148,7 +149,7 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings();
         toggleEditing(false);
-        toggleGallerySettings(false);
+        toggleGallery(false);
         hideEditor();
       },
       isActive: pageSettings.visible,
@@ -173,10 +174,28 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
-        toggleGallerySettings();
+        toggleGallery();
         hideEditor();
       },
-      isActive: gallerySettings.visible,
+      isActive: gallery.visible,
+      order: 1200,
+      group: 'site',
+      groupOrder: 400,
+    },
+    {
+      key: 'imageEditor',
+      label: 'Image Editor',
+      icon: 'settings',
+      action: () => {
+        toggleAppSettings(false);
+        toggleSiteSettings(false);
+        togglePageSettings(false);
+        toggleEditing(false);
+        toggleGallery(false);
+        toggleImageEditor();
+        hideEditor();
+      },
+      isActive: gallery.visible,
       order: 1200,
       group: 'site',
       groupOrder: 400,

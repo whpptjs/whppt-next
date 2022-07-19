@@ -12,7 +12,9 @@ import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
 import * as galleryContext from './Gallery/Context';
+import * as imageEditorContext from './ImageEditor/Context';
 import { WhpptLogin } from './ui/Login';
+import { WhpptImageEditor } from './ImageEditor';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -37,7 +39,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
   const [footer, setFooter] = useState(siteContext.defaultFooterState);
   const [siteSettings, setSiteSettings] = useState(siteContext.defaultSiteSettingsState);
   const [user, setUser] = useState(securityContext.defaultState);
-  const [gallerySettings, setGallerySettings] = useState(galleryContext.defaultGallerySettingsState);
+  const [gallery, setGallery] = useState(galleryContext.defaultGallerySettingsState);
+  const [imageEditor, setImageEditor] = useState(imageEditorContext.defaultImageEditorState);
   const api = useMemo(() => {
     return Api();
   }, []);
@@ -76,8 +79,12 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
       }),
       ...securityContext.Context({ user, setUser }),
       ...galleryContext.Context({
-        gallerySettings,
-        setGallerySettings,
+        gallery,
+        setGallery,
+      }),
+      ...imageEditorContext.Context({
+        imageEditor,
+        setImageEditor,
       }),
     }),
     [
@@ -94,7 +101,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
       footer,
       initFooter,
       user,
-      gallerySettings,
+      gallery,
+      imageEditor,
     ]
   );
 
@@ -135,6 +143,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
                     setShowFullNav={() => setShowFullNav(!showFullNav)}
                   />
                   <SettingsPanel showFullNav={showFullNav} />
+                  {imageEditor.visible ? <WhpptImageEditor /> : <></>}
                 </>
               ) : (
                 <WhpptLogin />

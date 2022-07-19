@@ -1,31 +1,33 @@
 export type GalleryState = {
   visible: boolean;
   activeTab: string;
+  imageToCrop: any;
 };
 
 export const defaultGallerySettingsState = {
   visible: false,
   activeTab: 'general',
+  imageToCrop: null,
 };
 
 export type GalleryContextArgs = {
-  gallerySettings: GalleryState;
-  setGallerySettings: (val: GalleryState) => void;
+  gallery: GalleryState;
+  setGallery: (val: GalleryState) => void;
 };
 
 export const defaultArgs = {
-  gallerySettings: defaultGallerySettingsState,
-  setGallerySettings: () => {},
+  gallery: defaultGallerySettingsState,
+  setGallery: () => {},
 } as GalleryContextArgs;
 
-export const Context = ({ gallerySettings, setGallerySettings }: GalleryContextArgs) => {
+export const Context = ({ gallery, setGallery }: GalleryContextArgs) => {
   return {
-    gallerySettings,
-    toggleGallerySettings: (visible?: boolean) =>
-      setGallerySettings({
-        ...gallerySettings,
-        visible: typeof visible === 'boolean' ? visible : !gallerySettings.visible,
+    gallery,
+    toggleGallery: (visible?: boolean) =>
+      setGallery({
+        ...gallery,
+        visible: typeof visible === 'boolean' ? visible : !gallery.visible,
       }),
-    changeGalleryActiveTab: (activeTab: string) => setGallerySettings({ ...gallerySettings, activeTab }),
+    changeGalleryActiveTab: (activeTab: string) => setGallery({ ...gallery, activeTab }),
   };
 };
