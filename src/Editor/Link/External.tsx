@@ -22,8 +22,8 @@ export const ExternalLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ valu
           type="text"
           error=""
           info=""
-          value={value.text}
-          onChange={text => onChange({ ...value, text })}
+          value={value.href}
+          onChange={href => onChange({ ...value, href })}
         />
       </section>
     </form>

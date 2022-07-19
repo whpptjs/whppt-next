@@ -22,8 +22,8 @@ export const AnchorLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ value,
           type="text"
           error=""
           info="eg. #anchor"
-          value={value.text}
-          onChange={text => onChange({ ...value, text })}
+          value={value.href}
+          onChange={href => onChange({ ...value, href })}
         />
       </section>
     </form>
