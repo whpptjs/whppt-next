@@ -1,13 +1,14 @@
 {
   "name": "@whppt/next",
-  "version": "0.0.2",
+  "version": "0.0.3-rc.4",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "types/index.d.ts",
   "files": [
     "/dist",
     "/types",
-    "/styles"
+    "/styles",
+    "/fonts"
   ],
   "repository": "https://github.com/whpptjs/whppt-next.git",
   "author": "Svelte Team <info@sveltestudios.com>",
@@ -33,6 +34,8 @@
     "build": "run-p build:*",
     "build:js": "rm -rf dist && rm -rf types && tsc",
     "build:css": "NODE_ENV=production postcss src/styles/index.scss -o styles/base.css",
+    "publish:patch-rc-dry": "yarn test && yarn build && standard-version --release-as patch --prerelease rc --dry-run",
+    "publish:patch-rc": "yarn test && yarn build && standard-version --release-as patch --prerelease rc && yarn publish --tag rc && git push --follow-tags",
     "publish:patch": "yarn test && yarn build && standard-version --release-as patch && yarn publish && git push --follow-tags",
     "publish:minor": "yarn test && yarn build && standard-version --release-as minor && yarn publish && git push --follow-tags",
     "publish:major": "yarn test && yarn build && standard-version --release-as major && yarn publish && git push --follow-tags"
@@ -42,6 +45,7 @@
     "@tiptap/extension-underline": "^2.0.0-beta.25",
     "@tiptap/react": "^2.0.0-beta.113",
     "@tiptap/starter-kit": "^2.0.0-beta.189",
+    "array-move": "^4.0.0",
     "formik": "^2.2.9",
     "js-cookie": "^3.0.1",
     "nanoid": "^4.0.0",
@@ -49,8 +53,10 @@
     "postcss-cli": "^9.1.0",
     "react": "^18.2.0",
     "react-advanced-cropper": "^0.9.0",
+    "react-sortable-hoc": "^2.0.0",
     "react-toastify": "^9.0.5",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",

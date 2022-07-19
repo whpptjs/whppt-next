@@ -1,6 +1,7 @@
 import { Domain } from '../App/Model';
 import { WhpptHttp } from '../Api/Http';
 import { HttpError } from '../HttpError';
+import { User } from '../Security/Model';
 
 export type AppApi = {
   domain: {
@@ -9,6 +10,10 @@ export type AppApi = {
     save: (domain: Domain) => Promise<{ domain: Domain }>;
     publish: (domain: Domain) => Promise<{ domain: Domain }>;
     unPublish: (domain: Domain) => Promise<{ domain: Domain }>;
+  };
+  user: {
+    create: (user: User) => Promise<string>;
+    list: () => Promise<User[]>;
   };
 };
 export type AppApiConstructor = ({ http }: { http: WhpptHttp }) => AppApi;
@@ -46,6 +51,17 @@ export const AppApi: AppApiConstructor = ({ http }) => {
           path: '/api/config/saveDomain',
           data: { domain },
         });
+      },
+    },
+    user: {
+      create(user: User) {
+        return http.secure.postJson({
+          path: '/user/create',
+          data: { newUser: user },
+        });
+      },
+      list() {
+        return http.secure.getJson<{ users: User[] }>({ path: '/user/list' }).then(data => data.users);
       },
     },
   };

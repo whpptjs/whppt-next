@@ -1,0 +1,41 @@
+.whppt-lightMode {
+  .sortableHelper {
+    @apply text-whpptDarkMode;
+  }
+  .whppt-sortable-list {
+    @apply text-whpptDarkMode;
+    &__item {
+      @apply bg-whpptLightBorder;
+    }
+  }
+}
+
+.sortableHelper {
+  z-index: 10000;
+  @apply text-whpptLightMode;
+}
+
+.whppt-sortable-list {
+  @apply relative;
+  &__main-actions {
+    @apply flex justify-between items-center mb-5;
+  }
+  &__helper {
+    @apply opacity-60 text-sm;
+  }
+  &--hide {
+    @apply absolute -right-96;
+  }
+  &__item {
+    @apply bg-whpptDarkBorder flex justify-between items-center p-3 my-2 cursor-move rounded;
+    &--flex {
+      @apply flex items-center;
+    }
+    &--icon {
+      @apply mr-2;
+      svg {
+        @apply w-10 h-10;
+      }
+    }
+  }
+}

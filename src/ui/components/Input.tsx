@@ -7,13 +7,26 @@ export type WhpptInputArgs = {
   error: string;
   type: 'text' | 'number' | 'file' | 'password' | 'email';
   placeholder?: string;
+  disabled?: boolean;
   name?: string;
   onChangeEvent?: (event) => void;
   onChange?: (value: string) => void;
   value: string;
 };
 
-export const WhpptInput: FC<WhpptInputArgs> = ({ id, label, info, error, type, placeholder, value, onChange, name, onChangeEvent }) => {
+export const WhpptInput: FC<WhpptInputArgs> = ({
+  id,
+  label,
+  info,
+  error,
+  type,
+  placeholder,
+  value,
+  onChange,
+  name,
+  onChangeEvent,
+  disabled,
+}) => {
   const _value = `${value}`;
   return (
     <div className="whppt-plaintext">
@@ -26,6 +39,7 @@ export const WhpptInput: FC<WhpptInputArgs> = ({ id, label, info, error, type, p
           value={_value}
           placeholder={placeholder || ''}
           name={name}
+          disabled={disabled}
           onChange={e => {
             if (onChangeEvent) return onChangeEvent(e);
             onChange(e.target.value);

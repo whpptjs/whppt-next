@@ -32,10 +32,6 @@ export const Redirects: FC<WhpptTab> = () => {
   const [perPage, setPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    requery();
-  }, [searchRedirects, currentPage, perPage]);
-
   const requery = () => {
     api.site.redirect
       .load({
@@ -50,6 +46,9 @@ export const Redirects: FC<WhpptTab> = () => {
       })
       .catch(err => setError(err));
   };
+  useEffect(() => {
+    requery();
+  }, [searchRedirects, currentPage, perPage]);
 
   const addRedirect = () => {
     const newRedirect = {

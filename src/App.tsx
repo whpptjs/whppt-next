@@ -13,6 +13,7 @@ import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
 import * as galleryContext from './Gallery/Context';
 import { WhpptLogin } from './ui/Login';
+import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -24,6 +25,7 @@ export type WhpptAppOptions = {
 export type WhpptApp = FC<WhpptAppOptions>;
 
 export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNav, initFooter }) => {
+  const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
   const [errorState, setError] = useState<Error>();
@@ -93,7 +95,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
             ...footer,
             content: initFooter(footer?.content || {}),
           });
-          setNav({ ...nav, content: initNav(nav?.content || {}) });
+          setNav({ ...nav });
+          // setNav({ ...nav, content: initNav(nav?.content || {}) });
         });
       })
       .catch(err => setError(err));
@@ -104,6 +107,11 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
     if (user._id === 'guest') return false;
     return true;
   };
+
+  useEffect(() => {
+    const isDraft = process.env.NEXT_PUBLIC_DRAFT === 'true';
+    setRenderChildren(!isDraft || (user && user._id !== 'guest'));
+  }, [setRenderChildren, user]);
 
   return (
     <div>
@@ -124,6 +132,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
               ) : (
                 <WhpptLogin />
               )}
+              <WhpptSetNewUserDetails />
               <ToastContainer
                 position="top-center"
                 autoClose={5000}
@@ -144,7 +153,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
             error(errorState)
           ) : (
             <div className="whppt-app__content">
-              <div>{children}</div>
+              {renderChildren ? <div>{children}</div> : <></>}
               {process.env.NEXT_PUBLIC_DRAFT === 'true' ? <WhpptEditorPanel editors={editors}></WhpptEditorPanel> : <></>}
             </div>
           )}
