@@ -12,7 +12,6 @@ import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
 import * as settingsContext from './Settings/Context';
-import * as imageEditorContext from './ImageEditor/Context';
 import { WhpptLogin } from './ui/Login';
 import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
 
@@ -78,28 +77,9 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
       }),
       ...securityContext.Context({ user, setUser }),
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
-      ...imageEditorContext.Context({
-        imageEditor,
-        setImageEditor,
-      }),
       contentTree,
     }),
-    [
-      api,
-      editing,
-      editorState,
-      domain,
-      page,
-      settingsPanel,
-      pageSettingsData,
-      settingsData,
-      nav,
-      initNav,
-      footer,
-      initFooter,
-      user,
-      imageEditor,
-    ]
+    [api, editing, editorState, domain, page, settingsPanel, pageSettingsData, settingsData, nav, initNav, footer, initFooter, user]
   );
 
   useEffect(() => {

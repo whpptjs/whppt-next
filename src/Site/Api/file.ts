@@ -47,9 +47,9 @@ export const SiteFileApi: SiteFileApiConstructor = ({ http }) => ({
   saveFile: async formData => {
     if (!formData) throw new Error('Invalid file');
 
-    return http.secure.saveFile<FormData>({
+    return http.secure.postFile({
       path: '/file/uploadFile',
-      data: formData,
+      fileData: formData,
     });
 >>>>>>> using new baseUrl
   },

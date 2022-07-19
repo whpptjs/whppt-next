@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { WhpptTab } from 'src/ui/components';
+import { GalleryTab } from './GalleryTab';
 
-export const Videos: FC<WhpptTab> = () => {
+export const Videos: FC<GalleryTab> = () => {
   return <div>Videos</div>;
 };

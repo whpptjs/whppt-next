@@ -1,13 +1,16 @@
+import { FileDetails } from './../Api/Http';
+import { GalleryFileType } from './Api';
+
 export type GalleryState = {
   visible: boolean;
   activeTab: string;
-  imageToCrop: any;
+  limitType?: GalleryFileType;
+  use?: (FileDetails) => void;
 };
 
 export const defaultGallerySettingsState = {
   visible: false,
-  activeTab: 'general',
-  imageToCrop: null,
+  activeTab: 'images',
 };
 
 export type GalleryContextArgs = {
@@ -23,11 +26,14 @@ export const defaultArgs = {
 export const Context = ({ gallery, setGallery }: GalleryContextArgs) => {
   return {
     gallery,
-    toggleGallery: (visible?: boolean) =>
+    showGallery: ({ limitType, use }: { limitType: GalleryFileType; use: (fileDetails: FileDetails) => void }) =>
       setGallery({
         ...gallery,
-        visible: typeof visible === 'boolean' ? visible : !gallery.visible,
+        visible: true,
+        limitType,
+        use,
       }),
+    hideGallery: () => setGallery({ visible: false, activeTab: 'image' }),
     changeGalleryActiveTab: (activeTab: string) => setGallery({ ...gallery, activeTab }),
   };
 };

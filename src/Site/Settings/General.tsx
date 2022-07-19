@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Heading } from '../../ui/components/Heading';
+import { WhpptHeading } from '../../ui/components/Heading';
 import { WhpptButton, WhpptTab } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { toast } from 'react-toastify';
@@ -42,7 +42,7 @@ export const General: FC<WhpptTab> = () => {
   return (
     <form className="whppt-form whppt-site-settings">
       <section className="whppt-form-section whppt-form-section--bottom-gap">
-        <Heading text={'Publishing'} />
+        <WhpptHeading text={'Publishing'} />
 
         <hr className="whppt-site-setings__ruler" />
 
@@ -54,7 +54,7 @@ export const General: FC<WhpptTab> = () => {
       </section>
 
       <section className="whppt-form-section">
-        <Heading text={'Dependencies'} />
+        <WhpptHeading text={'Dependencies'} />
 
         <hr className="whppt-site-setings__ruler" />
 

@@ -218,16 +218,20 @@ export const WhpptMainNav: FC<{
       groupOrder: 400,
     },
     {
-      key: 'imageEditor',
-      label: 'Image Editor',
+      key: 'gallery',
+      label: 'Gallery',
       icon: 'settings',
       action: () => {
         toggleAppSettings(false);
         toggleSiteSettings(false);
         togglePageSettings(false);
         toggleEditing(false);
-        toggleGallery(false);
-        toggleImageEditor();
+        showGallery({
+          limitType: 'image',
+          use: fileDetails => {
+            //open editor with fileDetails
+          },
+        });
         hideEditor();
       },
       isActive: gallery.visible,
