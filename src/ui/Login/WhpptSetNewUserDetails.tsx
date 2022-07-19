@@ -31,7 +31,7 @@ export const WhpptSetNewUserDetails: FC = () => {
   useEffect(() => {
     if (!router.query || !router.query.token) return;
     setUserDetails({ ...userDetails, email: router.query.email as string, token: router.query.token as string });
-  }, [router.query && router.query.token]);
+  }, [router.query, userDetails]);
 
   if (!userDetails.token) return <></>;
 
