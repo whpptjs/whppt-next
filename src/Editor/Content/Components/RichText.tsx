@@ -17,7 +17,7 @@ export const RichTextComponent: FC<{ data: RichTextComponentData; onChange: (dat
   };
 
   return (
-    <div onClick={e => e.stopPropagation()}>
+    <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
       <RichTextEditor value={_data.text} onChange={text => onChange({ ...data, text } as ComponentData)}>
         {() => (
           <div>
