@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { WhpptButton, WhpptHeading, WhpptInput } from '../ui/components';
-import { ImageData } from '../Gallery/Model/Image';
+import { FileDetails } from '../Api/Http';
 
 type ImageSettingsProps = {
   useImage: () => void;
-  selectedImage: ImageData;
+  selectedImage: FileDetails;
   remove: () => void;
 };
 

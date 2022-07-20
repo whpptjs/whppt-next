@@ -1,23 +1,22 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
 import { ImageData } from '../../Gallery/Model';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
 import { useWhppt } from '../../Context';
-import { WhpptHeading } from '../../ui/components/Heading';
 
 export type ImageEditorOptions = EditorOptions & { cropping: string[]; aspectLock?: string };
 
-export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
-  const { showGallery } = useWhppt();
+export const WhpptImageEditor: FC<EditorArgs<FileDetails, ImageEditorOptions>> = ({ value, onChange, options }) => {
+  const { showGallery, hideEditor } = useWhppt();
 
   const [coords, setCoords] = useState<any>(null);
   const [imageToCrop, setImageToCrop] = useState(null);
   const [aspectRatio, setAspectRatio] = useState(9 / 5);
 
-  // useEffect(() => {
-  //   setImageToCrop(imageEditor.imageToCrop);
-  // }, [imageEditor.imageToCrop]);
+  useEffect(() => {
+    setImageToCrop(value);
+  }, [value]);
 
   const getImgUrl = imgId => {
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/img/${imgId}`;
@@ -37,29 +36,16 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
 
   return (
     <div className="whppt-image-editor">
-      <section
-        className="whppt-form-section whppt-form-section--bottom-gap"
-        style={{ display: 'flex', flexDirection: 'column', position: 'fixed', right: 0, top: '50%', transform: 'translateY(-50%)' }}>
-        <WhpptHeading text="Image editor" />
-
+      <section className="whppt-form-section whppt-form-section--bottom-gap" style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'space-between', color: 'white' }}>
           <p style={{ cursor: 'pointer' }} onClick={() => setAspectRatio(9 / 5)}>
             Desktop
-            <p style={{ cursor: 'pointer' }} onClick={() => setAspectRatio(5 / 9)}>
-              flip
-            </p>
           </p>
           <p style={{ cursor: 'pointer' }} onClick={() => setAspectRatio(4 / 3)}>
             Tablet
-            <p style={{ cursor: 'pointer' }} onClick={() => setAspectRatio(3 / 4)}>
-              flip
-            </p>
           </p>
           <p style={{ cursor: 'pointer' }} onClick={() => setAspectRatio(16 / 9)}>
             Mobile
-            <p style={{ cursor: 'pointer' }} onClick={() => setAspectRatio(5 / 9)}>
-              flip
-            </p>
           </p>
         </div>
 
@@ -72,7 +58,10 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
         />
         <p
           style={{ color: 'white', cursor: 'pointer' }}
-          onClick={() => showGallery({ limitType: 'image', use: fileDetails => onChange(fileDetails) })}>
+          onClick={() => {
+            showGallery({ limitType: 'image', use: fileDetails => onChange(fileDetails) });
+            hideEditor();
+          }}>
           {imageToCrop ? 'Change picture' : 'Pick from Gallery'}
         </p>
       </section>

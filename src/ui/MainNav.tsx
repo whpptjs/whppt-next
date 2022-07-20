@@ -228,9 +228,16 @@ export const WhpptMainNav: FC<{
         toggleEditing(false);
         showGallery({
           limitType: 'image',
-          use: fileDetails => {
-            //open editor with fileDetails
-          },
+          use: fileDetails =>
+            showEditor(
+              'image',
+              fileDetails,
+              () => {
+                //update image edited
+                console.log(fileDetails);
+              },
+              { label: 'Image Editor' }
+            ),
         });
         hideEditor();
       },

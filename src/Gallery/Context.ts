@@ -29,7 +29,7 @@ export const Context = ({ gallery, setGallery }: GalleryContextArgs) => {
     showGallery: ({ limitType, use }: { limitType: GalleryFileType; use: (fileDetails: FileDetails) => void }) =>
       setGallery({
         ...gallery,
-        visible: true,
+        visible: !gallery.visible,
         limitType,
         use,
       }),

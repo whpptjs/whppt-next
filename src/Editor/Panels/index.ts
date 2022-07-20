@@ -6,3 +6,4 @@ export * from './NewPage';
 export * from '../Link/Panel';
 export * from '../Content/Panel';
 export * from '../ContentsTree/Panel';
+export * from '../Image/Panel';
