@@ -17,7 +17,7 @@
     }
 
     &__container {
-      @apply flex flex-col gap-4;
+      @apply flex flex-col gap-4 border-2 border-whpptStandard border-opacity-70 rounded-lg h-full py-0 px-4 max-h-screen;
     }
 
     &__tag-container {
@@ -27,5 +27,17 @@
     &__action-buttons {
       @apply flex gap-4;
     }
+  }
+
+  &__image {
+    @apply h-52 w-96 object-cover cursor-pointer;
+
+    &--selected {
+      @apply outline-whpptActive outline-2 outline;
+    }
+  }
+
+  &__filters {
+    @apply flex items-center gap-4 w-full px-5;
   }
 }
