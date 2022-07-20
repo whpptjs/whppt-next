@@ -11,6 +11,7 @@ import { SettingsPanel } from '../Settings/Context';
 import { PageSettings } from '../Page/Settings';
 import { SiteSettings } from '../Site/Settings';
 import { AppSettings } from '../App/Settings';
+import { ImageSettings } from '../App/ImageSettings';
 
 export type MenuItemOptions = {
   closeAllWhpptPanels: () => void;
@@ -91,6 +92,7 @@ export const WhpptMainNav: FC<{
         toggleEditing(false);
         closeAllWhpptPanels();
         showEditor('newPage', undefined, undefined, undefined);
+        hideGallery();
       },
       order: 400,
       group: 'page',
@@ -221,27 +223,16 @@ export const WhpptMainNav: FC<{
       key: 'gallery',
       label: 'Gallery',
       icon: 'settings',
-      action: () => {
-        toggleAppSettings(false);
-        toggleSiteSettings(false);
-        togglePageSettings(false);
+      action: ({ toggleSettingsPanel }) => {
         toggleEditing(false);
-        showGallery({
-          limitType: 'image',
-          use: fileDetails =>
-            showEditor(
-              'image',
-              fileDetails,
-              () => {
-                //update image edited
-                console.log(fileDetails);
-              },
-              { label: 'Image Editor' }
-            ),
+        closeWhpptEditor();
+        toggleSettingsPanel({
+          key: 'gallery',
+          activeTab: 'images',
+          component: <PageSettings />,
         });
-        hideEditor();
       },
-      isActive: gallery.visible,
+      isActive: ({ settingsPanel }) => settingsPanel.key === 'gallery',
       order: 1200,
       group: 'site',
       groupOrder: 400,

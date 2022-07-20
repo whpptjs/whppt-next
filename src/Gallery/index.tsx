@@ -33,24 +33,22 @@ export const Gallery: FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ flex: '1 1 0' }}>
-        <WhpptHeading text="Media Gallery" />
-        <div>Search</div>
-        <WhpptTabs tabs={tabs} selectTab={changeGalleryActiveTab} selectedTab={gallery.activeTab} />
-        <WhpptTab selectedTab={gallery.activeTab}>
-          {!gallery.limitType || (gallery.limitType && gallery.limitType === 'image') ? (
-            <Images name="images" label="Images" search={search} upload={upload} save={save} remove={remove} />
-          ) : (
-            <></>
-          )}
-          {!gallery.limitType || (gallery.limitType && gallery.limitType === 'video') ? (
-            <Videos name="videos" label="Videos" search={search} upload={upload} save={save} remove={remove} />
-          ) : (
-            <></>
-          )}
-        </WhpptTab>
-      </div>
+    <div>
+      <WhpptHeading text="Media Gallery" />
+      <div>Search</div>
+      <WhpptTabs tabs={tabs} selectTab={changeGalleryActiveTab} selectedTab={gallery.activeTab} />
+      <WhpptTab selectedTab={gallery.activeTab}>
+        {!gallery.limitType || (gallery.limitType && gallery.limitType === 'image') ? (
+          <Images name="images" label="Images" search={search} upload={upload} save={save} remove={remove} />
+        ) : (
+          <></>
+        )}
+        {!gallery.limitType || (gallery.limitType && gallery.limitType === 'video') ? (
+          <Videos name="videos" label="Videos" search={search} upload={upload} save={save} remove={remove} />
+        ) : (
+          <></>
+        )}
+      </WhpptTab>
     </div>
   );
 };

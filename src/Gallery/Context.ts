@@ -1,4 +1,5 @@
 import { FileDetails } from './../Api/Http';
+import { ImageData } from './Model';
 import { GalleryFileType } from './Api';
 
 export type GalleryState = {
@@ -26,7 +27,7 @@ export const defaultArgs = {
 export const Context = ({ gallery, setGallery }: GalleryContextArgs) => {
   return {
     gallery,
-    showGallery: ({ limitType, use }: { limitType: GalleryFileType; use: (fileDetails: FileDetails) => void }) =>
+    showGallery: ({ limitType, use }: { limitType: GalleryFileType; use: (imageData: ImageData) => void }) =>
       setGallery({
         ...gallery,
         visible: !gallery.visible,

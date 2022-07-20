@@ -5,10 +5,11 @@ type WhpptGalleryImageProps = {
   remove: () => void;
   name: string;
   onClick: (e: any) => void;
+  isSelected: boolean;
 };
 
-export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, name, onClick }) => {
-  const [showDelete, setShowDelete] = useState(false);
+export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, name, onClick, isSelected }) => {
+  // const [showDelete, setShowDelete] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -21,23 +22,12 @@ export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, nam
 
       <div style={loaded ? {} : { display: 'none' }} onClick={onClick}>
         <img
-          style={{ height: 200, width: 360, objectFit: 'cover', cursor: 'pointer' }}
+          style={{ height: 200, width: 360, objectFit: 'cover', cursor: 'pointer', outline: isSelected ? '2px solid blue' : '' }}
           onLoad={() => setLoaded(true)}
           src={url}
-          onMouseEnter={() => setShowDelete(true)}
-          onMouseLeave={() => setShowDelete(false)}
+          // onMouseEnter={() => setShowDelete(true)}
+          // onMouseLeave={() => setShowDelete(false)}
         />
-        {showDelete && (
-          <div
-            className="whppt-gallery-delete"
-            onMouseEnter={() => setShowDelete(true)}
-            onClick={e => {
-              e.stopPropagation();
-              remove();
-            }}>
-            Delete
-          </div>
-        )}
         <p>{name}</p>
       </div>
     </div>

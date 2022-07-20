@@ -24,6 +24,10 @@ export const Images: FC<GalleryTab> = ({ search, upload, save, remove }) => {
     hideGallery();
   };
 
+  const getSuggestedTags = image => {
+    return ['parent', 'dog', 'landscape'];
+  };
+
   useEffect(() => {
     //search('image').then(setImages);
     setImages([
@@ -94,12 +98,9 @@ export const Images: FC<GalleryTab> = ({ search, upload, save, remove }) => {
   }, [search]);
 
   return (
-    <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
-      <section
-        className="whppt-form-section whppt-form-section--bottom-gap"
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, 360px)', gap: '1rem', flex: '1 1 0' }}>
+    <section className="whppt-gallery whppt-gallery__main-container">
+      <div className="whppt-gallery__grid">
         <WhpptImageUploader uploadImage={uploadImage} />
-
         {images &&
           images.map(img => (
             <WhpptGalleryImage
@@ -108,19 +109,24 @@ export const Images: FC<GalleryTab> = ({ search, upload, save, remove }) => {
               remove={() => remove(img._id)}
               name={img.name}
               onClick={() => setSelectedImage(img)}
+              isSelected={selectedImage && selectedImage._id === img._id}
             />
           ))}
-      </section>
+      </div>
 
-      {selectedImage && (
-        <ImageSettings
-          useImage={useImage}
-          remove={() => {
-            remove(selectedImage._id);
-          }}
-          selectedImage={selectedImage}
-        />
-      )}
-    </div>
+      <div className={`whppt-gallery__image-settings ${selectedImage ? 'whppt-gallery__image-settings--active' : ''}`}>
+        {selectedImage && (
+          <ImageSettings
+            useImage={useImage}
+            remove={() => {
+              remove(selectedImage._id);
+            }}
+            save={save}
+            suggestedTags={getSuggestedTags(selectedImage)}
+            selectedImage={selectedImage}
+          />
+        )}
+      </div>
+    </section>
   );
 };

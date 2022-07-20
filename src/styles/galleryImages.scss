@@ -1,0 +1,31 @@
+.whppt-gallery {
+  @apply bg-whpptDarkMode px-6 py-4 mb-5;
+
+  &__main-container {
+    @apply flex gap-1 w-full;
+  }
+
+  &__grid {
+    @apply grid grid-cols-gallery gap-4 flex-1;
+  }
+
+  &__image-settings {
+    @apply w-0 transition-width duration-300 ease-in;
+
+    &--active {
+      @apply w-96;
+    }
+
+    &__container {
+      @apply flex flex-col gap-4;
+    }
+
+    &__tag-container {
+      @apply flex gap-4 flex-wrap;
+    }
+
+    &__action-buttons {
+      @apply flex gap-4;
+    }
+  }
+}
