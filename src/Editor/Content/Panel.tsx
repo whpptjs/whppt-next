@@ -12,8 +12,10 @@ export const WhpptContentEditor: FC<EditorArgs<ComponentData[], ContentEditorOpt
         const inilizedData = c.init({ _id: nanoid(), definitionKey: c.key } as ComponentData);
 
         return (
-          <div key={c.key} onClick={() => onChange([...value, inilizedData])}>
-            {c.name}
+          <div key={c.key}>
+            <button className="whppt-content__item" onClick={() => onChange([...value, inilizedData])}>
+              {c.name}
+            </button>
           </div>
         );
       })}

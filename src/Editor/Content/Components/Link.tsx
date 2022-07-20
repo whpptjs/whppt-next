@@ -5,11 +5,11 @@ import { ComponentData } from '../../../ui/Content';
 import { WhpptLink, WhpptLinkData } from '../../../ui/components';
 import { useWhppt } from '../../../Context';
 
-export type LinkPageComponentData = ComponentData & {
+export type LinkComponentData = ComponentData & {
   link: WhpptLinkData;
 };
 
-export const LinkComponent: FC<{ data: LinkPageComponentData; onChange: (data: ComponentData) => void }> = ({ data, onChange }) => {
+export const LinkComponent: FC<{ data: LinkComponentData; onChange: (data: ComponentData) => void }> = ({ data, onChange }) => {
   const _data = data;
   const { editing } = useWhppt();
 
