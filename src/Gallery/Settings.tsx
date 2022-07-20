@@ -11,6 +11,7 @@ type SettingsProps = {
 };
 
 export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTags }) => {
+  const [newTag, setNewTag] = useState('');
   const [defaultAltText, setDefaultAltText] = useState('');
   const [defaultCaption, setDefaultCaption] = useState('');
   const [date, setDate] = useState('');
@@ -18,7 +19,15 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
   return (
     <div className="whppt-gallery__image-settings__container">
       <WhpptHeading text={selected.name}></WhpptHeading>
-      <WhpptInput value="" type="text" info="Type your new tag here and add it with the +" />
+      <WhpptInput
+        value={newTag}
+        onChange={setNewTag}
+        id="new-tag"
+        label=""
+        error=""
+        type="text"
+        info="Type your new tag here and add it with the +"
+      />
 
       {selected.tags && (
         <div>
@@ -57,9 +66,9 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
           style={{ color: 'black' }}></input>
       </div>
 
-      <WhpptInput value={defaultAltText} label="Default alt text" onChange={setDefaultAltText} />
+      <WhpptInput id="alt" info="" label="Default alt text" error="" type="text" value={defaultAltText} onChange={setDefaultAltText} />
 
-      <WhpptInput value={defaultCaption} label="Default caption" onChange={setDefaultCaption} />
+      <WhpptInput id="caption" info="" label="Default caption" error="" type="text" value={defaultCaption} onChange={setDefaultCaption} />
 
       <div>
         <span>Used 8 times in 4 pages (dependencies)</span>

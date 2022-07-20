@@ -17,7 +17,7 @@
 }
 
 .whppt-popup {
-  @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto;
+  @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto overflow-auto;
   position: fixed;
   width: 0;
   transition: width 0.3s ease;

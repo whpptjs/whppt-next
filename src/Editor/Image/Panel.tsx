@@ -7,7 +7,7 @@ import { useWhppt } from '../../Context';
 
 export type ImageEditorOptions = EditorOptions & { cropping: string[]; aspectLock?: string };
 
-export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
+export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = ({ value, onChange }) => {
   const { showGallery, hideEditor } = useWhppt();
 
   const [coords, setCoords] = useState<any>(null);
