@@ -13,7 +13,7 @@ export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, nam
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div>
       {loaded ? null : (
         <div style={{ height: 200, width: 360 }}>
           <p>Loading ...</p>
@@ -22,11 +22,9 @@ export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, nam
 
       <div style={loaded ? {} : { display: 'none' }} onClick={onClick}>
         <img
-          style={{ height: 200, width: 360, objectFit: 'cover', cursor: 'pointer', outline: isSelected ? '2px solid blue' : '' }}
+          className={`whppt-gallery__image ${isSelected ? 'whppt-gallery__image--selected' : ''}`}
           onLoad={() => setLoaded(true)}
           src={url}
-          // onMouseEnter={() => setShowDelete(true)}
-          // onMouseLeave={() => setShowDelete(false)}
         />
         <p>{name}</p>
       </div>

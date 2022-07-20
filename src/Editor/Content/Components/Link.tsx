@@ -3,16 +3,18 @@ import { FC } from 'react';
 import { LinkEditor } from '../../Components';
 import { ComponentData } from '../../../ui/Content';
 import { WhpptLink, WhpptLinkData } from '../../../ui/components';
+import { useWhppt } from '../../../Context';
 
-export type LinkPageComponentData = ComponentData & {
+export type LinkComponentData = ComponentData & {
   link: WhpptLinkData;
 };
 
-export const LinkComponent: FC<{ data: LinkPageComponentData; onChange: (data: ComponentData) => void }> = ({ data, onChange }) => {
+export const LinkComponent: FC<{ data: LinkComponentData; onChange: (data: ComponentData) => void }> = ({ data, onChange }) => {
   const _data = data;
+  const { editing } = useWhppt();
 
   return (
-    <div onClick={e => e.stopPropagation()}>
+    <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
       <LinkEditor value={_data.link} onChange={link => onChange({ ...data, link } as ComponentData)}>
         {({ isEditing }) => (
           <WhpptLink link={_data.link} editing={isEditing}>

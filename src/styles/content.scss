@@ -1,3 +1,12 @@
 .whppt-content {
   @apply hover:bg-blue-300 hover:bg-opacity-20 hover:outline-blue-300 hover:outline;
+  &--hovered:hover {
+    @apply hover:bg-green-300 hover:bg-opacity-20 hover:outline-green-300 hover:outline;
+  }
+  &__item {
+    @apply p-3 bg-whpptDarkBorder mb-2 rounded w-full border border-transparent;
+    &:hover {
+      @apply border-whpptActive;
+    }
+  }
 }

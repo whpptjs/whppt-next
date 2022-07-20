@@ -32,7 +32,7 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, componentD
   }, [value, componentDefinitions, onChange]);
 
   return (
-    <ContentEditor value={[]} componentDefinitions={componentDefinitions} onChange={onChange}>
+    <ContentEditor<ComponentData> value={value} componentDefinitions={componentDefinitions} onChange={onChange}>
       {
         <div className={editing ? 'whppt-content' : ''}>
           {value.map(data => {

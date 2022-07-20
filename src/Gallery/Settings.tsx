@@ -2,30 +2,32 @@ import React, { FC, useState } from 'react';
 import { WhpptButton, WhpptHeading, WhpptInput } from '../ui/components';
 import { FileDetails } from '../Api/Http';
 
-type ImageSettingsProps = {
-  useImage: () => void;
-  selectedImage: FileDetails;
+type SettingsProps = {
+  use: () => void;
+  selected: FileDetails;
   remove: () => void;
   save: () => void;
   suggestedTags: any[];
 };
 
-export const ImageSettings: FC<ImageSettingsProps> = ({ useImage, selectedImage, remove, suggestedTags }) => {
+export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTags }) => {
   const [defaultAltText, setDefaultAltText] = useState('');
   const [defaultCaption, setDefaultCaption] = useState('');
   const [date, setDate] = useState('');
 
   return (
     <div className="whppt-gallery__image-settings__container">
-      <WhpptHeading text={selectedImage.name}></WhpptHeading>
+      <WhpptHeading text={selected.name}></WhpptHeading>
       <WhpptInput value="" type="text" info="Type your new tag here and add it with the +" />
 
-      {selectedImage.tags && (
+      {selected.tags && (
         <div>
           <h3>Tags</h3>
           <div className="whppt-gallery__image-settings__tag-container">
-            {selectedImage.tags.map((tag, index) => (
-              <span key={index}>{tag}</span>
+            {selected.tags.map((tag, index) => (
+              <span className="whppt-gallery__image-settings__tag" key={index}>
+                {tag}
+              </span>
             ))}
           </div>
         </div>
@@ -36,7 +38,9 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ useImage, selectedImage,
           <h3>Suggested tags</h3>
           <div className="whppt-gallery__image-settings__tag-container">
             {suggestedTags.map((tag, index) => (
-              <span key={index}>{tag}</span>
+              <span className="whppt-gallery__image-settings__tag" key={index}>
+                {tag}
+              </span>
             ))}
           </div>
         </div>
@@ -62,7 +66,7 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ useImage, selectedImage,
       </div>
 
       <div className="whppt-gallery__image-settings__action-buttons">
-        <WhpptButton text="use" onClick={useImage} />
+        <WhpptButton text="use" onClick={use} />
         <WhpptButton text="delete" onClick={remove} />
       </div>
     </div>

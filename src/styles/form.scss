@@ -63,6 +63,5 @@
   }
 }
 .whppt-form-heading {
-  font-weight: bold;
-  font-size: 2.5rem;
+  @apply flex w-full items-center font-bold text-whpptLightMode text-3xl py-3 px-5;
 }
