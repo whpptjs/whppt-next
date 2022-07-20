@@ -7,7 +7,7 @@ import { useWhppt } from '../../Context';
 
 export type ImageEditorOptions = EditorOptions & { cropping: string[]; aspectLock?: string };
 
-export const WhpptImageEditor: FC<EditorArgs<FileDetails, ImageEditorOptions>> = ({ value, onChange, options }) => {
+export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
   const { showGallery, hideEditor } = useWhppt();
 
   const [coords, setCoords] = useState<any>(null);
@@ -33,6 +33,8 @@ export const WhpptImageEditor: FC<EditorArgs<FileDetails, ImageEditorOptions>> =
       // );
     }
   };
+
+  console.log('IMGAE ON IMAGE EDITOR', value);
 
   return (
     <div className="whppt-image-editor">

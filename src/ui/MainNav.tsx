@@ -31,6 +31,7 @@ export const WhpptMainNav: FC<{
     setUser,
     gallery,
     showGallery,
+    hideGallery,
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
@@ -49,6 +50,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings(false);
         togglePageSettings(false);
         toggleSiteSettings(false);
+        hideGallery();
       },
       isActive: editing,
       order: 200,
@@ -67,6 +69,7 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings(false);
         setConfirmationPopup('');
         showEditor('newPage', undefined, undefined, undefined);
+        hideGallery();
       },
       order: 300,
       group: 'page',
@@ -122,6 +125,7 @@ export const WhpptMainNav: FC<{
         toggleAppSettings();
         hideEditor();
         setConfirmationPopup('');
+        hideGallery();
       },
       isActive: appSettings.visible,
       order: 800,
@@ -140,6 +144,7 @@ export const WhpptMainNav: FC<{
         toggleSiteSettings();
         setConfirmationPopup('');
         hideEditor();
+        hideGallery();
       },
       order: 900,
       group: 'site',
@@ -155,6 +160,7 @@ export const WhpptMainNav: FC<{
         togglePageSettings();
         toggleEditing(false);
         hideEditor();
+        hideGallery();
       },
       isActive: pageSettings.visible,
       order: 1000,

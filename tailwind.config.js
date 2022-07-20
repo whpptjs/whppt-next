@@ -16,6 +16,12 @@ module.exports = {
       minWidth: {
         400: '400px',
       },
+      transitionProperty: {
+        width: 'width',
+      },
+      gridTemplateColumns: {
+        gallery: 'repeat(auto-fit, 360px)',
+      },
     },
   },
   plugins: [],
