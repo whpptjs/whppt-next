@@ -43,8 +43,8 @@ export const Gallery: FC = () => {
   };
 
   return (
-    <div className="whppt-gallery" style={{ height: '100vh' }}>
-      <div className="whppt-gallery__content" style={{ display: 'flex', flexDirection: 'column' }}>
+    <div className="whppt-gallery">
+      <div className="whppt-gallery__content">
         <WhpptHeading text="Media Gallery" />
         <div className="whppt-gallery__filters">
           <WhpptQueryInput value={searchQuery} onChange={setSearchQuery} buttonText={'Search'} onClick={search} />
@@ -83,18 +83,20 @@ export const Gallery: FC = () => {
         </WhpptTab>
       </div>
 
-      <div className={'whppt-gallery__settings'}>
-        <Settings
-          use={() => {
-            gallery.use(selected);
-            hideGallery();
-          }}
-          remove={() => remove(selected._id)}
-          save={() => save}
-          suggestedTags={getSuggestedTags(selected)}
-          selected={selected}
-          setSelected={setSelected}
-        />
+      <div className={`whppt-gallery__settings ${selected ? 'whppt-gallery__settings--active' : ''}`}>
+        {selected && (
+          <Settings
+            use={() => {
+              gallery.use(selected);
+              hideGallery();
+            }}
+            remove={() => remove(selected._id)}
+            save={() => save}
+            suggestedTags={getSuggestedTags(selected)}
+            selected={selected}
+            setSelected={setSelected}
+          />
+        )}
       </div>
     </div>
   );
