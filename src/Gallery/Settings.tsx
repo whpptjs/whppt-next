@@ -16,10 +16,10 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
   const [date, setDate] = useState('');
 
   return (
-    <div className="whppt-gallery__image-settings__container">
+    <div className="whppt-gallery__settings__container">
       <WhpptHeading text={selected.name}></WhpptHeading>
 
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
+      <div className="whppt-gallery__settings__tag-input">
         <WhpptInput
           value={newTag}
           onChange={setNewTag}
@@ -29,15 +29,15 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
           type="text"
           info="Type your new tag here and add it with the +"
         />
-        <div style={{ fontSize: '3rem', cursor: 'pointer' }} onClick={() => setSelected({ ...selected, tags: [newTag, ...selected.tags] })}>
-          <span>+</span>
+        <div className="whppt-gallery__settings__tag-add" onClick={() => setSelected({ ...selected, tags: [newTag, ...selected.tags] })}>
+          +
         </div>
       </div>
 
       {selected.tags && (
         <>
           <h3>Tags</h3>
-          <div className="whppt-gallery__image-settings__tag-container">
+          <div className="whppt-gallery__settings__tag-container">
             {selected.tags.map((tag, index) => (
               <WhpptGalleryTag tag={tag} key={index} />
             ))}
@@ -48,7 +48,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
       {suggestedTags && (
         <>
           <h3>Suggested tags</h3>
-          <div className="whppt-gallery__image-settings__tag-container">
+          <div className="whppt-gallery__settings__tag-container">
             {suggestedTags.map((tag, index) => (
               <WhpptGalleryTag tag={tag} key={index} />
             ))}
@@ -91,7 +91,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
         <span>Used 8 times in 4 pages (dependencies)</span>
       </div>
 
-      <div className="whppt-gallery__image-settings__action-buttons">
+      <div className="whppt-gallery__settings__action-buttons">
         <WhpptButton text="use" onClick={use} />
         <WhpptButton text="delete" onClick={remove} />
       </div>
