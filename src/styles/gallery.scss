@@ -66,4 +66,14 @@
   &__tag {
     @apply bg-whpptActive px-2 py-1 rounded-md;
   }
+
+  &__day-picker {
+    &__container {
+      @apply relative;
+    }
+
+    &__calendar {
+      @apply absolute bg-whpptDarkMode rounded-lg border-solid border-2 border-whpptStandard;
+    }
+  }
 }
