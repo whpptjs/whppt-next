@@ -88,6 +88,7 @@ export const Gallery: FC = () => {
             save={() => save}
             suggestedTags={getSuggestedTags(selected)}
             selected={selected}
+            setSelected={setSelected}
           />
         )}
       </WhpptTab>
