@@ -106,7 +106,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
         </div>
 
         {aspectRatios && (
-          <div className="whppt-gallery__image-settings__tag-container">
+          <div className="whppt-gallery__settings__tag-container">
             {aspectRatios.map((ratio, index) => (
               <button key={index} onClick={() => setAspectRatio(ratio.ratio)}>
                 <WhpptGalleryTag tag={ratio.label} />

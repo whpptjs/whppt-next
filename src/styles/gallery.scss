@@ -2,14 +2,20 @@
   @apply bg-whpptDarkMode px-6 py-4 mb-5;
 
   &__main-container {
-    @apply flex gap-1 w-full;
+    @apply flex flex-1 overflow-auto gap-1 w-full;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__grid {
     @apply grid grid-cols-gallery gap-4 flex-1;
   }
 
-  &__image-settings {
+  &__settings {
     @apply w-0 transition-width duration-300 ease-in;
 
     &--active {
@@ -18,6 +24,14 @@
 
     &__container {
       @apply flex flex-col gap-4 border-2 border-whpptStandard border-opacity-70 rounded-lg h-full py-0 px-4 max-h-screen;
+    }
+
+    &__tag-input {
+      @apply flex gap-2 justify-between;
+    }
+
+    &__tag-add {
+      @apply text-5xl cursor-pointer mt-2;
     }
 
     &__tag-container {
