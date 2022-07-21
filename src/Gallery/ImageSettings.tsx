@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { WhpptButton, WhpptHeading, WhpptInput, WhpptGalleryTag } from '../ui/components';
 import { FileDetails } from '../Api/Http';
+import { DayPicker } from 'react-day-picker';
 
 type SettingsProps = {
   use: () => void;
@@ -13,7 +14,8 @@ type SettingsProps = {
 
 export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTags, setSelected }) => {
   const [newTag, setNewTag] = useState('');
-  const [date, setDate] = useState('');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [date, setDate] = useState(new Date().toLocaleDateString('en-US'));
 
   return (
     <div className="whppt-gallery__settings__container">
@@ -56,15 +58,22 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
         </>
       )}
 
-      <div>
+      <div className="whppt-gallery__day-picker__container">
         <h3>Date</h3>
-        <input
-          type="date"
-          id="start"
-          name="trip-start"
-          value={date}
-          onChange={e => setDate(e.target.value)}
-          style={{ color: 'black' }}></input>
+        <div onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer !important' }}>
+          <WhpptInput value={date.toString()} />
+        </div>
+
+        {showCalendar ? (
+          <DayPicker
+            className="whppt-gallery__day-picker__calendar"
+            fixedWeeks={true}
+            onDayClick={date => {
+              setDate(date.toLocaleDateString('en-GB'));
+              setShowCalendar(false);
+            }}
+          />
+        ) : null}
       </div>
 
       <WhpptInput
