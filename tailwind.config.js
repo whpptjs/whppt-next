@@ -22,6 +22,12 @@ module.exports = {
       gridTemplateColumns: {
         gallery: 'repeat(auto-fit, 360px)',
       },
+      gridAutoRows: {
+        gallery: 'fit-content(1rem)',
+      },
+      width: {
+        settingsSidebar: '32rem',
+      },
     },
   },
   plugins: [],

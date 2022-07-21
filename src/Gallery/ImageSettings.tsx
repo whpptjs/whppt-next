@@ -19,7 +19,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
 
   return (
     <div className="whppt-gallery__settings__container">
-      <WhpptHeading text={selected.name}></WhpptHeading>
+      <WhpptHeading text={(selected && selected.name) || ''}></WhpptHeading>
 
       <div className="whppt-gallery__settings__tag-input">
         <WhpptInput
@@ -31,12 +31,17 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
           type="text"
           info="Type your new tag here and add it with the +"
         />
-        <div className="whppt-gallery__settings__tag-add" onClick={() => setSelected({ ...selected, tags: [newTag, ...selected.tags] })}>
+        <div
+          className="whppt-gallery__settings__tag-add"
+          onClick={() => {
+            setSelected({ ...selected, tags: [newTag, ...selected.tags] });
+            setNewTag('');
+          }}>
           +
         </div>
       </div>
 
-      {selected.tags && (
+      {selected && selected.tags && (
         <>
           <h3>Tags</h3>
           <div className="whppt-gallery__settings__tag-container">
@@ -47,7 +52,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
         </>
       )}
 
-      {suggestedTags && (
+      {selected && suggestedTags && (
         <>
           <h3>Suggested tags</h3>
           <div className="whppt-gallery__settings__tag-container">
@@ -82,7 +87,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
         label="Default alt text"
         error=""
         type="text"
-        value={selected.defaultAlt || ''}
+        value={(selected && selected.defaultAlt) || ''}
         onChange={value => setSelected({ ...selected, defaultAlt: value })}
       />
 
@@ -92,7 +97,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
         label="Default caption"
         error=""
         type="text"
-        value={selected.defaultCaption || ''}
+        value={(selected && selected.defaultCaption) || ''}
         onChange={value => setSelected({ ...selected, defaultCaption: value })}
       />
 
