@@ -11,3 +11,4 @@ export * from './Table';
 export * from './WhpptLink';
 export * from './Heading';
 export * from './QueryInput';
+export * from './GalleryTag';

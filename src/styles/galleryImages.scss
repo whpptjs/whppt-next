@@ -48,4 +48,8 @@
   &__filters {
     @apply flex items-center gap-4 w-full px-5;
   }
+
+  &__tag {
+    @apply bg-whpptActive px-2 py-1 rounded-md;
+  }
 }

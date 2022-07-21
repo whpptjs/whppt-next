@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { WhpptButton, WhpptHeading, WhpptInput } from '../ui/components';
+import { WhpptButton, WhpptHeading, WhpptInput, WhpptGalleryTag } from '../ui/components';
 import { FileDetails } from '../Api/Http';
 
 type SettingsProps = {
@@ -8,51 +8,52 @@ type SettingsProps = {
   remove: () => void;
   save: () => void;
   suggestedTags: any[];
+  setSelected: ({}) => void;
 };
 
-export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTags }) => {
+export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTags, setSelected }) => {
   const [newTag, setNewTag] = useState('');
-  const [defaultAltText, setDefaultAltText] = useState('');
-  const [defaultCaption, setDefaultCaption] = useState('');
   const [date, setDate] = useState('');
 
   return (
     <div className="whppt-gallery__image-settings__container">
       <WhpptHeading text={selected.name}></WhpptHeading>
-      <WhpptInput
-        value={newTag}
-        onChange={setNewTag}
-        id="new-tag"
-        label=""
-        error=""
-        type="text"
-        info="Type your new tag here and add it with the +"
-      />
+
+      <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <WhpptInput
+          value={newTag}
+          onChange={setNewTag}
+          id="new-tag"
+          label=""
+          error=""
+          type="text"
+          info="Type your new tag here and add it with the +"
+        />
+        <div style={{ fontSize: '3rem', cursor: 'pointer' }} onClick={() => setSelected({ ...selected, tags: [newTag, ...selected.tags] })}>
+          <span>+</span>
+        </div>
+      </div>
 
       {selected.tags && (
-        <div>
+        <>
           <h3>Tags</h3>
           <div className="whppt-gallery__image-settings__tag-container">
             {selected.tags.map((tag, index) => (
-              <span className="whppt-gallery__image-settings__tag" key={index}>
-                {tag}
-              </span>
+              <WhpptGalleryTag tag={tag} key={index} />
             ))}
           </div>
-        </div>
+        </>
       )}
 
       {suggestedTags && (
-        <div>
+        <>
           <h3>Suggested tags</h3>
           <div className="whppt-gallery__image-settings__tag-container">
             {suggestedTags.map((tag, index) => (
-              <span className="whppt-gallery__image-settings__tag" key={index}>
-                {tag}
-              </span>
+              <WhpptGalleryTag tag={tag} key={index} />
             ))}
           </div>
-        </div>
+        </>
       )}
 
       <div>
@@ -66,9 +67,25 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
           style={{ color: 'black' }}></input>
       </div>
 
-      <WhpptInput id="alt" info="" label="Default alt text" error="" type="text" value={defaultAltText} onChange={setDefaultAltText} />
+      <WhpptInput
+        id="alt"
+        info=""
+        label="Default alt text"
+        error=""
+        type="text"
+        value={selected.defaultAlt || ''}
+        onChange={value => setSelected({ ...selected, defaultAlt: value })}
+      />
 
-      <WhpptInput id="caption" info="" label="Default caption" error="" type="text" value={defaultCaption} onChange={setDefaultCaption} />
+      <WhpptInput
+        id="caption"
+        info=""
+        label="Default caption"
+        error=""
+        type="text"
+        value={selected.defaultCaption || ''}
+        onChange={value => setSelected({ ...selected, defaultCaption: value })}
+      />
 
       <div>
         <span>Used 8 times in 4 pages (dependencies)</span>
