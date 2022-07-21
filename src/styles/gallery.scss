@@ -16,15 +16,11 @@
   }
 
   &__grid {
-    @apply grid grid-cols-gallery gap-4 flex-1;
+    @apply grid grid-cols-gallery gap-4 flex-1 auto-rows-fr auto-rows-gallery;
   }
 
   &__settings {
-    @apply w-0 transition-width duration-300 ease-in;
-
-    &--active {
-      @apply w-settingsSidebar;
-    }
+    @apply w-0 transition-width duration-300 ease-in w-settingsSidebar;
 
     &__container {
       @apply flex flex-col gap-4 border-2 border-whpptStandard border-opacity-70 rounded-lg h-full py-0 px-4 max-h-screen;

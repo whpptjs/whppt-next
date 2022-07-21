@@ -83,20 +83,18 @@ export const Gallery: FC = () => {
         </WhpptTab>
       </div>
 
-      <div className={`whppt-gallery__settings ${selected ? 'whppt-gallery__settings--active' : ''}`}>
-        {selected && (
-          <Settings
-            use={() => {
-              gallery.use(selected);
-              hideGallery();
-            }}
-            remove={() => remove(selected._id)}
-            save={() => save}
-            suggestedTags={getSuggestedTags(selected)}
-            selected={selected}
-            setSelected={setSelected}
-          />
-        )}
+      <div className={'whppt-gallery__settings'}>
+        <Settings
+          use={() => {
+            gallery.use(selected);
+            hideGallery();
+          }}
+          remove={() => remove(selected._id)}
+          save={() => save}
+          suggestedTags={getSuggestedTags(selected)}
+          selected={selected}
+          setSelected={setSelected}
+        />
       </div>
     </div>
   );
