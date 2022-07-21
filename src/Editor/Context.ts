@@ -1,3 +1,5 @@
+import { ComponentData } from '../ui/Content';
+
 export type EditorState = {
   editor: string;
   value: any;
@@ -17,6 +19,8 @@ export type EditorContextArgs = {
   setEditing: (val: boolean) => void;
   editorState: EditorState;
   setEditorState: (val: EditorState) => void;
+  contentsTree: () => ComponentData[][];
+  setContentsTree: (val: () => ComponentData[][]) => void;
 };
 
 export const defaultArgs = {
@@ -24,9 +28,11 @@ export const defaultArgs = {
   setEditing: () => {},
   editorState: defaultState,
   setEditorState: () => {},
+  contentsTree: () => [],
+  setContentsTree: () => {},
 } as EditorContextArgs;
 
-export const Context = ({ editing, setEditing, editorState, setEditorState }: EditorContextArgs) => {
+export const Context = ({ editing, setEditing, contentsTree, setContentsTree, editorState, setEditorState }: EditorContextArgs) => {
   return {
     editing,
     toggleEditing: (value?: boolean) => {
@@ -41,6 +47,8 @@ export const Context = ({ editing, setEditing, editorState, setEditorState }: Ed
         options: undefined,
       });
     },
+    contentsTree,
+    setContentsTree,
     showEditor: (editor: string, value: any, onChange: (value: any) => void, options: any) => {
       // if (!editing) return;
       const internalOnChange = (changedValue: any) => {

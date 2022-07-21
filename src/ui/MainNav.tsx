@@ -66,15 +66,33 @@ export const WhpptMainNav: FC<{
         setConfirmationPopup('');
         showEditor('newPage', undefined, undefined, undefined);
       },
+      order: 400,
+      group: 'page',
+      groupOrder: 200,
+    },
+    {
+      key: 'contentTree',
+      label: 'Content Tree',
+      icon: 'content-tree',
       order: 300,
       group: 'page',
       groupOrder: 200,
+      isActive: editorState.editor === 'contentsTree',
+      disabled: showPanel,
+      action: () => {
+        toggleEditing(false);
+        toggleAppSettings(false);
+        togglePageSettings(false);
+        toggleSiteSettings(false);
+        setConfirmationPopup('');
+        showEditor('contentsTree', undefined, undefined, undefined);
+      },
     },
     {
       key: 'save',
       label: 'Save Page',
       icon: 'save',
-      order: 400,
+      order: 500,
       group: 'page',
       groupOrder: 200,
       isActive: confirmationPopup === 'page',
@@ -92,7 +110,7 @@ export const WhpptMainNav: FC<{
       action: () => {
         setConfirmationPopup('nav');
       },
-      order: 500,
+      order: 200,
       group: 'site',
       groupOrder: 300,
     },
@@ -107,7 +125,7 @@ export const WhpptMainNav: FC<{
       action: () => {
         setConfirmationPopup('footer');
       },
-      order: 600,
+      order: 300,
     },
     {
       key: 'config-settings',
@@ -122,7 +140,7 @@ export const WhpptMainNav: FC<{
         setConfirmationPopup('');
       },
       isActive: appSettings.visible,
-      order: 800,
+      order: 200,
       group: 'config',
       groupOrder: 400,
     },
@@ -139,7 +157,7 @@ export const WhpptMainNav: FC<{
         setConfirmationPopup('');
         hideEditor();
       },
-      order: 900,
+      order: 400,
       group: 'site',
       groupOrder: 300,
     },
@@ -155,7 +173,7 @@ export const WhpptMainNav: FC<{
         hideEditor();
       },
       isActive: pageSettings.visible,
-      order: 1000,
+      order: 600,
       group: 'page',
       groupOrder: 200,
     },
@@ -163,7 +181,7 @@ export const WhpptMainNav: FC<{
       key: 'dashboard',
       label: 'Open Dashboard',
       icon: 'dashboard',
-      order: 1100,
+      order: 300,
       group: 'config',
       groupOrder: 400,
     },
