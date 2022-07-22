@@ -28,7 +28,7 @@ export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, nam
           // onMouseEnter={() => setShowDelete(true)}
           // onMouseLeave={() => setShowDelete(false)}
         />
-        <p>{name}</p>
+        <p className="whppt-gallery__image-name">{name}</p>
       </div>
     </div>
   );

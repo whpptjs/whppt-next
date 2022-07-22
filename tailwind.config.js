@@ -26,7 +26,7 @@ module.exports = {
         gallery: 'fit-content(1rem)',
       },
       width: {
-        settingsSidebar: '32rem',
+        settingsSidebar: '24rem',
       },
     },
   },

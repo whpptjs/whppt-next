@@ -1,0 +1,37 @@
+.whppt-image-editor {
+  &__device-select {
+    @apply cursor-pointer;
+
+    &--active {
+      @apply text-whpptActive underline;
+    }
+  }
+
+  &__gallery-actions {
+    @apply flex justify-between;
+
+    &__button {
+      @apply text-whpptLightMode cursor-pointer;
+    }
+  }
+
+  &__date-picker-input {
+    @apply relative;
+
+    & * {
+      @apply cursor-pointer;
+    }
+  }
+
+  &__date-picker-icon {
+    @apply absolute h-8 w-8 top-3 right-3 cursor-pointer transition-transform ease-out;
+
+    &.up {
+      @apply transform rotate-180;
+    }
+
+    &.down {
+      @apply transform rotate-0;
+    }
+  }
+}

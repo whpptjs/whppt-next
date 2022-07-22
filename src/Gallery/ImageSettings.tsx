@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { WhpptButton, WhpptHeading, WhpptInput, WhpptGalleryTag } from '../ui/components';
+import { WhpptButton, WhpptHeading, WhpptInput, WhpptGalleryTag, WhpptIcon } from '../ui/components';
 import { FileDetails } from '../Api/Http';
 import { DayPicker } from 'react-day-picker';
 
@@ -19,7 +19,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
 
   return (
     <div className="whppt-gallery__settings__container">
-      <WhpptHeading text={(selected && selected.name) || ''}></WhpptHeading>
+      <p className="whppt-gallery__settings__title">{(selected && selected.name) || ''}</p>
 
       <div className="whppt-gallery__settings__tag-input">
         <WhpptInput
@@ -65,8 +65,15 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
 
       <div className="whppt-gallery__day-picker__container">
         <h3>Date</h3>
-        <div onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer !important' }}>
+        <div
+          className="whppt-image-editor__date-picker-input"
+          onClick={() => setShowCalendar(!showCalendar)}
+          style={{ cursor: 'pointer !important' }}>
           <WhpptInput value={date.toString()} />
+
+          <div className={`whppt-image-editor__date-picker-icon ${showCalendar ? 'up' : 'down'}`}>
+            <WhpptIcon is="down" />
+          </div>
         </div>
 
         {showCalendar ? (

@@ -27,11 +27,25 @@
     }
 
     &__container {
-      @apply flex flex-col gap-4 border-2 border-whpptStandard border-opacity-70 rounded-lg h-full py-0 px-4 max-h-screen;
+      @apply flex flex-col gap-4 border-2 w-settingsSidebar border-whpptStandard border-opacity-70 rounded-lg h-full py-0 px-4 max-h-screen overflow-auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__title {
+      @apply text-3xl leading-9 font-bold mt-3 break-words;
     }
 
     &__tag-input {
       @apply flex gap-2 justify-between;
+
+      & .whppt-plaintext {
+        @apply w-full;
+      }
     }
 
     &__tag-add {
@@ -53,6 +67,10 @@
     &--selected {
       @apply outline-whpptActive outline-2 outline;
     }
+  }
+
+  &__image-name {
+    @apply whitespace-nowrap overflow-hidden text-ellipsis;
   }
 
   &__filters {

@@ -57,7 +57,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
         style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ display: 'flex', gap: '3rem', color: 'white' }}>
           <p
-            style={{ cursor: 'pointer', color: device === 'desktop' ? 'blue' : 'white' }}
+            className={`whppt-image-editor__device-select${device === 'desktop' ? '--active' : ''}`}
             onClick={() => {
               setDevice('desktop');
               setAspectRatio({ h: 9, w: 5 });
@@ -65,7 +65,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
             Desktop
           </p>
           <p
-            style={{ cursor: 'pointer', color: device === 'tablet' ? 'blue' : 'white' }}
+            className={`whppt-image-editor__device-select${device === 'tablet' ? '--active' : ''}`}
             onClick={() => {
               setDevice('tablet');
               setAspectRatio({ h: 4, w: 3 });
@@ -73,7 +73,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
             Tablet
           </p>
           <p
-            style={{ cursor: 'pointer', color: device === 'mobile' ? 'blue' : 'white' }}
+            className={`whppt-image-editor__device-select${device === 'mobile' ? '--active' : ''}`}
             onClick={() => {
               setDevice('mobile');
               setAspectRatio({ h: 16, w: 9 });
@@ -90,9 +90,9 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
           stencilProps={{ aspectRatio: aspectRatio.w / aspectRatio.h }}
         />
 
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className="whppt-image-editor__gallery-actions">
           <p
-            style={{ color: 'white', cursor: 'pointer' }}
+            className="whppt-image-editor__gallery-actions__button"
             onClick={() => {
               showGallery({ limitType: 'image', use: fileDetails => onChange(fileDetails) });
               hideEditor();
@@ -100,7 +100,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
             {imageToCrop ? 'Change picture' : 'Pick from Gallery'}
           </p>
 
-          <p style={{ color: 'white', cursor: 'pointer' }} onClick={() => setImageToCrop(null)}>
+          <p className="whppt-image-editor__gallery-actions__button" onClick={() => setImageToCrop(null)}>
             Remove
           </p>
         </div>
