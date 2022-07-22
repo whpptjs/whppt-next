@@ -5,12 +5,12 @@ import * as editor from './Editor/Context';
 import * as site from './Site/Context';
 import * as security from './Security/Context';
 import * as page from './Page/Context';
-import { ComponentData } from './ui/Content';
+import { ContentTreeNode } from './ui/Content';
 import { PageData } from './Page';
 
 export const contentTree = {
-  getTree: undefined as (page: PageData) => ComponentData[][],
-  setGetTree: function (val: (page: PageData) => ComponentData[][]) {
+  getTree: undefined as (page: PageData) => ContentTreeNode[],
+  setGetTree: function (val: (page: PageData) => ContentTreeNode[]) {
     this.getTree = val;
   },
 };
