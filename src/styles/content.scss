@@ -1,3 +1,11 @@
+.whppt-lightMode {
+  .whppt-content {
+    &-tree-list {
+      @apply bg-whpptLightBorder;
+    }
+  }
+}
+
 .whppt-content {
   @apply hover:bg-blue-300 hover:bg-opacity-20 hover:outline-blue-300 hover:outline;
   &--hovered:hover {
@@ -7,6 +15,13 @@
     @apply p-3 bg-whpptDarkBorder mb-2 rounded w-full border border-transparent;
     &:hover {
       @apply border-whpptActive;
+    }
+  }
+
+  &-tree-list {
+    @apply bg-whpptDarkBorder p-2 mb-2;
+    &__inner-list {
+      @apply bg-whpptActive px-2 my-2 rounded flex cursor-pointer;
     }
   }
 }

@@ -12,7 +12,7 @@ export const WhpptCheckbox: FC<WhpptCheckboxProps> = ({ label, value, onChange }
     <div className="whppt-checkbox">
       <label>
         <input className="whppt-checkbox--input" type="checkbox" value={value} onChange={onChange} />
-        <WhpptIcon is={value === 'true' ? 'checkBoxChecked' : 'checkBox'} />
+        <WhpptIcon is={value === 'true' ? 'checkbox-checked' : 'checkbox'} />
         <span className="whppt-checkbox__label">{label}</span>
         <span className="whppt-checkbox__checkmark"></span>
       </label>

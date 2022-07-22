@@ -5,6 +5,15 @@ import * as editor from './Editor/Context';
 import * as site from './Site/Context';
 import * as security from './Security/Context';
 import * as page from './Page/Context';
+import { ContentTreeNode } from './ui/Content';
+import { PageData } from './Page';
+
+export const contentTree = {
+  getTree: undefined as (page: PageData) => ContentTreeNode[],
+  setGetTree: function (val: (page: PageData) => ContentTreeNode[]) {
+    this.getTree = val;
+  },
+};
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
@@ -13,6 +22,7 @@ export const Whppt = createContext({
   ...site.Context(site.defaultArgs),
   ...page.Context(page.defaultArgs),
   api: Api(),
+  contentTree,
 });
 
 Whppt.displayName = 'WhpptContext';

@@ -9,11 +9,15 @@ import {
   ListEditorOptions,
   WhpptLinkEditor,
   WhpptContentEditor,
+  WhpptNewPageEditor,
+  WhpptContentsTreeEditor,
 } from './Panels';
 
 export type UseDefaultEditorsArgs = EditorArgs<any> & { editor: string };
 
 export const UseDefaultEditors = ({ editor, value, onChange, options }: UseDefaultEditorsArgs) => {
+  if (editor === 'newPage') return <WhpptNewPageEditor />;
+  if (editor === 'contentsTree') return <WhpptContentsTreeEditor />;
   if (editor === 'plainText') return <WhpptPlaintextEditor value={value} onChange={onChange} options={options} />;
   if (editor === 'richText') return <WhpptRichtextEditor value={value} onChange={onChange} options={options} />;
   if (editor === 'formattedText') return <WhpptFormattedTextEditor value={value} onChange={onChange} options={options} />;

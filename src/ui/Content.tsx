@@ -9,6 +9,12 @@ export type WhpptComponentDefinition = {
   init: (value: ComponentData) => ComponentData;
 };
 
+export type ContentTreeNode = {
+  name: string;
+  value: ComponentData[];
+  onChange: (value: ComponentData[]) => void;
+};
+
 export type ComponentData = {
   _id: string;
   definitionKey: string;
