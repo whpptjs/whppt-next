@@ -6,10 +6,15 @@ import { SiteSettings } from '../Site/Settings/index';
 
 export const defaultSettingsPanelState = {
   visible: false,
+  key: '',
+  activeTab: '',
   component: <></>,
 };
-export type settingsPanel = {
+
+export type SettingsPanel = {
   visible: boolean;
+  key: string;
+  activeTab: string;
   component: ReactElement;
 };
 

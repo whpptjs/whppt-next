@@ -140,6 +140,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
                     menuItems={menuItems}
                     setLightMode={() => setLightMode(!lightMode)}
                     setShowFullNav={() => setShowFullNav(!showFullNav)}
+                    setSettingsPanel={setSettingsPanel}
                   />
                   <SettingsPanel showFullNav={showFullNav} />
                 </>

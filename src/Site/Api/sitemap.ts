@@ -52,7 +52,6 @@ export const SitemapApi: SitemapApiConstructor = ({ http }) => {
         lastModTo && `lastModTo=${lastModTo}`,
         lastModFrom && `lastModFrom=${lastModFrom}`,
       ]);
-      console.log('🚀 ~ file: sitemap.ts ~ line 64 ~ params', params);
 
       return http.secure.getJson<SitemapResult>({
         path: `/site/loadSitemap?${params.join('&')}`,

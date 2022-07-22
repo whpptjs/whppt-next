@@ -40,18 +40,18 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({ dense, id, label, placeholde
 
   const handleKeyPress = event => {
     event.preventDefault();
-    if (event.key === 'Enter') {
-      console.log('enter press here! ');
-    }
-    if (event.key === 'Down') {
-      console.log('Down press here! ');
-    }
-    if (event.key === 'Up') {
-      console.log('Up press here! ');
-    }
-    if (event.key === 'Tab') {
-      console.log('Up press here! ');
-    }
+    // if (event.key === 'Enter') {
+    //   console.log('enter press here! ');
+    // }
+    // if (event.key === 'Down') {
+    //   console.log('Down press here! ');
+    // }
+    // if (event.key === 'Up') {
+    //   console.log('Up press here! ');
+    // }
+    // if (event.key === 'Tab') {
+    //   console.log('Up press here! ');
+    // }
     //TODO make arrows work
   };
   const setTextProp = item => {

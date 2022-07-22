@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { Dispatch, FC, ReactElement, useState } from 'react';
 import Cookies from 'js-cookie';
 import { groupBy, sortBy } from 'lodash';
 import { WhpptIcon } from './components/Icon';
@@ -7,9 +7,12 @@ import { ToggleWhpptIcon } from '../icons/Toggle';
 import { SavePagePopup } from './Popups/SavePage';
 import { SaveNavPopup } from './Popups/SaveNav';
 import { SaveFooterPopup } from './Popups/SaveFooter';
+import { defaultSettingsPanelState, SettingsPanel } from './SettingsPanel';
 
 export type MenuItemOptions = {
   closeWhpptPopups: () => void;
+  setSettingsPanel: Dispatch<SettingsPanel>;
+  settingsPanel: SettingsPanel;
 };
 
 export type MenuItem = {
@@ -29,8 +32,9 @@ export const WhpptMainNav: FC<{
   setLightMode: Function;
   showFullNav: boolean;
   setShowFullNav: Function;
+  setSettingsPanel: Dispatch<SettingsPanel>;
   menuItems: (options) => MenuItem[];
-}> = ({ menuItems, lightMode, setLightMode, showFullNav, setShowFullNav }) => {
+}> = ({ menuItems, lightMode, setLightMode, showFullNav, setShowFullNav, setSettingsPanel }) => {
   const [confirmationPopup, setConfirmationPopup] = useState('');
   const {
     toggleEditing,
@@ -46,6 +50,7 @@ export const WhpptMainNav: FC<{
     editorState,
     hideEditor,
     setUser,
+    settingsPanel,
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
@@ -57,6 +62,7 @@ export const WhpptMainNav: FC<{
     toggleSiteSettings(false);
     togglePageSettings(false);
     toggleAppSettings(false);
+    setSettingsPanel(defaultSettingsPanelState);
     hideEditor();
   };
 
@@ -210,11 +216,10 @@ export const WhpptMainNav: FC<{
       group: 'config',
       groupOrder: 400,
     },
-    ...menuItems({ closeWhpptPopups }),
+    ...menuItems({ closeWhpptPopups, setSettingsPanel, settingsPanel }),
   ] as MenuItem[];
 
   const groupedItems = sortBy(groupBy(sortBy(items, ['order']), 'group'), ['groupOrder']);
-  console.log('🚀 ~ file: MainNav.tsx ~ line 213 ~ groupedItems', groupedItems);
 
   return (
     <div>

@@ -16,7 +16,6 @@ export const LinkEditor: FC<
     <div
       className="whppt-editor-selector"
       onClick={e => {
-        console.log('🚀 ~ file: LinkEditor.tsx ~ line 20 ~ editing', editing);
         if (editing) {
           showEditor('link', value, onChange, opts);
           e.stopPropagation();

@@ -8,7 +8,7 @@ import * as security from './Security/Context';
 import * as page from './Page/Context';
 import { ContentTreeNode } from './ui/Content';
 import { PageData } from './Page';
-import { settingsPanel as settingsPanelType } from './ui/SettingsPanel';
+import { SettingsPanel } from './ui/SettingsPanel';
 
 export const contentTree = {
   getTree: undefined as (page: PageData) => ContentTreeNode[],
@@ -20,7 +20,7 @@ export const contentTree = {
 export const settingsPanel = {
   visible: false,
   component: '',
-} as unknown as settingsPanelType;
+} as unknown as SettingsPanel;
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
