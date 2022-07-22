@@ -1,6 +1,7 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { ComponentData } from '../../..';
+import { arrayMoveImmutable } from 'array-move';
+import { ComponentData, WhpptIcon } from '../../index';
 import { useWhppt } from '../../Context';
 
 export const WhpptContentsTreeEditor: FC = () => {
@@ -9,54 +10,37 @@ export const WhpptContentsTreeEditor: FC = () => {
     return contentTree && contentTree.getTree ? contentTree.getTree(page) : [];
   }, [contentTree, page]);
 
-  useEffect(() => {
-    console.log('🚀 ~ file: Panel.tsx ~ line 13 ~ tree', tree);
-  }, [tree]);
-
-  const SortableItem = SortableElement<{ item: ComponentData }>(({ item, index }) => (
-    <div className="whppt-content-tree-list__inner-list" key={`whppt-contents-child-${index}`}>
+  const SortableItem = SortableElement<{ item: ComponentData }>(({ item }) => (
+    <li className="whppt-content-tree-list__inner-list">
+      <WhpptIcon is="order" />
       {item.definitionKey}
-    </div>
+    </li>
   ));
 
-  const onSortEnd = () => {
-    // const onSortEnd = ({ oldIndex, newIndex }) => {
-    // onChange(arrayMoveImmutable(value, oldIndex, newIndex));
-    // var el = document.querySelector('li.whppt-sortable-list__item.sortableHelper');
-    // el && el.parentNode.removeChild(el);
+  const onSortEnd = ({ oldIndex, newIndex }, treeNode) => {
+    treeNode.onChange(arrayMoveImmutable(treeNode.value, oldIndex, newIndex));
+    var el = document.querySelector('li.whppt-content-tree-list__inner-list.sortableHelper');
+    el && el.parentNode.removeChild(el);
   };
 
-  const SortableList = SortableContainer<{ items: ComponentData[][] }>(({ items }) => {
+  const SortableList = SortableContainer<{ items: ComponentData[] }>(({ items }) => {
     return (
       <ul>
-        {items.map((list, key) => (
-          <div className="whppt-content-tree-list" key={`whppt-contents-${key}`}>
-            {list.map((content, index) => {
-              return <SortableItem key={`whppt-contents-${key}`} index={index} item={content} />;
-            })}
-          </div>
-        ))}
+        {items.map((content, index) => {
+          return <SortableItem key={`whppt-contents-${index}`} index={index} item={content} />;
+        })}
       </ul>
     );
   });
 
   return (
     <div>
-      <SortableList distance={10} helperClass="sortableHelper" items={tree} onSortEnd={onSortEnd} />
-
-      {/* {tree.map((contents, key) => {
-        return (
-          <div className="whppt-content-tree-list" key={`whppt-contents-${key}`}>
-            {contents.map((content, index) => {
-              return (
-                <div className="whppt-content-tree-list__inner-list" key={`whppt-contents-child-${index}`}>
-                  {content.definitionKey}
-                </div>
-              );
-            })}
-          </div>
-        );
-      })} */}
+      {tree.map((treeNode, key) => (
+        <ul className="whppt-content-tree-list" key={`whppt-contents-${key}`}>
+          <div>{treeNode.name}</div>
+          <SortableList distance={10} helperClass="sortableHelper" items={treeNode.value} onSortEnd={args => onSortEnd(args, treeNode)} />
+        </ul>
+      ))}
     </div>
   );
 };
