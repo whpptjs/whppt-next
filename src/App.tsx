@@ -3,8 +3,8 @@ import { contentTree, Whppt } from './Context';
 import { ToastContainer } from 'react-toastify';
 import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
 import { WhpptEditorPanel } from './Editor/EditorPanel';
-import { SettingsPanel } from './ui/SettingsPanel';
-import { WhpptMainNav } from './ui/MainNav';
+import { SettingsPanel, defaultSettingsPanelState } from './ui/SettingsPanel';
+import { MenuItem, MenuItemOptions, WhpptMainNav } from './ui/MainNav';
 import { Api } from './Api';
 import * as editor from './Editor/Context';
 import * as appContext from './App/Context';
@@ -18,23 +18,24 @@ export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
   editors: WhpptAppEditorsArg;
   error: (error: Error) => ReactElement;
+  menuItems: (options: MenuItemOptions) => MenuItem[];
   initNav?: (nav: any) => any;
   initFooter?: (footer: any) => any;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
-export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNav, initFooter }) => {
+export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, error, initNav, initFooter }) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
   const [errorState, setError] = useState<Error>();
   const [editing, setEditing] = useState(false);
   const [editorState, setEditorState] = useState(editor.defaultState);
-  // const [contentsTree, setContentsTree] = useState<() => ComponentData[][]>();
   const [domain, setDomain] = useState(appContext.defaultState);
   const [page, setPage] = useState(pageContext.defaultState);
   const [appSettings, setAppSettings] = useState(appContext.defaultAppSettingsState);
   const [pageSettings, setPageSettings] = useState(pageContext.defaultPageSettingsState);
+  const [settingsPanel, setSettingsPanel] = useState(defaultSettingsPanelState);
   const [nav, setNav] = useState(siteContext.defaultNavState);
   const [footer, setFooter] = useState(siteContext.defaultFooterState);
   const [siteSettings, setSiteSettings] = useState(siteContext.defaultSiteSettingsState);
@@ -76,9 +77,26 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
         initFooter,
       }),
       ...securityContext.Context({ user, setUser }),
+      settingsPanel,
+      setSettingsPanel,
       contentTree,
     }),
-    [editing, editorState, api, domain, appSettings, page, pageSettings, siteSettings, nav, initNav, footer, initFooter, user]
+    [
+      editing,
+      editorState,
+      api,
+      domain,
+      appSettings,
+      page,
+      settingsPanel,
+      pageSettings,
+      siteSettings,
+      nav,
+      initNav,
+      footer,
+      initFooter,
+      user,
+    ]
   );
 
   useEffect(() => {
@@ -92,7 +110,6 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
             content: initFooter(footer?.content || {}),
           });
           setNav({ ...nav });
-          // setNav({ ...nav, content: initNav(nav?.content || {}) });
         });
       })
       .catch(err => setError(err));
@@ -120,6 +137,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
                   <WhpptMainNav
                     lightMode={lightMode}
                     showFullNav={showFullNav}
+                    menuItems={menuItems}
                     setLightMode={() => setLightMode(!lightMode)}
                     setShowFullNav={() => setShowFullNav(!showFullNav)}
                   />

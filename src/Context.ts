@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+
 import { Api } from './Api';
 import * as app from './App/Context';
 import * as editor from './Editor/Context';
@@ -7,6 +8,7 @@ import * as security from './Security/Context';
 import * as page from './Page/Context';
 import { ContentTreeNode } from './ui/Content';
 import { PageData } from './Page';
+import { settingsPanel as settingsPanelType } from './ui/SettingsPanel';
 
 export const contentTree = {
   getTree: undefined as (page: PageData) => ContentTreeNode[],
@@ -14,6 +16,11 @@ export const contentTree = {
     this.getTree = val;
   },
 };
+
+export const settingsPanel = {
+  visible: false,
+  component: '',
+} as unknown as settingsPanelType;
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
@@ -23,6 +30,7 @@ export const Whppt = createContext({
   ...page.Context(page.defaultArgs),
   api: Api(),
   contentTree,
+  settingsPanel,
 });
 
 Whppt.displayName = 'WhpptContext';
