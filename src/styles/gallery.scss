@@ -90,4 +90,12 @@
       @apply absolute bg-whpptDarkMode rounded-lg border-solid border-2 border-whpptStandard;
     }
   }
+
+  &__loader {
+    @apply relative h-48 flex justify-center items-center;
+
+    &__spinner {
+      @apply animate-spin rounded-full h-8 w-8 border-b-2 border-whpptActive top-2/4 right-2/4;
+    }
+  }
 }

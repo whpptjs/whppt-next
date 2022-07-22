@@ -9,14 +9,12 @@ type WhpptGalleryImageProps = {
 };
 
 export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, name, onClick, isSelected }) => {
-  // const [showDelete, setShowDelete] = useState(false);
   const [loaded, setLoaded] = useState(false);
-
   return (
     <div style={{ position: 'relative' }}>
       {loaded ? null : (
-        <div style={{ height: 200, width: 360 }}>
-          <p>Loading ...</p>
+        <div className="whppt-gallery__loader">
+          <div className="whppt-gallery__loader__spinner"></div>
         </div>
       )}
 

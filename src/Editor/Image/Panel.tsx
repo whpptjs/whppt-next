@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
-import { ImageData } from '../../Gallery/Model';
+import { ImageData, AspectRatio, AspectRatioObject } from '../../Gallery/Model';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
 import { useWhppt } from '../../Context';
@@ -12,23 +12,34 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
   const { showGallery, hideEditor } = useWhppt();
 
   const [coords, setCoords] = useState<any>(null);
-  const [imageToCrop, setImageToCrop] = useState(null);
+  const [imageToCrop, setImageToCrop] = useState<ImageData>(null);
 
-  const [alt, setAlt] = useState(value.defaultAlt || '');
-  const [caption, setCaption] = useState(value.defaultCaption || '');
+  const [alt, setAlt] = useState<string>(value.defaultAlt || '');
+  const [caption, setCaption] = useState<string>(value.defaultCaption || '');
 
-  const [device, setDevice] = useState('desktop');
+  const [device, setDevice] = useState<string>('desktop');
 
-  const [aspectRatio, setAspectRatio] = useState({ w: 9, h: 5 });
-  const [aspectRatios, setAspectRatios] = useState([
+  const [aspectRatio, setAspectRatio] = useState<AspectRatio>({ w: 9, h: 5 });
+
+  const getLandscapeRatio = () => {
+    const { w, h } = aspectRatio;
+    return w >= h ? aspectRatio : { w: h, h: w };
+  };
+
+  const getPortraitRatio = () => {
+    const { w, h } = aspectRatio;
+    return h >= w ? aspectRatio : { w: h, h: w };
+  };
+
+  const aspectRatios: AspectRatioObject[] = [
     { label: '16/9', ratio: { w: 16, h: 9 } },
     { label: '9/5', ratio: { w: 9, h: 5 } },
     { label: '4/3', ratio: { w: 4, h: 3 } },
     { label: 'square', ratio: { w: 1, h: 1 } },
     { label: 'freeform', ratio: { w: undefined, h: undefined } },
-    { label: 'Landscape', ratio: aspectRatio },
-    { label: 'Portrait', ratio: { w: aspectRatio.h, h: aspectRatio.w } },
-  ]);
+    { label: 'Landscape', ratio: getLandscapeRatio() },
+    { label: 'Portrait', ratio: getPortraitRatio() },
+  ];
 
   useEffect(() => {
     setImageToCrop(value);
@@ -49,7 +60,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
       // );
     }
   };
-  console.log('SELECTED IMAGE', value);
+
   return (
     <div className="whppt-image-editor">
       <section
@@ -60,7 +71,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
             className={`whppt-image-editor__device-select${device === 'desktop' ? '--active' : ''}`}
             onClick={() => {
               setDevice('desktop');
-              setAspectRatio({ h: 9, w: 5 });
+              setAspectRatio({ w: 16, h: 9 });
             }}>
             Desktop
           </p>
@@ -68,7 +79,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
             className={`whppt-image-editor__device-select${device === 'tablet' ? '--active' : ''}`}
             onClick={() => {
               setDevice('tablet');
-              setAspectRatio({ h: 4, w: 3 });
+              setAspectRatio({ w: 3, h: 4 });
             }}>
             Tablet
           </p>
@@ -76,7 +87,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
             className={`whppt-image-editor__device-select${device === 'mobile' ? '--active' : ''}`}
             onClick={() => {
               setDevice('mobile');
-              setAspectRatio({ h: 16, w: 9 });
+              setAspectRatio({ w: 9, h: 16 });
             }}>
             Mobile
           </p>
@@ -87,7 +98,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
           style={{ height: 200, width: 360, objectFit: 'cover' }}
           onChange={onCrop}
           backgroundClassName={'whppt-cropper-background'}
-          stencilProps={{ aspectRatio: aspectRatio.w / aspectRatio.h }}
+          stencilProps={{ aspectRatio: aspectRatio.w / aspectRatio.h, lines: true }}
         />
 
         <div className="whppt-image-editor__gallery-actions">
