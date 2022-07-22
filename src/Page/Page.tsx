@@ -1,12 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { ComponentData } from '../ui/Content';
+import { ContentTreeNode } from '../ui/Content';
 
 import { useWhppt } from '../Context';
 import { PageData } from './Model/Page';
 
 export type WhpptPageProps<T extends PageData> = {
   init: (page: T) => T;
-  getContents: (page: T) => ComponentData[][];
+  getContents: (args: { page: T; setPage: (page: T) => void }) => ContentTreeNode[];
   slug: string;
   collection?: string;
   children: ({ page, setPage }: { page: T; setPage: (page: T) => void }) => ReactElement;
@@ -26,7 +26,7 @@ export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, co
       .then(loadedPage => {
         const initialisedPage = init(loadedPage as T);
         setPage(initialisedPage);
-        contentTree.setGetTree((aaa: T) => getContents(aaa));
+        contentTree.setGetTree(_page => getContents({ page: _page as T, setPage }));
       })
       .catch(err => {
         setError(err.message);
