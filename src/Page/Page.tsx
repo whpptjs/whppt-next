@@ -5,15 +5,15 @@ import { useWhppt } from '../Context';
 import { PageData } from './Model/Page';
 
 export type WhpptPageProps<T extends PageData> = {
-  slug: string;
+  init: (page: T) => T;
   getContents: (page: T) => ComponentData[][];
+  slug: string;
   collection?: string;
   children: ({ page, setPage }: { page: T; setPage: (page: T) => void }) => ReactElement;
-  init: (page: T) => T;
 };
 
 export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, collection, children, init }: WhpptPageProps<T>) => {
-  const { api, page, setPage, domain, setContentsTree, contentsTree } = useWhppt();
+  const { api, page, setPage, domain, contentTree } = useWhppt();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -24,11 +24,9 @@ export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, co
     api.page
       .loadFromSlug({ slug, collection, domain })
       .then(loadedPage => {
-        setPage(init(loadedPage as T));
-        const x = () => getContents(loadedPage as T);
-        console.log('🚀 ~ file: Page.tsx ~ line 29 ~ useEffect ~ x', x);
-        setContentsTree(x);
-        console.log('🚀 ~ file: Page.tsx ~ line 17 ~ ontentsTree', contentsTree);
+        const initialisedPage = init(loadedPage as T);
+        setPage(initialisedPage);
+        contentTree.setGetTree((aaa: T) => getContents(aaa));
       })
       .catch(err => {
         setError(err.message);
@@ -36,7 +34,7 @@ export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, co
       .finally(() => {
         setLoading(false);
       });
-  }, [domain, slug, api.page, collection, setPage, init, setContentsTree, getContents]);
+  }, [domain, slug, api.page, collection, setPage, init, getContents, contentTree]);
 
   if (loading) return <div>Page is loading</div>;
   if (error) return <div className="whppt-error">{error} test</div>;

@@ -1,5 +1,5 @@
 import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
-import { Whppt } from './Context';
+import { contentTree, Whppt } from './Context';
 import { ToastContainer } from 'react-toastify';
 import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
 import { WhpptEditorPanel } from './Editor/EditorPanel';
@@ -13,7 +13,6 @@ import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
 import { WhpptLogin } from './ui/Login';
 import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
-import { ComponentData } from './ui/Content';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -31,7 +30,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
   const [errorState, setError] = useState<Error>();
   const [editing, setEditing] = useState(false);
   const [editorState, setEditorState] = useState(editor.defaultState);
-  const [contentsTree, setContentsTree] = useState<() => ComponentData[][]>();
+  // const [contentsTree, setContentsTree] = useState<() => ComponentData[][]>();
   const [domain, setDomain] = useState(appContext.defaultState);
   const [page, setPage] = useState(pageContext.defaultState);
   const [appSettings, setAppSettings] = useState(appContext.defaultAppSettingsState);
@@ -51,8 +50,6 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
         setEditing,
         editorState,
         setEditorState,
-        contentsTree,
-        setContentsTree,
       }),
       api,
       ...appContext.Context({
@@ -79,8 +76,9 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
         initFooter,
       }),
       ...securityContext.Context({ user, setUser }),
+      contentTree,
     }),
-    [editing, editorState, contentsTree, api, domain, appSettings, page, pageSettings, siteSettings, nav, initNav, footer, initFooter, user]
+    [editing, editorState, api, domain, appSettings, page, pageSettings, siteSettings, nav, initNav, footer, initFooter, user]
   );
 
   useEffect(() => {
