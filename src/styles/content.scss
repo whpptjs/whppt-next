@@ -9,4 +9,10 @@
       @apply border-whpptActive;
     }
   }
+
+  &-tree-list {
+    &__inner-list {
+      @apply bg-whpptDarkBorder p-1 my-2 border border-transparent hover:border-whpptActive;
+    }
+  }
 }
