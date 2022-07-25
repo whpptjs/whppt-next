@@ -34,7 +34,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
         <div
           className="whppt-gallery__settings__tag-add"
           onClick={() => {
-            setSelected(selected.tags ? { ...selected, tags: [newTag, ...selected.tags] } : { ...selected, tags: [newTag] });
+            newTag && setSelected(selected.tags ? { ...selected, tags: [newTag, ...selected.tags] } : { ...selected, tags: [newTag] });
             setNewTag('');
           }}>
           +

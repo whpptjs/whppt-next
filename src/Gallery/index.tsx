@@ -7,7 +7,8 @@ import { Videos } from './Videos';
 import { GalleryFileType } from './Api';
 
 export const Gallery: FC = () => {
-  const { gallery, changeGalleryActiveTab, api, hideGallery } = useWhppt();
+  const { gallery, changeGalleryActiveTab, api, hideGallery, domain } = useWhppt();
+
   const [selected, setSelected] = useState<FileDetails>();
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState('');
@@ -19,7 +20,8 @@ export const Gallery: FC = () => {
   ];
 
   const search = (type: GalleryFileType) => {
-    return api.gallery.search({ page: 1, size: 10, type }).then(({ files }) => files);
+    const tags = (selected && selected.tags) || [];
+    return api.gallery.search({ domainId: domain._id, page: 1, size: 10, type, tags }).then(({ items }) => items);
   };
 
   const upload = newFile => {

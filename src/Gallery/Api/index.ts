@@ -4,7 +4,13 @@ import { FileDetails } from '../../Api/Http';
 export type GalleryFileType = 'image' | 'video' | 'file' | 'lotty' | 'svg';
 
 export type GalleryApi = {
-  search: (args: { page: string | number; size: string | number; type: GalleryFileType }) => Promise<{ files: FileDetails[] }>;
+  search: (args: {
+    page: string | number;
+    size: string | number;
+    type: GalleryFileType;
+    domainId: string;
+    tags: string[];
+  }) => Promise<{ files: FileDetails[] }>;
   upload: (fileData: FormData) => Promise<FileDetails>;
   save: (details: FileDetails) => Promise<FileDetails>;
   load: (id: string) => Promise<FileDetails>;
@@ -13,9 +19,9 @@ export type GalleryApi = {
 export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryApi;
 
 export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
-  search: async ({ page, size, type }) => {
+  search: async ({ domainId, page, size, type }) => {
     return http.secure.getJson<{ files: FileDetails[] }>({
-      path: `/api/gallery/search?limit=${size}&currentPage=${page}&type=${type}`,
+      path: `/api/gallery/search?domainId=${domainId}&limit=${size}&currentPage=${page}&type=${type}`,
     });
   },
   upload: async fileData => {
