@@ -26,6 +26,9 @@
   @apply bg-transparent relative overflow-hidden;
   @apply px-6;
   transition: 0.5s;
+  &__icon {
+    @apply w-5 h-5;
+  }
 }
 
 .whppt-button::before,

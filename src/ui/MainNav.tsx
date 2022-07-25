@@ -94,6 +94,7 @@ export const WhpptMainNav: FC<{
       },
       order: 400,
       group: 'page',
+      disabled: showPanel,
       groupOrder: 200,
     },
     {
