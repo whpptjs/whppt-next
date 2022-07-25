@@ -3,7 +3,7 @@ import { contentTree, Whppt } from './Context';
 import { ToastContainer } from 'react-toastify';
 import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
 import { WhpptEditorPanel } from './Editor/EditorPanel';
-import { SettingsPanel, defaultSettingsPanelState } from './ui/SettingsPanel';
+import { SettingsPanel } from './Settings/Panel';
 import { MenuItem, MenuItemOptions, WhpptMainNav } from './ui/MainNav';
 import { Api } from './Api';
 import * as editor from './Editor/Context';
@@ -11,6 +11,7 @@ import * as appContext from './App/Context';
 import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
+import * as settingsContext from './Settings/Context';
 import { WhpptLogin } from './ui/Login';
 import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
 
@@ -33,13 +34,10 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
   const [editorState, setEditorState] = useState(editor.defaultState);
   const [domain, setDomain] = useState(appContext.defaultState);
   const [page, setPage] = useState(pageContext.defaultState);
-  const [appSettings, setAppSettings] = useState(appContext.defaultAppSettingsState);
-  const [pageSettings, setPageSettings] = useState(pageContext.defaultPageSettingsState);
-  const [settingsPanel, setSettingsPanel] = useState(defaultSettingsPanelState);
   const [nav, setNav] = useState(siteContext.defaultNavState);
   const [footer, setFooter] = useState(siteContext.defaultFooterState);
-  const [siteSettings, setSiteSettings] = useState(siteContext.defaultSiteSettingsState);
   const [user, setUser] = useState(securityContext.defaultState);
+  const [settingsPanel, setSettingsPanel] = useState(settingsContext.defaultSettingsPanelState);
   const api = useMemo(() => {
     return Api();
   }, []);
@@ -56,19 +54,13 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
       ...appContext.Context({
         domain,
         setDomain,
-        appSettings,
-        setAppSettings,
       }),
       domain,
       ...pageContext.Context({
         page,
         setPage,
-        pageSettings,
-        setPageSettings,
       }),
       ...siteContext.Context({
-        siteSettings,
-        setSiteSettings,
         nav,
         setNav,
         initNav,
@@ -77,26 +69,10 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
         initFooter,
       }),
       ...securityContext.Context({ user, setUser }),
-      settingsPanel,
-      setSettingsPanel,
+      ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
       contentTree,
     }),
-    [
-      editing,
-      editorState,
-      api,
-      domain,
-      appSettings,
-      page,
-      settingsPanel,
-      pageSettings,
-      siteSettings,
-      nav,
-      initNav,
-      footer,
-      initFooter,
-      user,
-    ]
+    [editing, editorState, api, domain, page, settingsPanel, nav, initNav, footer, initFooter, user]
   );
 
   useEffect(() => {
@@ -140,7 +116,6 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
                     menuItems={menuItems}
                     setLightMode={() => setLightMode(!lightMode)}
                     setShowFullNav={() => setShowFullNav(!showFullNav)}
-                    setSettingsPanel={setSettingsPanel}
                   />
                   <SettingsPanel showFullNav={showFullNav} />
                 </>

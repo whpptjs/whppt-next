@@ -7,7 +7,7 @@ import { EditorOptions } from '../EditorOptions';
 export const LinkEditor: FC<
   EditorArgs<WhpptLinkData> & {
     label?: string;
-    children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
+    children: ReactElement | ReactElement[];
   }
 > = ({ children, value, label, onChange, options = {} as EditorOptions }) => {
   const { editing, showEditor } = useWhppt();
@@ -21,7 +21,7 @@ export const LinkEditor: FC<
           e.stopPropagation();
         }
       }}>
-      {children({ isEditing: editing })}
+      {children}
     </div>
   );
 };

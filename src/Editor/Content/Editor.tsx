@@ -7,7 +7,7 @@ import { EditorOptions } from '../EditorOptions';
 export type ContentEditorProps<T extends object> = {
   value: T[];
   onChange: (value: T[]) => void;
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
   componentDefinitions: WhpptComponentDefinition[];
 };
 export type ContentEditorOptions = EditorOptions & {

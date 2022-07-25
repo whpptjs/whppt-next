@@ -8,7 +8,7 @@ import { WhpptUsers } from './Users';
 export type WhpptSelectedType = string;
 
 export const AppSettings: FC = () => {
-  const { appSettings, changeAppSettingsActiveTab } = useWhppt();
+  const { settingsPanel, changeSettingsPanelActiveTab } = useWhppt();
 
   const tabs: Array<WhpptTab> = [
     { name: 'domain', label: 'Domain' },
@@ -17,8 +17,8 @@ export const AppSettings: FC = () => {
 
   return (
     <div>
-      <WhpptTabs tabs={tabs} selectTab={changeAppSettingsActiveTab} selectedTab={appSettings.activeTab} />
-      <WhpptTab selectedTab={appSettings.activeTab}>
+      <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+      <WhpptTab selectedTab={settingsPanel.activeTab}>
         <Domain name="domain" label="Domains" />
         <WhpptUsers name="users" label="Users" />
       </WhpptTab>

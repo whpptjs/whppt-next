@@ -19,12 +19,12 @@ export const RichTextComponent: FC<{ data: RichTextComponentData; onChange: (dat
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
       <RichTextEditor value={_data.text} onChange={text => onChange({ ...data, text } as ComponentData)}>
-        {() => (
+        {
           <div>
             {editing && <div>RichText Editor</div>}
             <div dangerouslySetInnerHTML={createMarkup()}></div>
           </div>
-        )}
+        }
       </RichTextEditor>
     </div>
   );

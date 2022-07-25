@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
 import Cookies from 'js-cookie';
 import { groupBy, sortBy } from 'lodash';
 import { WhpptIcon } from './components/Icon';
@@ -7,20 +7,26 @@ import { ToggleWhpptIcon } from '../icons/Toggle';
 import { SavePagePopup } from './Popups/SavePage';
 import { SaveNavPopup } from './Popups/SaveNav';
 import { SaveFooterPopup } from './Popups/SaveFooter';
-import { defaultSettingsPanelState, SettingsPanel } from './SettingsPanel';
+import { SettingsPanel } from '../Settings/Context';
+import { PageSettings } from '../Page/Settings';
+import { SiteSettings } from '../Site/Settings';
+import { AppSettings } from '../App/Settings';
 
 export type MenuItemOptions = {
-  closeWhpptPopups: () => void;
-  setSettingsPanel: Dispatch<SettingsPanel>;
-  settingsPanel: SettingsPanel;
+  closeAllWhpptPanels: () => void;
+};
+export type MenuItemActionOptions = {
+  closeWhpptEditor: () => void;
+  closeAllWhpptPanels: () => void;
+  toggleSettingsPanel: (val: SettingsPanel) => void;
 };
 
 export type MenuItem = {
   key: string;
   label: string;
   icon: ReactElement;
-  isActive: boolean;
-  action: () => void;
+  isActive: (args: { settingsPanel: SettingsPanel }) => boolean;
+  action: (args: MenuItemActionOptions) => void;
   disabled?: boolean;
   order: number;
   group: string;
@@ -32,38 +38,34 @@ export const WhpptMainNav: FC<{
   setLightMode: Function;
   showFullNav: boolean;
   setShowFullNav: Function;
-  setSettingsPanel: Dispatch<SettingsPanel>;
   menuItems: (options) => MenuItem[];
-}> = ({ menuItems, lightMode, setLightMode, showFullNav, setShowFullNav, setSettingsPanel }) => {
+}> = ({ menuItems, lightMode, setLightMode, showFullNav, setShowFullNav }) => {
   const [confirmationPopup, setConfirmationPopup] = useState('');
   const {
     toggleEditing,
     editing,
-    pageSettings,
-    appSettings,
-    siteSettings,
-    togglePageSettings,
-    toggleAppSettings,
     api,
-    toggleSiteSettings,
     showEditor,
     editorState,
     hideEditor,
     setUser,
+    hideSettingsPanel,
+    toggleSettingsPanel,
     settingsPanel,
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
     api.security.verify().then(user => setUser(user));
   };
-  const showPanel = [pageSettings, siteSettings, appSettings].some(setting => setting.visible);
+  const showPanel = settingsPanel.visible;
 
-  const closeWhpptPopups = () => {
-    toggleSiteSettings(false);
-    togglePageSettings(false);
-    toggleAppSettings(false);
-    setSettingsPanel(defaultSettingsPanelState);
+  const closeWhpptEditor = () => {
+    setConfirmationPopup('');
     hideEditor();
+  };
+  const closeAllWhpptPanels = () => {
+    hideSettingsPanel();
+    closeWhpptEditor();
   };
 
   const items = [
@@ -73,12 +75,9 @@ export const WhpptMainNav: FC<{
       icon: <WhpptIcon is="pointer"></WhpptIcon>,
       action: () => {
         toggleEditing();
-        hideEditor();
-        toggleAppSettings(false);
-        togglePageSettings(false);
-        toggleSiteSettings(false);
+        closeAllWhpptPanels();
       },
-      isActive: editing,
+      isActive: () => editing,
       order: 200,
       group: 'page',
       groupOrder: 200,
@@ -87,13 +86,10 @@ export const WhpptMainNav: FC<{
       key: 'new-page',
       label: 'Create New Page',
       icon: <WhpptIcon is="new-page"></WhpptIcon>,
-      isActive: editorState.editor === 'newPage',
+      isActive: () => editorState.editor === 'newPage',
       action: () => {
         toggleEditing(false);
-        toggleAppSettings(false);
-        togglePageSettings(false);
-        toggleSiteSettings(false);
-        setConfirmationPopup('');
+        closeAllWhpptPanels();
         showEditor('newPage', undefined, undefined, undefined);
       },
       order: 400,
@@ -107,14 +103,11 @@ export const WhpptMainNav: FC<{
       order: 300,
       group: 'page',
       groupOrder: 200,
-      isActive: editorState.editor === 'contentsTree',
+      isActive: () => editorState.editor === 'contentsTree',
       disabled: showPanel,
       action: () => {
         toggleEditing(false);
-        toggleAppSettings(false);
-        togglePageSettings(false);
-        toggleSiteSettings(false);
-        setConfirmationPopup('');
+        hideSettingsPanel();
         if (editorState.editor !== 'contentsTree') return showEditor('contentsTree', undefined, undefined, undefined);
         hideEditor();
       },
@@ -126,9 +119,10 @@ export const WhpptMainNav: FC<{
       order: 500,
       group: 'page',
       groupOrder: 200,
-      isActive: confirmationPopup === 'page',
+      isActive: () => confirmationPopup === 'page',
       disabled: showPanel,
       action: () => {
+        closeAllWhpptPanels();
         setConfirmationPopup('page');
       },
     },
@@ -136,9 +130,10 @@ export const WhpptMainNav: FC<{
       key: 'nav',
       label: 'Save Navigation',
       icon: <WhpptIcon is="nav"></WhpptIcon>,
-      isActive: confirmationPopup === 'nav',
+      isActive: () => confirmationPopup === 'nav',
       disabled: showPanel,
       action: () => {
+        closeAllWhpptPanels();
         setConfirmationPopup('nav');
       },
       order: 200,
@@ -151,9 +146,10 @@ export const WhpptMainNav: FC<{
       icon: <WhpptIcon is="footer"></WhpptIcon>,
       group: 'site',
       groupOrder: 300,
-      isActive: confirmationPopup === 'footer',
+      isActive: () => confirmationPopup === 'footer',
       disabled: showPanel,
       action: () => {
+        closeAllWhpptPanels();
         setConfirmationPopup('footer');
       },
       order: 300,
@@ -163,14 +159,15 @@ export const WhpptMainNav: FC<{
       label: 'Open Config Settings',
       icon: <WhpptIcon is="globe"></WhpptIcon>,
       action: () => {
-        toggleSiteSettings(false);
-        togglePageSettings(false);
         toggleEditing(false);
-        toggleAppSettings();
-        hideEditor();
-        setConfirmationPopup('');
+        closeWhpptEditor();
+        toggleSettingsPanel({
+          key: 'app',
+          activeTab: 'general',
+          component: <AppSettings />,
+        });
       },
-      isActive: appSettings.visible,
+      isActive: () => settingsPanel.key === 'app',
       order: 200,
       group: 'config',
       groupOrder: 400,
@@ -179,14 +176,15 @@ export const WhpptMainNav: FC<{
       key: 'site-settings',
       label: 'Open Site Settings',
       icon: <WhpptIcon is="settings"></WhpptIcon>,
-      isActive: siteSettings.visible,
+      isActive: () => settingsPanel.key === 'siteSettings',
       action: () => {
-        toggleAppSettings(false);
-        togglePageSettings(false);
         toggleEditing(false);
-        toggleSiteSettings();
-        setConfirmationPopup('');
-        hideEditor();
+        closeWhpptEditor();
+        toggleSettingsPanel({
+          key: 'siteSettings',
+          activeTab: 'general',
+          component: <SiteSettings />,
+        });
       },
       order: 400,
       group: 'site',
@@ -196,14 +194,16 @@ export const WhpptMainNav: FC<{
       key: 'page-settings',
       label: 'Open Page Settings',
       icon: <WhpptIcon is="page-settings"></WhpptIcon>,
-      action: () => {
-        toggleAppSettings(false);
-        toggleSiteSettings(false);
-        togglePageSettings();
+      action: ({ toggleSettingsPanel }) => {
         toggleEditing(false);
-        hideEditor();
+        closeWhpptEditor();
+        toggleSettingsPanel({
+          key: 'page',
+          activeTab: 'general',
+          component: <PageSettings />,
+        });
       },
-      isActive: pageSettings.visible,
+      isActive: ({ settingsPanel }) => settingsPanel.key === 'page',
       order: 600,
       group: 'page',
       groupOrder: 200,
@@ -216,7 +216,7 @@ export const WhpptMainNav: FC<{
       group: 'config',
       groupOrder: 400,
     },
-    ...menuItems({ closeWhpptPopups, setSettingsPanel, settingsPanel }),
+    ...menuItems({ closeAllWhpptPanels }),
   ] as MenuItem[];
 
   const groupedItems = sortBy(groupBy(sortBy(items, ['order']), 'group'), ['groupOrder']);
@@ -250,8 +250,10 @@ export const WhpptMainNav: FC<{
                           <li key={item.key}>
                             <button
                               disabled={item.disabled}
-                              className={`whppt-main-nav-group__nav-item ${item.isActive ? 'whppt-main-nav-group__nav-item--active' : ''}`}
-                              onClick={() => item.action && item.action()}>
+                              className={`whppt-main-nav-group__nav-item ${
+                                item.isActive && item.isActive({ settingsPanel }) ? 'whppt-main-nav-group__nav-item--active' : ''
+                              }`}
+                              onClick={() => item.action && item.action({ closeWhpptEditor, closeAllWhpptPanels, toggleSettingsPanel })}>
                               <div className="whppt-main-nav__icon">{item.icon}</div>
                               {showFullNav && <div className="whppt-main-nav-group__label">{item.label}</div>}
                             </button>

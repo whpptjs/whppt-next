@@ -6,9 +6,9 @@ import * as editor from './Editor/Context';
 import * as site from './Site/Context';
 import * as security from './Security/Context';
 import * as page from './Page/Context';
+import * as settings from './Settings/Context';
 import { ContentTreeNode } from './ui/Content';
 import { PageData } from './Page';
-import { SettingsPanel } from './ui/SettingsPanel';
 
 export const contentTree = {
   getTree: undefined as (page: PageData) => ContentTreeNode[],
@@ -17,20 +17,15 @@ export const contentTree = {
   },
 };
 
-export const settingsPanel = {
-  visible: false,
-  component: '',
-} as unknown as SettingsPanel;
-
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
   ...security.Context(security.defaultArgs),
   ...app.Context(app.defaultArgs),
   ...site.Context(site.defaultArgs),
   ...page.Context(page.defaultArgs),
+  ...settings.Context(settings.defaultArgs),
   api: Api(),
   contentTree,
-  settingsPanel,
 });
 
 Whppt.displayName = 'WhpptContext';

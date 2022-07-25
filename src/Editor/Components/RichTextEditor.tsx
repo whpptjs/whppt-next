@@ -6,10 +6,10 @@ import { EditorOptions } from '../EditorOptions';
 export const RichTextEditor: FC<
   EditorArgs<string> & {
     label?: string;
-    children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
+    children: ReactElement | ReactElement[];
   }
 > = ({ children, value, onChange, label, options = {} as EditorOptions }) => {
-  const { editing, showEditor } = useWhppt();
+  const { showEditor } = useWhppt();
   return (
     <div
       className="whppt-editor-selector"
@@ -19,7 +19,7 @@ export const RichTextEditor: FC<
           options,
         })
       }>
-      {children({ isEditing: editing })}
+      {children}
     </div>
   );
 };

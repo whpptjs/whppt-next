@@ -18,7 +18,7 @@ export const PlainTextComponent: FC<{ data: PlainTextPageComponentData; onChange
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
       <PlainTextEditor value={_data.text} onChange={text => onChange({ ...data, text } as ComponentData)}>
-        {() => <div>{_data.text || 'Plain Text change'}</div>}
+        <div>{_data.text || 'Plain Text change'}</div>
       </PlainTextEditor>
     </div>
   );
