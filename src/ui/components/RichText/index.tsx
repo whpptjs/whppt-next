@@ -29,8 +29,6 @@ export const WhpptRichText: FC<WhpptRichTextArgs> = ({ id, label, info, value, o
     onUpdate({ editor }) {
       const json2 = editor.getHTML();
       onChange(json2);
-
-      // The content has changed.
     },
   });
 

@@ -1,28 +1,32 @@
 import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
-import { Whppt } from './Context';
+import { contentTree, Whppt } from './Context';
 import { ToastContainer } from 'react-toastify';
 import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
 import { WhpptEditorPanel } from './Editor/EditorPanel';
-import { SettingsPanel } from './ui/SettingsPanel';
-import { WhpptMainNav } from './ui/MainNav';
+import { SettingsPanel } from './Settings/Panel';
+import { MenuItem, MenuItemOptions, WhpptMainNav } from './ui/MainNav';
 import { Api } from './Api';
 import * as editor from './Editor/Context';
 import * as appContext from './App/Context';
 import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
+import * as settingsContext from './Settings/Context';
 import { WhpptLogin } from './ui/Login';
+import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
   editors: WhpptAppEditorsArg;
   error: (error: Error) => ReactElement;
+  menuItems: (options: MenuItemOptions) => MenuItem[];
   initNav?: (nav: any) => any;
   initFooter?: (footer: any) => any;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
-export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNav, initFooter }) => {
+export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, error, initNav, initFooter }) => {
+  const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
   const [errorState, setError] = useState<Error>();
@@ -30,14 +34,12 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
   const [editorState, setEditorState] = useState(editor.defaultState);
   const [domain, setDomain] = useState(appContext.defaultState);
   const [page, setPage] = useState(pageContext.defaultState);
-  const [appSettings, setAppSettings] = useState(appContext.defaultAppSettingsState);
-  const [pageSettings, setPageSettings] = useState(pageContext.defaultPageSettingsState);
   const [nav, setNav] = useState(siteContext.defaultNavState);
   const [footer, setFooter] = useState(siteContext.defaultFooterState);
-  const [siteSettings, setSiteSettings] = useState(siteContext.defaultSiteSettingsState);
   const [settingsData, setSettingsData] = useState(siteContext.defaultSettingsData);
   const [pageSettingsData, setPageSettingsData] = useState(pageContext.defaultPageSettingsData);
   const [user, setUser] = useState(securityContext.defaultState);
+  const [settingsPanel, setSettingsPanel] = useState(settingsContext.defaultSettingsPanelState);
   const api = useMemo(() => {
     return Api();
   }, []);
@@ -54,21 +56,15 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
       ...appContext.Context({
         domain,
         setDomain,
-        appSettings,
-        setAppSettings,
       }),
       domain,
       ...pageContext.Context({
         page,
         setPage,
-        pageSettings,
-        setPageSettings,
         pageSettingsData,
         setPageSettingsData,
       }),
       ...siteContext.Context({
-        siteSettings,
-        setSiteSettings,
         nav,
         setNav,
         initNav,
@@ -79,24 +75,10 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
         setSettingsData,
       }),
       ...securityContext.Context({ user, setUser }),
+      ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
+      contentTree,
     }),
-    [
-      api,
-      editing,
-      editorState,
-      domain,
-      appSettings,
-      page,
-      pageSettings,
-      pageSettingsData,
-      settingsData,
-      siteSettings,
-      nav,
-      initNav,
-      footer,
-      initFooter,
-      user,
-    ]
+    [api, editing, editorState, domain, page, settingsPanel, pageSettingsData, settingsData, nav, initNav, footer, initFooter, user]
   );
 
   useEffect(() => {
@@ -109,7 +91,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
             ...footer,
             content: initFooter(footer?.content || {}),
           });
-          setNav({ ...nav, content: initNav(nav?.content || {}) });
+          setNav({ ...nav });
         });
       })
       .catch(err => setError(err));
@@ -120,6 +102,11 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
     if (user._id === 'guest') return false;
     return true;
   };
+
+  useEffect(() => {
+    const isDraft = process.env.NEXT_PUBLIC_DRAFT === 'true';
+    setRenderChildren(!isDraft || (user && user._id !== 'guest'));
+  }, [setRenderChildren, user]);
 
   return (
     <div>
@@ -132,6 +119,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
                   <WhpptMainNav
                     lightMode={lightMode}
                     showFullNav={showFullNav}
+                    menuItems={menuItems}
                     setLightMode={() => setLightMode(!lightMode)}
                     setShowFullNav={() => setShowFullNav(!showFullNav)}
                   />
@@ -140,6 +128,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
               ) : (
                 <WhpptLogin />
               )}
+              <WhpptSetNewUserDetails />
               <ToastContainer
                 position="top-center"
                 autoClose={5000}
@@ -160,7 +149,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, error, initNa
             error(errorState)
           ) : (
             <div className="whppt-app__content">
-              <div>{children}</div>
+              {renderChildren ? <div>{children}</div> : <></>}
               {process.env.NEXT_PUBLIC_DRAFT === 'true' ? <WhpptEditorPanel editors={editors}></WhpptEditorPanel> : <></>}
             </div>
           )}

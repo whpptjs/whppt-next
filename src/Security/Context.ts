@@ -6,7 +6,7 @@ export type SecurityContextArgs = {
 };
 
 export const defaultArgs = {
-  user: { _id: '', name: '', email: '' },
+  user: { _id: '', username: '', email: '' },
   setUser: () => {},
 } as SecurityContextArgs;
 

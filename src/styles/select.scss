@@ -21,10 +21,11 @@
 }
 
 .whppt-select {
-  position: relative;
+  @apply mb-5;
+  @apply w-full relative;
 
   &__input {
-    position: relative;
+    @apply relative;
     .whppt-select__icon {
       @apply absolute right-0 top-0 bottom-0;
       @apply flex items-center;

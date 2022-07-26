@@ -7,7 +7,7 @@ export type ListEditorProps<T extends object> = {
   onChange: (value: T[]) => void;
   addNew: () => T;
   displayName?: (item: T) => string;
-  children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
+  children: ReactElement | ReactElement[];
 };
 
 export const ListEditor = <T extends object>({ children, value, addNew, displayName, onChange }: ListEditorProps<T>) => {
@@ -22,7 +22,7 @@ export const ListEditor = <T extends object>({ children, value, addNew, displayN
           e.stopPropagation();
         }
       }}>
-      {children({ isEditing: editing })}
+      {children}
     </div>
   );
 };

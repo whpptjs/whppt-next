@@ -72,12 +72,12 @@ export const WhpptEditDomain: FC<{ domain: Domain; callback: () => void }> = ({ 
                 />
               </div>
             </div>
-            <div className="form-actions">
+            <div className="whppt-form--flex-apart">
+              <div>
+                <WhpptButton secondary text="Cancel" onClick={callback} />
+              </div>
               <div className="form-actions--action">
                 <WhpptButton type="submit" text="Save" icon="save" onClick={() => handleSubmit} />
-              </div>
-              <div>
-                <WhpptButton text="Cancel" onClick={callback} />
               </div>
             </div>
           </form>
