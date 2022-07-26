@@ -2,7 +2,8 @@ import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { LoginArgs } from '../../Security/Api';
 import { useWhppt } from '../../Context';
-import { WhpptButton, WhpptIcon, WhpptInput } from '../components';
+import { WhpptButton, WhpptInput } from '../components';
+import { WhpptLoginOverlay } from './WhpptLoginOverlay';
 
 export const WhpptLogin = () => {
   const { api } = useWhppt();
@@ -27,11 +28,7 @@ export const WhpptLogin = () => {
   };
 
   return (
-    <div className="whppt-login">
-      <div className="whppt-login--logo">
-        <WhpptIcon is="bruce" />
-      </div>
-      <h2 className="whppt-login--header">Whppt CMS</h2>
+    <WhpptLoginOverlay>
       <Formik
         initialValues={userToLogin}
         validate={values => {
@@ -86,6 +83,6 @@ export const WhpptLogin = () => {
           </form>
         )}
       </Formik>
-    </div>
+    </WhpptLoginOverlay>
   );
 };

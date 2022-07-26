@@ -8,12 +8,11 @@ import { General } from './General';
 import { SiteTwitter } from './SiteTwitter';
 import { Redirects } from './Redirects';
 import { Files } from './Files';
-// import { Banner } from './Banner';
 
 export type WhpptSelectedType = string;
 
 export const SiteSettings: FC = () => {
-  const { api, domain, siteSettings, changeSiteSettingsActiveTab, setSettingsData } = useWhppt();
+  const { api, domain, settingsPanel, changeSettingsPanelActiveTab, setSettingsData } = useWhppt();
 
   const tabs: Array<WhpptTab> = [
     { name: 'general', label: 'General' },
@@ -33,15 +32,14 @@ export const SiteSettings: FC = () => {
 
   return (
     <div>
-      <WhpptTabs tabs={tabs} selectTab={changeSiteSettingsActiveTab} selectedTab={siteSettings.activeTab} />
-      <WhpptTab selectedTab={siteSettings.activeTab}>
+      <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+      <WhpptTab selectedTab={settingsPanel.activeTab}>
         <General name="general" label="General" />
         <SiteSeo name="s-e-o" label="Seo" />
         <SiteOpenGraph name="open-graph" label="Open Graph" />
         <SiteTwitter name="twitter" label="Twitter" />
         <Redirects name="redirects" label="Redirects" />
         <Files name="files" label="Files" />
-        {/* <Banner name="banner" label="Banner" /> */}
       </WhpptTab>
     </div>
   );

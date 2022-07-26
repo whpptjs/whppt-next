@@ -6,14 +6,14 @@ import { EditorArgs } from '../EditorArgs';
 export const PlainTextEditor: FC<
   EditorArgs<string> & {
     label?: string;
-    children: ({ isEditing }: { isEditing: boolean }) => ReactElement;
+    children: ReactElement | ReactElement[];
   }
 > = ({ children, value, label, onChange, options = {} as EditorOptions }) => {
-  const { editing, showEditor } = useWhppt();
+  const { showEditor } = useWhppt();
   const opts = { label: label || 'Plain Text', ...options };
   return (
     <div className="whppt-editor-selector" onClick={() => showEditor('plainText', value, onChange, opts)}>
-      {children({ isEditing: editing })}
+      {children}
     </div>
   );
 };

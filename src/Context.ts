@@ -1,10 +1,21 @@
 import { createContext, useContext } from 'react';
+
 import { Api } from './Api';
 import * as app from './App/Context';
 import * as editor from './Editor/Context';
 import * as site from './Site/Context';
 import * as security from './Security/Context';
 import * as page from './Page/Context';
+import * as settings from './Settings/Context';
+import { ContentTreeNode } from './ui/Content';
+import { PageData } from './Page';
+
+export const contentTree = {
+  getTree: undefined as (page: PageData) => ContentTreeNode[],
+  setGetTree: function (val: (page: PageData) => ContentTreeNode[]) {
+    this.getTree = val;
+  },
+};
 
 export const Whppt = createContext({
   ...editor.Context(editor.defaultArgs),
@@ -12,7 +23,9 @@ export const Whppt = createContext({
   ...app.Context(app.defaultArgs),
   ...site.Context(site.defaultArgs),
   ...page.Context(page.defaultArgs),
+  ...settings.Context(settings.defaultArgs),
   api: Api(),
+  contentTree,
 });
 
 Whppt.displayName = 'WhpptContext';

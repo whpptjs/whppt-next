@@ -1,5 +1,4 @@
 import { PageData } from 'src/Page/Model/Page';
-import { PageSettings } from './Model/PageSettings';
 import { SettingsData } from '../CommonSettings/Model/SettingsData';
 
 export const defaultState = {} as PageData;
@@ -31,8 +30,6 @@ export const defaultPageSettingsData = {
 export type PageContextArgs = {
   page: PageData;
   setPage: (val: PageData) => void;
-  pageSettings: PageSettings;
-  setPageSettings: (val: PageSettings) => void;
   pageSettingsData: SettingsData;
   setPageSettingsData: (settingsData: SettingsData) => void;
 };
@@ -40,25 +37,15 @@ export type PageContextArgs = {
 export const defaultArgs = {
   page: { _id: '' },
   setPage: () => {},
-  pageSettings: defaultPageSettingsState,
-  setPageSettings: () => {},
   pageSettingsData: defaultPageSettingsData,
   setPageSettingsData: () => {},
 } as PageContextArgs;
 
-export const Context = ({ page, setPage, pageSettings, setPageSettings, pageSettingsData, setPageSettingsData }: PageContextArgs) => {
+export const Context = ({ page, setPage, pageSettingsData, setPageSettingsData }: PageContextArgs) => {
   return {
     page,
     setPage,
-    pageSettings,
-    setPageSettings,
     pageSettingsData,
     setPageSettingsData,
-    togglePageSettings: (visible?: boolean) =>
-      setPageSettings({
-        ...pageSettings,
-        visible: typeof visible === 'boolean' ? visible : !pageSettings.visible,
-      }),
-    changePageSettingsActiveTab: (activeTab: string) => setPageSettings({ ...pageSettings, activeTab }),
   };
 };

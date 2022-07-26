@@ -1,17 +1,19 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { ContentTreeNode } from '../ui/Content';
 
 import { useWhppt } from '../Context';
 import { PageData } from './Model/Page';
 
 export type WhpptPageProps<T extends PageData> = {
+  init: (page: T) => T;
+  getContents: (args: { page: T; setPage: (page: T) => void }) => ContentTreeNode[];
+  slug: string;
   collection?: string;
   children: ({ page, setPage }: { page: T; setPage: (page: T) => void }) => ReactElement;
 };
 
-export const WhpptPage = <T extends PageData = PageData>({ collection, children }: WhpptPageProps<T>) => {
-  const { api, page, setPage, setPageSettingsData, domain } = useWhppt();
-  const router = useRouter();
+export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, collection, children, init }: WhpptPageProps<T>) => {
+  const { api, page, setPage, setPageSettingsData, domain, contentTree } = useWhppt();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -19,12 +21,13 @@ export const WhpptPage = <T extends PageData = PageData>({ collection, children 
     setLoading(true);
     setError('');
     if (!domain._id) return;
-    console.log('🚀 ~ file: Page.tsx ~ line 42 ~ useEffect ~ router', router);
     api.page
-      .loadFromSlug({ slug: router.pathname, collection, domain })
+      .loadFromSlug({ slug, collection, domain })
       .then(loadedPage => {
-        setPage(loadedPage);
-        setPageSettingsData(loadedPage.settings);
+        const initialisedPage = init(loadedPage as T);
+        setPage(initialisedPage);
+        contentTree.setGetTree(_page => getContents({ page: _page as T, setPage }));
+        setPageSettingsData(initialisedPage.settings);
       })
       .catch(err => {
         setError(err.message);
@@ -32,7 +35,7 @@ export const WhpptPage = <T extends PageData = PageData>({ collection, children 
       .finally(() => {
         setLoading(false);
       });
-  }, [domain, api.page, router, collection, setPage]);
+  }, [domain, slug, api.page, collection, setPage, init, getContents, contentTree, setPageSettingsData]);
 
   if (loading) return <div>Page is loading</div>;
   if (error) return <div className="whppt-error">{error} test</div>;
