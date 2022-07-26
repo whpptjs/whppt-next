@@ -5,11 +5,13 @@ import { WhpptTabs, WhpptTab, WhpptQueryInput } from '../ui/components';
 import { Images } from './Images';
 import { Videos } from './Videos';
 import { GalleryFileType } from './Api';
+import { Settings } from './Settings';
+import { ImageData } from './Model/Image';
 
 export const Gallery: FC = () => {
   const { gallery, changeGalleryActiveTab, api, hideGallery, domain } = useWhppt();
 
-  const [selected, setSelected] = useState<FileDetails>();
+  const [selected, setSelected] = useState<ImageData>();
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState('');
 
@@ -25,9 +27,7 @@ export const Gallery: FC = () => {
   };
 
   const upload = newFile => {
-    const formData = new FormData();
-    formData.append('file', newFile);
-    return api.gallery.upload(formData);
+    return api.gallery.upload(newFile);
   };
 
   const save = details => {
@@ -35,7 +35,9 @@ export const Gallery: FC = () => {
   };
 
   const remove = id => {
-    return api.gallery.remove(id);
+    return api.gallery.remove(id).then(() => {
+      setSelected(null);
+    });
   };
 
   return (
@@ -58,6 +60,7 @@ export const Gallery: FC = () => {
               remove={remove}
               setSelected={setSelected}
               selectedId={selected && selected._id}
+              domainId={domain._id}
             />
           ) : (
             <></>
@@ -72,6 +75,7 @@ export const Gallery: FC = () => {
               remove={remove}
               setSelected={setSelected}
               selectedId={selected && selected._id}
+              domainId={domain._id}
             />
           ) : (
             <></>
@@ -87,7 +91,7 @@ export const Gallery: FC = () => {
               hideGallery();
             }}
             remove={() => remove(selected._id)}
-            save={() => save}
+            save={save}
             suggestedTags={getSuggestedTags(selected)}
             selected={selected}
             setSelected={setSelected}

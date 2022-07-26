@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
-import { ImageData, AspectRatio, AspectRatioObject } from '../../Gallery/Model';
+import { ImageData, AspectRatioObject } from '../../Gallery/Model';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
 import { useWhppt } from '../../Context';
@@ -17,7 +17,7 @@ const aspectRatios: AspectRatioObject[] = [
 ];
 
 export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = ({ value, onChange }) => {
-  const { showGallery, hideEditor, page, setPage } = useWhppt();
+  const { showGallery, hideEditor, page } = useWhppt();
 
   const [coords, setCoords] = useState<any>(null);
   const [imageToCrop, setImageToCrop] = useState<ImageData>(null);
@@ -52,7 +52,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
   }, [orientation, aspectRatio]);
 
   const getImgUrl = galleryItemId => {
-    return `${process.env.NEXT_PUBLIC_BASE_API_URL}/img/${galleryItemId}`;
+    return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
   };
 
   const onCrop = (cropper: CropperRef) => {
@@ -69,7 +69,9 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
 
     if (!page.crops) {
       crops.push({ galleryItemId: imageToCrop._id, [device]: deviceCrop });
-      setPage({ ...page, crops });
+      onChange({ ...value, crops });
+      console.log('page', page);
+
       return;
     }
 
@@ -89,7 +91,9 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
       }
     }
 
-    setPage({ ...page, crops });
+    onChange({ ...value, crops });
+    console.log('value', value);
+    console.log('page', page);
   };
 
   return (

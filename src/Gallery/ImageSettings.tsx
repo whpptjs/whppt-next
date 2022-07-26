@@ -1,21 +1,34 @@
 import React, { FC, useState } from 'react';
-import { WhpptButton, WhpptHeading, WhpptInput, WhpptGalleryTag, WhpptIcon } from '../ui/components';
+import { WhpptButton, WhpptInput, WhpptGalleryTag, WhpptIcon } from '../ui/components';
 import { FileDetails } from '../Api/Http';
 import { DayPicker } from 'react-day-picker';
 
 type SettingsProps = {
   use: () => void;
   selected: FileDetails;
-  remove: () => void;
-  save: () => void;
+  remove: (id: string) => void;
+  save: (details: any) => void;
   suggestedTags: any[];
   setSelected: ({}) => void;
 };
 
-export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTags, setSelected }) => {
+export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTags, setSelected, save }) => {
   const [newTag, setNewTag] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [date, setDate] = useState(new Date().toLocaleDateString('en-US'));
+
+  const addDefaultAlt = value => {
+    setSelected({ ...selected, defaultAlt: value });
+  };
+
+  const addDefaultCaption = value => {
+    setSelected({ ...selected, defaultCaption: value });
+  };
+
+  const saveDetailsAndEdit = () => {
+    save(selected);
+    use();
+  };
 
   return (
     <div className="whppt-gallery__settings__container">
@@ -64,12 +77,11 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
       )}
 
       <div className="whppt-gallery__day-picker__container">
-        <h3>Date</h3>
         <div
           className="whppt-image-editor__date-picker-input"
           onClick={() => setShowCalendar(!showCalendar)}
           style={{ cursor: 'pointer !important' }}>
-          <WhpptInput value={date.toString()} />
+          <WhpptInput id="date" label="Date" info="" error="" type="text" value={date.toString()} />
 
           <div className={`whppt-image-editor__date-picker-icon ${showCalendar ? 'up' : 'down'}`}>
             <WhpptIcon is="down" />
@@ -95,7 +107,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
         error=""
         type="text"
         value={(selected && selected.defaultAlt) || ''}
-        onChange={value => setSelected({ ...selected, defaultAlt: value })}
+        onChange={value => addDefaultAlt(value)}
       />
 
       <WhpptInput
@@ -105,7 +117,7 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
         error=""
         type="text"
         value={(selected && selected.defaultCaption) || ''}
-        onChange={value => setSelected({ ...selected, defaultCaption: value })}
+        onChange={value => addDefaultCaption(value)}
       />
 
       <div>
@@ -113,8 +125,8 @@ export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTa
       </div>
 
       <div className="whppt-gallery__settings__action-buttons">
-        <WhpptButton text="use" onClick={use} />
-        <WhpptButton text="delete" onClick={remove} />
+        <WhpptButton text="use" onClick={() => saveDetailsAndEdit()} />
+        <WhpptButton text="delete" onClick={() => remove(selected._id)} />
       </div>
     </div>
   );

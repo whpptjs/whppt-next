@@ -1,22 +1,25 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useWhppt } from '../Context';
-import { FileDetails } from '../Api/Http';
+import { ImageData } from './Model/Image';
 import { WhpptImageUploader } from '../ui/components/ImageUploader';
 import { WhpptGalleryImage } from '../ui/components/GalleryImage';
 import { GalleryTab } from './GalleryTab';
 import { ImageSettings } from './ImageSettings';
 
-export const Images: FC<GalleryTab> = ({ search, upload, save, remove }) => {
-  const { gallery, hideGallery } = useWhppt();
-  const [images, setImages] = useState<FileDetails[]>([]);
-  const [selectedImage, setSelectedImage] = useState<FileDetails>();
+export const Images: FC<GalleryTab> = ({ search, upload, remove, setSelected, selectedId, domainId }) => {
+  const [images, setImages] = useState<ImageData[]>([]);
 
   const getImgUrl = imgId => {
-    return `${process.env.NEXT_PUBLIC_BASE_API_URL}/img/${imgId}`;
+    return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${imgId}`;
   };
 
   const uploadImage = newFile => {
-    upload(newFile).then(fileDetails => setImages([fileDetails, ...images]));
+    const file = new FormData();
+    file.append('file', newFile);
+    file.append('type', 'image');
+    file.append('domainId', domainId);
+    upload(file).then(fileDetails => {
+      setImages([fileDetails, ...images]);
+    });
   };
 
   const useImage = () => {

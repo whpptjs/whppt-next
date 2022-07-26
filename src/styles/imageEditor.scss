@@ -24,7 +24,7 @@
   }
 
   &__date-picker-icon {
-    @apply absolute h-8 w-8 top-3 right-3 cursor-pointer transition-transform ease-out;
+    @apply absolute h-8 w-8 top-11 right-3 cursor-pointer transition-transform ease-out;
 
     &.up {
       @apply transform rotate-180;

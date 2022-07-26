@@ -8,8 +8,30 @@ export type ImageData = {
   date: Date;
   defaultAlt: string;
   defaultCaption: string;
-  aspect: '16x9' | '4x3' | 'square' | 'freeform';
-  orientation: 'landscape' | 'portrait';
-  alt: string;
-  caption: string;
+};
+
+export type PageImageData = {
+  crops: { [key: string]: ImageData };
+};
+
+export type ImageDataSize = {
+  //this is to be used by editor
+  altText: string;
+  galleryItemId: string;
+  crop: {
+    aspectRatio: {
+      label: string;
+      ratio: {
+        w: Number;
+        h: number;
+      };
+    };
+    orientation: 'landscape' | 'portrait' | undefined;
+    coords: {
+      width: number;
+      height: number;
+      left: number;
+      top: number;
+    };
+  };
 };

@@ -1,15 +1,22 @@
-import { SettingsData } from 'src/CommonSettings/Model/SettingsData';
+import { PageImageData } from './../../Gallery/Model/Image';
 
 export type PageData = {
   _id: string;
-  crops?: Crop[];
+  pageType: string;
+  domainId: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  contents: PageContents[];
 };
 
-export type Crop = {
-  galleryItemId: '';
-  label: string;
-  aspectRatio: { label: string; ratio: { w: number; h: number } };
-  orientation: 'landscape' | 'portrait';
+export type PageContents = {
+  [key: string]: string | Content[];
+};
+
+export type Content = {
+  title: string;
+  image: PageImageData;
 };
 
 export const Page = values => values as PageData;
