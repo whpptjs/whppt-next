@@ -24,7 +24,7 @@ export const AppApi: AppApiConstructor = ({ http }) => {
       loadForCurrentHost() {
         return http.secure
           .getJson<Domain>({
-            path: '/config/loadDomainForClient',
+            path: '/api/config/loadDomainForClient',
           })
           .then(domain => {
             if (!domain) throw HttpError.notFound('Domain not found');
@@ -36,19 +36,19 @@ export const AppApi: AppApiConstructor = ({ http }) => {
       },
       publish(domain: Domain) {
         return http.secure.postJson({
-          path: '/config/publishDomain',
+          path: '/api/config/publishDomain',
           data: { domain },
         });
       },
       unPublish(domain: Domain) {
         return http.secure.postJson({
-          path: '/config/unpublishDomain',
+          path: '/api/config/unpublishDomain',
           data: { domain },
         });
       },
       save(domain: Domain) {
         return http.secure.postJson({
-          path: '/config/saveDomain',
+          path: '/api/config/saveDomain',
           data: { domain },
         });
       },

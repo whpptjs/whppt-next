@@ -54,7 +54,7 @@ export const SitemapApi: SitemapApiConstructor = ({ http }) => {
       ]);
 
       return http.secure.getJson<SitemapResult>({
-        path: `/site/loadSitemap?${params.join('&')}`,
+        path: `/api/site/loadSitemap?${params.join('&')}`,
       });
     },
   };

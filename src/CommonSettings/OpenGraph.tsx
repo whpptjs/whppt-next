@@ -1,26 +1,38 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../ui/components/Input';
 import { WhpptButton, WhpptTextArea, WhpptTab } from '../ui/components';
+import { splitKeywords } from '../helpers';
+import { OpenGraphData } from './Model/SettingsData';
+import { toast } from 'react-toastify';
 
-export const OpenGraph: FC<WhpptTab> = () => {
-  const [title, setTitle] = useState('');
-  const [keyWords, setKeywords] = useState('');
-  const [description, setDescription] = useState('');
-
-  const submit = () => {
-    //const keyWordsArray = keyWords.replace(/ +/g, '').split(','); TODO: Move to helper and import?
-    //const openGraphSettings = { title, description, keywords: keyWordsArray};
-    //setPage(...page, openGraphSettings)
+type OpenGraphProps = WhpptTab &
+  OpenGraphData & {
+    save: (title, keywords, description) => Promise<unknown>;
   };
+
+export const OpenGraph: FC<OpenGraphProps> = ({ save, ...props }) => {
+  const [title, setTitle] = useState(props.title || '');
+  const [keyWords, setKeywords] = useState((props.keywords && props.keywords.join(', ')) || '');
+  const [description, setDescription] = useState(props.description || '');
 
   const error = '';
   const info = '';
+
+  const confirm = () => {
+    const update = save(title, splitKeywords(keyWords), description);
+
+    toast.promise(update, {
+      pending: 'Saving...',
+      success: 'Open Graph settings saved',
+      error: 'Open Graph settings failed saving 🤯',
+    });
+  };
 
   return (
     <form className="whppt-form">
       <section className="whppt-form-page-settings__actions">
         <div>
-          <WhpptButton icon="" text="Save Settings" onClick={submit} disabled={!title || !keyWords || !description} />
+          <WhpptButton icon="" text="Save Settings" onClick={confirm} />
         </div>
       </section>
 

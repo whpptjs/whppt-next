@@ -13,7 +13,7 @@ export type WhpptPageProps<T extends PageData> = {
 };
 
 export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, collection, children, init }: WhpptPageProps<T>) => {
-  const { api, page, setPage, domain, contentTree } = useWhppt();
+  const { api, page, setPage, setPageSettingsData, domain, contentTree } = useWhppt();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -27,6 +27,7 @@ export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, co
         const initialisedPage = init(loadedPage as T);
         setPage(initialisedPage);
         contentTree.setGetTree(_page => getContents({ page: _page as T, setPage }));
+        setPageSettingsData(initialisedPage.settings);
       })
       .catch(err => {
         setError(err.message);
@@ -34,7 +35,7 @@ export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, co
       .finally(() => {
         setLoading(false);
       });
-  }, [domain, slug, api.page, collection, setPage, init, getContents, contentTree]);
+  }, [domain, slug, api.page, collection, setPage, init, getContents, contentTree, setPageSettingsData]);
 
   if (loading) return <div>Page is loading</div>;
   if (error) return <div className="whppt-error">{error} test</div>;

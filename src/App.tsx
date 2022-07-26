@@ -36,6 +36,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
   const [page, setPage] = useState(pageContext.defaultState);
   const [nav, setNav] = useState(siteContext.defaultNavState);
   const [footer, setFooter] = useState(siteContext.defaultFooterState);
+  const [settingsData, setSettingsData] = useState(siteContext.defaultSettingsData);
+  const [pageSettingsData, setPageSettingsData] = useState(pageContext.defaultPageSettingsData);
   const [user, setUser] = useState(securityContext.defaultState);
   const [settingsPanel, setSettingsPanel] = useState(settingsContext.defaultSettingsPanelState);
   const api = useMemo(() => {
@@ -59,6 +61,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
       ...pageContext.Context({
         page,
         setPage,
+        pageSettingsData,
+        setPageSettingsData,
       }),
       ...siteContext.Context({
         nav,
@@ -67,12 +71,14 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
         footer,
         setFooter,
         initFooter,
+        settingsData,
+        setSettingsData,
       }),
       ...securityContext.Context({ user, setUser }),
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
       contentTree,
     }),
-    [editing, editorState, api, domain, page, settingsPanel, nav, initNav, footer, initFooter, user]
+    [api, editing, editorState, domain, page, settingsPanel, pageSettingsData, settingsData, nav, initNav, footer, initFooter, user]
   );
 
   useEffect(() => {

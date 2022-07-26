@@ -1,27 +1,38 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../ui/components/Input';
 import { WhpptButton, WhpptTextArea, WhpptTab } from '../ui/components';
+import { splitKeywords } from '../helpers';
+import { TwitterData } from './Model/SettingsData';
+import { toast } from 'react-toastify';
 
-export const Twitter: FC<WhpptTab> = () => {
-  const [title, setTitle] = useState('');
-  const [keyWords, setKeywords] = useState('');
-  const [description, setDescription] = useState('');
-
-  const submit = () => {
-    // TODO: Deal with meta data keywords.
-    //const keyWordsArray = keyWords.replace(/ +/g, '').split(',');
-    //const twitterSettings = { title, description, keywords: keyWordsArray};
-    //setPage(...page, twitterSettings)
+type TwitterProps = WhpptTab &
+  TwitterData & {
+    save: (title, keywords, description) => Promise<unknown>;
   };
+
+export const Twitter: FC<TwitterProps> = ({ save, ...props }) => {
+  const [title, setTitle] = useState(props.title || '');
+  const [keyWords, setKeywords] = useState((props.keywords && props.keywords.join(', ')) || '');
+  const [description, setDescription] = useState(props.description || '');
 
   const error = '';
   const info = '';
+
+  const confirm = () => {
+    const update = save(title, splitKeywords(keyWords), description);
+
+    toast.promise(update, {
+      pending: 'Saving...',
+      success: 'Twitter settings saved',
+      error: 'Twitter settings failed saving 🤯',
+    });
+  };
 
   return (
     <form className="whppt-form">
       <section className="whppt-form-page-settings__actions">
         <div>
-          <WhpptButton icon="" text="Save Settings" onClick={submit} disabled={!title || !keyWords || !description} />
+          <WhpptButton icon="" text="Save Settings" onClick={confirm} />
         </div>
       </section>
 
