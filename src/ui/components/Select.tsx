@@ -8,13 +8,30 @@ type WhpptSelectProps = {
   info?: string;
   error?: string | string[];
   placeholder?: string;
-  onChange: any;
+  onChange?: (val) => void;
+  onChangeEvent?: (event) => void;
   direction?: string;
-  items: object[];
+  items: object[] | string[];
   value: string | number;
+  textProp?: string;
+  name?: string;
 };
 
-export const WhpptSelect: FC<WhpptSelectProps> = ({ dense, id, label, placeholder, onChange, direction, items, info, error, value }) => {
+export const WhpptSelect: FC<WhpptSelectProps> = ({
+  dense,
+  name,
+  textProp,
+  id,
+  label,
+  placeholder,
+  onChange,
+  onChangeEvent,
+  direction,
+  items,
+  info,
+  error,
+  value,
+}) => {
   const [showSelectItems, setSelectItems] = useState(false);
 
   function useOutsideAlerter(ref) {
@@ -54,8 +71,11 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({ dense, id, label, placeholde
     // }
     //TODO make arrows work
   };
+  const textVal = item => {
+    return item[textProp || 'text'] || item;
+  };
   const setTextProp = item => {
-    return <div>{item.text}</div>;
+    return <div>{textVal(item)}</div>;
   };
 
   return (
@@ -68,6 +88,7 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({ dense, id, label, placeholde
       <div className="whppt-select__input whppt-input">
         <input
           id={id}
+          name={name}
           placeholder={placeholder}
           onClick={() => setSelectItems(true)}
           onFocus={() => setSelectItems(true)}
@@ -84,10 +105,13 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({ dense, id, label, placeholde
               {items.map((item, index) => (
                 <li
                   key={index}
+                  // name={textVal(item)}
+                  // name={name}
                   role="option"
                   className="whppt-select__menu-item"
-                  onClick={() => {
+                  onClick={e => {
                     setSelectItems(false);
+                    if (onChangeEvent) return onChangeEvent(e);
                     onChange(item);
                   }}>
                   {setTextProp(item)}

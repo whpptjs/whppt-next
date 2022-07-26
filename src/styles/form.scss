@@ -11,6 +11,9 @@
     &-section {
       @apply bg-whpptLightMode;
     }
+    &__content {
+      @apply bg-whpptLightMode;
+    }
   }
 }
 
@@ -65,4 +68,18 @@
 .whppt-form-heading {
   font-weight: bold;
   font-size: 2.5rem;
+}
+
+.whppt-form {
+  @apply w-full;
+  &__actions {
+    @apply w-3/12;
+  }
+  &__content {
+    @apply w-8/12;
+    @apply px-6 py-4 bg-whpptDarkMode;
+  }
+  &--flex-apart {
+    @apply flex gap-2 w-full;
+  }
 }

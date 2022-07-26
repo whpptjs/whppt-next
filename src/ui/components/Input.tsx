@@ -4,7 +4,7 @@ export type WhpptInputArgs = {
   id: string;
   label: string;
   info: string;
-  error: string;
+  error: string | undefined;
   type: 'text' | 'number' | 'checkbox' | 'email' | 'password';
   placeholder?: string;
   disabled?: boolean;
