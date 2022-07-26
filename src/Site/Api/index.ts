@@ -4,10 +4,12 @@ import { SiteNavApi } from './nav';
 import { SitemapApi } from './sitemap';
 import { SiteRedirectApi } from './redirect';
 import { SiteFileApi } from './file';
+import { SiteSettingsApi } from './settings';
 
 export type SiteApi = {
   footer: SiteFooterApi;
   nav: SiteNavApi;
+  settings: SiteSettingsApi;
   sitemap: SitemapApi;
   redirect: SiteRedirectApi;
   files: SiteFileApi;
@@ -21,5 +23,6 @@ export const SiteApi: SiteApiConstructor = ({ http }) => {
     redirect: SiteRedirectApi({ http }),
     files: SiteFileApi({ http }),
     sitemap: SitemapApi({ http }),
+    settings: SiteSettingsApi({ http }),
   };
 };
