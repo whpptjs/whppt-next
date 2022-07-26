@@ -44,7 +44,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
           {!hideHeaders && headers.length && (
             <thead className={fixedHeader && height ? 'whppt-table__headers--fixed' : ''}>
               <tr>
-                {actions && actions.length && (
+                {actions && actions.length !== 0 && (
                   <th
                     className={headers[0].align ? `whppt-table__header--${headers[0].align}` : 'whppt-table__header--left'}
                     key="whppt-table-actions">
@@ -87,7 +87,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
             {items.length ? (
               items.map((item, index: number) => (
                 <tr key={`${tableId}_${index}_row`}>
-                  {actions && actions.length && (
+                  {actions && actions.length !== 0 && (
                     <td key={`${tableId}_${index}-actions`} className="whppt-table__actions">
                       {actions.map((action, actionIndex) => (
                         <div key={`${tableId}_${actionIndex}_action`}>

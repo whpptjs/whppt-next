@@ -13,7 +13,7 @@ import { Banner } from './Banner';
 export type WhpptSelectedType = string;
 
 export const SiteSettings: FC = () => {
-  const { siteSettings, changeSiteSettingsActiveTab } = useWhppt();
+  const { settingsPanel, changeSettingsPanelActiveTab } = useWhppt();
 
   const tabs: Array<WhpptTab> = [
     { name: 'general', label: 'General' },
@@ -27,8 +27,8 @@ export const SiteSettings: FC = () => {
 
   return (
     <div>
-      <WhpptTabs tabs={tabs} selectTab={changeSiteSettingsActiveTab} selectedTab={siteSettings.activeTab} />
-      <WhpptTab selectedTab={siteSettings.activeTab}>
+      <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+      <WhpptTab selectedTab={settingsPanel.activeTab}>
         <General name="general" label="General" />
         <Seo name="s-e-o" label="Seo" />
         <OpenGraph name="open-graph" label="Open Graph" />

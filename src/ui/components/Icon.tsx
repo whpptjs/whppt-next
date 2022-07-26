@@ -36,6 +36,10 @@ import { WhpptIconDown } from '../../icons/Down';
 import { WhpptIconEdit } from '../../icons/Edit';
 import { WhpptIconCheckBoxChecked } from '../../icons/CheckBoxChecked';
 import { WhpptIconCheckBox } from '../../icons/CheckBox';
+import { WhpptIconOrder } from '../../icons/Order';
+import { WhpptIconPlus } from '../../icons/Plus';
+import { WhpptIconCopy } from '../../icons/Copy';
+import { WhpptIconContentTree } from '../../icons/ContentTree';
 
 export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'pointer') return <WhpptIconPointer></WhpptIconPointer>;
@@ -73,7 +77,11 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'next') return <WhpptIconNext></WhpptIconNext>;
   if (is === 'previous') return <WhpptIconPrevious></WhpptIconPrevious>;
   if (is === 'down') return <WhpptIconDown></WhpptIconDown>;
-  if (is === 'checkBoxChecked') return <WhpptIconCheckBoxChecked></WhpptIconCheckBoxChecked>;
-  if (is === 'checkBox') return <WhpptIconCheckBox></WhpptIconCheckBox>;
+  if (is === 'checkbox-checked') return <WhpptIconCheckBoxChecked></WhpptIconCheckBoxChecked>;
+  if (is === 'checkbox') return <WhpptIconCheckBox></WhpptIconCheckBox>;
+  if (is === 'order') return <WhpptIconOrder></WhpptIconOrder>;
+  if (is === 'plus') return <WhpptIconPlus></WhpptIconPlus>;
+  if (is === 'copy') return <WhpptIconCopy></WhpptIconCopy>;
+  if (is === 'content-tree') return <WhpptIconContentTree></WhpptIconContentTree>;
   return <div></div>;
 };
