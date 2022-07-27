@@ -8,8 +8,7 @@ type WhpptSelectProps = {
   info?: string;
   error?: string | string[];
   placeholder?: string;
-  onChange?: (val) => void;
-  onChangeEvent?: (event) => void;
+  onChange: (val) => void;
   direction?: string;
   items: object[] | string[];
   value: string | number;
@@ -25,7 +24,6 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
   label,
   placeholder,
   onChange,
-  onChangeEvent,
   direction,
   items,
   info,
@@ -109,9 +107,8 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
                   // name={name}
                   role="option"
                   className="whppt-select__menu-item"
-                  onClick={e => {
+                  onClick={() => {
                     setSelectItems(false);
-                    if (onChangeEvent) return onChangeEvent(e);
                     onChange(item);
                   }}>
                   {setTextProp(item)}

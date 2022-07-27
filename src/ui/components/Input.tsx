@@ -3,8 +3,8 @@ import React, { FC } from 'react';
 export type WhpptInputArgs = {
   id: string;
   label: string;
-  info: string;
-  error: string | undefined;
+  info?: string;
+  error?: string | undefined;
   type: 'text' | 'number' | 'checkbox' | 'email' | 'password';
   placeholder?: string;
   disabled?: boolean;
@@ -45,8 +45,8 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
             onChange(e.target.value);
           }}></input>
       </div>
-      <p className="whppt-input-info">{info}</p>
-      <p className="whppt-input-error">{error}</p>
+      {info && <p className="whppt-input-info">{info}</p>}
+      {error && <p className="whppt-input-error">{error}</p>}
     </div>
   );
 };

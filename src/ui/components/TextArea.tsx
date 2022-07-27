@@ -4,7 +4,7 @@ export type WhpptTextAreaArgs = {
   id: string;
   label: string;
   info: string;
-  error: string;
+  error: string | undefined;
   value: string;
   onChange: (value: string) => void;
 };
