@@ -3,5 +3,6 @@ export * from './RichTextEditor';
 export * from './PlainTextEditor';
 export * from './FormattedTextEditor';
 export * from '../Link/Editor';
+export * from '../Image/Editor';
 export * from '../Content/Editor';
 export * from '../Image/Editor';

@@ -20,9 +20,9 @@ export const SiteApi: SiteApiConstructor = ({ http }) => {
   return {
     footer: SiteFooterApi({ http }),
     nav: SiteNavApi({ http }),
-    sitemap: SitemapApi({ http }),
     redirect: SiteRedirectApi({ http }),
     settings: SiteSettingsApi({ http }),
     files: SiteFileApi({ http }),
+    sitemap: SitemapApi({ http }),
   };
 };
