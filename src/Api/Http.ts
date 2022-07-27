@@ -28,9 +28,11 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         const response = await fetch(buildFullPath(baseUrl, path), {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log('🚀 ~ file: Http.ts ~ line 31 ~ response ~ response', response);
 
         if (response.status >= 400) throw new Error(await response.text());
         const json = await response.json();
+        console.log('🚀 ~ file: Http.ts ~ line 35 ~ json', json);
         return json as T;
       },
       postJson: async <T, R>({ path, data }: WhpptPostOptions<T>) => {
