@@ -5,25 +5,26 @@ import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
 import { useWhppt } from '../../Context';
 import { WhpptGalleryTag, WhpptInput } from '../../ui/components';
+import { Gallery } from '../../Gallery';
+import { nanoid } from 'nanoid';
+import { aspectRatios } from './AspectRatios';
+import { getLandscapeRatio, getPortraitRatio } from './helpers';
 
 export type ImageEditorOptions = EditorOptions & { cropping: string[]; aspectLock?: string };
 
-const aspectRatios: AspectRatioObject[] = [
-  { label: '16/9', ratio: { w: 16, h: 9 } },
-  { label: '9/5', ratio: { w: 9, h: 5 } },
-  { label: '4/3', ratio: { w: 4, h: 3 } },
-  { label: 'square', ratio: { w: 1, h: 1 } },
-  { label: 'freeform', ratio: { w: undefined, h: undefined } },
-];
+const content = { type: 'Carousel', slides: [] };
+type Orientation = 'landscape' | 'portrait';
 
 export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = ({ value, onChange }) => {
-  const { showGallery, hideEditor, page } = useWhppt();
+  const { toggleSettingsPanel, hideEditor } = useWhppt();
 
   const [coords, setCoords] = useState<any>(null);
-  const [imageToCrop, setImageToCrop] = useState<ImageData>(null);
+  const [imageToCrop, setImageToCrop] = useState<ImageData>({ _id: 'vlrl61ozmll ' }); //passed down from UI
+  //prop content: {type, slides/etc}
+  const [crops, setCrops] = useState({});
 
-  const [alt, setAlt] = useState<string>(value.defaultAlt || '');
-  const [caption, setCaption] = useState<string>(value.defaultCaption || '');
+  const [altText, setAltText] = useState<string>((value && value.defaultAlt) || '');
+  const [caption, setCaption] = useState<string>((value && value.defaultCaption) || '');
 
   const [device, setDevice] = useState<string>('desktop');
 
@@ -31,24 +32,13 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
   const [stencilProps, setStencilProps] = useState(aspectRatio.ratio.w / aspectRatio.ratio.h);
   const [orientation, setOrientation] = useState<Orientation>('landscape');
 
-  const getLandscapeRatio = () => {
-    const { w, h } = aspectRatio.ratio;
-    return w >= h ? w / h : h / w;
-  };
-
-  const getPortraitRatio = () => {
-    const { w, h } = aspectRatio.ratio;
-    return w >= h ? h / w : w / h;
-  };
-
-  type Orientation = 'landscape' | 'portrait';
-
   useEffect(() => {
-    setImageToCrop(value);
+    // TODO: from props, remove??
+    setImageToCrop({ _id: 'vlrl61ozmll' });
   }, [value]);
 
   useEffect(() => {
-    setStencilProps(orientation === 'landscape' ? getLandscapeRatio() : getPortraitRatio());
+    setStencilProps(orientation === 'landscape' ? getLandscapeRatio(aspectRatio.ratio) : getPortraitRatio(aspectRatio.ratio));
   }, [orientation, aspectRatio]);
 
   const getImgUrl = galleryItemId => {
@@ -61,39 +51,12 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
 
     const deviceCrop = {
       aspectRatio: { label, ratio: { w: ratio.w, h: ratio.h } },
+      galleryItemId: nanoid(),
       orientation,
       coords,
     };
 
-    let crops = [];
-
-    if (!page.crops) {
-      crops.push({ galleryItemId: imageToCrop._id, [device]: deviceCrop });
-      onChange({ ...value, crops });
-      console.log('page', page);
-
-      return;
-    }
-
-    if (page.crops) {
-      const imageCrops = page.crops.find(crop => crop.galleryItemId === imageToCrop._id);
-      if (imageCrops) {
-        imageCrops[device] = deviceCrop;
-        crops = page.crops.map(crop => {
-          if (crop.galleryItemId === imageToCrop._id) {
-            return imageCrops;
-          } else {
-            return crop;
-          }
-        });
-      } else {
-        crops.push({ galleryItemId: imageToCrop._id, [device]: deviceCrop });
-      }
-    }
-
-    onChange({ ...value, crops });
-    console.log('value', value);
-    console.log('page', page);
+    setCrops({ ...crops, [device]: deviceCrop });
   };
 
   return (
@@ -137,7 +100,11 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
           <p
             className="whppt-image-editor__gallery-actions__button"
             onClick={() => {
-              showGallery({ limitType: 'image', use: fileDetails => onChange(fileDetails) });
+              toggleSettingsPanel({
+                key: 'gallery',
+                activeTab: 'images',
+                component: <Gallery />,
+              });
               hideEditor();
             }}>
             {imageToCrop ? 'Change picture' : 'Pick from Gallery'}
@@ -170,16 +137,37 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
                 <WhpptGalleryTag tag={'portrait'} />
               </button>
             </div>
-
-            <p>This image is locked to a {} ratio</p>
           </div>
         )}
 
+        <p>
+          {aspectRatio.label === 'freeform'
+            ? 'No aspect ratio locked'
+            : `This image is locked to a ${
+                aspectRatio.label === 'square' ? 'square' : `${aspectRatio.ratio.w.toString()} / ${aspectRatio.ratio.h.toString()}`
+              } ratio`}
+        </p>
+
         <div>
-          <WhpptInput value={alt} onChange={setAlt} id={'alt'} label={'Alt text'} info={''} error={''} type={'text'} name="altText" />
+          <WhpptInput
+            value={altText}
+            onChange={text => {
+              setAltText(text);
+              setCrops({ ...crops, [device]: { ...crops[device], altText: text } });
+            }}
+            id={'altText'}
+            label={'Alt text'}
+            info={''}
+            error={''}
+            type={'text'}
+            name="altText"
+          />
           <WhpptInput
             value={caption}
-            onChange={setCaption}
+            onChange={text => {
+              setCaption(text);
+              setCrops({ ...crops, [device]: { ...crops[device], caption: text } });
+            }}
             id={'caption'}
             label={'Caption'}
             info={''}

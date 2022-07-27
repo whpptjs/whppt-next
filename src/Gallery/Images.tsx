@@ -3,7 +3,6 @@ import { ImageData } from './Model/Image';
 import { WhpptImageUploader } from '../ui/components/ImageUploader';
 import { WhpptGalleryImage } from '../ui/components/GalleryImage';
 import { GalleryTab } from './GalleryTab';
-import { ImageSettings } from './ImageSettings';
 
 export const Images: FC<GalleryTab> = ({ search, upload, remove, setSelected, selectedId, domainId }) => {
   const [images, setImages] = useState<ImageData[]>([]);
@@ -22,15 +21,6 @@ export const Images: FC<GalleryTab> = ({ search, upload, remove, setSelected, se
     });
   };
 
-  const useImage = () => {
-    gallery.use(selectedImage);
-    hideGallery();
-  };
-
-  const getSuggestedTags = image => {
-    return ['parent', 'dog', 'landscape'];
-  };
-
   useEffect(() => {
     search('image').then(setImages);
   }, [search]);
@@ -46,24 +36,10 @@ export const Images: FC<GalleryTab> = ({ search, upload, remove, setSelected, se
               url={getImgUrl(img._id)}
               remove={() => remove(img._id)}
               name={img.name}
-              onClick={() => setSelectedImage(img)}
-              isSelected={selectedImage && selectedImage._id === img._id}
+              onClick={() => setSelected(img)}
+              isSelected={selectedId === img._id}
             />
           ))}
-      </div>
-
-      <div className={`whppt-gallery__image-settings ${selectedImage ? 'whppt-gallery__image-settings--active' : ''}`}>
-        {selectedImage && (
-          <ImageSettings
-            useImage={useImage}
-            remove={() => {
-              remove(selectedImage._id);
-            }}
-            save={save}
-            suggestedTags={getSuggestedTags(selectedImage)}
-            selectedImage={selectedImage}
-          />
-        )}
       </div>
     </section>
   );

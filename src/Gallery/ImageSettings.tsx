@@ -3,7 +3,7 @@ import { WhpptButton, WhpptInput, WhpptGalleryTag, WhpptIcon } from '../ui/compo
 import { FileDetails } from '../Api/Http';
 import { DayPicker } from 'react-day-picker';
 
-type SettingsProps = {
+type ImageSettingsProps = {
   use: () => void;
   selected: FileDetails;
   remove: (id: string) => void;
@@ -12,7 +12,7 @@ type SettingsProps = {
   setSelected: ({}) => void;
 };
 
-export const Settings: FC<SettingsProps> = ({ use, selected, remove, suggestedTags, setSelected, save }) => {
+export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, suggestedTags, setSelected, save }) => {
   const [newTag, setNewTag] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [date, setDate] = useState(new Date().toLocaleDateString('en-US'));
