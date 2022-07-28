@@ -30,6 +30,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
+  const [navWidth, setNavWidth] = useState('96px');
   const [errorState, setError] = useState<Error>();
   const [editing, setEditing] = useState(false);
   const [editorState, setEditorState] = useState(editor.defaultState);
@@ -80,21 +81,23 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
       gallery,
       contentTree,
+      navWidth,
     }),
     [
-      api,
       editing,
       editorState,
+      api,
       domain,
       page,
-      settingsPanel,
       pageSettingsData,
-      settingsData,
       nav,
       initNav,
       footer,
       initFooter,
+      settingsData,
       user,
+      settingsPanel,
+      navWidth,
       gallery,
     ]
   );
@@ -125,6 +128,10 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, er
     const isDraft = process.env.NEXT_PUBLIC_DRAFT === 'true';
     setRenderChildren(!isDraft || (user && user._id !== 'guest'));
   }, [setRenderChildren, user]);
+
+  useEffect(() => {
+    setNavWidth(showFullNav ? '256px' : '96px');
+  }, [navWidth, showFullNav]);
 
   return (
     <div>
