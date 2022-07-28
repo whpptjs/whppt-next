@@ -12,7 +12,7 @@ export type FileDetails = {
   tags?: string[];
   suggestedTags?: string[];
   date?: Date;
-  defaultAlt?: string;
+  defaultAltText?: string;
   defaultCaption?: string;
   uploadedOn?: string;
   type?: string;

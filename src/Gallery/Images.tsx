@@ -23,7 +23,7 @@ export const Images: FC<GalleryTab> = ({ search, upload, remove, setSelected, se
 
   useEffect(() => {
     search('image').then(setImages);
-  }, [search]);
+  }, []);
 
   return (
     <section className="whppt-gallery whppt-gallery__main-container">
@@ -37,7 +37,7 @@ export const Images: FC<GalleryTab> = ({ search, upload, remove, setSelected, se
               remove={() => remove(img._id)}
               name={img.name}
               onClick={() => setSelected(img)}
-              isSelected={selectedId === img._id}
+              isSelected={selectedId == img._id}
             />
           ))}
       </div>

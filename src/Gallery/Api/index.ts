@@ -12,46 +12,48 @@ export type GalleryApi = {
     tags: string[];
   }) => Promise<{ files: FileDetails[] }>;
   upload: (fileData: FormData) => Promise<FileDetails>;
-  save: (details: FileDetails) => Promise<FileDetails>;
+  save: (details: FileDetails) => Promise<{ item: FileDetails }>;
   load: (id: string) => Promise<FileDetails>;
   remove: (id: string) => Promise<any>;
 };
 export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryApi;
 
 export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
-  search: async ({ domainId, page, size, type }) => {
+  search: async ({ domainId, page, size, type, tags }) => {
     return http.secure.getJson<{ files: FileDetails[] }>({
-      path: `/api/gallery/search?domainId=${domainId}&limit=${size}&currentPage=${page}&type=${type}`,
+      path: `/api/gallery/search?domainId=${domainId}&limit=${size}&currentPage=${page}&type=${type}&tags=${tags}`,
     });
   },
   upload: async fileData => {
     if (!fileData) throw new Error('Invalid file data');
 
     return http.secure.postFile({
-      path: '/gallery/upload',
+      path: '/api/gallery/upload',
       fileData,
     });
   },
   save: async details => {
     if (!details) throw new Error('Invalid file details');
 
-    return http.secure.postJson<FileDetails, FileDetails>({
-      path: '/gallery/save',
-      data: details,
+    return http.secure.postJson<{ item: FileDetails }, { item: FileDetails }>({
+      path: '/api/gallery/save',
+      data: {
+        item: details,
+      },
     });
   },
   load: async (id: string) => {
     if (!id) throw new Error('Id of file is missing');
 
     return http.secure.getJson<Promise<FileDetails>>({
-      path: `/gallery/${id}`,
+      path: `/api/gallery/load?itemId=${id}`,
     });
   },
   remove: async (id: string) => {
     if (!id) throw new Error('Id of file is missing');
 
     return http.secure.postJson({
-      path: '/gallery/remove',
+      path: '/api/gallery/remove',
       data: { id },
     });
   },

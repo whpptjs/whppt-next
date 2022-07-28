@@ -11,12 +11,16 @@ export type ImageData = {
 };
 
 export type PageImageData = {
-  crops: { [key: string]: ImageData };
+  crops: Crops;
+};
+
+export type Crops = {
+  [key: string]: ImageDataSize;
 };
 
 export type ImageDataSize = {
-  //this is to be used by editor
   altText: string;
+  caption: string;
   galleryItemId: string;
   crop: {
     aspectRatio: {

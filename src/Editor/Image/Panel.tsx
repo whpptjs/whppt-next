@@ -1,6 +1,6 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useMemo } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
-import { ImageData, AspectRatioObject } from '../../Gallery/Model';
+import { ImageDataSize, AspectRatioObject, PageImageData } from '../../Gallery/Model';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
 import { useWhppt } from '../../Context';
@@ -9,32 +9,27 @@ import { Gallery } from '../../Gallery';
 import { nanoid } from 'nanoid';
 import { aspectRatios } from './AspectRatios';
 import { getLandscapeRatio, getPortraitRatio } from './helpers';
+import { DevicePicker } from './DevicePicker';
 
-export type ImageEditorOptions = EditorOptions & { cropping: string[]; aspectLock?: string };
-
-const content = { type: 'Carousel', slides: [] };
 type Orientation = 'landscape' | 'portrait';
 
-export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = ({ value, onChange }) => {
+export const WhpptImageEditor: FC<EditorArgs<PageImageData, EditorOptions>> = ({ value, onChange }) => {
   const { toggleSettingsPanel, hideEditor } = useWhppt();
 
   const [coords, setCoords] = useState<any>(null);
-  const [imageToCrop, setImageToCrop] = useState<ImageData>({ _id: 'vlrl61ozmll ' }); //passed down from UI
-  //prop content: {type, slides/etc}
-  const [crops, setCrops] = useState({});
-
-  const [altText, setAltText] = useState<string>((value && value.defaultAlt) || '');
-  const [caption, setCaption] = useState<string>((value && value.defaultCaption) || '');
-
   const [device, setDevice] = useState<string>('desktop');
+
+  const imageIdToCrop = useMemo(() => {
+    console.log('value', value);
+    return (value[device] as ImageDataSize) && value[device].galleryItemId;
+  }, [device, value]);
 
   const [aspectRatio, setAspectRatio] = useState<AspectRatioObject>(aspectRatios[0]);
   const [stencilProps, setStencilProps] = useState(aspectRatio.ratio.w / aspectRatio.ratio.h);
   const [orientation, setOrientation] = useState<Orientation>('landscape');
 
   useEffect(() => {
-    // TODO: from props, remove??
-    setImageToCrop({ _id: 'vlrl61ozmll' });
+    setDevice(Object.keys(value)[0]);
   }, [value]);
 
   useEffect(() => {
@@ -56,7 +51,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
       coords,
     };
 
-    setCrops({ ...crops, [device]: deviceCrop });
+    onChange({ ...value, [device]: deviceCrop });
   };
 
   return (
@@ -64,34 +59,12 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
       <section
         className="whppt-form-section whppt-form-section--bottom-gap"
         style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ display: 'flex', gap: '3rem', color: 'white' }}>
-          <p
-            className={`whppt-image-editor__device-select${device === 'desktop' ? '--active' : ''}`}
-            onClick={() => {
-              setDevice('desktop');
-            }}>
-            Desktop
-          </p>
-          <p
-            className={`whppt-image-editor__device-select${device === 'tablet' ? '--active' : ''}`}
-            onClick={() => {
-              setDevice('tablet');
-            }}>
-            Tablet
-          </p>
-          <p
-            className={`whppt-image-editor__device-select${device === 'mobile' ? '--active' : ''}`}
-            onClick={() => {
-              setDevice('mobile');
-            }}>
-            Mobile
-          </p>
-        </div>
+        <DevicePicker devices={Object.keys(value)} set={setDevice} />
 
         <Cropper
-          src={imageToCrop ? `${getImgUrl(imageToCrop._id)}` : ''}
+          src={imageIdToCrop ? `${getImgUrl(imageIdToCrop)}` : ''}
           style={{ height: 200, width: 360, objectFit: 'cover' }}
-          onChange={imageToCrop && onCrop}
+          onChange={imageIdToCrop && onCrop}
           backgroundClassName={'whppt-cropper-background'}
           stencilProps={{ aspectRatio: stencilProps, lines: true }}
         />
@@ -107,7 +80,7 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
               });
               hideEditor();
             }}>
-            {imageToCrop ? 'Change picture' : 'Pick from Gallery'}
+            {imageIdToCrop ? 'Change picture' : 'Pick from Gallery'}
           </p>
 
           <p className="whppt-image-editor__gallery-actions__button" onClick={() => setImageToCrop(null)}>
@@ -150,11 +123,16 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
 
         <div>
           <WhpptInput
-            value={altText}
-            onChange={text => {
-              setAltText(text);
-              setCrops({ ...crops, [device]: { ...crops[device], altText: text } });
-            }}
+            value={value.crops[device].altText}
+            onChange={alt =>
+              onChange({
+                ...value,
+                [device]: {
+                  ...value.crops[device],
+                  altText: alt,
+                },
+              })
+            }
             id={'altText'}
             label={'Alt text'}
             info={''}
@@ -163,11 +141,16 @@ export const WhpptImageEditor: FC<EditorArgs<ImageData, ImageEditorOptions>> = (
             name="altText"
           />
           <WhpptInput
-            value={caption}
-            onChange={text => {
-              setCaption(text);
-              setCrops({ ...crops, [device]: { ...crops[device], caption: text } });
-            }}
+            value={value.crops[device].caption}
+            onChange={caption =>
+              onChange({
+                ...value,
+                [device]: {
+                  ...value.crops[device],
+                  altText: caption,
+                },
+              })
+            }
             id={'caption'}
             label={'Caption'}
             info={''}

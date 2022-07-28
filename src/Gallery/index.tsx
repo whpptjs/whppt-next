@@ -5,14 +5,15 @@ import { WhpptTabs, WhpptTab, WhpptQueryInput } from '../ui/components';
 import { Images } from './Images';
 import { Videos } from './Videos';
 import { GalleryFileType } from './Api';
-import { Settings } from './Settings';
+import { ImageSettings } from './ImageSettings';
 import { ImageData } from './Model/Image';
+import { splitKeywords } from '../helpers';
 
 export const Gallery: FC = () => {
-  const { gallery, changeGalleryActiveTab, api, hideGallery, domain } = useWhppt();
+  const { settingsPanel, showEditor, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain, page, setPage } = useWhppt();
 
-  const [selected, setSelected] = useState<ImageData>();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selected, setSelected] = useState<ImageData>(null);
+  const [searchQueryTags, setSearchQueryTags] = useState('');
   const [filter, setFilter] = useState('');
 
   const tabs: Array<WhpptTab> = [
@@ -22,7 +23,9 @@ export const Gallery: FC = () => {
   ];
 
   const search = (type: GalleryFileType) => {
-    const tags = (selected && selected.tags) || [];
+    console.log('searching...');
+    const tags = splitKeywords(searchQueryTags) || [];
+    console.log('tags', tags);
     return api.gallery.search({ domainId: domain._id, page: 1, size: 10, type, tags }).then(({ items }) => items);
   };
 
@@ -45,12 +48,12 @@ export const Gallery: FC = () => {
       <div className="whppt-gallery__content">
         <WhpptHeading text="Media Gallery" />
         <div className="whppt-gallery__filters">
-          <WhpptQueryInput value={searchQuery} onChange={setSearchQuery} buttonText={'Search'} onClick={search} />
-          <WhpptQueryInput value={filter} onChange={setFilter} buttonText={'Filter'} onClick={search} />
+          <WhpptQueryInput value={searchQueryTags} onChange={setSearchQueryTags} buttonText={'Search'} onClick={() => search} />
+          <WhpptQueryInput value={filter} onChange={setFilter} buttonText={'Filter'} onClick={() => search} />
         </div>
-        <WhpptTabs tabs={tabs} selectTab={changeGalleryActiveTab} selectedTab={gallery.activeTab} />
-        <WhpptTab selectedTab={gallery.activeTab}>
-          {!gallery.limitType || (gallery.limitType && gallery.limitType === 'image') ? (
+        <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+        <WhpptTab selectedTab={settingsPanel.activeTab}>
+          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'images') ? (
             <Images
               name="images"
               label="Images"
@@ -65,7 +68,7 @@ export const Gallery: FC = () => {
           ) : (
             <></>
           )}
-          {!gallery.limitType || (gallery.limitType && gallery.limitType === 'video') ? (
+          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'video') ? (
             <Videos
               name="videos"
               label="Videos"
@@ -85,14 +88,13 @@ export const Gallery: FC = () => {
 
       <div className={`whppt-gallery__settings ${selected ? 'whppt-gallery__settings--active' : ''}`}>
         {selected && (
-          <Settings
+          <ImageSettings
             use={() => {
-              gallery.use(selected);
-              hideGallery();
+              showEditor('image', page, setPage, undefined);
+              hideSettingsPanel();
             }}
             remove={() => remove(selected._id)}
             save={save}
-            suggestedTags={getSuggestedTags(selected)}
             selected={selected}
             setSelected={setSelected}
           />

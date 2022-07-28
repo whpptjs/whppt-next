@@ -20,11 +20,9 @@ export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, nam
 
       <div style={loaded ? {} : { display: 'none' }} onClick={onClick}>
         <img
-          style={{ height: 200, width: 360, objectFit: 'cover', cursor: 'pointer', outline: isSelected ? '2px solid blue' : '' }}
+          className={`whppt-gallery__image whppt-gallery__image${isSelected ? '--selected' : ''}`}
           onLoad={() => setLoaded(true)}
           src={url}
-          // onMouseEnter={() => setShowDelete(true)}
-          // onMouseLeave={() => setShowDelete(false)}
         />
         <p className="whppt-gallery__image-name">{name}</p>
       </div>

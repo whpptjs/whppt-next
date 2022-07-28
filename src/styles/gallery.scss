@@ -87,7 +87,7 @@
     }
 
     &__calendar {
-      @apply absolute bg-whpptDarkMode rounded-lg border-solid border-2 border-whpptStandard;
+      @apply absolute bg-whpptDarkMode rounded-lg border-solid border-2 border-whpptStandard z-20;
     }
   }
 

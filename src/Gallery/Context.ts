@@ -1,5 +1,4 @@
 import { FileDetails } from './../Api/Http';
-import { ImageData } from './Model';
 import { GalleryFileType } from './Api';
 
 export type GalleryState = {
@@ -9,9 +8,10 @@ export type GalleryState = {
   use?: (FileDetails) => void;
 };
 
-export const defaultGallerySettingsState = {
+export const defaultGalleryState = {
   visible: false,
   activeTab: 'images',
+  use: () => {},
 };
 
 export type GalleryContextArgs = {
@@ -20,21 +20,12 @@ export type GalleryContextArgs = {
 };
 
 export const defaultArgs = {
-  gallery: defaultGallerySettingsState,
+  gallery: defaultGalleryState,
   setGallery: () => {},
 } as GalleryContextArgs;
 
-export const Context = ({ gallery, setGallery }: GalleryContextArgs) => {
+export const Context = ({ gallery }: GalleryContextArgs) => {
   return {
-    gallery,
-    showGallery: ({ limitType, use }: { limitType: GalleryFileType; use: (imageData: ImageData) => void }) =>
-      setGallery({
-        ...gallery,
-        visible: !gallery.visible,
-        limitType,
-        use,
-      }),
-    hideGallery: () => setGallery({ visible: false, activeTab: 'image' }),
-    changeGalleryActiveTab: (activeTab: string) => setGallery({ ...gallery, activeTab }),
+    ...gallery,
   };
 };

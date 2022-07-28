@@ -1,28 +1,29 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { WhpptButton, WhpptInput, WhpptGalleryTag, WhpptIcon } from '../ui/components';
 import { FileDetails } from '../Api/Http';
 import { DayPicker } from 'react-day-picker';
+import { useWhppt } from '../Context';
 
 type ImageSettingsProps = {
   use: () => void;
   selected: FileDetails;
   remove: (id: string) => void;
   save: (details: any) => void;
-  suggestedTags: any[];
   setSelected: ({}) => void;
 };
 
-export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, suggestedTags, setSelected, save }) => {
+export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, setSelected, save }) => {
+  const { api } = useWhppt();
   const [newTag, setNewTag] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
-  const [date, setDate] = useState(new Date().toLocaleDateString('en-US'));
 
-  const addDefaultAlt = value => {
-    setSelected({ ...selected, defaultAlt: value });
-  };
+  useEffect(() => {
+    loadImage(selected._id);
+  }, [selected._id]);
 
-  const addDefaultCaption = value => {
-    setSelected({ ...selected, defaultCaption: value });
+  const loadImage = async id => {
+    const image: { item: FileDetails } = await api.gallery.load(id);
+    setSelected({ ...selected, ...image.item });
   };
 
   const saveDetailsAndEdit = () => {
@@ -54,22 +55,11 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
         </div>
       </div>
 
-      {selected && selected.tags && (
+      {selected.tags && (
         <>
           <h3>Tags</h3>
           <div className="whppt-gallery__settings__tag-container">
             {selected.tags.map((tag, index) => (
-              <WhpptGalleryTag tag={tag} key={index} />
-            ))}
-          </div>
-        </>
-      )}
-
-      {selected && suggestedTags && (
-        <>
-          <h3>Suggested tags</h3>
-          <div className="whppt-gallery__settings__tag-container">
-            {suggestedTags.map((tag, index) => (
               <WhpptGalleryTag tag={tag} key={index} />
             ))}
           </div>
@@ -81,7 +71,14 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
           className="whppt-image-editor__date-picker-input"
           onClick={() => setShowCalendar(!showCalendar)}
           style={{ cursor: 'pointer !important' }}>
-          <WhpptInput id="date" label="Date" info="" error="" type="text" value={date.toString()} />
+          <WhpptInput
+            id="date"
+            label="Date"
+            info=""
+            error=""
+            type="text"
+            value={(selected.date && new Date(selected.date).toLocaleDateString('en-GB')) || new Date().toLocaleDateString('en-US')}
+          />
 
           <div className={`whppt-image-editor__date-picker-icon ${showCalendar ? 'up' : 'down'}`}>
             <WhpptIcon is="down" />
@@ -93,7 +90,7 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
             className="whppt-gallery__day-picker__calendar"
             fixedWeeks={true}
             onDayClick={date => {
-              setDate(date.toLocaleDateString('en-GB'));
+              setSelected({ ...selected, date });
               setShowCalendar(false);
             }}
           />
@@ -106,8 +103,10 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
         label="Default alt text"
         error=""
         type="text"
-        value={(selected && selected.defaultAlt) || ''}
-        onChange={value => addDefaultAlt(value)}
+        value={(selected && selected.defaultAltText) || ''}
+        onChange={value => {
+          setSelected({ ...selected, defaultAltText: value });
+        }}
       />
 
       <WhpptInput
@@ -117,12 +116,10 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
         error=""
         type="text"
         value={(selected && selected.defaultCaption) || ''}
-        onChange={value => addDefaultCaption(value)}
+        onChange={value => {
+          setSelected({ ...selected, defaultCaption: value });
+        }}
       />
-
-      <div>
-        <span>Used 8 times in 4 pages (dependencies)</span>
-      </div>
 
       <div className="whppt-gallery__settings__action-buttons">
         <WhpptButton text="use" onClick={() => saveDetailsAndEdit()} />
