@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 export type WhpptTextAreaArgs = {
   id: string;
   label: string;
-  info: string;
+  info?: string;
   name?: string;
   error: string | undefined;
   value: string;

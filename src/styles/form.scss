@@ -76,11 +76,16 @@
     @apply w-3/12;
   }
   &__content {
-    @apply overflow-auto h-85vh;
     @apply w-8/12;
     @apply px-6 py-4 bg-whpptDarkMode;
     &--header {
-      @apply text-xl font-bold;
+      @apply text-xl font-bold mb-5;
+    }
+    &--full-height {
+      @apply overflow-auto h-85vh;
+    }
+    &--flex {
+      @apply flex gap-3 items-center;
     }
   }
   &--flex-apart {

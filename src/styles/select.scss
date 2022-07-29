@@ -52,7 +52,7 @@
       @apply border border-whpptStandard rounded-lg;
       @apply bg-whpptDarkBorder;
       @apply m-0 list-none;
-      @apply fixed;
+      @apply fixed h-80 overflow-auto;
       width: 230px;
 
       .whppt-select__menu-item--active {
