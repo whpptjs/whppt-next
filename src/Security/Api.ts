@@ -32,7 +32,7 @@ export const SecurityApi: SecurityApiConstructor = ({ http }) => {
       });
     },
     setPassword(args) {
-      return http.secure.postJson<SetPasswordArgs, {}>({ path: '/user/setPassword', data: args });
+      return http.secure.postJson<SetPasswordArgs, {}>({ path: '/api/user/setPassword', data: args });
     },
   };
 };

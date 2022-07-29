@@ -32,7 +32,6 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
 
         if (response.status >= 400) throw new Error(await response.text());
         const json = await response.json();
-        console.log('🚀 ~ file: Http.ts ~ line 35 ~ json', json);
         return json as T;
       },
       postJson: async <T, R>({ path, data }: WhpptPostOptions<T>) => {
