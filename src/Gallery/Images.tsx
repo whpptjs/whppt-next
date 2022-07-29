@@ -4,7 +4,7 @@ import { WhpptImageUploader } from '../ui/components/ImageUploader';
 import { WhpptGalleryImage } from '../ui/components/GalleryImage';
 import { GalleryTab } from './GalleryTab';
 
-export const Images: FC<GalleryTab> = ({ search, upload, remove, setSelected, selectedId, domainId }) => {
+export const Images: FC<GalleryTab> = ({ search, upload, setSelected, selectedId, domainId }) => {
   const [images, setImages] = useState<ImageData[]>([]);
 
   const getImgUrl = imgId => {
@@ -34,7 +34,6 @@ export const Images: FC<GalleryTab> = ({ search, upload, remove, setSelected, se
             <WhpptGalleryImage
               key={img._id}
               url={getImgUrl(img._id)}
-              remove={() => remove(img._id)}
               name={img.name}
               onClick={() => setSelected(img)}
               isSelected={selectedId == img._id}

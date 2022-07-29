@@ -1,5 +1,6 @@
 import { WhpptHttp } from '../../Api/Http';
 import { FileDetails } from '../../Api/Http';
+import { joinQueryTags } from '../../helpers';
 
 export type GalleryFileType = 'image' | 'video' | 'file' | 'lotty' | 'svg';
 
@@ -10,7 +11,7 @@ export type GalleryApi = {
     type: GalleryFileType;
     domainId: string;
     tags: string[];
-  }) => Promise<{ files: FileDetails[] }>;
+  }) => Promise<{ items: FileDetails[] }>;
   upload: (fileData: FormData) => Promise<FileDetails>;
   save: (details: FileDetails) => Promise<{ item: FileDetails }>;
   load: (id: string) => Promise<FileDetails>;
@@ -20,15 +21,15 @@ export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryAp
 
 export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
   search: async ({ domainId, page, size, type, tags }) => {
-    return http.secure.getJson<{ files: FileDetails[] }>({
-      path: `/api/gallery/search?domainId=${domainId}&limit=${size}&currentPage=${page}&type=${type}&tags=${tags}`,
+    return http.secure.getJson<{ items: FileDetails[] }>({
+      path: `/api/gallery/search?domainId=${domainId}&limit=${size}&currentPage=${page}&type=${type}${joinQueryTags(tags)}`,
     });
   },
   upload: async fileData => {
     if (!fileData) throw new Error('Invalid file data');
 
     return http.secure.postFile({
-      path: '/api/gallery/upload',
+      path: '/gallery/upload',
       fileData,
     });
   },

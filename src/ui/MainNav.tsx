@@ -221,7 +221,7 @@ export const WhpptMainNav: FC<{
     {
       key: 'gallery',
       label: 'Gallery',
-      icon: <WhpptIcon is="settings"></WhpptIcon>,
+      icon: <WhpptIcon is="gallery"></WhpptIcon>,
       action: ({ toggleSettingsPanel }) => {
         toggleEditing(false);
         closeWhpptEditor();

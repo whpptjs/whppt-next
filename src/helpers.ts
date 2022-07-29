@@ -17,3 +17,15 @@ export const formatSlug = slug => {
 
   return slug;
 };
+
+export const joinQueryTags = tags => {
+  if (!tags) return '';
+
+  let tagsQuery = '';
+
+  tags.forEach(tag => {
+    tagsQuery += `&queryTags[]=${tag}`;
+  });
+  console.log('tagsQuery', tagsQuery);
+  return tagsQuery;
+};

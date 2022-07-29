@@ -18,7 +18,7 @@ export const WhpptImageUploader: FC<WhpptImageUploaderProps> = ({ uploadImage })
 
   return (
     <div>
-      <div className="whppt-impage-uploader" onClick={openImageInput}>
+      <div className="whppt-image-uploader" onClick={openImageInput}>
         <span>+</span>
       </div>
       <input type="file" style={{ display: 'none' }} ref={imageInputRef} onChange={selectFile} />

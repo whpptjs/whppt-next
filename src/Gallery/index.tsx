@@ -8,6 +8,7 @@ import { GalleryFileType } from './Api';
 import { ImageSettings } from './ImageSettings';
 import { ImageData } from './Model/Image';
 import { splitKeywords } from '../helpers';
+import { FileDetails } from '../Api/Http';
 
 export const Gallery: FC = () => {
   const { settingsPanel, showEditor, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain, page, setPage } = useWhppt();
@@ -23,10 +24,8 @@ export const Gallery: FC = () => {
   ];
 
   const search = (type: GalleryFileType) => {
-    console.log('searching...');
     const tags = splitKeywords(searchQueryTags) || [];
-    console.log('tags', tags);
-    return api.gallery.search({ domainId: domain._id, page: 1, size: 10, type, tags }).then(({ items }) => items);
+    return api.gallery.search({ domainId: domain._id, page: 1, size: 10, type, tags }).then(({ items }: { items: FileDetails[] }) => items);
   };
 
   const upload = newFile => {
@@ -60,7 +59,6 @@ export const Gallery: FC = () => {
               search={search}
               upload={upload}
               save={save}
-              remove={remove}
               setSelected={setSelected}
               selectedId={selected && selected._id}
               domainId={domain._id}
@@ -75,7 +73,6 @@ export const Gallery: FC = () => {
               search={search}
               upload={upload}
               save={save}
-              remove={remove}
               setSelected={setSelected}
               selectedId={selected && selected._id}
               domainId={domain._id}

@@ -20,7 +20,6 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData, EditorOptions>> = ({
   const [device, setDevice] = useState<string>('desktop');
 
   const imageIdToCrop = useMemo(() => {
-    console.log('value', value);
     return (value[device] as ImageDataSize) && value[device].galleryItemId;
   }, [device, value]);
 
@@ -83,7 +82,7 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData, EditorOptions>> = ({
             {imageIdToCrop ? 'Change picture' : 'Pick from Gallery'}
           </p>
 
-          <p className="whppt-image-editor__gallery-actions__button" onClick={() => setImageToCrop(null)}>
+          <p className="whppt-image-editor__gallery-actions__button" onClick={() => imageIdToCrop(null)}>
             Remove
           </p>
         </div>

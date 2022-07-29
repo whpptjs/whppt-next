@@ -2,14 +2,14 @@ import React, { FC, useState } from 'react';
 
 type WhpptGalleryImageProps = {
   url: string;
-  remove: () => void;
   name: string;
   onClick: (e: any) => void;
   isSelected: boolean;
 };
 
-export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, remove, name, onClick, isSelected }) => {
+export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, name, onClick, isSelected }) => {
   const [loaded, setLoaded] = useState(false);
+
   return (
     <div style={{ position: 'relative' }}>
       {loaded ? null : (
