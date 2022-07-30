@@ -47,6 +47,7 @@
     "@tiptap/starter-kit": "^2.0.0-beta.189",
     "array-move": "^4.0.0",
     "formik": "^2.2.9",
+    "html-react-parser": "^3.0.1",
     "js-cookie": "^3.0.1",
     "nanoid": "^4.0.0",
     "postcss": "^8.4.14",

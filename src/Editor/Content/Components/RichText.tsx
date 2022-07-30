@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { RichTextEditor } from '../../Editors';
 import { ComponentData } from '../../../ui/Content';
 import { useWhppt } from '../../../Context';
@@ -12,20 +11,10 @@ export const RichTextComponent: FC<{ data: RichTextComponentData; onChange: (dat
   const _data = data;
   const { editing } = useWhppt();
 
-  const createMarkup = () => {
-    return { __html: data.text };
-  };
-
+  // TODO: Check why editing is setting hovered?
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
-      <RichTextEditor value={_data.text} onChange={text => onChange({ ...data, text } as ComponentData)}>
-        {
-          <div>
-            {editing && <div>RichText Editor</div>}
-            <div dangerouslySetInnerHTML={createMarkup()}></div>
-          </div>
-        }
-      </RichTextEditor>
+      <RichTextEditor value={_data.text} onChange={text => onChange({ ...data, text } as ComponentData)} />
     </div>
   );
 };
