@@ -1,6 +1,6 @@
 import React from 'react';
 import { FC } from 'react';
-import { PlainTextEditor } from '../../Components';
+import { PlainTextEditor } from '../../PlainText/Editor';
 import { ComponentData } from '../../../ui/Content';
 import { useWhppt } from '../../../Context';
 

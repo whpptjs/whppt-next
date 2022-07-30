@@ -20,7 +20,7 @@ export const ContentEditor = <T extends object>({ children, value, onChange, com
 
   return (
     <div
-      className="whppt-editor-selector"
+      className={['whppt-content-selector whppt-editor-selector', editing ? 'whppt-editor-selector--editing' : ''].join(' ')}
       onClick={e => {
         if (editing) {
           showEditor('content', value, onChange, options);

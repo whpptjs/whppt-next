@@ -19,13 +19,13 @@ export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
   editors: WhpptAppEditorsArg;
   error: (error: Error) => ReactElement;
-  menuItems: (options: MenuItemOptions) => MenuItem[];
+  menuItems?: (options: MenuItemOptions) => MenuItem[];
   initNav?: (nav: any) => any;
   initFooter?: (footer: any) => any;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
-export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems, error, initNav, initFooter }) => {
+export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = () => [], error, initNav, initFooter }) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);

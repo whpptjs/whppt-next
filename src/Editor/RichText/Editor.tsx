@@ -9,16 +9,19 @@ export const RichTextEditor: FC<
     children: ReactElement | ReactElement[];
   }
 > = ({ children, value, onChange, label, options = {} as EditorOptions }) => {
-  const { showEditor } = useWhppt();
+  const { editing, showEditor } = useWhppt();
   return (
     <div
-      className="whppt-editor-selector"
-      onClick={() =>
-        showEditor('richText', value, onChange, {
-          label: label || 'Rich Text',
-          options,
-        })
-      }>
+      className={['whppt-editor-selector', editing ? 'whppt-editor-selector--editing' : ''].join(' ')}
+      onClick={e => {
+        if (editing) {
+          showEditor('richText', value, onChange, {
+            label: label || 'Rich Text',
+            options,
+          });
+          e.stopPropagation();
+        }
+      }}>
       {children}
     </div>
   );

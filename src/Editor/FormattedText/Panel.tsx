@@ -1,17 +1,17 @@
 import React, { FC } from 'react';
-import { EditorArgs } from '../EditorArgs';
 import { WhpptRichText } from '../../ui/components';
+import { EditorArgs } from '../EditorArgs';
 
-export const WhpptRichtextEditor: FC<EditorArgs<string>> = ({ value, onChange }) => {
+export const WhpptFormattedTextEditorPanel: FC<EditorArgs<string>> = ({ value, onChange }) => {
   return (
     <div className="whppt-richtext-editor">
       <WhpptRichText
-        id="whppt-richtext-input"
+        id="whppt-formatted-text-input"
         label="Whppt rich text Label"
         error=""
         info=""
         value={value}
-        formatOptionsOnly={false}
+        formatOptionsOnly={true}
         onChange={onChange}
       />
     </div>

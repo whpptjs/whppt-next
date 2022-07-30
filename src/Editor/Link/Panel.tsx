@@ -6,7 +6,7 @@ import { ExternalLinkTab } from './External';
 import { FileLinkTab } from './File';
 import { PageLinkTab } from './Page';
 
-export const WhpptLinkEditor: FC<EditorArgs<WhpptLinkData>> = ({ value, onChange }) => {
+export const WhpptLinkEditorPanel: FC<EditorArgs<WhpptLinkData>> = ({ value, onChange }) => {
   const tabs: Array<WhpptTab> = [
     { name: 'page', label: 'Page' },
     { name: 'external', label: 'External' },
