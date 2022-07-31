@@ -18,13 +18,8 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
   const [showCalendar, setShowCalendar] = useState(false);
 
   useEffect(() => {
-    loadImage(selected._id);
-  }, [selected._id]);
-
-  const loadImage = async id => {
-    const image: { item: FileDetails } = await api.gallery.load(id);
-    setSelected({ ...selected, ...image.item });
-  };
+    api.gallery.load(selected._id).then(({ item }) => setSelected({ ...selected, ...item }));
+  }, []);
 
   const saveDetailsAndEdit = () => {
     save(selected);

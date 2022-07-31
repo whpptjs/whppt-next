@@ -26,6 +26,6 @@ export const joinQueryTags = tags => {
   tags.forEach(tag => {
     tagsQuery += `&queryTags[]=${tag}`;
   });
-  console.log('tagsQuery', tagsQuery);
+
   return tagsQuery;
 };

@@ -14,7 +14,7 @@ export type GalleryApi = {
   }) => Promise<{ items: FileDetails[] }>;
   upload: (fileData: FormData) => Promise<FileDetails>;
   save: (details: FileDetails) => Promise<{ item: FileDetails }>;
-  load: (id: string) => Promise<FileDetails>;
+  load: (id: string) => Promise<{ item: FileDetails }>;
   remove: (id: string) => Promise<any>;
 };
 export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryApi;
@@ -46,16 +46,16 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
   load: async (id: string) => {
     if (!id) throw new Error('Id of file is missing');
 
-    return http.secure.getJson<Promise<FileDetails>>({
+    return http.secure.getJson<Promise<{ item: FileDetails }>>({
       path: `/api/gallery/load?itemId=${id}`,
     });
   },
-  remove: async (id: string) => {
-    if (!id) throw new Error('Id of file is missing');
+  remove: async (itemId: string) => {
+    if (!itemId) throw new Error('Id of file is missing');
 
     return http.secure.postJson({
       path: '/api/gallery/remove',
-      data: { id },
+      data: { itemId },
     });
   },
 });

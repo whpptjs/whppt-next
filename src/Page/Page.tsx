@@ -3,9 +3,10 @@ import { ContentTreeNode } from '../ui/Content';
 
 import { useWhppt } from '../Context';
 import { PageData } from './Model/Page';
+import { SettingsData } from '../CommonSettings/Model/SettingsData';
 
 export type WhpptPageProps<T extends PageData> = {
-  init: (page: T) => T;
+  init: (page: T & { settings?: SettingsData }) => T & { settings?: SettingsData };
   getContents: (args: { page: T; setPage: (page: T) => void }) => ContentTreeNode[];
   slug: string;
   collection?: string;

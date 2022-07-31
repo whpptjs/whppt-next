@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
 import { WhpptTabs, WhpptTab, WhpptQueryInput } from '../ui/components';
@@ -10,9 +10,9 @@ import { ImageData } from './Model/Image';
 import { splitKeywords } from '../helpers';
 import { FileDetails } from '../Api/Http';
 
-export const Gallery: FC = () => {
+export const Gallery: FC<{ device: string }> = ({ device }) => {
   const { settingsPanel, showEditor, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain, page, setPage } = useWhppt();
-
+  const [items, setItems] = useState([]);
   const [selected, setSelected] = useState<ImageData>(null);
   const [searchQueryTags, setSearchQueryTags] = useState('');
   const [filter, setFilter] = useState('');
@@ -23,13 +23,21 @@ export const Gallery: FC = () => {
     { name: 'files', label: 'Files' },
   ];
 
-  const search = (type: GalleryFileType) => {
+  useEffect(() => {
+    search();
+  }, []);
+
+  const search = () => {
     const tags = splitKeywords(searchQueryTags) || [];
-    return api.gallery.search({ domainId: domain._id, page: 1, size: 10, type, tags }).then(({ items }: { items: FileDetails[] }) => items);
+    const type = settingsPanel.activeTab as GalleryFileType;
+
+    return api.gallery
+      .search({ domainId: domain._id, page: 1, size: 10, type, tags })
+      .then(({ items }: { items: FileDetails[] }) => setItems(items));
   };
 
   const upload = newFile => {
-    return api.gallery.upload(newFile);
+    return api.gallery.upload(newFile).then(file => setItems([...items, file]));
   };
 
   const save = details => {
@@ -39,6 +47,7 @@ export const Gallery: FC = () => {
   const remove = id => {
     return api.gallery.remove(id).then(() => {
       setSelected(null);
+      setItems(items.filter(({ _id }) => _id == id));
     });
   };
 
@@ -47,18 +56,17 @@ export const Gallery: FC = () => {
       <div className="whppt-gallery__content">
         <WhpptHeading text="Media Gallery" />
         <div className="whppt-gallery__filters">
-          <WhpptQueryInput value={searchQueryTags} onChange={setSearchQueryTags} buttonText={'Search'} onClick={() => search} />
+          <WhpptQueryInput value={searchQueryTags} onChange={setSearchQueryTags} buttonText={'Search'} onClick={search} />
           <WhpptQueryInput value={filter} onChange={setFilter} buttonText={'Filter'} onClick={() => search} />
         </div>
         <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
         <WhpptTab selectedTab={settingsPanel.activeTab}>
-          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'images') ? (
+          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'image') ? (
             <Images
               name="images"
               label="Images"
-              search={search}
+              items={items}
               upload={upload}
-              save={save}
               setSelected={setSelected}
               selectedId={selected && selected._id}
               domainId={domain._id}
@@ -70,9 +78,8 @@ export const Gallery: FC = () => {
             <Videos
               name="videos"
               label="Videos"
-              search={search}
+              items={items}
               upload={upload}
-              save={save}
               setSelected={setSelected}
               selectedId={selected && selected._id}
               domainId={domain._id}
@@ -87,7 +94,7 @@ export const Gallery: FC = () => {
         {selected && (
           <ImageSettings
             use={() => {
-              showEditor('image', page, setPage, undefined);
+              showEditor('image', page, setPage, { device, contentType: 'Gallery', selected });
               hideSettingsPanel();
             }}
             remove={() => remove(selected._id)}

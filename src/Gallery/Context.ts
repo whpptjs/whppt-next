@@ -5,12 +5,13 @@ export type GalleryState = {
   visible: boolean;
   activeTab: string;
   limitType?: GalleryFileType;
+  device?: string;
   use?: (FileDetails) => void;
 };
 
 export const defaultGalleryState = {
   visible: false,
-  activeTab: 'images',
+  activeTab: 'image',
   use: () => {},
 };
 
@@ -24,8 +25,4 @@ export const defaultArgs = {
   setGallery: () => {},
 } as GalleryContextArgs;
 
-export const Context = ({ gallery }: GalleryContextArgs) => {
-  return {
-    ...gallery,
-  };
-};
+export const Context = ({ gallery }: GalleryContextArgs) => gallery;

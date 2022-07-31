@@ -1,12 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
-import { ImageData } from './Model/Image';
+import React, { FC } from 'react';
 import { WhpptImageUploader } from '../ui/components/ImageUploader';
 import { WhpptGalleryImage } from '../ui/components/GalleryImage';
 import { GalleryTab } from './GalleryTab';
 
-export const Images: FC<GalleryTab> = ({ search, upload, setSelected, selectedId, domainId }) => {
-  const [images, setImages] = useState<ImageData[]>([]);
-
+export const Images: FC<GalleryTab> = ({ items, upload, setSelected, selectedId, domainId }) => {
   const getImgUrl = imgId => {
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${imgId}`;
   };
@@ -16,21 +13,15 @@ export const Images: FC<GalleryTab> = ({ search, upload, setSelected, selectedId
     file.append('file', newFile);
     file.append('type', 'image');
     file.append('domainId', domainId);
-    upload(file).then(fileDetails => {
-      setImages([fileDetails, ...images]);
-    });
+    upload(file);
   };
-
-  useEffect(() => {
-    search('image').then(setImages);
-  }, []);
 
   return (
     <section className="whppt-gallery whppt-gallery__main-container">
       <div className="whppt-gallery__grid">
         <WhpptImageUploader uploadImage={uploadImage} />
-        {images &&
-          images.map(img => (
+        {items &&
+          items.map(img => (
             <WhpptGalleryImage
               key={img._id}
               url={getImgUrl(img._id)}
