@@ -62,10 +62,7 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
       )}
 
       <div className="whppt-gallery__day-picker__container">
-        <div
-          className="whppt-image-editor__date-picker-input"
-          onClick={() => setShowCalendar(!showCalendar)}
-          style={{ cursor: 'pointer !important' }}>
+        <div className="whppt-image-editor__date-picker-input" onClick={() => setShowCalendar(!showCalendar)}>
           <WhpptInput
             id="date"
             label="Date"

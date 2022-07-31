@@ -8,13 +8,12 @@ type DevicePickerProps = {
 
 export const DevicePicker: FC<DevicePickerProps> = ({ devices, set, activeDevice }) => {
   return (
-    <div style={{ display: 'flex', gap: '3rem', color: 'white' }}>
+    <div className="whppt-image-editor__device-picker">
       {devices.map((device, index) => (
         <p
           key={index}
           className={`whppt-image-editor__device-select${device === activeDevice ? '--active' : ''}`}
           onClick={() => {
-            console.log('setting');
             set(device);
           }}>
           {device}

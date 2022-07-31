@@ -61,98 +61,94 @@ export const WhpptImageEditor: FC<EditorArgs<PageData, ImageEditorOptions>> = ({
 
   return (
     <div className="whppt-image-editor">
-      <section
-        className="whppt-form-section whppt-form-section--bottom-gap"
-        style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <DevicePicker devices={['desktop', 'tablet', 'mobile']} set={setDevice} activeDevice={device} />
+      <DevicePicker devices={['Desktop', 'Tablet', 'Mobile']} set={setDevice} activeDevice={device} />
 
-        <Cropper
-          src={value ? `${getImgUrl(options.selected._id)}` : ''}
-          style={{ height: 200, width: 360, objectFit: 'cover' }}
-          onChange={onCrop}
-          backgroundClassName={'whppt-cropper-background'}
-          stencilProps={{ aspectRatio: stencilProps, lines: true }}
-        />
+      <Cropper
+        src={value ? `${getImgUrl(options.selected._id)}` : ''}
+        className="whppt-image-editor__cropper"
+        onChange={onCrop}
+        backgroundClassName={'whppt-cropper-background'}
+        stencilProps={{ aspectRatio: stencilProps, lines: true }}
+      />
 
-        <div className="whppt-image-editor__gallery-actions">
-          <p
-            className="whppt-image-editor__gallery-actions__button"
-            onClick={() => {
-              toggleSettingsPanel({
-                key: 'gallery',
-                activeTab: 'image',
-                component: <Gallery device={device} />,
-              });
-              hideEditor();
-            }}>
-            {value._id ? 'Change picture' : 'Pick from Gallery'}
-          </p>
-
-          <p className="whppt-image-editor__gallery-actions__button" onClick={() => onChange(null)}>
-            Remove
-          </p>
-        </div>
-
-        {aspectRatios && (
-          <div className="whppt-gallery__settings__tag-container">
-            {aspectRatios.map((ratio, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setAspectRatio(ratio);
-                  if (ratio.label === 'square') setOrientation(undefined);
-                }}>
-                <WhpptGalleryTag tag={ratio.label} />
-              </button>
-            ))}
-
-            <div className="whppt-gallery__settings__tag-container">
-              <button onClick={() => setOrientation('landscape')}>
-                <WhpptGalleryTag tag={'landscape'} />
-              </button>
-
-              <button onClick={() => setOrientation('portrait')}>
-                <WhpptGalleryTag tag={'portrait'} />
-              </button>
-            </div>
-          </div>
-        )}
-
-        <p>
-          {aspectRatio.label === 'freeform'
-            ? 'No aspect ratio locked'
-            : `This image is locked to a ${
-                aspectRatio.label === 'square' ? 'square' : `${aspectRatio.ratio.w.toString()} / ${aspectRatio.ratio.h.toString()}`
-              } ratio`}
+      <div className="whppt-image-editor__gallery-actions">
+        <p
+          className="whppt-image-editor__gallery-actions__button"
+          onClick={() => {
+            toggleSettingsPanel({
+              key: 'gallery',
+              activeTab: 'image',
+              component: <Gallery device={device} />,
+            });
+            hideEditor();
+          }}>
+          {value._id ? 'Change picture' : 'Pick from Gallery'}
         </p>
 
-        <div>
-          <WhpptInput
-            value={(contentUpdate && contentUpdate[device] && contentUpdate[device].altText) || ''}
-            onChange={text => {
-              setContentUpdate({ ...contentUpdate, [device]: { ...contentUpdate[device], altText: text } });
-            }}
-            id={'altText'}
-            label={'Alt text'}
-            info={''}
-            error={''}
-            type={'text'}
-            name="altText"
-          />
-          <WhpptInput
-            value={(contentUpdate && contentUpdate[device] && contentUpdate[device].caption) || ''}
-            onChange={text => {
-              setContentUpdate({ ...contentUpdate, [device]: { ...contentUpdate[device], caption: text } });
-            }}
-            id={'caption'}
-            label={'Caption'}
-            info={''}
-            error={''}
-            type={'text'}
-            name="caption"
-          />
+        <p className="whppt-image-editor__gallery-actions__button" onClick={() => onChange(null)}>
+          Remove
+        </p>
+      </div>
+
+      {aspectRatios && (
+        <div className="whppt-gallery__settings__tag-container">
+          {aspectRatios.map((ratio, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setAspectRatio(ratio);
+                if (ratio.label === 'square') setOrientation(undefined);
+              }}>
+              <WhpptGalleryTag tag={ratio.label} />
+            </button>
+          ))}
+
+          <div className="whppt-gallery__settings__tag-container">
+            <button onClick={() => setOrientation('landscape')}>
+              <WhpptGalleryTag tag={'landscape'} />
+            </button>
+
+            <button onClick={() => setOrientation('portrait')}>
+              <WhpptGalleryTag tag={'portrait'} />
+            </button>
+          </div>
         </div>
-      </section>
+      )}
+
+      <p>
+        {aspectRatio.label === 'freeform'
+          ? 'No aspect ratio locked'
+          : `This image is locked to a ${
+              aspectRatio.label === 'square' ? 'square' : `${aspectRatio.ratio.w.toString()} / ${aspectRatio.ratio.h.toString()}`
+            } ratio`}
+      </p>
+
+      <div>
+        <WhpptInput
+          value={(contentUpdate && contentUpdate[device] && contentUpdate[device].altText) || ''}
+          onChange={text => {
+            setContentUpdate({ ...contentUpdate, [device]: { ...contentUpdate[device], altText: text } });
+          }}
+          id={'altText'}
+          label={'Alt text'}
+          info={''}
+          error={''}
+          type={'text'}
+          name="altText"
+        />
+        <WhpptInput
+          value={(contentUpdate && contentUpdate[device] && contentUpdate[device].caption) || ''}
+          onChange={text => {
+            setContentUpdate({ ...contentUpdate, [device]: { ...contentUpdate[device], caption: text } });
+          }}
+          id={'caption'}
+          label={'Caption'}
+          info={''}
+          error={''}
+          type={'text'}
+          name="caption"
+        />
+      </div>
     </div>
   );
 };

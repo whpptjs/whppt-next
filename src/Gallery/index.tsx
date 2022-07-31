@@ -18,9 +18,9 @@ export const Gallery: FC<{ device: string }> = ({ device }) => {
   const [filter, setFilter] = useState('');
 
   const tabs: Array<WhpptTab> = [
-    { name: 'images', label: 'Images' },
-    { name: 'videos', label: 'Videos' },
-    { name: 'files', label: 'Files' },
+    { name: 'image', label: 'Images' },
+    { name: 'video', label: 'Videos' },
+    { name: 'file', label: 'Files' },
   ];
 
   useEffect(() => {

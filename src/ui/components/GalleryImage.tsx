@@ -11,7 +11,7 @@ export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, name, onCli
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div>
       {loaded ? null : (
         <div className="whppt-gallery__loader">
           <div className="whppt-gallery__loader__spinner"></div>

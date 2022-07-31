@@ -1,4 +1,10 @@
 .whppt-image-editor {
+  @apply flex flex-col gap-4;
+
+  &__device-picker {
+    @apply flex gap-12 text-whpptLightMode;
+  }
+
   &__device-select {
     @apply cursor-pointer;
 
@@ -16,7 +22,7 @@
   }
 
   &__date-picker-input {
-    @apply relative;
+    @apply relative cursor-pointer;
 
     & * {
       @apply cursor-pointer;
@@ -33,5 +39,9 @@
     &.down {
       @apply transform rotate-0;
     }
+  }
+
+  &__cropper {
+    @apply h-[200px] w-[360px] object-cover;
   }
 }
