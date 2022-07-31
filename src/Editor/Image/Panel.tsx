@@ -10,14 +10,13 @@ import { aspectRatios } from './AspectRatios';
 import { getLandscapeRatio, getPortraitRatio } from './helpers';
 import { DevicePicker } from './DevicePicker';
 import { PageData } from '../../Page/Model/Page';
+import { ImageData } from '../../Gallery/Model/Image';
 
 type Orientation = 'landscape' | 'portrait';
 
-export const WhpptImageEditor: FC<EditorArgs<PageData, EditorOptions & { device?: string; contentType: string; selected: ImageData }>> = ({
-  value,
-  onChange,
-  options,
-}) => {
+export type ImageEditorOptions = EditorOptions & { device?: string; contentType?: string; selected?: ImageData };
+
+export const WhpptImageEditor: FC<EditorArgs<PageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
   const { toggleSettingsPanel, hideEditor, page, setPage } = useWhppt();
 
   const [coords, setCoords] = useState<any>(null);
@@ -25,7 +24,9 @@ export const WhpptImageEditor: FC<EditorArgs<PageData, EditorOptions & { device?
   const [aspectRatio, setAspectRatio] = useState<AspectRatioObject>(aspectRatios[0]);
   const [stencilProps, setStencilProps] = useState(aspectRatio.ratio.w / aspectRatio.ratio.h);
   const [orientation, setOrientation] = useState<Orientation>('landscape');
-  const [contentUpdate, setContentUpdate] = useState(page.contents.find(content => content.contentType == options.contentType));
+  const [contentUpdate, setContentUpdate] = useState(
+    page.contents.find(content => content.contentType == options.contentType) || { contentType: options.contentType, [device]: {} }
+  );
 
   useEffect(() => {
     setStencilProps(orientation === 'landscape' ? getLandscapeRatio(aspectRatio.ratio) : getPortraitRatio(aspectRatio.ratio));
@@ -46,22 +47,15 @@ export const WhpptImageEditor: FC<EditorArgs<PageData, EditorOptions & { device?
       galleryItemId: options.selected._id,
     };
 
-    setContentUpdate({ ...contentUpdate, [device]: deviceCrop });
+    setContentUpdate({ ...contentUpdate, [device]: { ...contentUpdate[device], ...deviceCrop } });
     const contents = (page.contents.length && updateContents()) || [{ contentType: options.contentType, ...contentUpdate }];
 
     setPage({ ...page, contents: contents });
-    console.log('page', page);
   };
 
   const updateContents = () => {
-    console.log('is Updating content');
     return page.contents.map(content => {
-      if (content.contentType === options.contentType) {
-        //look for type coming from UI event
-        content = contentUpdate;
-        return content;
-      }
-      return content;
+      return content.contentType === options.contentType ? contentUpdate : content;
     });
   };
 

@@ -7,11 +7,11 @@ export type PageData = {
   slug: string;
   createdAt: string;
   updatedAt: string;
-  contents: PageContents[];
+  contents: PageContents;
 };
 
 export type PageContents = {
-  [key: string]: string | Content[];
+  [key: string]: any;
 };
 
 export type Content = {

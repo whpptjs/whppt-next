@@ -12,6 +12,7 @@ import {
   WhpptNewPageEditor,
   WhpptContentsTreeEditor,
   WhpptImageEditor,
+  ImageEditorOptions,
 } from './Panels';
 
 export type UseDefaultEditorsArgs = EditorArgs<any> & { editor: string };
@@ -25,5 +26,5 @@ export const UseDefaultEditors = ({ editor, value, onChange, options }: UseDefau
   if (editor === 'list') return <WhpptListEditor value={value} onChange={onChange} options={options as ListEditorOptions} />;
   if (editor === 'link') return <WhpptLinkEditor value={value} onChange={onChange} options={options} />;
   if (editor === 'content') return <WhpptContentEditor value={value} onChange={onChange} options={options as ContentEditorOptions} />;
-  if (editor === 'image') return <WhpptImageEditor value={value} onChange={onChange} options={options} />;
+  if (editor === 'image') return <WhpptImageEditor value={value} onChange={onChange} options={options as ImageEditorOptions} />;
 };

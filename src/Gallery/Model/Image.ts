@@ -1,8 +1,8 @@
 export type ImageData = {
   _id: string;
-  fileId: string; // from FileDetails._id
+  fileId: string;
   name: string;
-  file: FormData; // TODO: might only be needed on the upload
+  file: FormData;
   tags: string[];
   suggestedTags: string[];
   date: Date;
