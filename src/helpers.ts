@@ -29,3 +29,7 @@ export const joinQueryTags = tags => {
 
   return tagsQuery;
 };
+
+export const buildCroppedImgUrl = (imgId, { height, left, top, width }) => {
+  return `http://localhost:3001/gallery/image/${imgId}?cw=${width}&ch=${height}&cx=${left}&cy=${top}`;
+};
