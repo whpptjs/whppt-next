@@ -15,8 +15,8 @@ export type PageImageData = {
 };
 
 export type ImageDataSize = {
-  altText: string;
-  caption: string;
+  altText?: string;
+  caption?: string;
   galleryItemId: string;
   aspectRatio: {
     label: string;
