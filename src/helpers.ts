@@ -31,5 +31,5 @@ export const joinQueryTags = tags => {
 };
 
 export const buildCroppedImgUrl = (imgId, { height, left, top, width }) => {
-  return `http://localhost:3001/gallery/image/${imgId}?cw=${width}&ch=${height}&cx=${left}&cy=${top}`;
+  return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${imgId}?cw=${width}&ch=${height}&cx=${left}&cy=${top}`;
 };
