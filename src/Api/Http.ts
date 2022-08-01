@@ -3,10 +3,12 @@ import Cookies from 'js-cookie';
 
 export type WhpptGetOptions = { path: string };
 export type WhpptPostOptions<T> = { path: string; data: T };
+export type WhpptSaveFileOptions<FormData> = { path: string; data: FormData };
 
 export type WhpptHttpMethods = {
   getJson: <T>(options?: WhpptGetOptions) => Promise<T>;
   postJson: <T, R>(options?: WhpptPostOptions<T>) => Promise<R>;
+  saveFile: <FormData>(options?: WhpptSaveFileOptions<FormData>) => Promise<Response>;
 };
 
 export type WhpptHttp = {
@@ -47,6 +49,14 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         if (response.status >= 400) throw new Error(await response.text());
         const json = await response.json();
         return json as R;
+      },
+      saveFile: async <FormData>({ path, data }: WhpptSaveFileOptions<FormData>) => {
+        const response = await fetch(buildFullPath(baseUrl, path), {
+          method: 'POST',
+          body: data as any,
+        });
+        if (response.status >= 400) throw new Error(await response.text());
+        return response;
       },
     },
   };

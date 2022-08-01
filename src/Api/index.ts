@@ -8,6 +8,7 @@ export type WhpptApi = { app: AppApi; site: SiteApi; page: PageApi; security: Se
 export type WhpptApiConstructor = () => WhpptApi;
 
 const http = Http(process.env.NEXT_PUBLIC_BASE_API_URL);
+
 export const Api: WhpptApiConstructor = () => {
   return {
     app: AppApi({ http }),
