@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from 'react';
 import { WhpptIcon } from '../ui/components/Icon';
 import { useWhppt } from '../Context';
-import { WhpptNewPageEditor } from './Panels';
+import { WhpptNewPageEditorPanel } from './Panels';
 
 export type WhpptAppEditorsArg = ({
   editor,
@@ -24,7 +24,7 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
   const { editorState, hideEditor } = useWhppt();
 
   const selectingEditor = () => {
-    if (editorState.editor === 'newPage') return <WhpptNewPageEditor />;
+    if (editorState.editor === 'newPage') return <WhpptNewPageEditorPanel />;
     return editors(editorState);
   };
 

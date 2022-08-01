@@ -1,0 +1,27 @@
+.whppt-editor-selector {
+  &--editing:hover {
+    @apply bg-blue-200 bg-opacity-20;
+  }
+}
+
+.whppt-content-selector.whppt-editor-selector {
+  &--editing:hover {
+    @apply bg-red-200 bg-opacity-40;
+  }
+}
+
+.whppt-editor-plain-text.whppt-editor-selector {
+  &--editing:hover {
+    @apply cursor-pointer;
+  }
+}
+
+.whppt-editor-list {
+  &--editing {
+    @apply relative pr-8;
+  }
+  &--editing &__show-editor {
+    @apply absolute right-1 top-0;
+    @apply w-6 h-6;
+  }
+}

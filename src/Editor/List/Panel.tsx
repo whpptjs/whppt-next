@@ -15,7 +15,7 @@ export type SortableListItem = {
   text: string;
 };
 
-export const WhpptListEditor: FC<EditorArgs<any[], ListEditorOptions>> = ({ value, onChange, options }) => {
+export const WhpptListEditorPanel: FC<EditorArgs<any[], ListEditorOptions>> = ({ value, onChange, options }) => {
   const listItems = useMemo(() => {
     return value.map((v, i) => ({ _id: v._id, text: options.displayName ? options.displayName(v) : `Item ${i}` } as SortableListItem));
   }, [options, value]);

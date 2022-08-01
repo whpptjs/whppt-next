@@ -4,7 +4,7 @@ import { ComponentData } from 'src/ui/Content';
 import { EditorArgs } from '../EditorArgs';
 import { ContentEditorOptions } from './Editor';
 
-export const WhpptContentEditor: FC<EditorArgs<ComponentData[], ContentEditorOptions>> = ({ onChange, options, value }) => {
+export const WhpptContentEditorPanel: FC<EditorArgs<ComponentData[], ContentEditorOptions>> = ({ onChange, options, value }) => {
   return (
     <div>
       {options.componentDefinitions.map(c => {

@@ -1,16 +1,16 @@
 import React from 'react';
-import { ContentEditorOptions } from './Components';
+import { ContentEditorOptions } from './Editors';
 import { EditorArgs } from './EditorArgs';
 import {
-  WhpptPlaintextEditor,
-  WhpptRichtextEditor,
-  WhpptFormattedTextEditor,
-  WhpptListEditor,
+  WhpptPlaintextEditorPanel,
+  WhpptRichtextEditorPanel,
+  WhpptFormattedTextEditorPanel,
+  WhpptListEditorPanel,
   ListEditorOptions,
-  WhpptLinkEditor,
-  WhpptContentEditor,
-  WhpptNewPageEditor,
-  WhpptContentsTreeEditor,
+  WhpptLinkEditorPanel,
+  WhpptContentEditorPanel,
+  WhpptNewPageEditorPanel,
+  WhpptContentsTreeEditorPanel,
   WhpptImageEditor,
   ImageEditorOptions,
 } from './Panels';
@@ -18,13 +18,13 @@ import {
 export type UseDefaultEditorsArgs = EditorArgs<any> & { editor: string };
 
 export const UseDefaultEditors = ({ editor, value, onChange, options }: UseDefaultEditorsArgs) => {
-  if (editor === 'newPage') return <WhpptNewPageEditor />;
-  if (editor === 'contentsTree') return <WhpptContentsTreeEditor />;
-  if (editor === 'plainText') return <WhpptPlaintextEditor value={value} onChange={onChange} options={options} />;
-  if (editor === 'richText') return <WhpptRichtextEditor value={value} onChange={onChange} options={options} />;
-  if (editor === 'formattedText') return <WhpptFormattedTextEditor value={value} onChange={onChange} options={options} />;
-  if (editor === 'list') return <WhpptListEditor value={value} onChange={onChange} options={options as ListEditorOptions} />;
-  if (editor === 'link') return <WhpptLinkEditor value={value} onChange={onChange} options={options} />;
-  if (editor === 'content') return <WhpptContentEditor value={value} onChange={onChange} options={options as ContentEditorOptions} />;
+  if (editor === 'newPage') return <WhpptNewPageEditorPanel />;
+  if (editor === 'contentsTree') return <WhpptContentsTreeEditorPanel />;
+  if (editor === 'plainText') return <WhpptPlaintextEditorPanel value={value} onChange={onChange} options={options} />;
+  if (editor === 'richText') return <WhpptRichtextEditorPanel value={value} onChange={onChange} options={options} />;
+  if (editor === 'formattedText') return <WhpptFormattedTextEditorPanel value={value} onChange={onChange} options={options} />;
+  if (editor === 'list') return <WhpptListEditorPanel value={value} onChange={onChange} options={options as ListEditorOptions} />;
+  if (editor === 'link') return <WhpptLinkEditorPanel value={value} onChange={onChange} options={options} />;
+  if (editor === 'content') return <WhpptContentEditorPanel value={value} onChange={onChange} options={options as ContentEditorOptions} />;
   if (editor === 'image') return <WhpptImageEditor value={value} onChange={onChange} options={options as ImageEditorOptions} />;
 };

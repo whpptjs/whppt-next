@@ -19,17 +19,15 @@ export const SiteSettingsApi: SiteSettingsApiConstructor = ({ http }) => ({
   save: async ({ settings, domain }) => {
     if (!settings) throw new Error('Invalid settings');
 
-    return http.secure
-      .postJson({
-        path: '/api/siteSettings/saveSiteSettings',
-        data: {
-          siteSettings: {
-            domainId: domain._id,
-            ...settings,
-          },
+    return http.secure.postJson({
+      path: '/api/siteSettings/saveSiteSettings',
+      data: {
+        siteSettings: {
+          domainId: domain._id,
+          ...settings,
         },
-      })
-      .then(settings => settings);
+      },
+    });
   },
   publish: async settings => {
     return http.secure.postJson({

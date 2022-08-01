@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import { find } from 'lodash';
 import { WhpptIconCarrot } from '../../icons/Carrot';
 
 type WhpptSelectProps = {
@@ -13,7 +14,10 @@ type WhpptSelectProps = {
   items: object[] | string[];
   value: string | number;
   textProp?: string;
+  valueProp?: string;
+  idProp?: string;
   name?: string;
+  displayValue?: string;
 };
 
 export const WhpptSelect: FC<WhpptSelectProps> = ({
@@ -29,6 +33,8 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
   info,
   error,
   value,
+  valueProp,
+  displayValue,
 }) => {
   const [showSelectItems, setSelectItems] = useState(false);
 
@@ -75,6 +81,16 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
   const setTextProp = item => {
     return <div>{textVal(item)}</div>;
   };
+  const getValue = () => {
+    if (typeof value === 'object') return value[valueProp];
+
+    const itemFromValue = find(items, i => i[valueProp] === value);
+
+    return itemFromValue ? itemFromValue[displayValue] : value;
+
+    // const foundValue = find(items, i => )
+    // return value[valueProp || 'text'] || item;
+  };
 
   return (
     <div ref={wrapperRef} className={`${dense ? 'whppt-select whppt-select--dense' : 'whppt-select'}`}>
@@ -91,7 +107,7 @@ export const WhpptSelect: FC<WhpptSelectProps> = ({
           onClick={() => setSelectItems(true)}
           onFocus={() => setSelectItems(true)}
           onKeyPress={handleKeyPress}
-          value={value}
+          value={getValue()}
           readOnly
         />
         <div className="whppt-select__icon">
