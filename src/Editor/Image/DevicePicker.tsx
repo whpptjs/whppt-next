@@ -14,7 +14,7 @@ export const DevicePicker: FC<DevicePickerProps> = ({ devices, set, activeDevice
           key={index}
           className={`whppt-image-editor__device-select${device === activeDevice ? '--active' : ''}`}
           onClick={() => {
-            set(device);
+            set(device.toLocaleLowerCase());
           }}>
           {device}
         </p>

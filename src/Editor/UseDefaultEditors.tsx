@@ -11,9 +11,8 @@ import {
   WhpptContentEditorPanel,
   WhpptNewPageEditorPanel,
   WhpptContentsTreeEditorPanel,
-  WhpptImageEditor,
-  ImageEditorOptions,
 } from './Panels';
+import { WhpptImageEditor, ImageEditorOptions } from './Image/Panel';
 
 export type UseDefaultEditorsArgs = EditorArgs<any> & { editor: string };
 

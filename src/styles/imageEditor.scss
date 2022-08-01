@@ -44,4 +44,15 @@
   &__cropper {
     @apply h-[200px] w-[360px] object-cover;
   }
+
+  &__cropper-empty {
+    @apply h-full;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border-color: white;
+    border-width: 1px;
+    border-style: dashed;
+  }
 }

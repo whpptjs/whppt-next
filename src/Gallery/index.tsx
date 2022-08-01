@@ -11,7 +11,7 @@ import { splitKeywords } from '../helpers';
 import { FileDetails } from '../Api/Http';
 
 export const Gallery: FC<{ device: string }> = ({ device }) => {
-  const { settingsPanel, showEditor, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain, page, setPage } = useWhppt();
+  const { settingsPanel, showEditor, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState<ImageData>(null);
   const [searchQueryTags, setSearchQueryTags] = useState('');
@@ -94,7 +94,7 @@ export const Gallery: FC<{ device: string }> = ({ device }) => {
         {selected && (
           <ImageSettings
             use={() => {
-              showEditor('image', page, setPage, { device, contentType: 'Gallery', selected });
+              showEditor('image', selected, setSelected, { device });
               hideSettingsPanel();
             }}
             remove={() => remove(selected._id)}
