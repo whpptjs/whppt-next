@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { WhpptInput } from '../../ui/components';
 import { EditorArgs } from '../EditorArgs';
 
-export const WhpptPlaintextEditor: FC<EditorArgs<string>> = ({ value, onChange, options }) => {
+export const WhpptPlaintextEditorPanel: FC<EditorArgs<string>> = ({ value, onChange, options }) => {
   return (
     <div className="whppt-plaintext-editor">
       <WhpptInput

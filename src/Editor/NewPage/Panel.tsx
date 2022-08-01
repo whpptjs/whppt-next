@@ -4,7 +4,7 @@ import { WhpptButton, WhpptInput } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
 
-export const WhpptNewPageEditor: FC = () => {
+export const WhpptNewPageEditorPanel: FC = () => {
   const { api, domain } = useWhppt();
 
   const [page] = useState({

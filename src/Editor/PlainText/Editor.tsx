@@ -9,10 +9,17 @@ export const PlainTextEditor: FC<
     children: ReactElement | ReactElement[];
   }
 > = ({ children, value, label, onChange, options = {} as EditorOptions }) => {
-  const { showEditor } = useWhppt();
+  const { editing, showEditor } = useWhppt();
   const opts = { label: label || 'Plain Text', ...options };
   return (
-    <div className="whppt-editor-selector" onClick={() => showEditor('plainText', value, onChange, opts)}>
+    <div
+      className={['whppt-editor-plain-text whppt-editor-selector', editing ? 'whppt-editor-selector--editing' : ''].join(' ')}
+      onClick={e => {
+        if (editing) {
+          showEditor('plainText', value, onChange, opts);
+          e.stopPropagation();
+        }
+      }}>
       {children}
     </div>
   );

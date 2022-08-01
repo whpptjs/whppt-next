@@ -3,8 +3,9 @@ import React, { FC } from 'react';
 export type WhpptTextAreaArgs = {
   id: string;
   label: string;
-  info: string;
-  error: string;
+  info?: string;
+  name?: string;
+  error: string | undefined;
   value: string;
   onChange: (value: string) => void;
 };

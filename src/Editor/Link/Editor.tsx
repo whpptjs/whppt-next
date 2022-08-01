@@ -14,7 +14,7 @@ export const LinkEditor: FC<
   const opts = { label: label || 'Link Editor', ...options };
   return (
     <div
-      className="whppt-editor-selector"
+      className={['whppt-editor-selector', editing ? 'whppt-editor-selector--editing' : ''].join(' ')}
       onClick={e => {
         if (editing) {
           showEditor('link', value, onChange, opts);

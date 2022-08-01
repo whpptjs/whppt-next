@@ -4,7 +4,7 @@ import { arrayMoveImmutable } from 'array-move';
 import { ComponentData, WhpptIcon } from '../../index';
 import { useWhppt } from '../../Context';
 
-export const WhpptContentsTreeEditor: FC = () => {
+export const WhpptContentsTreeEditorPanel: FC = () => {
   const { contentTree, page } = useWhppt();
   const tree = useMemo(() => {
     return contentTree && contentTree.getTree ? contentTree.getTree(page) : [];

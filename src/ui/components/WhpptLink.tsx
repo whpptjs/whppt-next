@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from 'react';
 import { useRouter } from 'next/router';
 import { trim } from 'lodash';
 import { nanoid } from 'nanoid';
+import { useWhppt } from '../../Context';
 
 export type WhpptLinkData = {
   _id: string;
@@ -19,10 +20,10 @@ export const WhpptLinkData = {
 export const WhpptLink: FC<{
   link: WhpptLinkData;
   className?: string;
-  editing: boolean;
   children?: ReactElement | ReactElement[] | string;
-}> = ({ link, className, children, editing }) => {
+}> = ({ link, className, children }) => {
   const router = useRouter();
+  const { editing } = useWhppt();
 
   // TODO: Write tests
   // router.pathname =  ""

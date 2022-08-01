@@ -9,9 +9,16 @@ export const FormattedTextEditor: FC<
     children: ReactElement | ReactElement[];
   }
 > = ({ children, value, onChange, label, options = {} as EditorOptions }) => {
-  const { showEditor } = useWhppt();
+  const { editing, showEditor } = useWhppt();
   return (
-    <div className="whppt-editor-selector" onClick={() => showEditor('formattedText', value, onChange, { label, ...options })}>
+    <div
+      className={['whppt-editor-selector', editing ? 'whppt-editor-selector--editing' : ''].join(' ')}
+      onClick={e => {
+        if (editing) {
+          showEditor('formattedText', value, onChange, { label, ...options });
+          e.stopPropagation();
+        }
+      }}>
       {children}
     </div>
   );

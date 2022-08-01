@@ -5,6 +5,9 @@ module.exports = {
       Roboto: ['Roboto', 'Sans-serif'],
     },
     extend: {
+      height: {
+        '85vh': '85vh',
+      },
       colors: {
         whpptLightMode: '#fff',
         whpptDarkMode: '#121212',

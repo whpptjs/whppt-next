@@ -28,7 +28,7 @@ export const SiteSettings: FC = () => {
     api.site.settings.load({ domain }).then(settings => {
       setSettingsData(settings);
     });
-  }, []);
+  }, [api.site.settings, domain, setSettingsData]);
 
   return (
     <div>
