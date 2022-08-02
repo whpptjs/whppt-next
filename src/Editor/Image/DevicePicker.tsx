@@ -16,7 +16,7 @@ export const DevicePicker: FC<DevicePickerProps> = ({ devices, set, activeDevice
           onClick={() => {
             set(device.toLocaleLowerCase());
           }}>
-          {device}
+          {device.charAt(0).toUpperCase() + device.slice(1)}
         </p>
       ))}
     </div>

@@ -94,7 +94,6 @@ export const Gallery: FC<{ onUse?: (image: ImageData) => void }> = ({ onUse }) =
         {selected && (
           <ImageSettings
             use={() => {
-              // showEditor('image', selected, setSelected, { device });
               onUse && onUse(selected);
               hideSettingsPanel();
             }}

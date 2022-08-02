@@ -34,6 +34,7 @@ module.exports = {
       zIndex: {
         editorPanel: '1000',
         settingsPanel: '1500',
+        mainNav: '2000',
       },
     },
   },
