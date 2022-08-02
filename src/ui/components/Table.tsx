@@ -44,13 +44,6 @@ export const WhpptTable: FC<WhpptTableProps> = ({
           {!hideHeaders && headers.length && (
             <thead className={fixedHeader && height ? 'whppt-table__headers--fixed' : ''}>
               <tr>
-                {actions && actions.length !== 0 && (
-                  <th
-                    className={headers[0].align ? `whppt-table__header--${headers[0].align}` : 'whppt-table__header--left'}
-                    key="whppt-table-actions">
-                    Actions
-                  </th>
-                )}
                 {headers.map((header, index) => (
                   <th
                     className={header.align ? `whppt-table__header--${header.align}` : 'whppt-table__header--left'}
@@ -58,6 +51,13 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     {header.text}
                   </th>
                 ))}
+                {actions && actions.length !== 0 && (
+                  <th
+                    className={headers[0].align ? `whppt-table__header--${headers[0].align}` : 'whppt-table__header--left'}
+                    key="whppt-table-actions">
+                    Actions
+                  </th>
+                )}
               </tr>
             </thead>
           )}
@@ -87,6 +87,9 @@ export const WhpptTable: FC<WhpptTableProps> = ({
             {items.length ? (
               items.map((item, index: number) => (
                 <tr key={`${tableId}_${index}_row`}>
+                  {headers.map((header, _index) => (
+                    <td key={`${tableId}_value_${_index}`}>{item[header.value]}</td>
+                  ))}
                   {actions && actions.length !== 0 && (
                     <td key={`${tableId}_${index}-actions`} className="whppt-table__actions">
                       {actions.map((action, actionIndex) => (
@@ -101,10 +104,6 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                       ))}
                     </td>
                   )}
-
-                  {headers.map((header, _index) => (
-                    <td key={`${tableId}_value_${_index}`}>{item[header.value]}</td>
-                  ))}
                 </tr>
               ))
             ) : (
