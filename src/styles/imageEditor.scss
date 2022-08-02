@@ -46,13 +46,6 @@
   }
 
   &__cropper-empty {
-    @apply h-full;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    border-color: white;
-    border-width: 1px;
-    border-style: dashed;
+    @apply flex justify-center items-center h-[200px] border-whpptLightMode border-[1px] border-dashed cursor-pointer;
   }
 }

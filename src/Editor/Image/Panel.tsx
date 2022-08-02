@@ -21,12 +21,11 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData, ImageEditorOptions>>
   const [orientation, setOrientation] = useState<Orientation>('landscape');
 
   const selectedDevice = useMemo(() => value && value[device], [device, value]);
-  const stencilProps = useMemo(
-    () =>
-      orientation === 'landscape'
-        ? getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio)
-        : getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio),
-    [orientation, selectedDevice?.aspectRatio.ratio]
+
+  const [stencilProps, setStencilProps] = useState(
+    orientation === 'landscape'
+      ? getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio)
+      : getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio)
   );
 
   const getImgUrl = galleryItemId => {
@@ -72,9 +71,7 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData, ImageEditorOptions>>
               stencilProps={{ aspectRatio: stencilProps, lines: true }}
             />
           ) : (
-            <div className="whppt-image-editor__cropper-empty">
-              <p>No picture selected</p>
-            </div>
+            <></>
           )}
 
           {aspectRatios && (
@@ -84,6 +81,11 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData, ImageEditorOptions>>
                   key={index}
                   onClick={() => {
                     selectedDevice.aspectRatio = ratio;
+                    setStencilProps(
+                      orientation === 'landscape'
+                        ? getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio)
+                        : getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio)
+                    );
                     if (ratio.label === 'square') setOrientation(undefined);
                   }}>
                   <WhpptGalleryTag tag={ratio.label} />
@@ -91,11 +93,19 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData, ImageEditorOptions>>
               ))}
 
               <div className="whppt-gallery__settings__tag-container">
-                <button onClick={() => setOrientation('landscape')}>
+                <button
+                  onClick={() => {
+                    setOrientation('landscape');
+                    setStencilProps(getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio));
+                  }}>
                   <WhpptGalleryTag tag={'landscape'} />
                 </button>
 
-                <button onClick={() => setOrientation('portrait')}>
+                <button
+                  onClick={() => {
+                    setOrientation('portrait');
+                    setStencilProps(getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio));
+                  }}>
                   <WhpptGalleryTag tag={'portrait'} />
                 </button>
               </div>
@@ -113,12 +123,8 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData, ImageEditorOptions>>
           </p>
         </>
       ) : (
-        <></>
-      )}
-
-      <div className="whppt-image-editor__gallery-actions">
-        <p
-          className="whppt-image-editor__gallery-actions__button"
+        <div
+          className="whppt-image-editor__cropper-empty"
           onClick={() => {
             toggleSettingsPanel({
               key: 'gallery',
@@ -126,15 +132,28 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData, ImageEditorOptions>>
               component: <Gallery onUse={useImage} />,
             });
           }}>
-          {selectedDevice ? 'Change picture' : 'Pick from Gallery'}
-        </p>
+          <p className="whppt-image-editor__gallery-actions__button">{'Pick from Gallery'}</p>
+        </div>
+      )}
 
-        {selectedDevice && (
+      {selectedDevice && (
+        <div className="whppt-image-editor__gallery-actions">
+          <p
+            className="whppt-image-editor__gallery-actions__button"
+            onClick={() => {
+              toggleSettingsPanel({
+                key: 'gallery',
+                activeTab: 'image',
+                component: <Gallery onUse={useImage} />,
+              });
+            }}>
+            {'Change picture'}
+          </p>
           <p className="whppt-image-editor__gallery-actions__button" onClick={() => onChange(null)}>
             Remove
           </p>
-        )}
-      </div>
+        </div>
+      )}
 
       <div>
         <WhpptInput
