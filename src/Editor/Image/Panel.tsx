@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useMemo } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
 import { AspectRatioObject } from '../../Gallery/Model';
 import { EditorArgs } from '../EditorArgs';
@@ -15,32 +15,57 @@ type Orientation = 'landscape' | 'portrait';
 
 export type ImageEditorOptions = EditorOptions & { device?: string };
 
-export const WhpptImageEditor: FC<EditorArgs<PageImageData & ImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
-  const { toggleSettingsPanel, hideEditor } = useWhppt();
+export const WhpptImageEditor: FC<EditorArgs<PageImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
+  const { toggleSettingsPanel } = useWhppt();
 
-  const [coords, setCoords] = useState<any>(null);
+  // const [coords, setCoords] = useState<any>(null);
   const [device, setDevice] = useState<string>((options && options.device) || 'desktop');
-  const [aspectRatio, setAspectRatio] = useState<AspectRatioObject>(aspectRatios[0]);
-  const [stencilProps, setStencilProps] = useState(aspectRatio.ratio.w / aspectRatio.ratio.h);
+  // const [aspectRatio, setAspectRatio] = useState<AspectRatioObject>(aspectRatios[0]);
+  // const [stencilProps, setStencilProps] = useState(aspectRatio.ratio.w / aspectRatio.ratio.h);
   const [orientation, setOrientation] = useState<Orientation>('landscape');
 
-  useEffect(() => {
-    setStencilProps(orientation === 'landscape' ? getLandscapeRatio(aspectRatio.ratio) : getPortraitRatio(aspectRatio.ratio));
-  }, [orientation, aspectRatio]);
+  const selectedDevice = useMemo(() => value && value[device], [device, value]);
+  const stencilProps = useMemo(
+    () =>
+      orientation === 'landscape'
+        ? getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio)
+        : getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio),
+    [orientation, selectedDevice?.aspectRatio.ratio]
+  );
+
+  // useEffect(() => {
+  //   setStencilProps(
+  //     orientation === 'landscape'
+  //       ? getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio)
+  //       : getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio)
+  //   );
+  // }, [orientation, selectedDevice]);
 
   const getImgUrl = galleryItemId => {
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
   };
 
+  const useImage = (image: ImageData) => {
+    console.log('🚀 ~ file: Panel.tsx ~ line 49 ~ useImage ~ image', image);
+    const defaultSize: ImageDataSize = {
+      galleryItemId: image._id,
+      aspectRatio: { ...aspectRatios[0] },
+      orientation: 'landscape',
+      coords: { width: 100, height: 100, left: 0, top: 0 },
+    };
+    onChange({ ...value, [device]: { ...defaultSize, galleryItemId: image._id } });
+  };
+
   const onCrop = (cropper: CropperRef) => {
-    setCoords(cropper.getCoordinates());
-    const { label, ratio } = aspectRatio;
+    const coords = cropper.getCoordinates();
+    console.log('🚀 ~ file: Panel.tsx ~ line 61 ~ onCrop ~ coords', coords);
+    const { label, ratio } = selectedDevice.aspectRatio;
 
     const deviceCrop: ImageDataSize = {
       aspectRatio: { label, ratio: { w: ratio.w, h: ratio.h } },
       orientation,
-      coords,
-      galleryItemId: value[device].galleryItemId || value._id,
+      coords: coords || { width: 100, height: 100, left: 0, top: 0 },
+      galleryItemId: value[device].galleryItemId,
     };
 
     onChange({ ...value, [device]: { ...value[device], ...deviceCrop } });
@@ -50,18 +75,59 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData & ImageData, ImageEdi
     <div className="whppt-image-editor">
       <DevicePicker devices={['Desktop', 'Tablet', 'Mobile']} set={setDevice} activeDevice={device} />
 
-      {value && (value.galleryItemId || value._id) ? (
-        <Cropper
-          src={getImgUrl(value.galleryItemId || value._id)}
-          className="whppt-image-editor__cropper"
-          onChange={onCrop}
-          backgroundClassName={'whppt-cropper-background'}
-          stencilProps={{ aspectRatio: stencilProps, lines: true }}
-        />
+      {selectedDevice ? (
+        <>
+          {selectedDevice.galleryItemId ? (
+            <Cropper
+              src={getImgUrl(selectedDevice.galleryItemId)}
+              className="whppt-image-editor__cropper"
+              onChange={onCrop}
+              backgroundClassName={'whppt-cropper-background'}
+              stencilProps={{ aspectRatio: stencilProps, lines: true }}
+            />
+          ) : (
+            <div className="whppt-image-editor__cropper-empty">
+              <p>No picture selected</p>
+            </div>
+          )}
+
+          {aspectRatios && (
+            <div className="whppt-gallery__settings__tag-container">
+              {aspectRatios.map((ratio, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setAspectRatio(ratio);
+                    if (ratio.label === 'square') setOrientation(undefined);
+                  }}>
+                  <WhpptGalleryTag tag={ratio.label} />
+                </button>
+              ))}
+
+              <div className="whppt-gallery__settings__tag-container">
+                <button onClick={() => setOrientation('landscape')}>
+                  <WhpptGalleryTag tag={'landscape'} />
+                </button>
+
+                <button onClick={() => setOrientation('portrait')}>
+                  <WhpptGalleryTag tag={'portrait'} />
+                </button>
+              </div>
+            </div>
+          )}
+
+          <p>
+            {selectedDevice.aspectRatio.label === 'freeform'
+              ? 'No aspect ratio locked'
+              : `This image is locked to a ${
+                  selectedDevice.aspectRatio.label === 'square'
+                    ? 'square'
+                    : `${selectedDevice.aspectRatio.ratio.w.toString()} / ${selectedDevice.aspectRatio.ratio.h.toString()}`
+                } ratio`}
+          </p>
+        </>
       ) : (
-        <div className="whppt-image-editor__cropper-empty">
-          <p>No picture selected</p>
-        </div>
+        <></>
       )}
 
       <div className="whppt-image-editor__gallery-actions">
@@ -71,9 +137,8 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData & ImageData, ImageEdi
             toggleSettingsPanel({
               key: 'gallery',
               activeTab: 'image',
-              component: <Gallery device={device} />,
+              component: <Gallery onUse={useImage} />,
             });
-            hideEditor();
           }}>
           {value && (value.galleryItemId || value._id) ? 'Change picture' : 'Pick from Gallery'}
         </p>
@@ -82,39 +147,6 @@ export const WhpptImageEditor: FC<EditorArgs<PageImageData & ImageData, ImageEdi
           Remove
         </p>
       </div>
-
-      {aspectRatios && (
-        <div className="whppt-gallery__settings__tag-container">
-          {aspectRatios.map((ratio, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setAspectRatio(ratio);
-                if (ratio.label === 'square') setOrientation(undefined);
-              }}>
-              <WhpptGalleryTag tag={ratio.label} />
-            </button>
-          ))}
-
-          <div className="whppt-gallery__settings__tag-container">
-            <button onClick={() => setOrientation('landscape')}>
-              <WhpptGalleryTag tag={'landscape'} />
-            </button>
-
-            <button onClick={() => setOrientation('portrait')}>
-              <WhpptGalleryTag tag={'portrait'} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      <p>
-        {aspectRatio.label === 'freeform'
-          ? 'No aspect ratio locked'
-          : `This image is locked to a ${
-              aspectRatio.label === 'square' ? 'square' : `${aspectRatio.ratio.w.toString()} / ${aspectRatio.ratio.h.toString()}`
-            } ratio`}
-      </p>
 
       <div>
         <WhpptInput

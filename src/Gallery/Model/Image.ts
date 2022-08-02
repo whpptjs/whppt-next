@@ -26,7 +26,7 @@ export type ImageDataSize = {
     };
   };
   orientation: 'landscape' | 'portrait' | undefined;
-  coords: {
+  coords?: {
     width: number;
     height: number;
     left: number;

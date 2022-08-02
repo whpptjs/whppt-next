@@ -31,6 +31,10 @@ module.exports = {
       width: {
         settingsSidebar: '24rem',
       },
+      zIndex: {
+        editorPanel: '1000',
+        settingsPanel: '1500',
+      },
     },
   },
   plugins: [],

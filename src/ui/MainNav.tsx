@@ -228,7 +228,7 @@ export const WhpptMainNav: FC<{
         toggleSettingsPanel({
           key: 'gallery',
           activeTab: 'image',
-          component: <Gallery device="desktop" />,
+          component: <Gallery />,
         });
       },
       isActive: ({ settingsPanel }) => settingsPanel.key === 'gallery',

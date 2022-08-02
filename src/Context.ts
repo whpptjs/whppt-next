@@ -7,7 +7,6 @@ import * as site from './Site/Context';
 import * as security from './Security/Context';
 import * as page from './Page/Context';
 import * as settings from './Settings/Context';
-import * as gallery from './Gallery/Context';
 import { ContentTreeNode } from './ui/Content';
 import { PageData } from './Page';
 
@@ -25,7 +24,6 @@ export const Whppt = createContext({
   ...site.Context(site.defaultArgs),
   ...page.Context(page.defaultArgs),
   ...settings.Context(settings.defaultArgs),
-  ...gallery.Context(gallery.defaultArgs),
   api: Api(),
   contentTree,
 });

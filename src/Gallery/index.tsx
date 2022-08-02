@@ -10,8 +10,8 @@ import { ImageData } from './Model/Image';
 import { splitKeywords } from '../helpers';
 import { FileDetails } from '../Api/Http';
 
-export const Gallery: FC<{ device: string }> = ({ device }) => {
-  const { settingsPanel, showEditor, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
+export const Gallery: FC<{ onUse?: (image: ImageData) => void }> = ({ onUse }) => {
+  const { settingsPanel, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState<ImageData>(null);
   const [searchQueryTags, setSearchQueryTags] = useState('');
@@ -94,7 +94,8 @@ export const Gallery: FC<{ device: string }> = ({ device }) => {
         {selected && (
           <ImageSettings
             use={() => {
-              showEditor('image', selected, setSelected, { device });
+              // showEditor('image', selected, setSelected, { device });
+              onUse && onUse(selected);
               hideSettingsPanel();
             }}
             remove={() => remove(selected._id)}
