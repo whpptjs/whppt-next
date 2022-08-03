@@ -46,6 +46,6 @@
   }
 
   &__cropper-empty {
-    @apply flex justify-center items-center h-[200px] border-whpptLightMode border-[1px] border-dashed cursor-pointer;
+    @apply flex justify-center items-center h-[200px] w-[360px] border-whpptLightMode border-[1px] border-dashed cursor-pointer;
   }
 }
