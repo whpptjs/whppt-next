@@ -32,7 +32,7 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
     <div className={`whppt-editor ${editorState.editor ? 'whppt-editor--active' : ''}`}>
       <div className="whppt-editor__content-wrapper">
         <div className="whppt-editor__header">
-          Whppt Editor
+          {editorState.options ? editorState.options.label : 'Whppt Editor'}
           <button className="whppt-editor__header--button" onClick={hideEditor}>
             <WhpptIcon is="close"></WhpptIcon>
           </button>

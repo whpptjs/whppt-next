@@ -11,5 +11,5 @@ type WhpptTabProps = {
 };
 
 export const WhpptTab: FC<WhpptTabProps> = ({ selectedTab, children }) => {
-  return <div>{children.find(tab => tab.props.name === selectedTab) || children[0]}</div>;
+  return <div className="whppt-tab">{children.find(tab => tab.props.name === selectedTab) || children[0]}</div>;
 };

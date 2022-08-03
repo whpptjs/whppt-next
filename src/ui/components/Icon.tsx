@@ -40,6 +40,7 @@ import { WhpptIconOrder } from '../../icons/Order';
 import { WhpptIconPlus } from '../../icons/Plus';
 import { WhpptIconCopy } from '../../icons/Copy';
 import { WhpptIconContentTree } from '../../icons/ContentTree';
+import { WhpptIconGallery } from '../../icons/Gallery';
 import { WhpptIconList } from '../../icons/List';
 
 export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
@@ -84,6 +85,7 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'plus') return <WhpptIconPlus></WhpptIconPlus>;
   if (is === 'copy') return <WhpptIconCopy></WhpptIconCopy>;
   if (is === 'content-tree') return <WhpptIconContentTree></WhpptIconContentTree>;
+  if (is === 'gallery') return <WhpptIconGallery></WhpptIconGallery>;
   if (is === 'list') return <WhpptIconList></WhpptIconList>;
   return <div></div>;
 };

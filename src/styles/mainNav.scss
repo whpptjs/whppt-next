@@ -6,8 +6,8 @@
 }
 
 .whppt-main-nav {
-  @apply hidden lg:block w-24 relative h-full font-Roboto;
-  z-index: 999;
+  @apply hidden lg:block w-24 relative h-full font-Roboto z-mainNav;
+
   &--show-full-nav {
     @apply w-64;
   }
