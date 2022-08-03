@@ -22,7 +22,7 @@ export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryAp
 export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
   search: async ({ domainId, page, size, type, tags }) => {
     return http.secure.getJson<{ items: FileDetails[] }>({
-      path: `/api/gallery/search?domainId=${domainId}&limit=${size}&currentPage=${page}&type=${type}${joinQueryTags(tags)}`,
+      path: `/api/gallery/search?domainId=${domainId}&size=${size}&page=${page}&type=${type}${joinQueryTags(tags)}`,
     });
   },
   upload: async fileData => {

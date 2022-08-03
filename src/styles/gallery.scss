@@ -98,4 +98,13 @@
       @apply animate-spin rounded-full h-8 w-8 border-b-2 border-whpptActive top-2/4 right-2/4;
     }
   }
+
+  &__scroller {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }

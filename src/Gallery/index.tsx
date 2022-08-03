@@ -9,11 +9,17 @@ import { ImageSettings } from './ImageSettings';
 import { ImageData } from './Model/Image';
 import { splitKeywords } from '../helpers';
 import { FileDetails } from '../Api/Http';
+import InfiniteScroll from 'react-infinite-scroller';
 
 export const Gallery: FC<{ device: string }> = ({ device }) => {
   const { settingsPanel, showEditor, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain, page, setPage } = useWhppt();
-  const [items, setItems] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const [galleryItems, setGalleryItems] = useState([]);
   const [selected, setSelected] = useState<ImageData>(null);
+
   const [searchQueryTags, setSearchQueryTags] = useState('');
   const [filter, setFilter] = useState('');
 
@@ -27,17 +33,20 @@ export const Gallery: FC<{ device: string }> = ({ device }) => {
     search();
   }, []);
 
-  const search = () => {
+  const search = (page?: string | number, limit?: string | number) => {
     const tags = splitKeywords(searchQueryTags) || [];
     const type = settingsPanel.activeTab as GalleryFileType;
+    const size = limit || 10;
 
-    return api.gallery
-      .search({ domainId: domain._id, page: 1, size: 10, type, tags })
-      .then(({ items }: { items: FileDetails[] }) => setItems(items));
+    return api.gallery.search({ domainId: domain._id, page: page || 1, size, type, tags }).then(({ items }: { items: FileDetails[] }) => {
+      setGalleryItems([...galleryItems, ...items]);
+      setCurrentPage(currentPage + 1);
+      setHasMore(items.length >= size);
+    });
   };
 
   const upload = newFile => {
-    return api.gallery.upload(newFile).then(file => setItems([...items, file]));
+    return api.gallery.upload(newFile).then(file => setGalleryItems([...galleryItems, file]));
   };
 
   const save = details => {
@@ -47,8 +56,12 @@ export const Gallery: FC<{ device: string }> = ({ device }) => {
   const remove = id => {
     return api.gallery.remove(id).then(() => {
       setSelected(null);
-      setItems(items.filter(({ _id }) => _id == id));
+      setGalleryItems(galleryItems.filter(({ _id }) => _id == id));
     });
+  };
+
+  const loadMore = () => {
+    search(currentPage);
   };
 
   return (
@@ -60,34 +73,45 @@ export const Gallery: FC<{ device: string }> = ({ device }) => {
           <WhpptQueryInput value={filter} onChange={setFilter} buttonText={'Filter'} onClick={() => search} />
         </div>
         <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
-        <WhpptTab selectedTab={settingsPanel.activeTab}>
-          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'image') ? (
-            <Images
-              name="images"
-              label="Images"
-              items={items}
-              upload={upload}
-              setSelected={setSelected}
-              selectedId={selected && selected._id}
-              domainId={domain._id}
-            />
-          ) : (
-            <></>
-          )}
-          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'video') ? (
-            <Videos
-              name="videos"
-              label="Videos"
-              items={items}
-              upload={upload}
-              setSelected={setSelected}
-              selectedId={selected && selected._id}
-              domainId={domain._id}
-            />
-          ) : (
-            <></>
-          )}
-        </WhpptTab>
+        <div className="whppt-gallery__scroller">
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={loadMore}
+            hasMore={hasMore}
+            useWindow={false}
+            loader={
+              <div className="loader" key={0}>
+                Loading ...
+              </div>
+            }>
+            {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'image') ? (
+              <Images
+                name="images"
+                label="Images"
+                items={galleryItems}
+                upload={upload}
+                setSelected={setSelected}
+                selectedId={selected && selected._id}
+                domainId={domain._id}
+              />
+            ) : (
+              <></>
+            )}
+            {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'video') ? (
+              <Videos
+                name="videos"
+                label="Videos"
+                items={galleryItems}
+                upload={upload}
+                setSelected={setSelected}
+                selectedId={selected && selected._id}
+                domainId={domain._id}
+              />
+            ) : (
+              <></>
+            )}
+          </InfiniteScroll>
+        </div>
       </div>
 
       <div className={`whppt-gallery__settings ${selected ? 'whppt-gallery__settings--active' : ''}`}>
