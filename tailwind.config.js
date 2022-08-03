@@ -8,6 +8,10 @@ module.exports = {
       height: {
         '85vh': '85vh',
       },
+      width: {
+        'sidebar-collapsed': 'var(--whppt-sidebar-collapsed)',
+        'sidebar-extended': 'var(--whppt-sidebar-extended)',
+      },
       colors: {
         whpptLightMode: '#fff',
         whpptDarkMode: '#121212',

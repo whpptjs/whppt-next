@@ -27,6 +27,7 @@ export type WhpptApp = FC<WhpptAppOptions>;
 
 export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = () => [], error, initNav, initFooter }) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
+  const [isDraftMode] = useState(process.env.NEXT_PUBLIC_DRAFT === 'true');
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
   const [navWidth, setNavWidth] = useState('96px');
@@ -79,6 +80,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
       contentTree,
       navWidth,
+      isDraftMode,
     }),
     [
       editing,
@@ -95,6 +97,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
       user,
       settingsPanel,
       navWidth,
+      isDraftMode,
     ]
   );
 
