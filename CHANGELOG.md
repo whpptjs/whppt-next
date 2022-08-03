@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-next.3](https://github.com/whpptjs/whppt-next/compare/v0.0.3-next.1...v0.0.3-next.3) (2022-08-02)
+
+### [0.0.3-next.2](https://github.com/whpptjs/whppt-next/compare/v0.0.3-next.1...v0.0.3-next.2) (2022-08-02)
+
+### [0.0.3-next.1](https://github.com/whpptjs/whppt-next/compare/v0.0.3-next.0...v0.0.3-next.1) (2022-08-02)
+
+### [0.0.3-next.0](https://github.com/whpptjs/whppt-next/compare/v0.0.3-rc.4...v0.0.3-next.0) (2022-08-02)
+
 ### [0.0.3-rc.4](https://github.com/whpptjs/whppt-next/compare/v0.0.3-rc.3...v0.0.3-rc.4) (2022-07-18)
 
 ### [0.0.3-rc.3](https://github.com/whpptjs/whppt-next/compare/v0.0.3-rc.2...v0.0.3-rc.3) (2022-07-18)
