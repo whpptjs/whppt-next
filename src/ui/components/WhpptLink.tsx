@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { useWhppt } from '../../Context';
 
 export type WhpptLinkData = {
-  _id: string;
+  _id?: string;
   type: 'page' | 'external' | 'anchor' | 'file';
   text: string;
   href: string;
