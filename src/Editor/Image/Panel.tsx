@@ -1,7 +1,6 @@
 import React, { FC, useState, useMemo } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
 import { EditorArgs } from '../EditorArgs';
-import { EditorOptions } from '../EditorOptions';
 import { useWhppt } from '../../Context';
 import { WhpptGalleryTag, WhpptInput } from '../../ui/components';
 import { Gallery } from '../../Gallery';
@@ -9,12 +8,11 @@ import { aspectRatios } from './AspectRatios';
 import { getLandscapeRatio, getPortraitRatio } from './helpers';
 import { DevicePicker } from './DevicePicker';
 import { ImageDataSize, PageImageData, ImageData } from './../../Gallery/Model/Image';
+import { ImageEditorOptions } from '../Editors';
 
 type Orientation = 'landscape' | 'portrait';
 
-export type ImageEditorOptions = EditorOptions & { sizes?: string[] };
-
-export const WhpptImageEditor: FC<EditorArgs<PageImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
+export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
   const { toggleSettingsPanel } = useWhppt();
 
   const [device, setDevice] = useState<string>('desktop');
