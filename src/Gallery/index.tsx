@@ -1,7 +1,7 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
-import { WhpptTabs, WhpptTab, WhpptTagInput, WhpptTagSelect } from '../ui/components';
+import { WhpptTabs, WhpptTab, WhpptQueryInput } from '../ui/components';
 import { Images } from './Images';
 import { Videos } from './Videos';
 import { GalleryFileType } from './Model';
@@ -10,31 +10,36 @@ import { ImageData } from './Model/Image';
 import { splitKeywords } from '../helpers';
 import { FileDetails } from '../Api/Http';
 
+const tabs: Array<WhpptTab> = [
+  { name: 'image', label: 'Images' },
+  { name: 'video', label: 'Videos' },
+  { name: 'file', label: 'Files' },
+];
+
 export const Gallery: FC<{ onUse?: (image: ImageData) => void }> = ({ onUse }) => {
   const { settingsPanel, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState<FileDetails>(null);
   const [searchQueryTags, setSearchQueryTags] = useState('');
-  const [filter, setFilter] = useState('');
+  //const [filter, setFilter] = useState('');
 
-  const tabs: Array<WhpptTab> = [
-    { name: 'image', label: 'Images' },
-    { name: 'video', label: 'Videos' },
-    { name: 'file', label: 'Files' },
-  ];
+  const [loading, setLoading] = useState<'loading' | 'loaded'>('loading');
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    search();
-  }, []);
-
-  const search = () => {
+  const search = useCallback(() => {
     const tags = splitKeywords(searchQueryTags) || [];
     const type = settingsPanel.activeTab as GalleryFileType;
 
     return api.gallery
-      .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter })
-      .then(({ items }: { items: FileDetails[] }) => setItems(items));
-  };
+      .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter: '' })
+      .then(({ items }: { items: FileDetails[] }) => setItems(items))
+      .catch(error => setError(error.message || error));
+  }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab]);
+
+  useEffect(() => {
+    if (loading === 'loading') return setLoading('loaded');
+    if (loading === 'loaded') search();
+  }, [loading, search]);
 
   const upload = newFile => {
     return api.gallery.upload(newFile).then(file => setItems([...items, file]));
@@ -56,8 +61,8 @@ export const Gallery: FC<{ onUse?: (image: ImageData) => void }> = ({ onUse }) =
       <div className="whppt-gallery__content">
         <WhpptHeading text="Media Gallery" />
         <div className="whppt-gallery__filters">
-          <WhpptTagInput value={searchQueryTags} onChange={setSearchQueryTags} buttonText={'Search'} onClick={search} />
-          <WhpptTagSelect values={splitKeywords(searchQueryTags)} onChange={setFilter} selectedValue={filter} />
+          <WhpptQueryInput value={searchQueryTags} onChange={setSearchQueryTags} buttonText={'Search'} />
+          {/* <WhpptTagSelect values={splitKeywords(searchQueryTags)} onChange={setFilter} selectedValue={filter} /> */}
         </div>
         <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
         <WhpptTab selectedTab={settingsPanel.activeTab}>
@@ -86,6 +91,7 @@ export const Gallery: FC<{ onUse?: (image: ImageData) => void }> = ({ onUse }) =
             <></>
           )}
         </WhpptTab>
+        {error}
       </div>
 
       <div className={`whppt-gallery__settings ${selected ? 'whppt-gallery__settings--active' : ''}`}>

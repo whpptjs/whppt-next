@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo } from 'react';
+import React, { FC, useState } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
 import { EditorArgs } from '../EditorArgs';
 import { useWhppt } from '../../Context';
@@ -26,12 +26,10 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
   const [device, setDevice] = useState<string>('desktop');
   const [orientation, setOrientation] = useState<ImageDataSize['orientation']>('landscape');
 
-  const selectedDevice = useMemo(() => value && value[device], [device, value]);
-
   const [stencilProps, setStencilProps] = useState(
     orientation === 'landscape'
-      ? getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio)
-      : getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio)
+      ? getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
+      : getPortraitRatio(value[device]?.aspectRatio.ratio || aspectRatios[0].ratio)
   );
 
   const getImgUrl = galleryItemId => {
@@ -39,7 +37,6 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
   };
 
   const useImage = (image: ImageData) => {
-    console.log('image', image);
     const defaultSize: ImageDataSize = {
       galleryItemId: image._id,
       aspectRatio: { ...aspectRatios[0] },
@@ -51,28 +48,28 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
 
   const onCrop = (cropper: CropperRef) => {
     const coords = cropper.getCoordinates();
-    const { label, ratio } = selectedDevice.aspectRatio;
+    const { label, ratio } = value[device].aspectRatio;
 
     const deviceCrop: ImageDataSize = {
       aspectRatio: { label, ratio: { w: ratio.w, h: ratio.h } },
       orientation,
-      coords: coords || selectedDevice.coords,
-      galleryItemId: selectedDevice.galleryItemId,
+      coords: coords || value[device].coords,
+      galleryItemId: value[device].galleryItemId,
     };
 
-    onChange({ ...value, [device]: { ...selectedDevice, ...deviceCrop } });
+    onChange({ ...value, [device]: { ...value[device], ...deviceCrop } });
   };
 
   return (
-    <div className="whppt-image-editor">
+    <div className="whppt-image-editor-panel">
       <DevicePicker devices={options?.sizes || []} set={setDevice} activeDevice={device} />
 
-      {selectedDevice ? (
+      {value[device] ? (
         <>
-          {selectedDevice.galleryItemId ? (
+          {value[device].galleryItemId ? (
             <Cropper
-              src={getImgUrl(selectedDevice.galleryItemId)}
-              className="whppt-image-editor__cropper"
+              src={getImgUrl(value[device].galleryItemId)}
+              className="whppt-image-editor-panel__cropper"
               onChange={onCrop}
               backgroundClassName={'whppt-cropper-background'}
               stencilProps={{ aspectRatio: stencilProps, lines: true }}
@@ -87,11 +84,11 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
                 <button
                   key={index}
                   onClick={() => {
-                    selectedDevice.aspectRatio = ratio;
+                    value[device].aspectRatio = ratio;
                     setStencilProps(
                       orientation === 'landscape'
-                        ? getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio)
-                        : getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio)
+                        ? getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
+                        : getPortraitRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
                     );
                     if (ratio.label === 'square') setOrientation(undefined);
                   }}>
@@ -103,7 +100,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
                 <button
                   onClick={() => {
                     setOrientation('landscape');
-                    setStencilProps(getLandscapeRatio(selectedDevice?.aspectRatio?.ratio || aspectRatios[0].ratio));
+                    setStencilProps(getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio));
                   }}>
                   <WhpptGalleryTag tag={'landscape'} />
                 </button>
@@ -111,7 +108,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
                 <button
                   onClick={() => {
                     setOrientation('portrait');
-                    setStencilProps(getPortraitRatio(selectedDevice?.aspectRatio.ratio || aspectRatios[0].ratio));
+                    setStencilProps(getPortraitRatio(value[device]?.aspectRatio.ratio || aspectRatios[0].ratio));
                   }}>
                   <WhpptGalleryTag tag={'portrait'} />
                 </button>
@@ -120,18 +117,18 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
           )}
 
           <p>
-            {selectedDevice.aspectRatio.label === 'freeform'
+            {value[device].aspectRatio.label === 'freeform'
               ? 'No aspect ratio locked'
               : `This image is locked to a ${
-                  selectedDevice.aspectRatio.label === 'square'
+                  value[device].aspectRatio.label === 'square'
                     ? 'square'
-                    : `${selectedDevice.aspectRatio.ratio.w.toString()} / ${selectedDevice.aspectRatio.ratio.h.toString()}`
+                    : `${value[device].aspectRatio.ratio.w.toString()} / ${value[device].aspectRatio.ratio.h.toString()}`
                 } ratio`}
           </p>
         </>
       ) : (
         <div
-          className="whppt-image-editor__cropper--empty"
+          className="whppt-image-editor-panel__cropper--empty"
           onClick={() => {
             toggleSettingsPanel({
               key: 'gallery',
@@ -139,55 +136,57 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
               component: <Gallery onUse={useImage} />,
             });
           }}>
-          <p className="whppt-image-editor__gallery-actions__button">{'Pick from Gallery'}</p>
+          <p className="whppt-image-editor-panel__gallery-actions__button">{'Pick from Gallery'}</p>
         </div>
       )}
 
-      {selectedDevice && (
-        <div className="whppt-image-editor__gallery-actions">
-          <p
-            className="whppt-image-editor__gallery-actions__button"
-            onClick={() => {
-              toggleSettingsPanel({
-                key: 'gallery',
-                activeTab: 'image',
-                component: <Gallery onUse={useImage} />,
-              });
-            }}>
-            {'Change picture'}
-          </p>
-          <p className="whppt-image-editor__gallery-actions__button" onClick={() => onChange(null)}>
-            Remove
-          </p>
-        </div>
-      )}
+      {value[device] && (
+        <>
+          <div className="whppt-image-editor-panel__gallery-actions">
+            <p
+              className="whppt-image-editor-panel__gallery-actions__button"
+              onClick={() => {
+                toggleSettingsPanel({
+                  key: 'gallery',
+                  activeTab: 'image',
+                  component: <Gallery onUse={useImage} />,
+                });
+              }}>
+              {'Change picture'}
+            </p>
+            <p className="whppt-image-editor-panel__gallery-actions__button" onClick={() => onChange(null)}>
+              Remove
+            </p>
+          </div>
 
-      <div>
-        <WhpptInput
-          value={(selectedDevice && selectedDevice.altText) || ''}
-          onChange={text => {
-            onChange({ ...value, [device]: { ...selectedDevice, altText: text } });
-          }}
-          id={'altText'}
-          label={'Alt text'}
-          info={''}
-          error={''}
-          type={'text'}
-          name="altText"
-        />
-        <WhpptInput
-          value={(selectedDevice && selectedDevice.caption) || ''}
-          onChange={text => {
-            onChange({ ...value, [device]: { ...selectedDevice, caption: text } });
-          }}
-          id={'caption'}
-          label={'Caption'}
-          info={''}
-          error={''}
-          type={'text'}
-          name="caption"
-        />
-      </div>
+          <div>
+            <WhpptInput
+              value={(value[device] && value[device].altText) || ''}
+              onChange={text => {
+                onChange({ ...value, [device]: { ...value[device], altText: text } });
+              }}
+              id={'altText'}
+              label={'Alt text'}
+              info={''}
+              error={''}
+              type={'text'}
+              name="altText"
+            />
+            <WhpptInput
+              value={(value[device] && value[device].caption) || ''}
+              onChange={text => {
+                onChange({ ...value, [device]: { ...value[device], caption: text } });
+              }}
+              id={'caption'}
+              label={'Caption'}
+              info={''}
+              error={''}
+              type={'text'}
+              name="caption"
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

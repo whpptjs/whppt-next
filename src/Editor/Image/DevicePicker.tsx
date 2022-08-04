@@ -8,11 +8,11 @@ type DevicePickerProps = {
 
 export const DevicePicker: FC<DevicePickerProps> = ({ devices, set, activeDevice }) => {
   return (
-    <div className="whppt-image-editor__device-picker">
+    <div className="whppt-image-editor-panel__device-picker">
       {devices.map((device, index) => (
         <p
           key={index}
-          className={`whppt-image-editor__device-select${device === activeDevice ? '--active' : ''}`}
+          className={`whppt-image-editor-panel__device-select${device === activeDevice ? '--active' : ''}`}
           onClick={() => {
             set(device.toLocaleLowerCase());
           }}>

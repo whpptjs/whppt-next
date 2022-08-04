@@ -10,6 +10,6 @@ export * from './Input';
 export * from './Table';
 export * from './WhpptLink';
 export * from './Heading';
-export * from './TagInput';
+export * from './QueryInput';
 export * from './DayInput';
 export * from './TagSelect';
