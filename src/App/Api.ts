@@ -32,7 +32,7 @@ export const AppApi: AppApiConstructor = ({ http }) => {
           });
       },
       list() {
-        return http.secure.getJson<Domain[]>({ path: '/config/loadDomains' });
+        return http.secure.getJson<Domain[]>({ path: '/api/config/loadDomains' });
       },
       publish(domain: Domain) {
         return http.secure.postJson({
@@ -56,12 +56,12 @@ export const AppApi: AppApiConstructor = ({ http }) => {
     user: {
       create(user: User) {
         return http.secure.postJson({
-          path: '/user/create',
+          path: '/api/user/create',
           data: { newUser: user },
         });
       },
       list() {
-        return http.secure.getJson<{ users: User[] }>({ path: '/user/list' }).then(data => data.users);
+        return http.secure.getJson<{ users: User[] }>({ path: '/api/user/list' }).then(data => data.users);
       },
     },
   };

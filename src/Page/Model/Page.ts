@@ -1,8 +1,9 @@
-import { SettingsData } from 'src/CommonSettings/Model/SettingsData';
+import { PageSettingsData } from 'src/CommonSettings/Model/SettingsData';
 
 export type PageData = {
   _id: string;
-  settings?: SettingsData;
+  slug?: string;
+  settings?: PageSettingsData;
 };
 
 export const Page = values => values as PageData;

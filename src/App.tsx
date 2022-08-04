@@ -24,7 +24,6 @@ export type WhpptAppOptions = {
   initFooter?: (footer: any) => any;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
-
 export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = () => [], error, initNav, initFooter }) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [lightMode, setLightMode] = useState(false);
@@ -45,8 +44,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
     return Api();
   }, []);
 
-  const context = useMemo(
-    () => ({
+  const context = useMemo(() => {
+    return {
       ...editor.Context({
         editing,
         setEditing,
@@ -79,24 +78,23 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
       contentTree,
       navWidth,
-    }),
-    [
-      editing,
-      editorState,
-      api,
-      domain,
-      page,
-      pageSettingsData,
-      nav,
-      initNav,
-      footer,
-      initFooter,
-      settingsData,
-      user,
-      settingsPanel,
-      navWidth,
-    ]
-  );
+    };
+  }, [
+    editing,
+    editorState,
+    api,
+    domain,
+    page,
+    pageSettingsData,
+    nav,
+    initNav,
+    footer,
+    initFooter,
+    settingsData,
+    user,
+    settingsPanel,
+    navWidth,
+  ]);
 
   useEffect(() => {
     Promise.all([api.app.domain.loadForCurrentHost(), api.security.verify()])

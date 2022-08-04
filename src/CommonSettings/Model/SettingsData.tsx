@@ -3,6 +3,9 @@ export type SettingsData = {
   seo: SeoData;
   og: OpenGraphData;
 };
+export type PageSettingsData = SettingsData & {
+  hideFromSitemap: boolean;
+};
 
 export type OpenGraphData = {
   title: string;

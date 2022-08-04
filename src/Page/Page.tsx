@@ -3,6 +3,7 @@ import { ContentTreeNode } from '../ui/Content';
 
 import { useWhppt } from '../Context';
 import { PageData } from './Model/Page';
+import { defaultPageSettingsData } from './Context';
 
 export type WhpptPageProps<T extends PageData> = {
   init: (page: T) => T;
@@ -25,6 +26,7 @@ export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, co
       .loadFromSlug({ slug, collection, domain })
       .then(loadedPage => {
         const initialisedPage = init(loadedPage as T);
+        initialisedPage.settings = initialisedPage.settings || defaultPageSettingsData;
         setPage(initialisedPage);
         contentTree.setGetTree(_page => getContents({ page: _page as T, setPage }));
         setPageSettingsData(initialisedPage.settings);
