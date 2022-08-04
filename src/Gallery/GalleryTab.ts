@@ -5,6 +5,5 @@ export type GalleryTab = WhpptTab & {
   upload: (newFile: FormData) => Promise<void>;
   setSelected: (fileDetails) => void;
   selectedId: string | number;
-  domainId: string;
   items: FileDetails[];
 };

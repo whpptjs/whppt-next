@@ -43,9 +43,10 @@
 
   &__cropper {
     @apply h-[200px] w-[360px] object-cover;
-  }
 
-  &__cropper-empty {
-    @apply flex justify-center items-center h-[200px] w-[360px] border-whpptLightMode border-[1px] border-dashed cursor-pointer;
+    &--empty {
+      @apply flex justify-center items-center h-[200px] w-[360px];
+      @apply border-whpptLightMode border-[1px] border-dashed cursor-pointer;
+    }
   }
 }

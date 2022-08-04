@@ -1,6 +1,6 @@
 import React from 'react';
 import { FC } from 'react';
-import { ImageEditor } from '../../Components';
+import { ImageEditor } from '../../Editors';
 import { useWhppt } from '../../../Context';
 import { PageImageData } from '../../../Gallery/Model/Image';
 import { buildCroppedImgUrl } from '../../../helpers';

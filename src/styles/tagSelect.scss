@@ -1,0 +1,33 @@
+.whppt-tag-select {
+  &__input {
+    @apply relative w-full flex-1;
+
+    & button {
+      @apply absolute right-3 p-4 h-4 text-base top-[10px];
+    }
+  }
+
+  &__select {
+    @apply relative w-full flex-1;
+    @apply w-full;
+    @apply p-3;
+    @apply bg-transparent;
+    @apply border-2 border-whpptStandard border-opacity-70 rounded-lg text-white;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:hover {
+      @apply border-opacity-100;
+    }
+
+    &:focus,
+    &:focus-visible {
+      @apply border-whpptActive border-opacity-100 outline-none caret-whpptActive;
+    }
+    @apply h-0 transition-[height] duration-300 ease-in;
+
+    &--open {
+      @apply h-7;
+    }
+  }
+}

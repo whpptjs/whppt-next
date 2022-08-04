@@ -35,6 +35,18 @@ const buildFullPath = (baseUrl: string, path: string) => {
   return fullPath;
 };
 
+export const joinQueryTags = (tags: string[]) => {
+  if (!tags) return '';
+
+  let tagsQuery = '';
+
+  tags.forEach(tag => {
+    tagsQuery += `&queryTags[]=${tag}`;
+  });
+
+  return tagsQuery;
+};
+
 export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
   return {
     secure: {

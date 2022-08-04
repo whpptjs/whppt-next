@@ -1,10 +1,10 @@
 import React, { FC, useState, useEffect } from 'react';
-import { WhpptButton, WhpptInput, WhpptGalleryTag, WhpptIcon } from '../ui/components';
+import { WhpptButton, WhpptInput, WhpptDayInput } from '../ui/components';
+import { WhpptGalleryTag } from './GalleryTag';
 import { FileDetails } from '../Api/Http';
-import { DayPicker } from 'react-day-picker';
 import { useWhppt } from '../Context';
 
-type ImageSettingsProps = {
+type GalleryItemSettingsProps = {
   use: () => void;
   selected: FileDetails;
   remove: (id: string) => void;
@@ -12,23 +12,17 @@ type ImageSettingsProps = {
   setSelected: ({}) => void;
 };
 
-export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, setSelected, save }) => {
+export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selected, remove, setSelected, save }) => {
   const { api } = useWhppt();
   const [newTag, setNewTag] = useState('');
-  const [showCalendar, setShowCalendar] = useState(false);
 
   useEffect(() => {
     api.gallery.load(selected._id).then(({ item }) => setSelected({ ...selected, ...item }));
   }, []);
 
-  const saveDetailsAndEdit = () => {
-    save(selected);
-    use();
-  };
-
   return (
     <div className="whppt-gallery__settings__container">
-      <p className="whppt-gallery__settings__title">{(selected && selected.name) || ''}</p>
+      <p className="whppt-gallery__settings__title">{selected?.name || ''}</p>
 
       <div className="whppt-gallery__settings__tag-input">
         <WhpptInput
@@ -61,33 +55,7 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
         </>
       )}
 
-      <div className="whppt-gallery__day-picker__container">
-        <div className="whppt-image-editor__date-picker-input" onClick={() => setShowCalendar(!showCalendar)}>
-          <WhpptInput
-            id="date"
-            label="Date"
-            info=""
-            error=""
-            type="text"
-            value={(selected.date && new Date(selected.date).toLocaleDateString('en-GB')) || new Date().toLocaleDateString('en-US')}
-          />
-
-          <div className={`whppt-image-editor__date-picker-icon ${showCalendar ? 'up' : 'down'}`}>
-            <WhpptIcon is="down" />
-          </div>
-        </div>
-
-        {showCalendar ? (
-          <DayPicker
-            className="whppt-gallery__day-picker__calendar"
-            fixedWeeks={true}
-            onDayClick={date => {
-              setSelected({ ...selected, date });
-              setShowCalendar(false);
-            }}
-          />
-        ) : null}
-      </div>
+      <WhpptDayInput date={selected.date} onChange={date => setSelected({ ...selected, date })} />
 
       <WhpptInput
         id="alt"
@@ -114,8 +82,9 @@ export const ImageSettings: FC<ImageSettingsProps> = ({ use, selected, remove, s
       />
 
       <div className="whppt-gallery__settings__action-buttons">
-        <WhpptButton text="use" onClick={() => saveDetailsAndEdit()} />
+        <WhpptButton text="save" onClick={() => save(selected)} />
         <WhpptButton text="delete" onClick={() => remove(selected._id)} />
+        <WhpptButton text="use" onClick={use} />
       </div>
     </div>
   );

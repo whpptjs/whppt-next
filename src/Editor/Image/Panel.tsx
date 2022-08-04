@@ -2,21 +2,29 @@ import React, { FC, useState, useMemo } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
 import { EditorArgs } from '../EditorArgs';
 import { useWhppt } from '../../Context';
-import { WhpptGalleryTag, WhpptInput } from '../../ui/components';
+import { WhpptInput } from '../../ui/components';
+import { WhpptGalleryTag } from '../../Gallery/GalleryTag';
 import { Gallery } from '../../Gallery';
-import { aspectRatios } from './AspectRatios';
-import { getLandscapeRatio, getPortraitRatio } from './helpers';
+import { aspectRatios } from '../../Gallery/Model';
 import { DevicePicker } from './DevicePicker';
 import { ImageDataSize, PageImageData, ImageData } from './../../Gallery/Model/Image';
 import { ImageEditorOptions } from '../Editors';
 
-type Orientation = 'landscape' | 'portrait';
+const getLandscapeRatio = ratio => {
+  const { w, h } = ratio;
+  return w >= h ? w / h : h / w;
+};
+
+const getPortraitRatio = ratio => {
+  const { w, h } = ratio;
+  return w >= h ? h / w : w / h;
+};
 
 export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
   const { toggleSettingsPanel } = useWhppt();
 
   const [device, setDevice] = useState<string>('desktop');
-  const [orientation, setOrientation] = useState<Orientation>('landscape');
+  const [orientation, setOrientation] = useState<ImageDataSize['orientation']>('landscape');
 
   const selectedDevice = useMemo(() => value && value[device], [device, value]);
 
@@ -31,6 +39,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
   };
 
   const useImage = (image: ImageData) => {
+    console.log('image', image);
     const defaultSize: ImageDataSize = {
       galleryItemId: image._id,
       aspectRatio: { ...aspectRatios[0] },
@@ -122,7 +131,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
         </>
       ) : (
         <div
-          className="whppt-image-editor__cropper-empty"
+          className="whppt-image-editor__cropper--empty"
           onClick={() => {
             toggleSettingsPanel({
               key: 'gallery',

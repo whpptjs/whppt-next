@@ -1,7 +1,7 @@
 import React, { FC, useRef } from 'react';
 
 type WhpptImageUploaderProps = {
-  uploadImage: (any) => void;
+  uploadImage: (file: File) => void;
 };
 
 export const WhpptImageUploader: FC<WhpptImageUploaderProps> = ({ uploadImage }) => {
@@ -11,8 +11,8 @@ export const WhpptImageUploader: FC<WhpptImageUploaderProps> = ({ uploadImage })
     imageInputRef && imageInputRef.current && imageInputRef.current.click();
   };
 
-  const selectFile = event => {
-    const imageUploaded = event.target.files[0];
+  const selectFile: React.ChangeEventHandler = event => {
+    const imageUploaded: File = (event.target as HTMLInputElement)?.files[0];
     uploadImage(imageUploaded);
   };
 

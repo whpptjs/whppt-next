@@ -27,7 +27,9 @@
     }
 
     &__container {
-      @apply flex flex-col gap-4 border-2 w-settingsSidebar border-whpptStandard border-opacity-70 rounded-lg h-full py-0 px-4 max-h-screen overflow-auto;
+      @apply flex flex-col gap-4;
+      @apply border-2 border-whpptStandard border-opacity-70 rounded-lg;
+      @apply h-full py-0 px-4 max-h-screen overflow-auto w-settingsSidebar;
       -ms-overflow-style: none;
       scrollbar-width: none;
 
@@ -87,7 +89,8 @@
     }
 
     &__calendar {
-      @apply absolute bg-whpptDarkMode rounded-lg border-solid border-2 border-whpptStandard z-20;
+      @apply absolute bg-whpptDarkMode z-20;
+      @apply rounded-lg border-solid border-2 border-whpptStandard;
     }
   }
 

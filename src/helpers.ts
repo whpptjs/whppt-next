@@ -19,18 +19,6 @@ export const formatSlug = slug => {
   return slug;
 };
 
-export const joinQueryTags = tags => {
-  if (!tags) return '';
-
-  let tagsQuery = '';
-
-  tags.forEach(tag => {
-    tagsQuery += `&queryTags[]=${tag}`;
-  });
-
-  return tagsQuery;
-};
-
 export const buildCroppedImgUrl = (image: ImageDataSize, { height, width }: { height: string; width: string }) => {
   const params = [
     `w=${width}`,

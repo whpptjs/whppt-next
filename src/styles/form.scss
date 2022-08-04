@@ -18,9 +18,7 @@
 }
 
 .whppt-form {
-  @apply flex px-10 py-2;
-  display: flex;
-  gap: 1rem;
+  @apply flex gap-4 px-10 py-2;
 
   &__user-invite {
     @apply break-words contents text-left;
@@ -33,8 +31,8 @@
     @apply mb-5;
   }
   &-split {
-    display: flex;
-    gap: 1rem;
+    @apply flex gap-4;
+
     &--even {
       @apply w-1/2;
     }
@@ -51,9 +49,7 @@
   }
 
   .whppt-form-slug-placeholder {
-    height: 52px;
-    display: flex;
-    align-items: center;
+    @apply flex items-center h-[52px];
   }
 
   &-page-settings {
@@ -66,7 +62,8 @@
   }
 }
 .whppt-form-heading {
-  @apply flex w-full items-center font-bold text-whpptLightMode text-3xl py-3 px-5;
+  @apply flex w-full items-center py-3 px-5;
+  @apply font-bold text-whpptLightMode text-3xl;
 }
 
 .whppt-form {

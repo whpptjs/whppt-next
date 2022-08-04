@@ -1,16 +1,15 @@
 import { WhpptHttp } from '../../Api/Http';
-import { FileDetails } from '../../Api/Http';
-import { joinQueryTags } from '../../helpers';
-
-export type GalleryFileType = 'image' | 'video' | 'file' | 'lotty' | 'svg';
+import { FileDetails, joinQueryTags } from '../../Api/Http';
+import { GalleryFileType } from '../Model';
 
 export type GalleryApi = {
   search: (args: {
-    page: string | number;
-    size: string | number;
     type: GalleryFileType;
     domainId: string;
-    tags: string[];
+    page?: string | number;
+    size?: string | number;
+    tags?: string[];
+    filter?: string;
   }) => Promise<{ items: FileDetails[] }>;
   upload: (fileData: FormData) => Promise<FileDetails>;
   save: (details: FileDetails) => Promise<{ item: FileDetails }>;
@@ -20,9 +19,18 @@ export type GalleryApi = {
 export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryApi;
 
 export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
-  search: async ({ domainId, page, size, type, tags }) => {
+  search: async ({ domainId, page, size, type, tags, filter }) => {
+    const params = [
+      `domainId=${domainId}`,
+      `limit=${size}`,
+      `currentPage=${page}`,
+      `type=${type}`,
+      joinQueryTags(tags),
+      `filterTag=${filter}`,
+    ].join('&');
+
     return http.secure.getJson<{ items: FileDetails[] }>({
-      path: `/api/gallery/search?domainId=${domainId}&limit=${size}&currentPage=${page}&type=${type}${joinQueryTags(tags)}`,
+      path: `/api/gallery/search?${params}`,
     });
   },
   upload: async fileData => {
