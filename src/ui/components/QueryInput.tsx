@@ -1,19 +1,21 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { WhpptInput } from './Input';
 import { WhpptButton } from './Button';
 
 type QueryInputProps = {
-  value: any;
+  // value: any;
   onChange: (value: string) => void;
   buttonText: string;
-  onClick: () => void;
+  // onClick: () => void;
 };
 
-export const WhpptQueryInput: FC<QueryInputProps> = ({ value, onChange, buttonText, onClick }) => {
+export const WhpptQueryInput: FC<QueryInputProps> = ({ onChange, buttonText }) => {
+  const [searchText, setSearchText] = useState('');
+
   return (
     <div className="whppt-query-input">
-      <WhpptInput id="search" label="" info="" error="" type="text" value={value} onChange={onChange} />
-      <WhpptButton onClick={onClick} text={buttonText} />
+      <WhpptInput id="search" label="" info="" error="" type="text" value={searchText} onChange={setSearchText} />
+      <WhpptButton onClick={() => onChange(searchText)} text={buttonText} />
     </div>
   );
 };
