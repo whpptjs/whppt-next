@@ -1,23 +1,4 @@
 .whppt-image-uploader {
-  @apply min-h-[13rem] h-full;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  border-color: white;
-  border-width: 1px;
-  border-style: dashed;
-  font-size: 40px;
-  cursor: pointer;
-}
-
-.whppt-gallery-delete {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  cursor: pointer;
-  background-color: black;
-  display: inline-block;
+  @apply flex justify-center items-center min-h-[13rem] h-[200px];
+  @apply text-5xl border-whpptLightMode border-2 border-dashed;
 }

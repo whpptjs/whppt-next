@@ -24,13 +24,13 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
   const { toggleSettingsPanel } = useWhppt();
 
   const [device, setDevice] = useState<string>('desktop');
-  const [orientation, setOrientation] = useState<ImageDataSize['orientation']>('landscape');
+  const [stencilProps, setStencilProps] = useState(() => {
+    if (!value[device]) return getLandscapeRatio(aspectRatios[0].ratio);
 
-  const [stencilProps, setStencilProps] = useState(
-    orientation === 'landscape'
+    return value[device].orientation === 'landscape'
       ? getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
-      : getPortraitRatio(value[device]?.aspectRatio.ratio || aspectRatios[0].ratio)
-  );
+      : getPortraitRatio(value[device]?.aspectRatio.ratio || aspectRatios[0].ratio);
+  });
 
   const getImgUrl = galleryItemId => {
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
@@ -52,9 +52,9 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
 
     const deviceCrop: ImageDataSize = {
       aspectRatio: { label, ratio: { w: ratio.w, h: ratio.h } },
-      orientation,
       coords: coords || value[device].coords,
       galleryItemId: value[device].galleryItemId,
+      orientation: value[device].orientation,
     };
 
     onChange({ ...value, [device]: { ...value[device], ...deviceCrop } });
@@ -86,11 +86,11 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
                   onClick={() => {
                     value[device].aspectRatio = ratio;
                     setStencilProps(
-                      orientation === 'landscape'
+                      value[device].orientation === 'landscape'
                         ? getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
                         : getPortraitRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
                     );
-                    if (ratio.label === 'square') setOrientation(undefined);
+                    if (ratio.label === 'square') onChange({ ...value, orientation: undefined });
                   }}>
                   <WhpptGalleryTag tag={ratio.label} />
                 </button>
@@ -99,7 +99,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
               <div className="whppt-gallery__settings__tag-container">
                 <button
                   onClick={() => {
-                    setOrientation('landscape');
+                    onChange({ ...value, [device]: { ...value[device], orientation: 'landscape' } });
                     setStencilProps(getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio));
                   }}>
                   <WhpptGalleryTag tag={'landscape'} />
@@ -107,7 +107,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
 
                 <button
                   onClick={() => {
-                    setOrientation('portrait');
+                    onChange({ ...value, [device]: { ...value[device], orientation: 'portrait' } });
                     setStencilProps(getPortraitRatio(value[device]?.aspectRatio.ratio || aspectRatios[0].ratio));
                   }}>
                   <WhpptGalleryTag tag={'portrait'} />
