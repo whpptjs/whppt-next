@@ -1,13 +1,13 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
-import { WhpptTabs, WhpptTab, WhpptQueryInput } from '../ui/components';
+import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect } from '../ui/components';
 import { Images } from './Images';
 import { Videos } from './Videos';
 import { GalleryFileType } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
 import { ImageItemData } from './Model/Image';
-import { splitKeywords } from '../helpers';
+import { capitalizeFirstLetter, splitKeywords } from '../helpers';
 import { FileDetails } from '../Api/Http';
 
 const tabs: Array<WhpptTab> = [
@@ -21,7 +21,7 @@ export const Gallery: FC<{ onUse?: (image: ImageItemData) => void }> = ({ onUse 
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState<FileDetails>(null);
   const [searchQueryTags, setSearchQueryTags] = useState('');
-  //const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState('');
 
   const [loading, setLoading] = useState<'loading' | 'loaded'>('loading');
   const [error, setError] = useState('');
@@ -34,7 +34,7 @@ export const Gallery: FC<{ onUse?: (image: ImageItemData) => void }> = ({ onUse 
       .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter: '' })
       .then(({ items }: { items: FileDetails[] }) => setItems(items))
       .catch(error => setError(error.message || error));
-  }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab]);
+  }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab, filter]);
 
   useEffect(() => {
     if (loading === 'loading') return setLoading('loaded');
@@ -61,8 +61,24 @@ export const Gallery: FC<{ onUse?: (image: ImageItemData) => void }> = ({ onUse 
       <div className="whppt-gallery__content">
         <WhpptHeading text="Media Gallery" />
         <div className="whppt-gallery__filters">
-          <WhpptQueryInput value={searchQueryTags} onChange={setSearchQueryTags} buttonText={'Search'} />
-          {/* {searchQueryTags && <WhpptSelect label="filter" items={splitKeywords(searchQueryTags)} onChange={setFilter} value={filter} />} */}
+          <WhpptQueryInput
+            value={searchQueryTags}
+            onChange={setSearchQueryTags}
+            buttonText={'Search'}
+            onEnterKeyPressed={setSearchQueryTags}
+          />
+          {searchQueryTags && (
+            <WhpptSelect
+              label="Filter"
+              getOptionLabel={item => item.label}
+              items={splitKeywords(searchQueryTags).map(item => {
+                return { value: item, label: capitalizeFirstLetter(item) };
+              })}
+              onChange={({ value }) => setFilter(value)}
+              value={{ value: filter, label: capitalizeFirstLetter(filter) }}
+              isOptionSelected={({ value }) => value === filter}
+            />
+          )}
         </div>
         <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
         <WhpptTab selectedTab={settingsPanel.activeTab}>

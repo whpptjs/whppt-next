@@ -17,20 +17,20 @@
     @apply flex justify-between;
 
     &__button {
-      @apply text-whpptLightMode cursor-pointer;
+      @apply text-whpptLightMode;
     }
   }
 
   &__date-picker-input {
-    @apply relative cursor-pointer;
+    @apply relative w-full;
 
-    & * {
-      @apply cursor-pointer;
+    & .whppt-label {
+      @apply text-start;
     }
   }
 
   &__date-picker-icon {
-    @apply absolute h-8 w-8 top-11 right-3 cursor-pointer transition-transform ease-out;
+    @apply absolute h-8 w-8 top-[3.25rem] right-3 transition-transform ease-out;
 
     &.up {
       @apply transform rotate-180;

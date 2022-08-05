@@ -13,20 +13,21 @@ export const WhpptDayInput: FC<WhpptDayInputProps> = ({ date, onChange }) => {
 
   return (
     <div className="whppt-gallery__day-picker__container">
-      <div className="whppt-image-editor-panel__date-picker-input" onClick={() => setShowCalendar(!showCalendar)}>
+      <button className="whppt-image-editor-panel__date-picker-input" onClick={() => setShowCalendar(!showCalendar)}>
         <WhpptInput
           id="date"
           label="Date"
           info=""
           error=""
           type="text"
-          value={date ? new Date(date).toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-US')}
+          disabled={true}
+          value={date ? new Date(date).toLocaleDateString() : new Date().toLocaleDateString()}
         />
 
         <div className={`whppt-image-editor-panel__date-picker-icon ${showCalendar ? 'up' : 'down'}`}>
           <WhpptIcon is="down" />
         </div>
-      </div>
+      </button>
 
       {showCalendar ? (
         <DayPicker

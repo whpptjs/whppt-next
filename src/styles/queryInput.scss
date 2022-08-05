@@ -1,7 +1,7 @@
 .whppt-query-input {
-  @apply relative w-full flex-1;
+  @apply flex relative w-full flex-1;
 
   & button {
-    @apply absolute right-3 p-4 h-4 text-base top-[10px];
+    @apply absolute right-3 p-4 h-4 text-base top-2;
   }
 }

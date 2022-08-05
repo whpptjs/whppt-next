@@ -30,3 +30,7 @@ export const buildCroppedImgUrl = (image: ImageItemDataSize, { height, width }: 
   ].join('&');
   return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${image.galleryItemId}?${params}`;
 };
+
+export const capitalizeFirstLetter = (word: string): string => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};

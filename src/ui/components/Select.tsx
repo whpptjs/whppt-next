@@ -9,7 +9,7 @@ type WhpptSelectProps<T> = {
   items: T[];
   value?: T;
   onChange: (item: T) => void;
-  getOptionLabel?: (option: T) => string;
+  getOptionLabel: (option: T) => string;
   isOptionSelected?: (option: T) => boolean;
   isDisabled?: boolean;
   isLoading?: boolean;

@@ -136,14 +136,14 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageItemData, ImageEditor
               component: <Gallery onUse={useImage} />,
             });
           }}>
-          <p className="whppt-image-editor-panel__gallery-actions__button">{'Pick from Gallery'}</p>
+          <button className="whppt-image-editor-panel__gallery-actions__button">{'Pick from Gallery'}</button>
         </div>
       )}
 
       {value[device] && (
         <>
           <div className="whppt-image-editor-panel__gallery-actions">
-            <p
+            <button
               className="whppt-image-editor-panel__gallery-actions__button"
               onClick={() => {
                 toggleSettingsPanel({
@@ -153,10 +153,10 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageItemData, ImageEditor
                 });
               }}>
               {'Change picture'}
-            </p>
-            <p className="whppt-image-editor-panel__gallery-actions__button" onClick={() => onChange(null)}>
+            </button>
+            <button className="whppt-image-editor-panel__gallery-actions__button" onClick={() => onChange(null)}>
               Remove
-            </p>
+            </button>
           </div>
 
           <div>
