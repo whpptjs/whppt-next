@@ -36,12 +36,13 @@ export const PageLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ value, o
           onChange={text => onChange({ ...value, text })}
         />
 
-        <WhpptSelect<SitemapData, string>
+        <WhpptSelect
           id="whppt-editor-link-href"
           label="Page to link to"
           items={items}
-          value={value.href}
+          value={items.find(i => i.slug === value.href)}
           onChange={item => onChange({ ...value, href: item.slug })}
+          getOptionLabel={item => `/${item.slug}`}
         />
       </section>
     </form>
