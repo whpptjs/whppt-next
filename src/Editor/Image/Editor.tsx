@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from 'react';
-import { PageImageData } from '../../Gallery/Model';
+import { PageImageItemData } from '../../Gallery/Model';
 import { useWhppt } from '../../Context';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
@@ -7,7 +7,7 @@ import { EditorOptions } from '../EditorOptions';
 export type ImageEditorOptions = EditorOptions & { sizes: string[] };
 
 export const ImageEditor: FC<
-  EditorArgs<PageImageData, ImageEditorOptions> & {
+  EditorArgs<PageImageItemData, ImageEditorOptions> & {
     label?: string;
     children: ReactElement | ReactElement[];
   }

@@ -6,7 +6,7 @@ import { Images } from './Images';
 import { Videos } from './Videos';
 import { GalleryFileType } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
-import { ImageData } from './Model/Image';
+import { ImageItemData } from './Model/Image';
 import { splitKeywords } from '../helpers';
 import { FileDetails } from '../Api/Http';
 
@@ -16,7 +16,7 @@ const tabs: Array<WhpptTab> = [
   { name: 'file', label: 'Files' },
 ];
 
-export const Gallery: FC<{ onUse?: (image: ImageData) => void }> = ({ onUse }) => {
+export const Gallery: FC<{ onUse?: (image: ImageItemData) => void }> = ({ onUse }) => {
   const { settingsPanel, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState<FileDetails>(null);
@@ -62,7 +62,7 @@ export const Gallery: FC<{ onUse?: (image: ImageData) => void }> = ({ onUse }) =
         <WhpptHeading text="Media Gallery" />
         <div className="whppt-gallery__filters">
           <WhpptQueryInput value={searchQueryTags} onChange={setSearchQueryTags} buttonText={'Search'} />
-          {/* <WhpptTagSelect values={splitKeywords(searchQueryTags)} onChange={setFilter} selectedValue={filter} /> */}
+          {/* {searchQueryTags && <WhpptSelect label="filter" items={splitKeywords(searchQueryTags)} onChange={setFilter} value={filter} />} */}
         </div>
         <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
         <WhpptTab selectedTab={settingsPanel.activeTab}>
@@ -98,7 +98,7 @@ export const Gallery: FC<{ onUse?: (image: ImageData) => void }> = ({ onUse }) =
         {selected && (
           <GalleryItemSettings
             use={() => {
-              onUse && onUse(selected as ImageData);
+              onUse && onUse(selected as ImageItemData);
               hideSettingsPanel();
             }}
             remove={() => remove(selected._id)}

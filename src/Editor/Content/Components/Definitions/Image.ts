@@ -1,8 +1,4 @@
-import { PageImageData } from '../../../../Gallery/Model';
-
-export type ImageComponentData = {
-  image: PageImageData;
-};
+import { ImageComponentData } from '../Image';
 
 export const ImageDefinition = {
   key: 'Image',

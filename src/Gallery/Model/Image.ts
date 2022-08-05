@@ -1,20 +1,17 @@
-export type ImageData = {
-  _id: string;
-  fileId: string;
-  name: string;
-  file: FormData;
+import { GalleryItem } from './GalleryItem';
+
+export type ImageItemData = GalleryItem & {
   tags: string[];
   suggestedTags: string[];
-  date: Date;
   defaultAlt: string;
   defaultCaption: string;
 };
 
-export type PageImageData = {
-  [key: string]: ImageDataSize;
+export type PageImageItemData = {
+  [key: string]: ImageItemDataSize;
 };
 
-export type ImageDataSize = {
+export type ImageItemDataSize = {
   altText?: string;
   caption?: string;
   galleryItemId: string;

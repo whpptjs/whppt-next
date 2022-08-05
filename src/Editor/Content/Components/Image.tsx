@@ -2,10 +2,15 @@ import React from 'react';
 import { FC } from 'react';
 import { ImageEditor } from '../../Editors';
 import { useWhppt } from '../../../Context';
-import { PageImageData } from '../../../Gallery/Model/Image';
+import { PageImageItemData } from '../../../Gallery/Model/Image';
 import { buildCroppedImgUrl } from '../../../helpers';
+import { ComponentData } from '../../../ui/Content';
 
-export const ImageComponent: FC<{ data: PageImageData; onChange: (data: PageImageData) => void }> = ({ data, onChange }) => {
+export type ImageComponentData = ComponentData & {
+  data: PageImageItemData;
+};
+
+export const ImageComponent: FC<{ data: PageImageItemData; onChange: (data: PageImageItemData) => void }> = ({ data, onChange }) => {
   const { editing } = useWhppt();
 
   return (

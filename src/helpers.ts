@@ -1,7 +1,7 @@
 import slugify from 'slugify';
-import { ImageDataSize } from './Gallery/Model';
+import { ImageItemDataSize } from './Gallery/Model';
 
-export const splitKeywords = keyWordsString => {
+export const splitKeywords = (keyWordsString: string): string[] => {
   return keyWordsString
     .replace(/ +/g, '')
     .split(',')
@@ -19,7 +19,7 @@ export const formatSlug = slug => {
   return slug;
 };
 
-export const buildCroppedImgUrl = (image: ImageDataSize, { height, width }: { height: string; width: string }) => {
+export const buildCroppedImgUrl = (image: ImageItemDataSize, { height, width }: { height: string; width: string }) => {
   const params = [
     `w=${width}`,
     `h=${height}`,

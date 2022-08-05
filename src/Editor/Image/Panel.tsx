@@ -7,7 +7,7 @@ import { WhpptGalleryTag } from '../../Gallery/GalleryTag';
 import { Gallery } from '../../Gallery';
 import { aspectRatios } from '../../Gallery/Model';
 import { DevicePicker } from './DevicePicker';
-import { ImageDataSize, PageImageData, ImageData } from './../../Gallery/Model/Image';
+import { ImageItemDataSize, PageImageItemData, ImageItemData } from './../../Gallery/Model/Image';
 import { ImageEditorOptions } from '../Editors';
 
 const getLandscapeRatio = ratio => {
@@ -20,7 +20,7 @@ const getPortraitRatio = ratio => {
   return w >= h ? h / w : w / h;
 };
 
-export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
+export const WhpptImageEditorPanel: FC<EditorArgs<PageImageItemData, ImageEditorOptions>> = ({ value, onChange, options }) => {
   const { toggleSettingsPanel } = useWhppt();
 
   const [device, setDevice] = useState<string>('desktop');
@@ -36,8 +36,8 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
   };
 
-  const useImage = (image: ImageData) => {
-    const defaultSize: ImageDataSize = {
+  const useImage = (image: ImageItemData) => {
+    const defaultSize: ImageItemDataSize = {
       galleryItemId: image._id,
       aspectRatio: { ...aspectRatios[0] },
       orientation: 'landscape',
@@ -50,7 +50,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageData, ImageEditorOpti
     const coords = cropper.getCoordinates();
     const { label, ratio } = value[device].aspectRatio;
 
-    const deviceCrop: ImageDataSize = {
+    const deviceCrop: ImageItemDataSize = {
       aspectRatio: { label, ratio: { w: ratio.w, h: ratio.h } },
       coords: coords || value[device].coords,
       galleryItemId: value[device].galleryItemId,
