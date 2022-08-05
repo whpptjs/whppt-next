@@ -61,6 +61,7 @@
     "react-advanced-cropper": "^0.9.0",
     "react-toastify": "^9.0.5",
     "slugify": "^1.6.5",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "yup": "^0.32.11"
   },
   "devDependencies": {

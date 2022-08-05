@@ -7,12 +7,7 @@
 
   &__main-container {
     @apply flex flex-1 overflow-auto gap-1 w-full;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    @apply scrollbar-hide;
   }
 
   &__grid {
@@ -30,12 +25,7 @@
       @apply flex flex-col gap-4;
       @apply border-2 border-whpptStandard border-opacity-70 rounded-lg;
       @apply h-full py-0 px-4 max-h-screen overflow-auto w-settingsSidebar;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
+      @apply scrollbar-hide;
     }
 
     &__title {
@@ -91,6 +81,15 @@
     &__calendar {
       @apply absolute bg-whpptDarkMode z-20;
       @apply rounded-lg border-solid border-2 border-whpptStandard;
+
+      button:focus,
+      button:active {
+        @apply text-whpptLightMode bg-whpptActive;
+      }
+
+      button:hover:not([aria-disabled='true']) {
+        @apply text-whpptLightMode bg-whpptActive;
+      }
     }
   }
 

@@ -17,18 +17,17 @@
 @import './form.scss';
 @import './login.scss';
 @import './confirmationPopup.scss';
-@import './cropper.scss';
 @import './imageUploader.scss';
 @import './listPanel.scss';
 @import './content.scss';
-@import './cropper.scss';
 @import './imageUploader.scss';
 @import './gallery.scss';
 @import './queryInput.scss';
 @import './tab.scss';
-@import './dayPicker.scss';
 @import './imageEditor.scss';
 @import './editors.scss';
+@import '../../node_modules/react-advanced-cropper/dist/style.css';
+@import '../../node_modules/react-day-picker/dist/style.css';
 
 .whppt-app {
   display: flex;

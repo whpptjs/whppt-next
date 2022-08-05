@@ -6,7 +6,7 @@ import { PageImageItemData } from '../../../Gallery/Model/Image';
 import { buildCroppedImgUrl } from '../../../helpers';
 import { ComponentData } from '../../../ui/Content';
 
-export type ImageComponentData = ComponentData & {
+export type ImageData = ComponentData & {
   data: PageImageItemData;
 };
 
