@@ -26,12 +26,14 @@ export const ListEditor = <T extends object>({ children, value, addNew, displayN
           e.stopPropagation();
         }
       }}>
-      {children}
-      {editing && (
-        <button className="whppt-editor-list__show-editor">
-          <WhpptIcon is="list" />
-        </button>
-      )}
+      <div>{children}</div>
+      <div className="whppt-editor-list__edit">
+        {editing && (
+          <button className="whppt-editor-list__show-editor">
+            <WhpptIcon is="list" />
+          </button>
+        )}
+      </div>
     </div>
   );
 };

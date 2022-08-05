@@ -42,10 +42,7 @@
   }
 
   &-section {
-    @apply px-6 py-4 bg-whpptDarkMode;
-    &--bottom-gap {
-      @apply mb-5;
-    }
+    @apply px-6 py-4 mb-5 bg-whpptDarkMode;
   }
 
   .whppt-form-slug-placeholder {
@@ -73,15 +70,24 @@
   }
   &__content {
     @apply w-8/12;
-    @apply px-6 py-4 bg-whpptDarkMode;
+    @apply px-6 py-4;
+    &--gap {
+      @apply mb-5;
+    }
     &--header {
       @apply text-xl font-bold mb-5;
+    }
+    &--info {
+      @apply text-base mb-5;
     }
     &--full-height {
       @apply overflow-auto h-85vh;
     }
     &--flex {
       @apply flex gap-3 items-center;
+    }
+    &--justify-between {
+      @apply justify-between;
     }
   }
   &--flex-apart {

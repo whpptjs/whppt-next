@@ -24,9 +24,9 @@ export type WhpptAppOptions = {
   initFooter?: (footer: any) => any;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
-
 export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = () => [], error, initNav, initFooter }) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
+  const [isDraftMode] = useState(process.env.NEXT_PUBLIC_DRAFT === 'true');
   const [lightMode, setLightMode] = useState(false);
   const [showFullNav, setShowFullNav] = useState(false);
   const [navWidth, setNavWidth] = useState('96px');
@@ -45,8 +45,8 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
     return Api();
   }, []);
 
-  const context = useMemo(
-    () => ({
+  const context = useMemo(() => {
+    return {
       ...editor.Context({
         editing,
         setEditing,
@@ -79,24 +79,25 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
       contentTree,
       navWidth,
-    }),
-    [
-      editing,
-      editorState,
-      api,
-      domain,
-      page,
-      pageSettingsData,
-      nav,
-      initNav,
-      footer,
-      initFooter,
-      settingsData,
-      user,
-      settingsPanel,
-      navWidth,
-    ]
-  );
+      isDraftMode,
+    };
+  }, [
+    editing,
+    editorState,
+    api,
+    domain,
+    page,
+    pageSettingsData,
+    nav,
+    initNav,
+    footer,
+    initFooter,
+    settingsData,
+    user,
+    settingsPanel,
+    navWidth,
+    isDraftMode,
+  ]);
 
   useEffect(() => {
     Promise.all([api.app.domain.loadForCurrentHost(), api.security.verify()])

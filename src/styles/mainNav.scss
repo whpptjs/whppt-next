@@ -18,7 +18,7 @@
     @apply text-whpptLightMode w-24;
 
     &--show-full-nav {
-      @apply w-64;
+      @apply w-sidebar-extended;
     }
   }
   &__whppt-label {

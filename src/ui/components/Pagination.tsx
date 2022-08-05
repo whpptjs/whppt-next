@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { WhpptIcon } from './Icon';
-import { WhpptSelect } from '../../ui/components/Select';
+// import { WhpptSelect } from './Select';
 
 type WhpptPagintionProps = {
   page: number;
@@ -17,11 +17,11 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
   page,
   total,
   perPage,
-  perPageItems,
+  // perPageItems,
   dark,
-  direction,
+  // direction,
   changePage,
-  setPerPage,
+  // setPerPage,
 }) => {
   const firstNumber = page * perPage - perPage + 1;
   const secondNumber = total < page * perPage ? total : page * perPage;
@@ -31,15 +31,22 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({
     changePage(newPage);
   };
 
-  const handlePerPageChange = page => {
-    setPerPage(page.text);
-  };
+  // const handlePerPageChange = page => {
+  //   setPerPage(page.text);
+  // };
 
   return (
     <div className={`whppt-pagination ${dark ? 'whppt-pagination--dark' : ''}`}>
       <div className="whppt-pagination__per-page">
         <div className="whppt-pagination__per-page-select">
-          <WhpptSelect id={''} label={''} value={perPage} items={perPageItems} onChange={handlePerPageChange} direction={direction} />
+          {/* <WhpptSelect<number[], number>
+            id={'pagination'}
+            label={''}
+            value={perPage}
+            options={perPageItems as number[]}
+            onChange={handlePerPageChange}
+            direction={direction}
+          /> */}
         </div>
       </div>
 

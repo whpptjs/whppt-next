@@ -18,10 +18,14 @@
 
 .whppt-editor-list {
   &--editing {
-    @apply relative pr-8;
+    @apply flex justify-between;
   }
+
+  &--editing &__edit {
+    @apply w-8;
+  }
+
   &--editing &__show-editor {
-    @apply absolute right-1 top-0;
     @apply w-6 h-6;
   }
 }

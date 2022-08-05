@@ -1,8 +1,11 @@
+import { PageSettingsData } from 'src/CommonSettings/Model/SettingsData';
+
 export type PageData = {
   _id: string;
   pageType: string;
   domainId: string;
-  slug: string;
+  slug?: string;
+  settings?: PageSettingsData;
   createdAt: string;
   updatedAt: string;
   contents: PageContents;
