@@ -26,6 +26,7 @@ export const Whppt = createContext({
   ...settings.Context(settings.defaultArgs),
   api: Api(),
   contentTree,
+  isDraftMode: false,
 });
 
 Whppt.displayName = 'WhpptContext';
