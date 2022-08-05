@@ -52,13 +52,14 @@ export const WhpptMainNav: FC<{
     hideSettingsPanel,
     toggleSettingsPanel,
     settingsPanel,
+    page,
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
     api.security.verify().then(user => setUser(user));
   };
   const showPanel = settingsPanel.visible;
-
+  const noPageLoaded = !page || !page._id;
   const closeWhpptEditor = () => {
     setConfirmationPopup('');
     hideEditor();
@@ -81,6 +82,7 @@ export const WhpptMainNav: FC<{
       order: 200,
       group: 'page',
       groupOrder: 200,
+      disabled: noPageLoaded,
     },
     {
       key: 'new-page',
@@ -105,7 +107,7 @@ export const WhpptMainNav: FC<{
       group: 'page',
       groupOrder: 200,
       isActive: () => editorState.editor === 'contentsTree',
-      disabled: showPanel,
+      disabled: noPageLoaded || showPanel,
       action: () => {
         toggleEditing(false);
         hideSettingsPanel();
@@ -121,7 +123,8 @@ export const WhpptMainNav: FC<{
       group: 'page',
       groupOrder: 200,
       isActive: () => confirmationPopup === 'page',
-      disabled: showPanel,
+      disabled: noPageLoaded || showPanel,
+      // disabled: !(page || page._id) && showPanel,
       action: () => {
         closeAllWhpptPanels();
         setConfirmationPopup('page');
@@ -132,7 +135,7 @@ export const WhpptMainNav: FC<{
       label: 'Save Navigation',
       icon: <WhpptIcon is="nav"></WhpptIcon>,
       isActive: () => confirmationPopup === 'nav',
-      disabled: showPanel,
+      disabled: noPageLoaded || showPanel,
       action: () => {
         closeAllWhpptPanels();
         setConfirmationPopup('nav');
@@ -148,7 +151,7 @@ export const WhpptMainNav: FC<{
       group: 'site',
       groupOrder: 300,
       isActive: () => confirmationPopup === 'footer',
-      disabled: showPanel,
+      disabled: noPageLoaded || showPanel,
       action: () => {
         closeAllWhpptPanels();
         setConfirmationPopup('footer');
@@ -164,7 +167,7 @@ export const WhpptMainNav: FC<{
         closeWhpptEditor();
         toggleSettingsPanel({
           key: 'app',
-          activeTab: 'general',
+          activeTab: 'domain',
           component: <AppSettings />,
         });
       },
@@ -208,6 +211,7 @@ export const WhpptMainNav: FC<{
       order: 600,
       group: 'page',
       groupOrder: 200,
+      disabled: noPageLoaded,
     },
     {
       key: 'dashboard',

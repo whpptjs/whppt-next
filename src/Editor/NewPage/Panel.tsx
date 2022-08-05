@@ -23,6 +23,7 @@ export const WhpptNewPageEditorPanel: FC = () => {
     return api.page.checkSlug({ slug: page.slug, domain }).then(_page => {
       if (_page) return setError('Slug Taken');
       return api.page.save({ page }).then(createdPage => {
+        //TODO redirect to new page
         console.log('🚀 ~ file: NewPage.tsx ~ line 39 ~ returnapi.page.create ~ createdPage', createdPage);
         // router.push(createdPage.slug)
       });

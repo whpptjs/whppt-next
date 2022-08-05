@@ -5,6 +5,7 @@ import { WhpptTab } from '../../ui/components/WhpptTab';
 
 export const PageSeo = ({ name, label }: WhpptTab) => {
   const { api, page, pageSettingsData, setPageSettingsData } = useWhppt();
+  console.log('🚀 ~ file: PageSeo.tsx ~ line 8 ~ PageSeo ~ pageSettingsData', pageSettingsData);
 
   const save = (title, keywords, description, priority, frequency) => {
     const settings = { ...pageSettingsData, seo: { title, keywords, description, priority, frequency } };

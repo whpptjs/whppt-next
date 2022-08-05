@@ -54,6 +54,7 @@
     "postcss": "^8.4.14",
     "postcss-cli": "^9.1.0",
     "react": "^18.2.0",
+    "react-select": "^5.4.0",
     "react-sortable-hoc": "^2.0.0",
     "react-toastify": "^9.0.5",
     "slugify": "^1.6.5",

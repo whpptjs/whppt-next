@@ -1,5 +1,5 @@
 import { PageData } from 'src/Page/Model/Page';
-import { SettingsData } from '../CommonSettings/Model/SettingsData';
+import { PageSettingsData } from '../CommonSettings/Model/SettingsData';
 
 export const defaultState = {} as PageData;
 
@@ -8,6 +8,7 @@ export const defaultPageSettingsState = {
   activeTab: 'general',
 };
 export const defaultPageSettingsData = {
+  hideFromSitemap: false,
   twitter: {
     title: '',
     description: '',
@@ -30,8 +31,8 @@ export const defaultPageSettingsData = {
 export type PageContextArgs = {
   page: PageData;
   setPage: (val: PageData) => void;
-  pageSettingsData: SettingsData;
-  setPageSettingsData: (settingsData: SettingsData) => void;
+  pageSettingsData: PageSettingsData;
+  setPageSettingsData: (settingsData: PageSettingsData) => void;
 };
 
 export const defaultArgs = {
