@@ -18,7 +18,7 @@
 }
 
 .whppt-form {
-  @apply flex px-10 py-2;
+  @apply flex py-2;
   display: flex;
   gap: 1rem;
 
@@ -86,6 +86,9 @@
     }
     &--info {
       @apply text-base mb-5;
+    }
+    &--helper-text {
+      @apply text-sm mb-5 text-whpptStandard;
     }
     &--full-height {
       @apply overflow-auto h-85vh;
