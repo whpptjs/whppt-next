@@ -72,6 +72,9 @@
   &__actions {
     @apply w-3/12;
   }
+  &--group {
+    @apply border-b border-whpptStandard pb-3 mb-3;
+  }
   &__content {
     @apply w-8/12;
     @apply px-6 py-4;
@@ -95,6 +98,6 @@
     }
   }
   &--flex-apart {
-    @apply flex gap-2 w-full;
+    @apply flex gap-2 w-full items-center;
   }
 }

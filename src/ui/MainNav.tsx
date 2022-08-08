@@ -195,6 +195,22 @@ export const WhpptMainNav: FC<{
       groupOrder: 300,
     },
     {
+      key: 'page-header',
+      label: 'Change Page Header',
+      icon: <WhpptIcon is="page-header"></WhpptIcon>,
+      action: () => {
+        toggleEditing(false);
+        hideSettingsPanel();
+        if (editorState.editor !== 'changeHeader') return showEditor('changeHeader', undefined, undefined, undefined);
+        hideEditor();
+      },
+      isActive: () => editorState.editor === 'changeHeader',
+      order: 600,
+      group: 'page',
+      groupOrder: 200,
+      disabled: noPageLoaded || showPanel,
+    },
+    {
       key: 'page-settings',
       label: 'Open Page Settings',
       icon: <WhpptIcon is="page-settings"></WhpptIcon>,
@@ -208,7 +224,7 @@ export const WhpptMainNav: FC<{
         });
       },
       isActive: ({ settingsPanel }) => settingsPanel.key === 'page',
-      order: 600,
+      order: 700,
       group: 'page',
       groupOrder: 200,
       disabled: noPageLoaded,

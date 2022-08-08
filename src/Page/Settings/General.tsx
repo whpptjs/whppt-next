@@ -31,6 +31,7 @@ export const General: FC<WhpptTab> = () => {
       slug: validSlug,
       domainId: domain._id,
       pageType: 'page',
+      header: page.header || { type: '' },
     };
 
     const pageDulpicate = api.page.save({ page: { ...newPage, _id: undefined } });

@@ -11,6 +11,7 @@ import {
   WhpptContentEditorPanel,
   WhpptNewPageEditorPanel,
   WhpptContentsTreeEditorPanel,
+  WhpptChangeHeaderEditorPanel,
 } from './Panels';
 
 export type UseDefaultEditorsArgs = EditorArgs<any> & { editor: string };
@@ -18,6 +19,7 @@ export type UseDefaultEditorsArgs = EditorArgs<any> & { editor: string };
 export const UseDefaultEditors = ({ editor, value, onChange, options }: UseDefaultEditorsArgs) => {
   if (editor === 'newPage') return <WhpptNewPageEditorPanel />;
   if (editor === 'contentsTree') return <WhpptContentsTreeEditorPanel />;
+  if (editor === 'changeHeader') return <WhpptChangeHeaderEditorPanel />;
   if (editor === 'plainText') return <WhpptPlaintextEditorPanel value={value} onChange={onChange} options={options} />;
   if (editor === 'richText') return <WhpptRichtextEditorPanel value={value} onChange={onChange} options={options} />;
   if (editor === 'formattedText') return <WhpptFormattedTextEditorPanel value={value} onChange={onChange} options={options} />;

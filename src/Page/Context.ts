@@ -36,7 +36,7 @@ export type PageContextArgs = {
 };
 
 export const defaultArgs = {
-  page: { _id: '' },
+  page: { _id: '', header: { type: '' } },
   setPage: () => {},
   pageSettingsData: defaultPageSettingsData,
   setPageSettingsData: () => {},
