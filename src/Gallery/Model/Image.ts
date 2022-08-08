@@ -1,4 +1,4 @@
-export type PageImageItemData = {
+export type WhpptImageData = {
   [key: string]: ImageItemDataSize;
 };
 

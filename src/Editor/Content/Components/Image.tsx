@@ -2,20 +2,20 @@ import React from 'react';
 import { FC } from 'react';
 import { ImageEditor } from '../../Editors';
 import { useWhppt } from '../../../Context';
-import { PageImageItemData } from '../../../Gallery/Model/Image';
+import { WhpptImageData } from '../../../Gallery/Model/Image';
 import { buildCroppedImgUrl } from '../../../helpers';
 import { ComponentData } from '../../../ui/Content';
 
-export type ImageData = ComponentData & {
-  data: PageImageItemData;
+export type ComponentImageData = ComponentData & {
+  data: WhpptImageData;
 };
 
-export const ImageComponent: FC<{ data: PageImageItemData; onChange: (data: PageImageItemData) => void }> = ({ data, onChange }) => {
+export const ImageComponent: FC<{ data: WhpptImageData; onChange: (value: WhpptImageData) => void }> = ({ data, onChange }) => {
   const { editing } = useWhppt();
 
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
-      <ImageEditor value={data} options={{ label: '', sizes: ['desktop', 'mobile'] }} onChange={val => onChange(val)}>
+      <ImageEditor value={data} options={{ label: '', sizes: ['desktop', 'tablet', 'mobile'] }} onChange={val => onChange(val)}>
         {data.desktop ? (
           <img
             alt="test"

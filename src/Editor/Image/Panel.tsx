@@ -7,9 +7,9 @@ import { WhpptGalleryTag } from '../../Gallery/GalleryTag';
 import { Gallery } from '../../Gallery';
 import { aspectRatios } from '../../Gallery/Model';
 import { DevicePicker } from './DevicePicker';
-import { ImageItemDataSize, PageImageItemData } from '../../Gallery/Model/Image';
+import { ImageItemDataSize, WhpptImageData } from '../../Gallery/Model/Image';
 import { GalleryItem } from '../../Gallery/Model';
-import { ImageEditorOptions } from '../Editors';
+import { ImageEditorOptions } from '../../Editor/';
 
 const getLandscapeRatio = ratio => {
   const { w, h } = ratio;
@@ -21,7 +21,7 @@ const getPortraitRatio = ratio => {
   return w >= h ? h / w : w / h;
 };
 
-export const WhpptImageEditorPanel: FC<EditorArgs<PageImageItemData, ImageEditorOptions>> = ({ value, onChange, options }) => {
+export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
   const { toggleSettingsPanel } = useWhppt();
 
   const [device, setDevice] = useState<string>('desktop');

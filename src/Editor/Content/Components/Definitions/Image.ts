@@ -1,7 +1,7 @@
-import { ImageData } from '../Image';
+import { ComponentImageData } from '../Image';
 
 export const ImageDefinition = {
   key: 'Image',
   name: 'Image',
-  init: (content: ImageData) => content as ImageData,
+  init: (content: ComponentImageData) => content as ComponentImageData,
 };
