@@ -6,7 +6,7 @@ import { Images } from './Images';
 import { Videos } from './Videos';
 import { GalleryFileType } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
-import { ImageItemData } from './Model/Image';
+import { GalleryItem } from './Model';
 import { capitalizeFirstLetter, splitKeywords } from '../helpers';
 import { FileDetails } from '../Api/Http';
 
@@ -16,7 +16,7 @@ const tabs: Array<WhpptTab> = [
   { name: 'file', label: 'Files' },
 ];
 
-export const Gallery: FC<{ onUse?: (image: ImageItemData) => void }> = ({ onUse }) => {
+export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
   const { settingsPanel, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState<FileDetails>(null);
@@ -31,7 +31,7 @@ export const Gallery: FC<{ onUse?: (image: ImageItemData) => void }> = ({ onUse 
     const type = settingsPanel.activeTab as GalleryFileType;
 
     return api.gallery
-      .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter: '' })
+      .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter })
       .then(({ items }: { items: FileDetails[] }) => setItems(items))
       .catch(error => setError(error.message || error));
   }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab, filter]);
@@ -114,7 +114,7 @@ export const Gallery: FC<{ onUse?: (image: ImageItemData) => void }> = ({ onUse 
         {selected && (
           <GalleryItemSettings
             use={() => {
-              onUse && onUse(selected as ImageItemData);
+              onUse && onUse(selected as GalleryItem);
               hideSettingsPanel();
             }}
             remove={() => remove(selected._id)}

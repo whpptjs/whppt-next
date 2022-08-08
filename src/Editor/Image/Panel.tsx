@@ -7,7 +7,8 @@ import { WhpptGalleryTag } from '../../Gallery/GalleryTag';
 import { Gallery } from '../../Gallery';
 import { aspectRatios } from '../../Gallery/Model';
 import { DevicePicker } from './DevicePicker';
-import { ImageItemDataSize, PageImageItemData, ImageItemData } from './../../Gallery/Model/Image';
+import { ImageItemDataSize, PageImageItemData } from '../../Gallery/Model/Image';
+import { GalleryItem } from '../../Gallery/Model';
 import { ImageEditorOptions } from '../Editors';
 
 const getLandscapeRatio = ratio => {
@@ -36,7 +37,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<PageImageItemData, ImageEditor
     return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
   };
 
-  const useImage = (image: ImageItemData) => {
+  const useImage = (image: GalleryItem) => {
     const defaultSize: ImageItemDataSize = {
       galleryItemId: image._id,
       aspectRatio: { ...aspectRatios[0] },

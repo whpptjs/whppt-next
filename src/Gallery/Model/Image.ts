@@ -1,12 +1,3 @@
-import { GalleryItem } from './GalleryItem';
-
-export type ImageItemData = GalleryItem & {
-  tags: string[];
-  suggestedTags: string[];
-  defaultAlt: string;
-  defaultCaption: string;
-};
-
 export type PageImageItemData = {
   [key: string]: ImageItemDataSize;
 };

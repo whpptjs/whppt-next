@@ -3,4 +3,8 @@ export type GalleryItem = {
   name: string;
   file: FormData;
   date: Date;
+  tags: string[];
+  suggestedTags: string[];
+  defaultAlt: string;
+  defaultCaption: string;
 };
