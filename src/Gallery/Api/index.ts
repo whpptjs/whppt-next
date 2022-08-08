@@ -1,6 +1,7 @@
 import { WhpptHttp } from '../../Api/Http';
-import { FileDetails, joinQueryTags } from '../../Api/Http';
+import { joinQueryTags } from '../../Api/Http';
 import { GalleryFileType } from '../Model';
+import { GalleryItem } from 'src/Gallery/Model';
 
 export type GalleryApi = {
   search: (args: {
@@ -10,10 +11,10 @@ export type GalleryApi = {
     size?: string | number;
     tags?: string[];
     filter?: string;
-  }) => Promise<{ items: FileDetails[] }>;
-  upload: (fileData: FormData) => Promise<FileDetails>;
-  save: (details: FileDetails) => Promise<{ item: FileDetails }>;
-  load: (id: string) => Promise<{ item: FileDetails }>;
+  }) => Promise<{ items: GalleryItem[] }>;
+  upload: (fileData: FormData) => Promise<GalleryItem>;
+  save: (details: GalleryItem) => Promise<{ item: GalleryItem }>;
+  load: (id: string) => Promise<{ item: GalleryItem }>;
   remove: (id: string) => Promise<any>;
 };
 export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryApi;
@@ -29,7 +30,7 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
       `filterTag=${filter}`,
     ].join('&');
 
-    return http.secure.getJson<{ items: FileDetails[] }>({
+    return http.secure.getJson<{ items: GalleryItem[] }>({
       path: `/api/gallery/search?${params}`,
     });
   },
@@ -44,7 +45,7 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
   save: async details => {
     if (!details) throw new Error('Invalid file details');
 
-    return http.secure.postJson<{ item: FileDetails }, { item: FileDetails }>({
+    return http.secure.postJson<{ item: GalleryItem }, { item: GalleryItem }>({
       path: '/api/gallery/save',
       data: {
         item: details,
@@ -54,7 +55,7 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
   load: async (id: string) => {
     if (!id) throw new Error('Id of file is missing');
 
-    return http.secure.getJson<Promise<{ item: FileDetails }>>({
+    return http.secure.getJson<Promise<{ item: GalleryItem }>>({
       path: `/api/gallery/load?itemId=${id}`,
     });
   },

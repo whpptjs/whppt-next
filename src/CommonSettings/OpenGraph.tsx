@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../ui/components/Input';
 import { WhpptButton, WhpptTextArea, WhpptTab } from '../ui/components';
-import { splitKeywords } from '../helpers';
+import { splitKeywords } from '../splitKeywords';
 import { OpenGraphData } from './Model/SettingsData';
 import { toast } from 'react-toastify';
 

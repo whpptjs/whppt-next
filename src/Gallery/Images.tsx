@@ -28,7 +28,7 @@ export const Images: FC<GalleryTab> = ({ items, upload, setSelected, selectedId 
             <WhpptGalleryImage
               key={img._id}
               url={getImgUrl(img._id)}
-              name={img.name}
+              name={img.fileInfo.originalname}
               onClick={() => setSelected(img)}
               isSelected={selectedId == img._id}
             />

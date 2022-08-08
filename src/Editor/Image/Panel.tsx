@@ -7,7 +7,7 @@ import { WhpptGalleryTag } from '../../Gallery/GalleryTag';
 import { Gallery } from '../../Gallery';
 import { aspectRatios } from '../../Gallery/Model';
 import { DevicePicker } from './DevicePicker';
-import { ImageItemDataSize, WhpptImageData } from '../../Gallery/Model/Image';
+import { WhpptImageCrop, WhpptImageData } from './ImageData';
 import { GalleryItem } from '../../Gallery/Model';
 import { ImageEditorOptions } from '../../Editor/';
 
@@ -38,27 +38,27 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
   };
 
   const useImage = (image: GalleryItem) => {
-    const defaultSize: ImageItemDataSize = {
+    const defaultCrop: WhpptImageCrop = {
       galleryItemId: image._id,
       aspectRatio: { ...aspectRatios[0] },
       orientation: 'landscape',
       coords: { width: 100, height: 100, left: 0, top: 0 },
     };
-    onChange({ ...value, [device]: { ...defaultSize, galleryItemId: image._id } });
+    onChange({ ...value, [device]: { ...defaultCrop, galleryItemId: image._id } });
   };
 
   const onCrop = (cropper: CropperRef) => {
     const coords = cropper.getCoordinates();
     const { label, ratio } = value[device].aspectRatio;
 
-    const deviceCrop: ImageItemDataSize = {
+    const imageCrop: WhpptImageCrop = {
       aspectRatio: { label, ratio: { w: ratio.w, h: ratio.h } },
       coords: coords || value[device].coords,
       galleryItemId: value[device].galleryItemId,
       orientation: value[device].orientation,
     };
 
-    onChange({ ...value, [device]: { ...value[device], ...deviceCrop } });
+    onChange({ ...value, [device]: { ...value[device], ...imageCrop } });
   };
 
   return (
@@ -155,7 +155,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
               }}>
               {'Change picture'}
             </button>
-            <button className="whppt-image-editor-panel__gallery-actions__button" onClick={() => onChange(null)}>
+            <button className="whppt-image-editor-panel__gallery-actions__button" onClick={() => onChange({ ...value, [device]: null })}>
               Remove
             </button>
           </div>

@@ -1,8 +1,8 @@
 export type WhpptImageData = {
-  [key: string]: ImageItemDataSize;
+  [key: string]: WhpptImageCrop;
 };
 
-export type ImageItemDataSize = {
+export type WhpptImageCrop = {
   altText?: string;
   caption?: string;
   galleryItemId: string;

@@ -6,8 +6,8 @@ export type PageData = {
   domainId: string;
   slug?: string;
   settings?: PageSettingsData;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   contents: PageContents;
 };
 

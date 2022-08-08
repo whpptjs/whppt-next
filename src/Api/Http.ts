@@ -1,27 +1,15 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 import Cookies from 'js-cookie';
+import { GalleryItem } from 'src/Gallery/Model';
 
 export type WhpptGetOptions = { path: string };
 export type WhpptPostOptions<T> = { path: string; data: T };
 export type WhpptSaveFileOptions = { path: string; fileData: FormData };
 
-export type FileDetails = {
-  _id?: string;
-  name: string;
-  version?: string;
-  tags?: string[];
-  suggestedTags?: string[];
-  date?: Date;
-  defaultAltText?: string;
-  defaultCaption?: string;
-  uploadedOn?: string;
-  type?: string;
-};
-
 export type WhpptHttpMethods = {
   getJson: <T>(options?: WhpptGetOptions) => Promise<T>;
   postJson: <T, R>(options?: WhpptPostOptions<T>) => Promise<R>;
-  postFile: (options?: WhpptSaveFileOptions) => Promise<FileDetails>;
+  postFile: (options?: WhpptSaveFileOptions) => Promise<GalleryItem>;
 };
 
 export type WhpptHttp = {
@@ -75,14 +63,14 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         const json = await response.json();
         return json as R;
       },
-      postFile: async <R>({ path, fileData }: WhpptSaveFileOptions) => {
+      postFile: async ({ path, fileData }: WhpptSaveFileOptions) => {
         const response = await fetch(buildFullPath(baseUrl, path), {
           method: 'POST',
           body: fileData as any,
         });
         if (response.status >= 400) throw new Error(await response.text());
         const json = await response.json();
-        return json as R;
+        return json as GalleryItem;
       },
     },
   };

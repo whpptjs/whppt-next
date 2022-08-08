@@ -31,8 +31,6 @@ export const General: FC<WhpptTab> = () => {
       slug: validSlug,
       domainId: domain._id,
       pageType: 'page',
-      createdAt: '',
-      updatedAt: '',
       contents: [],
     };
 

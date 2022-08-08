@@ -4,3 +4,4 @@ export * from './Panels';
 export * from './EditorArgs';
 export * from './EditorOptions';
 export * from './UseDefaultEditors';
+export * from './Image/buildCroppedImgUrl';

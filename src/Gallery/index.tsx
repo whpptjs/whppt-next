@@ -7,8 +7,8 @@ import { Videos } from './Videos';
 import { GalleryFileType } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
 import { GalleryItem } from './Model';
-import { capitalizeFirstLetter, splitKeywords } from '../helpers';
-import { FileDetails } from '../Api/Http';
+import { capitalizeFirstLetter } from '../helpers';
+import { splitKeywords } from '../splitKeywords';
 
 const tabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images' },
@@ -18,8 +18,8 @@ const tabs: Array<WhpptTab> = [
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
   const { settingsPanel, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
-  const [items, setItems] = useState([]);
-  const [selected, setSelected] = useState<FileDetails>(null);
+  const [items, setItems] = useState<GalleryItem[]>([]);
+  const [selected, setSelected] = useState<GalleryItem>(null);
   const [searchQueryTags, setSearchQueryTags] = useState('');
   const [filter, setFilter] = useState('');
 
@@ -32,7 +32,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
 
     return api.gallery
       .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter })
-      .then(({ items }: { items: FileDetails[] }) => setItems(items))
+      .then(({ items }: { items: GalleryItem[] }) => setItems(items))
       .catch(error => setError(error.message || error));
   }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab, filter]);
 
@@ -41,12 +41,8 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     if (loading === 'loaded') search();
   }, [loading, search]);
 
-  const upload = newFile => {
+  const upload = (newFile: FormData) => {
     return api.gallery.upload(newFile).then(file => setItems([...items, file]));
-  };
-
-  const save = details => {
-    return api.gallery.save(details);
   };
 
   const remove = id => {
@@ -118,9 +114,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               hideSettingsPanel();
             }}
             remove={() => remove(selected._id)}
-            save={save}
-            selected={selected}
-            setSelected={setSelected}
+            selectedId={selected._id}
           />
         )}
       </div>
