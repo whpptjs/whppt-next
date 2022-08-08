@@ -9,6 +9,7 @@ import { GalleryItemSettings } from './GalleryItemSettings';
 import { GalleryItem } from './Model';
 import { capitalizeFirstLetter } from '../helpers';
 import { splitKeywords } from '../splitKeywords';
+import { toast } from 'react-toastify';
 
 const tabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images' },
@@ -18,22 +19,28 @@ const tabs: Array<WhpptTab> = [
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
   const { settingsPanel, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
+
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [selected, setSelected] = useState<GalleryItem>(null);
   const [searchQueryTags, setSearchQueryTags] = useState('');
   const [filter, setFilter] = useState('');
-
-  const [loading, setLoading] = useState<'loading' | 'loaded'>('loading');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState<'loading' | 'loaded'>('loading');
 
   const search = useCallback(() => {
+    setError('');
+
     const tags = splitKeywords(searchQueryTags) || [];
     const type = settingsPanel.activeTab as GalleryFileType;
 
-    return api.gallery
+    const search = api.gallery
       .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter })
       .then(({ items }: { items: GalleryItem[] }) => setItems(items))
       .catch(error => setError(error.message || error));
+
+    return toast.promise(search, {
+      error: 'Image upload failed 🤯',
+    });
   }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab, filter]);
 
   useEffect(() => {
@@ -41,14 +48,26 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     if (loading === 'loaded') search();
   }, [loading, search]);
 
-  const upload = (newFile: FormData) => {
-    return api.gallery.upload(newFile).then(file => setItems([...items, file]));
+  const upload = newFile => {
+    const upload = api.gallery.upload(newFile).then(file => setItems([...items, file]));
+
+    return toast.promise(upload, {
+      pending: 'Uploading Image...',
+      success: 'Image uploaded',
+      error: 'Image upload failed 🤯',
+    });
   };
 
   const remove = id => {
-    return api.gallery.remove(id).then(() => {
+    const remove = api.gallery.remove(id).then(() => {
       setSelected(null);
       setItems(items.filter(({ _id }) => _id == id));
+    });
+
+    return toast.promise(remove, {
+      pending: 'Deleting image...',
+      success: 'Image deleted',
+      error: 'Image delete failed 🤯',
     });
   };
 
@@ -77,6 +96,9 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
           )}
         </div>
         <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+
+        {error ? <h1>Search failed</h1> : <></>}
+
         <WhpptTab selectedTab={settingsPanel.activeTab}>
           {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'image') ? (
             <Images
@@ -103,7 +125,6 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
             <></>
           )}
         </WhpptTab>
-        {error}
       </div>
 
       <div className={`whppt-gallery__settings ${selected ? 'whppt-gallery__settings--active' : ''}`}>
