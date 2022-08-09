@@ -54,7 +54,7 @@
   }
 
   &__image {
-    @apply h-52 w-96 object-cover cursor-pointer;
+    @apply h-galleryImage w-galleryImage object-cover cursor-pointer;
 
     &--selected {
       @apply outline-whpptActive outline-2 outline;

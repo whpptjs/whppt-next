@@ -3,6 +3,7 @@ import { WhpptButton, WhpptInput, WhpptDayInput } from '../ui/components';
 import { WhpptGalleryTag } from './GalleryTag';
 import { useWhppt } from '../Context';
 import { GalleryItem } from './Model';
+import { toast } from 'react-toastify';
 
 type GalleryItemSettingsProps = {
   use: () => void;
@@ -31,7 +32,13 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
   }, [api.gallery, created, selectedId, setItem]);
 
   const save = details => {
-    return api.gallery.save(details);
+    const save = api.gallery.save(details);
+
+    return toast.promise(save, {
+      pending: 'Saving image details...',
+      success: 'Image details saved',
+      error: 'Saving image details failed 🤯',
+    });
   };
 
   return (
