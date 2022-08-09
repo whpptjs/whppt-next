@@ -11,11 +11,12 @@ export type PageData = {
   settings?: PageSettingsData;
   createdAt?: string;
   updatedAt?: string;
-  contents: PageContents;
+  contents: PageContents[];
   header: HeaderData;
 };
 
 export type PageContents = {
+  type: string;
   [key: string]: any;
 };
 
