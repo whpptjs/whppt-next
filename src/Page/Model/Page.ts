@@ -5,8 +5,17 @@ export type HeaderData = {
 };
 export type PageData = {
   _id: string;
+  pageType: string;
+  domainId: string;
   slug?: string;
   settings?: PageSettingsData;
+  createdAt?: string;
+  updatedAt?: string;
+  contents: PageContents;
+};
+
+export type PageContents = {
+  [key: string]: any;
   header: HeaderData;
 };
 

@@ -1,12 +1,5 @@
 import slugify from 'slugify';
 
-export const splitKeywords = keyWordsString => {
-  return keyWordsString
-    .replace(/ +/g, '')
-    .split(',')
-    .filter(w => w);
-};
-
 export const formatSlug = slug => {
   if (slug.startsWith('/')) slug = slug.replace(/^(\/*)/, '');
 
@@ -16,4 +9,8 @@ export const formatSlug = slug => {
   slug = slug.replace(/[#?]/g, '');
 
   return slug;
+};
+
+export const capitalizeFirstLetter = (word: string): string => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
 };

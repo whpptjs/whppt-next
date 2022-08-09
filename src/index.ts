@@ -9,4 +9,6 @@ export * from './replaceInList';
 export * from './Editor/Content/Components';
 export * from './Editor/Content/Components/Definitions';
 export * from './Api';
+export * from './Editor/Image/ImageData';
+export * from './helpers';
 export { toast } from 'react-toastify';

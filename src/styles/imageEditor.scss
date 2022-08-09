@@ -1,0 +1,52 @@
+.whppt-image-editor-panel {
+  @apply flex flex-col gap-4;
+
+  &__device-picker {
+    @apply flex gap-12 text-whpptLightMode;
+  }
+
+  &__device-select {
+    @apply cursor-pointer;
+
+    &--active {
+      @apply text-whpptActive underline;
+    }
+  }
+
+  &__gallery-actions {
+    @apply flex justify-between;
+
+    &__button {
+      @apply text-whpptLightMode;
+    }
+  }
+
+  &__date-picker-input {
+    @apply relative w-full;
+
+    & .whppt-label {
+      @apply text-start;
+    }
+  }
+
+  &__date-picker-icon {
+    @apply absolute h-8 w-8 top-[3.25rem] right-3 transition-transform ease-out;
+
+    &.up {
+      @apply transform rotate-180;
+    }
+
+    &.down {
+      @apply transform rotate-0;
+    }
+  }
+
+  &__cropper {
+    @apply h-[200px] w-[360px] object-cover;
+
+    &--empty {
+      @apply flex justify-center items-center h-[200px] w-[360px];
+      @apply border-whpptLightMode border-[1px] border-dashed cursor-pointer;
+    }
+  }
+}

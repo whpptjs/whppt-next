@@ -3,8 +3,9 @@ import { AppApi } from '../App/Api';
 import { PageApi } from '../Page/Api';
 import { SiteApi } from '../Site/Api';
 import { SecurityApi } from '../Security/Api';
-export * from './Http';
-export type WhpptApi = { app: AppApi; site: SiteApi; page: PageApi; security: SecurityApi };
+import { GalleryApi } from './../Gallery/Api/index';
+
+export type WhpptApi = { app: AppApi; site: SiteApi; page: PageApi; security: SecurityApi; gallery: GalleryApi };
 export type WhpptApiConstructor = () => WhpptApi;
 
 const http = Http(process.env.NEXT_PUBLIC_BASE_API_URL);
@@ -15,5 +16,6 @@ export const Api: WhpptApiConstructor = () => {
     site: SiteApi({ http }),
     page: PageApi({ http }),
     security: SecurityApi({ http }),
+    gallery: GalleryApi({ http }),
   };
 };
