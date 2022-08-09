@@ -1,14 +1,15 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 import Cookies from 'js-cookie';
+import { GalleryItem } from 'src/Gallery/Model';
 
 export type WhpptGetOptions = { path: string };
 export type WhpptPostOptions<T> = { path: string; data: T };
-export type WhpptSaveFileOptions<FormData> = { path: string; data: FormData };
+export type WhpptSaveFileOptions = { path: string; fileData: FormData };
 
 export type WhpptHttpMethods = {
   getJson: <T>(options?: WhpptGetOptions) => Promise<T>;
   postJson: <T, R>(options?: WhpptPostOptions<T>) => Promise<R>;
-  saveFile: <FormData>(options?: WhpptSaveFileOptions<FormData>) => Promise<Response>;
+  postFile: (options?: WhpptSaveFileOptions) => Promise<GalleryItem>;
 };
 
 export type WhpptHttp = {
@@ -20,6 +21,18 @@ const buildFullPath = (baseUrl: string, path: string) => {
   const trimmedPath = path.startsWith('/') ? path.substring(1, path.length) : path;
   const fullPath = `${trimmedBaseUrl}/${trimmedPath}`;
   return fullPath;
+};
+
+export const joinQueryTags = (tags: string[]) => {
+  if (!tags) return '';
+
+  let tagsQuery = '';
+
+  tags.forEach(tag => {
+    tagsQuery += `&queryTags[]=${tag}`;
+  });
+
+  return tagsQuery;
 };
 
 export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
@@ -50,13 +63,14 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         const json = await response.json();
         return json as R;
       },
-      saveFile: async <FormData>({ path, data }: WhpptSaveFileOptions<FormData>) => {
+      postFile: async ({ path, fileData }: WhpptSaveFileOptions) => {
         const response = await fetch(buildFullPath(baseUrl, path), {
           method: 'POST',
-          body: data as any,
+          body: fileData as any,
         });
         if (response.status >= 400) throw new Error(await response.text());
-        return response;
+        const json = await response.json();
+        return json as GalleryItem;
       },
     },
   };

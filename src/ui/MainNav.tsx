@@ -11,6 +11,7 @@ import { SettingsPanel } from '../Settings/Context';
 import { PageSettings } from '../Page/Settings';
 import { SiteSettings } from '../Site/Settings';
 import { AppSettings } from '../App/Settings';
+import { Gallery } from '../Gallery';
 
 export type MenuItemOptions = {
   closeAllWhpptPanels: () => void;
@@ -235,6 +236,24 @@ export const WhpptMainNav: FC<{
       icon: <WhpptIcon is="dashboard"></WhpptIcon>,
       order: 300,
       group: 'config',
+      groupOrder: 400,
+    },
+    {
+      key: 'gallery',
+      label: 'Gallery',
+      icon: <WhpptIcon is="gallery"></WhpptIcon>,
+      action: ({ toggleSettingsPanel }) => {
+        toggleEditing(false);
+        closeWhpptEditor();
+        toggleSettingsPanel({
+          key: 'gallery',
+          activeTab: 'image',
+          component: <Gallery />,
+        });
+      },
+      isActive: ({ settingsPanel }) => settingsPanel.key === 'gallery',
+      order: 1200,
+      group: 'site',
       groupOrder: 400,
     },
     ...menuItems({ closeAllWhpptPanels }),

@@ -1,0 +1,103 @@
+.whppt-gallery {
+  @apply bg-whpptDarkMode px-6 py-4 mb-5 flex w-full h-screen;
+
+  &__content {
+    @apply w-full flex flex-col;
+  }
+
+  &__main-container {
+    @apply flex flex-1 overflow-auto gap-1 w-full;
+    @apply scrollbar-hide;
+  }
+
+  &__grid {
+    @apply grid grid-cols-gallery gap-4 flex-1 auto-rows-gallery;
+  }
+
+  &__settings {
+    @apply translate-x-full transition-all duration-300 ease-in opacity-0;
+
+    &--active {
+      @apply translate-x-0 w-settingsSidebar opacity-100;
+    }
+
+    &__container {
+      @apply flex flex-col gap-4;
+      @apply border-2 border-whpptStandard border-opacity-70 rounded-lg;
+      @apply h-full py-0 px-4 max-h-screen overflow-auto w-settingsSidebar;
+      @apply scrollbar-hide;
+    }
+
+    &__title {
+      @apply text-3xl leading-9 font-bold mt-3 break-words;
+    }
+
+    &__tag-input {
+      @apply flex gap-2 justify-between;
+
+      & .whppt-plaintext {
+        @apply w-full;
+      }
+    }
+
+    &__tag-add {
+      @apply text-5xl cursor-pointer mt-2;
+    }
+
+    &__tag-container {
+      @apply flex gap-4 flex-wrap;
+    }
+
+    &__action-buttons {
+      @apply flex gap-4;
+    }
+  }
+
+  &__image {
+    @apply h-52 w-96 object-cover cursor-pointer;
+
+    &--selected {
+      @apply outline-whpptActive outline-2 outline;
+    }
+  }
+
+  &__image-name {
+    @apply whitespace-nowrap overflow-hidden text-ellipsis;
+  }
+
+  &__filters {
+    @apply w-full px-5;
+  }
+
+  &__tag {
+    @apply bg-whpptActive px-2 py-1 rounded-md;
+  }
+
+  &__day-picker {
+    &__container {
+      @apply relative;
+    }
+
+    &__calendar {
+      @apply absolute bg-whpptDarkMode z-20;
+      @apply rounded-lg border-solid border-2 border-whpptStandard;
+
+      button:focus,
+      button:active {
+        @apply text-whpptLightMode bg-whpptActive;
+      }
+
+      button:hover:not([aria-disabled='true']) {
+        @apply text-whpptLightMode bg-whpptActive;
+      }
+    }
+  }
+
+  &__loader {
+    @apply relative h-48 flex justify-center items-center;
+
+    &__spinner {
+      @apply animate-spin rounded-full h-8 w-8 border-b-2 border-whpptActive top-2/4 right-2/4;
+    }
+  }
+}

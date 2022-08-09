@@ -4,6 +4,6 @@ type WhpptHeaderProps = {
   text: string;
 };
 
-export const Heading: FC<WhpptHeaderProps> = ({ text }) => {
+export const WhpptHeading: FC<WhpptHeaderProps> = ({ text }) => {
   return <h1 className="whppt-form-heading">{text}</h1>;
 };

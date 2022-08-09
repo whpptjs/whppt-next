@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../ui/components/Input';
-import { splitKeywords } from '../helpers';
+import { splitKeywords } from '../splitKeywords';
 import { SeoData } from './Model/SettingsData';
 import { toast } from 'react-toastify';
 

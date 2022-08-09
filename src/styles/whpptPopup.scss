@@ -18,17 +18,11 @@
 
 .whppt-popup {
   @apply bg-whpptDarkBorder text-whpptLightMode font-Roboto;
-  position: fixed;
-  width: 0;
-  transition: width 0.3s ease;
-  right: 0;
-  height: 100vh;
-  z-index: 998;
-  top: 0;
+  @apply fixed h-screen w-0 right-0 top-0 z-settingsPanel;
+  @apply w-0 transition-width duration-300 ease-in;
 
   &--active {
-    @apply border-l-2 border-whpptDarkMode block lg:pl-24;
-    width: 100%;
+    @apply border-l-2 border-whpptDarkMode block lg:pl-24 w-full;
     &.whppt-popup--fullNav {
       @apply lg:pl-64;
     }

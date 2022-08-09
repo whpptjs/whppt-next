@@ -31,8 +31,8 @@
     @apply mb-5;
   }
   &-split {
-    display: flex;
-    gap: 1rem;
+    @apply flex gap-4;
+
     &--even {
       @apply w-1/2;
     }
@@ -46,9 +46,7 @@
   }
 
   .whppt-form-slug-placeholder {
-    height: 52px;
-    display: flex;
-    align-items: center;
+    @apply flex items-center h-[52px];
   }
 
   &-page-settings {
@@ -61,8 +59,8 @@
   }
 }
 .whppt-form-heading {
-  font-weight: bold;
-  font-size: 2.5rem;
+  @apply flex w-full items-center py-3 px-5;
+  @apply font-bold text-whpptLightMode text-3xl;
 }
 
 .whppt-form {
