@@ -73,6 +73,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               onChange={({ value }) => setFilter(value)}
               value={{ value: filter, label: capitalizeFirstLetter(filter) }}
               isOptionSelected={({ value }) => value === filter}
+              isClearable
             />
           )}
         </div>

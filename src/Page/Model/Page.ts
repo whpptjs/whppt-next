@@ -17,7 +17,7 @@ export type PageData = {
 
 export type PageContents = {
   type: string;
-  [key: string]: any;
+  data: any;
 };
 
 export const Page = values => values as PageData;

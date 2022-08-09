@@ -1,4 +1,4 @@
-import { ComponentData } from '../../ui/Content';
+import { ComponentData } from '../ComponentData';
 
 export type FormattedTextData = ComponentData & {
   text: string;

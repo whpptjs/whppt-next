@@ -1,16 +1,15 @@
 import React from 'react';
 import { FC } from 'react';
-import { ImageEditor } from '../../Editors';
-import { useWhppt } from '../../../Context';
-import { WhpptImageData } from '../../Image/ImageData';
-import { buildCroppedImgUrl } from '../../Image/buildCroppedImgUrl';
-import { ComponentData } from '../../../ui/Content';
+import { ImageEditor } from '../../Editor/Editors';
+import { useWhppt } from '../../Context';
+import { WhpptImageData } from '../../Editor/Image/ImageData';
+import { buildCroppedImgUrl } from '../../Editor/Image/buildCroppedImgUrl';
+import { ComponentArgs } from '../ComponentData';
 
-export type ComponentImageData = ComponentData & {
+export type ImageComponentData = {
   image: WhpptImageData;
 };
-
-export const ImageComponent: FC<{ data: ComponentImageData; onChange: (value: ComponentImageData) => void }> = ({ data, onChange }) => {
+export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, onChange }) => {
   const { editing } = useWhppt();
 
   return (
@@ -19,7 +18,7 @@ export const ImageComponent: FC<{ data: ComponentImageData; onChange: (value: Co
         {data.image.desktop ? (
           <img
             alt="test"
-            src={buildCroppedImgUrl(data.image.desktop, { width: '200', height: '200' })}
+            src={buildCroppedImgUrl(data.image.desktop, { width: '200', height: '100' })}
             style={{ width: '200px', height: '100px' }}
           />
         ) : (

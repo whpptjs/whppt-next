@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { WhpptComponentDefinition } from '../../ui/Content';
+import { WhpptComponentDefinition } from '../../ContentComponents/ComponentData';
 // import { ContentEditorOptions } from '../Panels';
 import { useWhppt } from '../../Context';
 import { EditorOptions } from '../EditorOptions';

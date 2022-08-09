@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import React, { FC } from 'react';
-import { ComponentData } from 'src/ui/Content';
+import { ComponentData } from '../../ContentComponents/ComponentData';
 import { EditorArgs } from '../EditorArgs';
 import { ContentEditorOptions } from './Editor';
 
@@ -9,11 +9,12 @@ export const WhpptContentEditorPanel: FC<EditorArgs<ComponentData[], ContentEdit
     <div>
       {options.componentDefinitions.map(c => {
         if (!c.init) throw new Error(`Definition is missing a init funciton ${c.key}`);
-        const inilizedData = c.init({ _id: nanoid(), definitionKey: c.key } as ComponentData);
+        const inilizedData = c.init({});
+        const componentData: ComponentData = { _id: nanoid(), definitionKey: c.key, data: inilizedData };
 
         return (
           <div key={c.key}>
-            <button className="whppt-content__item" onClick={() => onChange([...value, inilizedData])}>
+            <button className="whppt-content__item" onClick={() => onChange([...value, componentData])}>
               {c.name}
             </button>
           </div>
