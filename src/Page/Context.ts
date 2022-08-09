@@ -1,7 +1,7 @@
-import { PageData } from 'src/Page/Model/Page';
+import { PageData } from '../Page/Model/Page';
 import { PageSettingsData } from '../CommonSettings/Model/SettingsData';
 
-export const defaultState = {} as PageData;
+export const defaultState: PageData = { _id: undefined, header: { type: '' }, pageType: 'page', contents: [] };
 
 export const defaultPageSettingsState = {
   visible: false,
@@ -36,7 +36,7 @@ export type PageContextArgs = {
 };
 
 export const defaultArgs = {
-  page: { _id: '', header: { type: '' } },
+  page: defaultState,
   setPage: () => {},
   pageSettingsData: defaultPageSettingsData,
   setPageSettingsData: () => {},

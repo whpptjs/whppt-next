@@ -4,19 +4,19 @@ export type HeaderData = {
   type: string;
 };
 export type PageData = {
-  _id: string;
+  _id?: string;
   pageType: string;
-  domainId: string;
+  domainId?: string;
   slug?: string;
   settings?: PageSettingsData;
   createdAt?: string;
   updatedAt?: string;
   contents: PageContents;
+  header: HeaderData;
 };
 
 export type PageContents = {
   [key: string]: any;
-  header: HeaderData;
 };
 
 export const Page = values => values as PageData;
