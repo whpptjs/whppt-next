@@ -32,8 +32,12 @@ module.exports = {
       gridAutoRows: {
         gallery: 'fit-content(1rem)',
       },
+      height: {
+        galleryImage: '12.5rem',
+      },
       width: {
         settingsSidebar: '24rem',
+        galleryImage: '22.5rem',
       },
       zIndex: {
         editorPanel: '1000',

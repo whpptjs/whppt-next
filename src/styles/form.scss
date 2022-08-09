@@ -87,7 +87,7 @@
       @apply text-sm mb-5 text-whpptStandard;
     }
     &--full-height {
-      @apply overflow-auto h-85vh;
+      @apply overflow-auto h-[85vh];
     }
     &--flex {
       @apply flex gap-3 items-center;
