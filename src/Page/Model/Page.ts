@@ -1,4 +1,5 @@
 import { PageSettingsData } from 'src/CommonSettings/Model/SettingsData';
+import { ComponentData } from '../../ContentComponents';
 
 export type HeaderData = {
   type: string;
@@ -11,13 +12,8 @@ export type PageData = {
   settings?: PageSettingsData;
   createdAt?: string;
   updatedAt?: string;
-  contents: PageContents[];
+  contents: ComponentData[];
   header: HeaderData;
-};
-
-export type PageContents = {
-  type: string;
-  data: any;
 };
 
 export const Page = values => values as PageData;
