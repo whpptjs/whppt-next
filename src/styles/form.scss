@@ -68,6 +68,9 @@
   &__actions {
     @apply w-3/12;
   }
+  &--group {
+    @apply border-b border-whpptStandard pb-3 mb-3;
+  }
   &__content {
     @apply w-8/12;
     @apply px-6 py-4;
@@ -80,6 +83,9 @@
     &--info {
       @apply text-base mb-5;
     }
+    &--helper-text {
+      @apply text-sm mb-5 text-whpptStandard;
+    }
     &--full-height {
       @apply overflow-auto h-85vh;
     }
@@ -91,6 +97,6 @@
     }
   }
   &--flex-apart {
-    @apply flex gap-2 w-full;
+    @apply flex gap-2 w-full items-center;
   }
 }

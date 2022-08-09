@@ -9,6 +9,7 @@ export const WhpptNewPageEditorPanel: FC = () => {
 
   const [page] = useState({
     slug: '',
+    header: { type: '' },
   });
 
   const [error, setError] = useState('');

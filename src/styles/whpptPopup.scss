@@ -30,6 +30,7 @@
   }
 
   &__contents {
+    @apply px-10;
     textarea {
       resize: none;
     }
@@ -43,7 +44,7 @@
   }
   &__tabs {
     min-height: 74px;
-    @apply px-10 flex w-full;
+    @apply flex w-full;
   }
   &__tab {
     @apply h-full mr-5  w-full text-left text-lg;

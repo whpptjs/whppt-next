@@ -32,11 +32,12 @@ export const General: FC<WhpptTab> = () => {
       domainId: domain._id,
       pageType: 'page',
       contents: [],
+      header: page.header || { type: '' },
     };
 
-    const pageDulpicate = api.page.save({ page: { ...newPage, _id: undefined } });
+    const pageDulpicatePromise = api.page.save({ page: { ...newPage, _id: undefined } });
 
-    toast.promise(pageDulpicate, {
+    toast.promise(pageDulpicatePromise, {
       pending: 'Duplicating page...',
       success: 'Page Duplicated',
       error: 'Page duplicate failed 🤯',
@@ -44,9 +45,9 @@ export const General: FC<WhpptTab> = () => {
   };
 
   const deletePage = () => {
-    const pageDelete = api.page.delete(page);
+    const pageDeletePromise = api.page.delete(page);
 
-    toast.promise(pageDelete, {
+    toast.promise(pageDeletePromise, {
       pending: 'Deleting Page...',
       success: 'Page deleted',
       error: 'Page delete failed 🤯',

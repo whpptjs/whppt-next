@@ -8,7 +8,7 @@ import { defaultPageSettingsData } from './Context';
 export type WhpptPageProps<T extends PageData> = {
   init: (page: T) => T;
   getContents: (args: { page: T; setPage: (page: T) => void }) => ContentTreeNode[];
-  slug: string;
+  slug: string | undefined;
   collection?: string;
   children: ({ page, setPage }: { page: T; setPage: (page: T) => void }) => ReactElement;
 };
@@ -18,15 +18,20 @@ export const WhpptPage = <T extends PageData = PageData>({ slug, getContents, co
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const whpptPageInit = _page => {
+    _page.settings = _page.settings || defaultPageSettingsData;
+    _page.header = _page.header || { type: '' };
+  };
+
   useEffect(() => {
     setLoading(true);
     setError('');
-    if (!domain._id) return;
+    if (!domain._id || !slug) return;
     api.page
       .loadFromSlug({ slug, collection, domain })
       .then(loadedPage => {
         const initialisedPage = init(loadedPage as T);
-        initialisedPage.settings = initialisedPage.settings || defaultPageSettingsData;
+        whpptPageInit(initialisedPage);
         setPage(initialisedPage);
         contentTree.setGetTree(_page => getContents({ page: _page as T, setPage }));
         setPageSettingsData(initialisedPage.settings);

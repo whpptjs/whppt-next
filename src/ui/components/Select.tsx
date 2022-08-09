@@ -38,13 +38,14 @@ export const WhpptSelect = <T extends {}>({
   const _isOptionSelected = (item: T) => item && value && item[idField] === value[idField];
 
   return (
-    <div>
-      <label htmlFor={id}>{label}</label>
-
+    <div className="whppt-select--full">
+      <div className="whppt-label">
+        <label htmlFor={id}>{label}</label>
+      </div>
       <Select<T>
         id={id}
-        className="basic-single"
-        classNamePrefix="select"
+        className="whppt-select"
+        classNamePrefix="whppt-select"
         isDisabled={isDisabled}
         isLoading={isLoading}
         isClearable={isClearable}

@@ -1,20 +1,16 @@
 .whppt-lightMode {
   .whppt-select {
-    &__input .whppt-select__icon {
-      @apply text-whpptDarkMode;
-    }
+    &__control,
     &__menu {
-      ul {
-        @apply bg-whpptLightBorder;
-        .whppt-select__menu-item--active {
-          @apply bg-whpptLightMode;
-        }
-        li {
-          @apply text-whpptDarkMode;
-          &:hover {
-            @apply bg-whpptLightMode;
-          }
-        }
+      @apply border-whpptStandard !important;
+      @apply bg-whpptLightMode  !important;
+    }
+    &__single-value {
+      @apply text-whpptDarkMode !important;
+    }
+    &__option {
+      &:hover {
+        @apply bg-whpptDarkMode text-whpptLightBorder;
       }
     }
   }
@@ -24,67 +20,23 @@
   @apply mb-5;
   @apply w-full relative;
 
-  &__input {
-    @apply relative;
-    .whppt-select__icon {
-      @apply absolute right-0 top-0 bottom-0;
-      @apply flex items-center;
-      pointer-events: none;
-      padding: 0 0.5rem;
-    }
+  &__control {
+    padding: 6px 0;
   }
-
+  &__control,
   &__menu {
-    left: 0;
-    z-index: 1;
-    position: absolute;
-    width: 100%;
-
-    &--up {
-      bottom: 0;
-    }
-
-    &--down {
-      top: 0;
-    }
-
-    ul {
-      @apply border border-whpptStandard rounded-lg;
-      @apply bg-whpptDarkBorder;
-      @apply m-0 list-none;
-      @apply fixed h-80 overflow-auto;
-      width: 230px;
-
-      .whppt-select__menu-item--active {
-        @apply bg-whpptDarkMode;
-      }
-
-      li {
-        @apply p-3;
-        @apply text-whpptLightMode cursor-pointer rounded-lg;
-
-        &:hover {
-          @apply bg-whpptDarkMode;
-        }
-      }
+    @apply border-2 border-whpptStandard border-opacity-70 rounded-lg !important;
+    @apply bg-whpptDarkMode  !important;
+  }
+  &__single-value {
+    @apply text-whpptLightMode !important;
+  }
+  &__option {
+    &:hover {
+      @apply bg-whpptLightMode text-whpptDarkBorder;
     }
   }
-
-  &--dense {
-    .whppt-select__input {
-      input {
-        padding: 0.5rem;
-      }
-    }
-
-    .whppt-select__menu {
-      ul {
-        padding: 0.25rem 0;
-
-        li {
-          padding: 0.5rem;
-        }
-      }
-    }
+  &--full {
+    @apply w-full;
   }
 }
