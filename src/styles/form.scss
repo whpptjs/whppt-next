@@ -18,9 +18,7 @@
 }
 
 .whppt-form {
-  @apply flex py-2;
-  display: flex;
-  gap: 1rem;
+  @apply lg:flex gap-4 py-2;
 
   &__user-invite {
     @apply break-words contents text-left;
@@ -55,10 +53,10 @@
 
   &-page-settings {
     &__actions {
-      @apply flex flex-col w-3/12;
+      @apply flex flex-col lg:w-3/12;
     }
     &__form {
-      @apply w-8/12 overflow-auto;
+      @apply lg:w-8/12 overflow-auto;
     }
   }
 }
@@ -70,13 +68,13 @@
 .whppt-form {
   @apply w-full;
   &__actions {
-    @apply w-3/12;
+    @apply lg:w-3/12;
   }
   &--group {
     @apply border-b border-whpptStandard pb-3 mb-3;
   }
   &__content {
-    @apply w-8/12;
+    @apply lg:w-9/12 xl:w-8/12;
     @apply px-6 py-4;
     &--gap {
       @apply mb-5;

@@ -27,10 +27,10 @@
   top: 0;
 
   &--active {
-    @apply border-l-2 border-whpptDarkMode block pl-24;
+    @apply border-l-2 border-whpptDarkMode block lg:pl-24;
     width: 100%;
     &.whppt-popup--fullNav {
-      @apply pl-64;
+      @apply lg:pl-64;
     }
   }
 
