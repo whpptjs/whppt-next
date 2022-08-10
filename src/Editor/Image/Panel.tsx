@@ -1,5 +1,4 @@
-import React, { FC, useState } from 'react';
-import { CropperRef, Cropper } from 'react-advanced-cropper';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { EditorArgs } from '../EditorArgs';
 import { useWhppt } from '../../Context';
 import { WhpptInput } from '../../ui/components';
@@ -10,55 +9,34 @@ import { DevicePicker } from './DevicePicker';
 import { WhpptImageCrop, WhpptImageData } from './ImageData';
 import { GalleryItem } from '../../Gallery/Model';
 import { ImageEditorOptions } from '../../Editor/';
-
-const getLandscapeRatio = ratio => {
-  const { w, h } = ratio;
-  return w >= h ? w / h : h / w;
-};
-
-const getPortraitRatio = ratio => {
-  const { w, h } = ratio;
-  return w >= h ? h / w : w / h;
-};
+import { WhpptCropper, getLandscapeRatio, getPortraitRatio, defaultCoordinates } from './Cropper';
 
 export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
   const { toggleSettingsPanel } = useWhppt();
 
   const [device, setDevice] = useState<string>('desktop');
-  const [stencilProps, setStencilProps] = useState(() => {
+
+  const getStencilProps = useCallback(() => {
     if (!value[device]) return getLandscapeRatio(aspectRatios[0].ratio);
 
     return value[device].orientation === 'landscape'
       ? getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
       : getPortraitRatio(value[device]?.aspectRatio.ratio || aspectRatios[0].ratio);
-  });
+  }, [value, device]);
 
-  const getImgUrl = galleryItemId => {
-    return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
-  };
+  const [stencilProps, setStencilProps] = useState(() => getStencilProps());
+
+  useEffect(() => setStencilProps(getStencilProps()), [device, getStencilProps]);
 
   const useImage = (image: GalleryItem) => {
     const defaultCrop: WhpptImageCrop = {
       galleryItemId: image._id,
       aspectRatio: { ...aspectRatios[0] },
       orientation: 'landscape',
-      coords: { width: 100, height: 100, left: 0, top: 0 },
+      coords: defaultCoordinates,
     };
+
     onChange({ ...value, [device]: { ...defaultCrop, galleryItemId: image._id } });
-  };
-
-  const onCrop = (cropper: CropperRef) => {
-    const coords = cropper.getCoordinates();
-    const { label, ratio } = value[device].aspectRatio;
-
-    const imageCrop: WhpptImageCrop = {
-      aspectRatio: { label, ratio: { w: ratio.w, h: ratio.h } },
-      coords: coords || value[device].coords,
-      galleryItemId: value[device].galleryItemId,
-      orientation: value[device].orientation,
-    };
-
-    onChange({ ...value, [device]: { ...value[device], ...imageCrop } });
   };
 
   return (
@@ -68,12 +46,10 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
       {value[device] ? (
         <>
           {value[device].galleryItemId ? (
-            <Cropper
-              src={getImgUrl(value[device].galleryItemId)}
-              className="whppt-image-editor-panel__cropper"
-              onChange={onCrop}
-              backgroundClassName={'whppt-cropper-background'}
-              stencilProps={{ aspectRatio: stencilProps, lines: true }}
+            <WhpptCropper
+              value={value[device]}
+              stencilProps={stencilProps}
+              onChange={updatedImageData => onChange({ ...value, [device]: updatedImageData })}
             />
           ) : (
             <></>
