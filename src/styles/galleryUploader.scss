@@ -1,0 +1,8 @@
+.whppt-gallery-uploader {
+  @apply mb-7;
+}
+
+.whppt-gallery-uploader__div {
+  @apply flex justify-center items-center h-galleryItem mb-7;
+  @apply text-5xl border-whpptLightMode border-2 border-dashed;
+}

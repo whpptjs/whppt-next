@@ -10,8 +10,23 @@
     @apply scrollbar-hide;
   }
 
-  &__grid {
-    @apply grid grid-cols-gallery gap-4 flex-1 auto-rows-gallery;
+  &-grid {
+    @apply grid gap-4 flex-1 auto-rows-gallery;
+
+    &--images {
+      @apply grid-cols-galleryImages;
+    }
+
+    &--svgs {
+      @apply grid-cols-gallerySvgs;
+
+      &.svg-container {
+      }
+
+      &.svg-title {
+        @apply text-center;
+      }
+    }
   }
 
   &__settings {
@@ -54,7 +69,7 @@
   }
 
   &__image {
-    @apply h-galleryImage w-galleryImage object-cover cursor-pointer;
+    @apply h-galleryItem w-galleryImage object-cover cursor-pointer;
 
     &--selected {
       @apply outline-whpptActive outline-2 outline;
