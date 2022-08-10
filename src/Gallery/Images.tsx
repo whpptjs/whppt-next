@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { WhpptImageUploader } from '../ui/components/ImageUploader';
-import { WhpptGalleryImage } from '../ui/components/GalleryImage';
-import { GalleryTab } from './GalleryTab';
+import { WhpptGalleryUploader } from './Components';
+import { WhpptGalleryImage } from './Components';
+import { GalleryTab } from './Components';
 import { useWhppt } from '..';
 
 export const Images: FC<GalleryTab> = ({ items, upload, setSelected, selectedId }) => {
@@ -21,8 +21,8 @@ export const Images: FC<GalleryTab> = ({ items, upload, setSelected, selectedId 
 
   return (
     <section className="whppt-gallery whppt-gallery__main-container">
-      <div className="whppt-gallery__grid">
-        <WhpptImageUploader uploadImage={uploadImage} />
+      <div className="whppt-gallery-grid whppt-gallery-grid__images">
+        <WhpptGalleryUploader upload={uploadImage} />
         {items &&
           items.map(img => (
             <WhpptGalleryImage

@@ -1,0 +1,11 @@
+@mixin checkers($size: 50px, $contrast: 0.07) {
+  $checkerColor: rgba(#000, $contrast);
+  $angle: 45deg;
+  $tp: 25%;
+
+  background-image: linear-gradient($angle, $checkerColor $tp, transparent $tp),
+    linear-gradient(-$angle, $checkerColor $tp, transparent $tp), linear-gradient($angle, transparent 3 * $tp, $checkerColor 3 * $tp),
+    linear-gradient(-$angle, transparent 3 * $tp, $checkerColor 3 * $tp);
+  background-size: $size $size;
+  background-position: 0 0, 0 $size/2, $size/2 -1 * $size/2, -1 * $size/2 0;
+}
