@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { WhpptButton, WhpptInput, WhpptDayInput } from '../ui/components';
-import { WhpptGalleryTag } from './GalleryTag';
+import { WhpptGalleryTag } from './Components';
 import { useWhppt } from '../Context';
 import { GalleryItem } from './Model';
 import { toast } from 'react-toastify';

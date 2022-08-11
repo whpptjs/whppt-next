@@ -34,16 +34,10 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
 
     const tags = splitKeywords(searchQueryTags) || [];
     const type = settingsPanel.activeTab as GalleryFileType;
-    console.log('search', type);
     const search = api.gallery
       .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter })
-      .then(({ items }: { items: GalleryItem[] }) => {
-        setItems(items);
-        console.log('items', items);
-      })
-      .catch(error => {
-        setError(error.message || error);
-      });
+      .then(({ items }: { items: GalleryItem[] }) => setItems(items))
+      .catch(error => setError(error.message || error));
 
     return toast.promise(search, {
       error: 'Image search failed 🤯',
