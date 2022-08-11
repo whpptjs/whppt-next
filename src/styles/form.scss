@@ -97,6 +97,10 @@
     }
   }
   &--flex-apart {
-    @apply flex gap-2 w-full items-center;
+    @apply flex w-full flex-wrap items-center;
+
+    & > div {
+      @apply w-6/12 pr-1;
+    }
   }
 }
