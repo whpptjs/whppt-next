@@ -26,6 +26,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
   const [filter, setFilter] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState<'loading' | 'loaded'>('loading');
+  const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 
   const search = useCallback(() => {
     setError('');
@@ -95,8 +96,8 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               isClearable
             />
           )}
+          <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
         </div>
-        <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
 
         {error ? <h1>Search failed</h1> : <></>}
 
@@ -107,7 +108,10 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               label="Images"
               items={items}
               upload={upload}
-              setSelected={setSelected}
+              setSelected={image => {
+                setSelected(image);
+                setSettingsOpen(true);
+              }}
               selectedId={selected && selected._id}
             />
           ) : (
@@ -119,7 +123,10 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               label="Videos"
               items={items}
               upload={upload}
-              setSelected={setSelected}
+              setSelected={video => {
+                setSelected(video);
+                setSettingsOpen(true);
+              }}
               selectedId={selected && selected._id}
             />
           ) : (
@@ -128,15 +135,20 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
         </WhpptTab>
       </div>
 
-      <div className={`whppt-gallery__settings ${selected ? 'whppt-gallery__settings--active' : ''}`}>
+      <div className={`whppt-gallery-settings ${selected && settingsOpen ? 'whppt-gallery-settings--active' : ''}`}>
         {selected && (
           <GalleryItemSettings
-            use={() => {
-              onUse && onUse(selected as GalleryItem);
-              hideSettingsPanel();
-            }}
+            use={
+              onUse
+                ? updatedItem => {
+                    onUse(updatedItem as GalleryItem);
+                    hideSettingsPanel();
+                  }
+                : undefined
+            }
             remove={() => remove(selected._id)}
             selectedId={selected._id}
+            setSettingsOpen={setSettingsOpen}
           />
         )}
       </div>
