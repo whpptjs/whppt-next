@@ -29,12 +29,16 @@
     }
 
     &__header {
-      @apply flex justify-between items-end;
+      @apply flex justify-between items-baseline mt-3;
     }
 
     &__title {
-      @apply text-3xl leading-9 font-bold mt-3;
-      @apply whitespace-nowrap overflow-hidden text-ellipsis;
+      @apply flex flex-wrap items-center w-full max-w-[20rem];
+      @apply text-3xl leading-9 font-bold;
+
+      &__name {
+        @apply whitespace-nowrap overflow-hidden text-ellipsis;
+      }
     }
 
     &__icon {

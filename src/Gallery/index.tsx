@@ -97,9 +97,8 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
             />
           )}
           <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+          {error ? <h1>Search failed</h1> : <></>}
         </div>
-
-        {error ? <h1>Search failed</h1> : <></>}
 
         <WhpptTab selectedTab={settingsPanel.activeTab}>
           {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'image') ? (
