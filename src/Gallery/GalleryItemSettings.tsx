@@ -42,6 +42,17 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
     });
   };
 
+  const formatFileName = (filename: string) => {
+    const filenameSplit = filename.split('.');
+    return (
+      <>
+        <span className="whppt-gallery-settings__title__name">{filenameSplit[0]}</span>
+        <span>{'.'}</span>
+        <span>{filenameSplit[1]}</span>
+      </>
+    );
+  };
+
   return (
     <div className="whppt-gallery-settings__container">
       {loading ? (
@@ -56,7 +67,8 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
           ) : (
             <>
               <div className="whppt-gallery-settings__header">
-                <p className="whppt-gallery-settings__title">{item.fileInfo?.originalname || ''}</p>
+                {item.fileInfo && <p className="whppt-gallery-settings__title">{formatFileName(item.fileInfo.originalname)}</p>}
+
                 <button className="whppt-gallery-settings__icon" onClick={() => setSettingsOpen(false)}>
                   <WhpptIcon is="close" />
                 </button>
