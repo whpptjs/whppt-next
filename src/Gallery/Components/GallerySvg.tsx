@@ -2,12 +2,12 @@ import React, { FC, useState, useEffect } from 'react';
 import parse from 'html-react-parser';
 import { useWhppt } from '../../Context';
 
-type WhpptSvgItemProps = {
+type WhpptGallerySvgProps = {
   itemId: string | number;
   name: string;
 };
 
-export const WhpptSvgItem: FC<WhpptSvgItemProps> = ({ itemId, name }) => {
+export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name }) => {
   const { api } = useWhppt();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
