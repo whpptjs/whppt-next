@@ -5,6 +5,7 @@ import { useWhppt } from '../../Context';
 type WhpptGallerySvgProps = {
   itemId: string | number;
   name: string;
+  onClick: (e: any) => void;
   isSelected: boolean;
 };
 
