@@ -21,7 +21,7 @@ export const Images: FC<GalleryTab> = ({ items, upload, setSelected, selectedId 
 
   return (
     <section className="whppt-gallery whppt-gallery__main-container">
-      <div className="whppt-gallery-grid whppt-gallery-grid--images">
+      <div className="whppt-gallery-grid whppt-gallery-grid__images">
         <WhpptGalleryUploader upload={uploadImage} />
         {items &&
           items.map(img => (

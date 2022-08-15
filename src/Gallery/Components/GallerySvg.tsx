@@ -5,9 +5,11 @@ import { useWhppt } from '../../Context';
 type WhpptGallerySvgProps = {
   itemId: string | number;
   name: string;
+  onClick: (e: any) => void;
+  isSelected: boolean;
 };
 
-export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name }) => {
+export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name, onClick, isSelected }) => {
   const { api } = useWhppt();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -30,7 +32,9 @@ export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name }) => {
   ) : loading ? (
     <p>loading ...</p>
   ) : (
-    <div className="whppt-gallery-grid--svgs svg-container">
+    <div
+      className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''}`}
+      onClick={() => onClick({ _id: itemId, svgString: SvgString })}>
       {parse(svgString)}
       {<p className="whppt-gallery-grid--svgs svg-title">{name}</p>}
     </div>

@@ -39,6 +39,7 @@ module.exports = {
       width: {
         settingsSidebar: '24rem',
         galleryImage: '22.5rem',
+        gallerySvg: '12.5rem',
       },
       zIndex: {
         editorPanel: '1000',
