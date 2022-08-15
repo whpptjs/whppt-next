@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { arrayMoveImmutable } from 'array-move';
+import arrayMoveImmutable from 'array-move';
 import { WhpptIcon } from '../../index';
 import { useWhppt } from '../../Context';
 import { ComponentData } from '../../ContentComponents/ComponentData';
