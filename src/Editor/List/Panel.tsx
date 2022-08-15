@@ -1,10 +1,13 @@
 import React, { FC, useMemo } from 'react';
 import { nanoid } from 'nanoid';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { arrayMoveImmutable } from 'array-move';
+// import { arrayMoveImmutable } from 'array-move';
 import { EditorOptions } from '../EditorOptions';
 import { EditorArgs } from '../EditorArgs';
 import { WhpptButton, WhpptIcon } from '../../ui/components';
+
+const { arrayMoveImmutable } = require('array-move');
+console.log('🚀 ~ file: Panel.tsx ~ line 10 ~ arrayMoveImmutable', arrayMoveImmutable);
 
 export type ListEditorOptions = EditorOptions & {
   addNew: () => any;
