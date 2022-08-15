@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../../Editor/';
 import { WhpptSvgData } from './SvgData';
