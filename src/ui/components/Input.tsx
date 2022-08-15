@@ -43,7 +43,7 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
           name={name}
           disabled={disabled}
           onKeyPress={e => {
-            if (onEnterKeyPressed && e.key === 'Enter') onEnterKeyPressed(e.target.value);
+            if (onEnterKeyPressed && e.key === 'Enter') onEnterKeyPressed(_value);
           }}
           onChange={e => {
             if (onChangeEvent) return onChangeEvent(e);

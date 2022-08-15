@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { nanoid } from 'nanoid';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { arrayMoveImmutable } from 'array-move';
+import arrayMoveImmutable from 'array-move';
 import { EditorOptions } from '../EditorOptions';
 import { EditorArgs } from '../EditorArgs';
 import { WhpptButton, WhpptIcon } from '../../ui/components';
