@@ -13,19 +13,12 @@
   &-grid {
     @apply grid gap-4 flex-1 auto-rows-gallery;
 
-    &--images {
+    &__images {
       @apply grid-cols-galleryImages;
     }
 
-    &--svgs {
+    &__svgs {
       @apply grid-cols-gallerySvgs;
-
-      &.svg-container {
-      }
-
-      &.svg-title {
-        @apply text-center;
-      }
     }
   }
 
@@ -78,6 +71,22 @@
 
   &__image-name {
     @apply whitespace-nowrap overflow-hidden text-ellipsis;
+  }
+
+  &__svg {
+    @apply h-galleryItem w-gallerySvg cursor-pointer;
+
+    &--selected {
+      @apply outline-whpptActive outline-2 outline;
+    }
+
+    & svg {
+      @apply h-full w-full;
+    }
+  }
+
+  &.svg-title {
+    @apply text-center;
   }
 
   &__filters {
