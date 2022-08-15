@@ -2,9 +2,10 @@ import React, { FC, ReactElement } from 'react';
 import { useWhppt } from '../../Context';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
+import { WhpptSvgData } from './SvgData';
 
 export const SvgEditor: FC<
-  EditorArgs<string> & {
+  EditorArgs<WhpptSvgData, EditorOptions> & {
     label?: string;
     children: ReactElement | ReactElement[];
   }

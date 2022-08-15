@@ -4,7 +4,7 @@ import { GalleryTab } from './Components';
 import { useWhppt } from '../Context';
 import { WhpptGallerySvg } from './Components';
 
-export const Svgs: FC<GalleryTab> = ({ items, upload }) => {
+export const Svgs: FC<GalleryTab> = ({ items, upload, setSelected, selectedId }) => {
   const { domain } = useWhppt();
 
   const uploadSvg = newFile => {
@@ -17,9 +17,12 @@ export const Svgs: FC<GalleryTab> = ({ items, upload }) => {
 
   return (
     <section className="whppt-gallery whppt-gallery__main-container">
-      <div className="whppt-gallery-grid whppt-gallery-grid--svgs">
+      <div className="whppt-gallery-grid whppt-gallery-grid__svgs">
         <WhpptGalleryUploader upload={uploadSvg} />
-        {items && items.map(({ fileInfo, _id }, index) => <WhpptGallerySvg key={index} itemId={_id} name={fileInfo?.originalname} />)}
+        {items &&
+          items.map(({ fileInfo, _id }, index) => (
+            <WhpptGallerySvg key={index} itemId={_id} name={fileInfo?.originalname} onClick={setSelected} isSelected={selectedId == _id} />
+          ))}
       </div>
     </section>
   );
