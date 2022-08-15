@@ -1,7 +1,5 @@
 import { Domain } from './Model';
 
-export const defaultState = {} as Domain;
-
 export type AppContextArgs = {
   domain: Domain;
   setDomain: (val: Domain) => void;

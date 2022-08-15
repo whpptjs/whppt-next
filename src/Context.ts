@@ -5,7 +5,6 @@ import * as app from './App/Context';
 import * as editor from './Editor/Context';
 import * as site from './Site/Context';
 import * as security from './Security/Context';
-import * as page from './Page/Context';
 import * as settings from './Settings/Context';
 import * as gallery from './Gallery/Context';
 import { ContentTreeNode } from './ui/Content';
@@ -23,9 +22,10 @@ export const Whppt = createContext({
   ...security.Context(security.defaultArgs),
   ...app.Context(app.defaultArgs),
   ...site.Context(site.defaultArgs),
-  ...page.Context(page.defaultArgs),
   ...settings.Context(settings.defaultArgs),
   ...gallery.Context(gallery.defaultArgs),
+  page: {} as PageData,
+  setPage: (_: PageData) => {},
   api: Api(),
   contentTree,
   isDraftMode: false,
@@ -43,7 +43,7 @@ export const useWhpptNav: <T>() => {
 } = <T>() => {
   const whppt = useContext(Whppt);
   return {
-    nav: whppt.initNav({ ...whppt.nav?.content }),
+    nav: whppt.nav?.content,
     setNav: (nav: T) => whppt.setNav({ ...whppt.nav, content: nav }),
   };
 };
@@ -56,5 +56,16 @@ export const useWhpptFooter: <T>() => {
   return {
     footer: whppt.footer?.content || {},
     setFooter: (footer: T) => whppt.setFooter({ ...whppt.footer, content: footer }),
+  };
+};
+
+export const useWhpptPageContent: <T>() => {
+  pageContent: T;
+  setPageContent: (page: T) => void;
+} = <T>() => {
+  const whppt = useContext(Whppt);
+  return {
+    pageContent: whppt.page?.content || {},
+    setPageContent: (content: T) => whppt.setPage({ ...whppt.page, content }),
   };
 };

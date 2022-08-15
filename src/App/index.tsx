@@ -1,32 +1,48 @@
 import React, { FC, ReactElement, useEffect, useMemo, useState } from 'react';
-import { contentTree, Whppt } from './Context';
+import { contentTree, Whppt } from '../Context';
 import { ToastContainer } from 'react-toastify';
-import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
-import { WhpptEditorPanel } from './Editor/EditorPanel';
-import { SettingsPanel } from './Settings/Panel';
-import { GalleryPanel } from './Gallery/Panel';
-import { MenuItem, MenuItemOptions, WhpptMainNav } from './ui/MainNav';
-import { Api } from './Api';
-import * as editor from './Editor/Context';
-import * as appContext from './App/Context';
-import * as siteContext from './Site/Context';
-import * as pageContext from './Page/Context';
-import * as securityContext from './Security/Context';
-import * as settingsContext from './Settings/Context';
-import * as galleryContext from './Gallery/Context';
-import { WhpptLogin } from './ui/Login';
-import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
+import type { WhpptAppEditorsArg } from '../Editor/EditorPanel';
+import { WhpptEditorPanel } from '../Editor/EditorPanel';
+import { SettingsPanel } from '../Settings/Panel';
+import { MenuItem, MenuItemOptions, WhpptMainNav } from '../ui/MainNav';
+import { Api } from '../Api';
+import * as editor from '../Editor/Context';
+import * as appContext from './Context';
+import * as siteContext from '../Site/Context';
+import * as securityContext from '../Security/Context';
+import * as settingsContext from '../Settings/Context';
+import { WhpptLogin } from '../ui/Login';
+import { WhpptSetNewUserDetails } from '../ui/Login/WhpptSetNewUserDetails';
+import { Domain } from './Model';
+import { GalleryPanel } from '../Gallery/Panel';
+import * as galleryContext from '../Gallery/Context';
+import { Footer, Nav } from '../Site/Model';
+import { PageData, pageFactory } from '../Page';
+
+export * from './Model';
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
+  domain?: Domain;
+  nav?: Nav<any>;
+  footer?: Footer<any>;
+  page?: PageData;
   editors: WhpptAppEditorsArg;
   error: (error: Error) => ReactElement;
   menuItems?: (options: MenuItemOptions) => MenuItem[];
-  initNav?: (nav: any) => any;
-  initFooter?: (footer: any) => any;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
-export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = () => [], error, initNav, initFooter }) => {
+
+export const WhpptApp: FC<WhpptAppOptions> = ({
+  children,
+  domain: defaultDomain,
+  nav: defaultNav,
+  footer: defaultFooter,
+  page: defaultPage,
+  editors,
+  menuItems = () => [],
+  error,
+}) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [isDraftMode] = useState(process.env.NEXT_PUBLIC_DRAFT === 'true');
   const [lightMode, setLightMode] = useState(false);
@@ -35,12 +51,11 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
   const [errorState, setError] = useState<Error>();
   const [editing, setEditing] = useState(false);
   const [editorState, setEditorState] = useState(editor.defaultState);
-  const [domain, setDomain] = useState(appContext.defaultState);
-  const [page, setPage] = useState(pageContext.defaultState);
-  const [nav, setNav] = useState(siteContext.defaultNavState);
-  const [footer, setFooter] = useState(siteContext.defaultFooterState);
+  const [domain, setDomain] = useState(defaultDomain);
+  const [page, setPage] = useState(pageFactory.init(defaultDomain, defaultPage));
+  const [nav, setNav] = useState(defaultNav);
+  const [footer, setFooter] = useState(defaultFooter);
   const [settingsData, setSettingsData] = useState(siteContext.defaultSettingsData);
-  const [pageSettingsData, setPageSettingsData] = useState(pageContext.defaultPageSettingsData);
   const [user, setUser] = useState(securityContext.defaultState);
   const [settingsPanel, setSettingsPanel] = useState(settingsContext.defaultSettingsPanelState);
   const [galleryPanel, setGalleryPanel] = useState(galleryContext.defaultGalleryPanelState);
@@ -61,64 +76,31 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
         domain,
         setDomain,
       }),
-      domain,
-      ...pageContext.Context({
-        page,
-        setPage,
-        pageSettingsData,
-        setPageSettingsData,
-      }),
       ...siteContext.Context({
         nav,
         setNav,
-        initNav,
         footer,
         setFooter,
-        initFooter,
         settingsData,
         setSettingsData,
       }),
       ...securityContext.Context({ user, setUser }),
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
       ...galleryContext.Context({ galleryPanel, setGalleryPanel }),
+      page,
+      setPage,
       contentTree,
       navWidth,
       isDraftMode,
     };
-  }, [
-    editing,
-    editorState,
-    api,
-    domain,
-    page,
-    pageSettingsData,
-    nav,
-    initNav,
-    footer,
-    initFooter,
-    settingsData,
-    user,
-    settingsPanel,
-    galleryPanel,
-    navWidth,
-    isDraftMode,
-  ]);
+  }, [editing, editorState, api, domain, page, nav, footer, settingsData, user, settingsPanel, galleryPanel, navWidth, isDraftMode]);
 
   useEffect(() => {
-    Promise.all([api.app.domain.loadForCurrentHost(), api.security.verify()])
-      .then(([domain, user]) => {
-        setDomain(domain);
-        setUser(user);
-        return Promise.all([api.site.footer.load({ domain }), api.site.nav.load({ domain })]).then(([footer, nav]) => {
-          setFooter({
-            ...footer,
-            content: initFooter(footer?.content || {}),
-          });
-          setNav({ ...nav });
-        });
-      })
+    api.security
+      .verify()
+      .then(user => setUser(user))
       .catch(err => setError(err));
-  }, [api, initFooter, initNav]);
+  }, [api]);
 
   const checkWhpptUser = () => {
     //TODO work this out better
@@ -132,6 +114,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
   }, [setRenderChildren, user]);
 
   useEffect(() => {
+    // TODO: move the px values to a file that can be imported here and in the tailwind config
     setNavWidth(showFullNav ? '256px' : '96px');
   }, [navWidth, showFullNav]);
 

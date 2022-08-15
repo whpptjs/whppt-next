@@ -5,7 +5,6 @@ import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
 import { toast } from 'react-toastify';
 import { SavePagePopup } from '../../ui/Popups/SavePage';
-import { defaultState as defaultPageData } from '../Context';
 import { PageData } from '../Model/Page';
 
 export const General: FC<WhpptTab> = () => {
@@ -30,7 +29,6 @@ export const General: FC<WhpptTab> = () => {
 
   const duplicatePage = () => {
     const newPage: PageData = {
-      ...defaultPageData,
       ...page,
       _id: undefined,
       slug: validSlug,

@@ -1,6 +1,7 @@
 import { Nav } from '../Model';
 import { Domain } from '../..//App/Model';
 import { WhpptHttp } from '../../Api/Http';
+import { HttpError } from '../../HttpError';
 
 export type SiteNavApi = {
   load: ({ domain }) => Promise<Nav<any>>;
@@ -13,9 +14,14 @@ export const SiteNavApi: SiteNavApiConstructor = ({ http }) => {
     load: ({ domain }) => {
       if (!domain && domain._id) throw new Error('Invalid Domain');
 
-      return http.secure.getJson<Nav<any>>({
-        path: `/api/site/loadNav?domainId=${domain._id}`,
-      });
+      return http.secure
+        .getJson<Nav<any>>({
+          path: `/api/site/loadNav?domainId=${domain._id}`,
+        })
+        .catch((err: HttpError) => {
+          if (err.status === 404) return undefined;
+          throw err;
+        });
     },
     save: ({ domain, nav, publish }) => {
       if (!domain && domain._id) throw new Error('Invalid Domain');

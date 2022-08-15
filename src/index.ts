@@ -1,6 +1,7 @@
 export * from './HttpError';
 export * from './Context';
 export * from './App';
+export * from './Site/Model';
 export * from './Page';
 export * from './Editor';
 export * from './ui/components';

@@ -1,6 +1,7 @@
 import { Domain } from '../../App/Model';
 import { Footer } from '../Model';
 import { WhpptHttp } from '../../Api/Http';
+import { HttpError } from '../../HttpError';
 
 export type SiteFooterApi = {
   load: ({ domain }) => Promise<Footer<any>>;
@@ -13,9 +14,14 @@ export const SiteFooterApi: SiteFooterApiConstructor = ({ http }) => {
     load: ({ domain }) => {
       if (!domain && domain._id) throw new Error('Invalid Domain');
 
-      return http.secure.getJson<Footer<any>>({
-        path: `/api/site/loadFooter?domainId=${domain._id}`,
-      });
+      return http.secure
+        .getJson<Footer<any>>({
+          path: `/api/site/loadFooter?domainId=${domain._id}`,
+        })
+        .catch((err: HttpError) => {
+          if (err.status === 404) return undefined;
+          throw err;
+        });
     },
     save: ({ domain, footer, publish }) => {
       if (!domain && domain._id) throw new Error('Invalid Domain');

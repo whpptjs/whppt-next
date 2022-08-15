@@ -4,14 +4,14 @@ import { OpenGraph } from '../../CommonSettings/OpenGraph';
 import { WhpptTab } from '../../ui/components/WhpptTab';
 
 export const PageOpenGraph = ({ name, label }: WhpptTab) => {
-  const { api, page, pageSettingsData, setPageSettingsData } = useWhppt();
+  const { api, page, setPage } = useWhppt();
 
   const save = (title, keywords, description) => {
-    const settings = { ...pageSettingsData, og: { title, keywords, description } };
+    const settings = { ...page.settings, og: { title, keywords, description } };
     const updatedPage = { ...page, settings: { ...settings } };
 
-    return api.page.save({ page: { ...updatedPage } }).then(() => {
-      setPageSettingsData(settings);
+    return api.page.save({ page: updatedPage }).then(() => {
+      setPage(updatedPage);
     });
   };
 
@@ -20,9 +20,9 @@ export const PageOpenGraph = ({ name, label }: WhpptTab) => {
       name={name}
       label={label}
       save={save}
-      title={pageSettingsData.og && pageSettingsData.og.title}
-      keywords={pageSettingsData.og && pageSettingsData.og.keywords}
-      description={pageSettingsData.og && pageSettingsData.og.description}
+      title={page.settings.og && page.settings.og.title}
+      keywords={page.settings.og && page.settings.og.keywords}
+      description={page.settings.og && page.settings.og.description}
     />
   );
 };

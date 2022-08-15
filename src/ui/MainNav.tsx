@@ -59,6 +59,7 @@ export const WhpptMainNav: FC<{
     hideGalleryPanel,
     galleryPanel,
     page,
+    domain,
   } = useWhppt();
   const logout = () => {
     Cookies.remove('authToken');
@@ -103,7 +104,7 @@ export const WhpptMainNav: FC<{
       },
       order: 400,
       group: 'page',
-      disabled: showPanel,
+      disabled: !domain,
       groupOrder: 200,
     },
     {
