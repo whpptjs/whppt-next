@@ -3,7 +3,7 @@ import parse from 'html-react-parser';
 import { useWhppt } from '../../Context';
 
 type WhpptGallerySvgProps = {
-  itemId: string | number;
+  itemId: string;
   name: string;
   onClick: (e: any) => void;
   isSelected: boolean;
@@ -11,29 +11,31 @@ type WhpptGallerySvgProps = {
 
 export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name, isSelected }) => {
   const { api } = useWhppt();
+  const [created, setCreated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [svgString, setSvgString] = useState('');
 
   useEffect(() => {
-    //TODO: Check if we will return Svg or gallery Item
-    api.gallery.loadSvg
-      .load('_id')
-      .then(res => res.text())
+    if (!created) return setCreated(true);
+    api.gallery
+      .loadSvg(itemId)
       .then(svgString => {
         setSvgString(svgString);
-        setLoading(true);
+        setLoading(false);
       })
       .catch(error => setError(error.message || error));
-  }, [itemId]);
+  }, [api, created, itemId]);
 
   return error ? (
-    <p>Svg could not be loaded</p>
+    <>
+      <p>Svg could not be loaded</p> {error}
+    </>
   ) : loading ? (
     <p>loading ...</p>
   ) : (
     <div className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''}`}>
-      {parse(svgString)}
+      {svgString && parse(svgString)}
       {<p className="whppt-gallery-grid--svgs svg-title">{name}</p>}
     </div>
   );

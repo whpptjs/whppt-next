@@ -20,8 +20,8 @@ export const Svgs: FC<GalleryTab> = ({ items, upload, setSelected, selectedId })
       <div className="whppt-gallery-grid whppt-gallery-grid__svgs">
         <WhpptGalleryUploader upload={uploadSvg} />
         {items &&
-          items.map(({ fileInfo, _id }, index) => (
-            <WhpptGallerySvg key={index} itemId={_id} name={fileInfo?.originalname} onClick={setSelected} isSelected={selectedId == _id} />
+          items.map(({ fileInfo, _id }) => (
+            <WhpptGallerySvg key={_id} itemId={_id} name={fileInfo?.originalname} onClick={setSelected} isSelected={selectedId == _id} />
           ))}
       </div>
     </section>
