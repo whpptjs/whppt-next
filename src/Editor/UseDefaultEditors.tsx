@@ -13,6 +13,7 @@ import {
   WhpptContentsTreeEditorPanel,
   WhpptImageEditorPanel,
   WhpptChangeHeaderEditorPanel,
+  WhpptSvgEditorPanel,
 } from './Panels';
 import { ImageEditorOptions } from './Image/Editor';
 
@@ -29,4 +30,5 @@ export const UseDefaultEditors = ({ editor, value, onChange, options }: UseDefau
   if (editor === 'link') return <WhpptLinkEditorPanel value={value} onChange={onChange} options={options} />;
   if (editor === 'content') return <WhpptContentEditorPanel value={value} onChange={onChange} options={options as ContentEditorOptions} />;
   if (editor === 'image') return <WhpptImageEditorPanel value={value} onChange={onChange} options={options as ImageEditorOptions} />;
+  if (editor === 'svg') return <WhpptSvgEditorPanel value={value} onChange={onChange} options={options} />;
 };

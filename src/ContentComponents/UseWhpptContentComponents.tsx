@@ -4,6 +4,7 @@ import { FormattedTextComponent, FormattedTextComponentData } from './FormattedT
 import { ImageComponent, ImageComponentData } from './Image';
 import { PlainTextComponent, PlainTextPageComponentData } from './PlainText';
 import { RichTextComponent, RichTextComponentData } from './RichText';
+import { SvgComponent, SvgComponentData } from './Svg';
 
 export const UseWhpptContentComponents = (componentData: ComponentData, onChange: (data: ComponentData) => void) => {
   if (componentData.definitionKey === 'PlainText')
@@ -31,4 +32,6 @@ export const UseWhpptContentComponents = (componentData: ComponentData, onChange
         onChange={value => onChange({ ...componentData, data: value })}
       />
     );
+  if (componentData.definitionKey === 'Svg')
+    return <SvgComponent data={componentData.data as SvgComponentData} onChange={value => onChange({ ...componentData, data: value })} />;
 };
