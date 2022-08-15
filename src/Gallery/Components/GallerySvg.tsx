@@ -39,4 +39,3 @@ export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name, isSele
       {<p className="whppt-gallery-grid__svgs svg-title">{name}</p>}
     </div>
   );
-};
