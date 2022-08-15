@@ -107,31 +107,33 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
 
               <WhpptDayInput date={item.date} onChange={date => setItem({ ...item, date })} />
 
-              <WhpptInput
-                id="alt"
-                info="Enter the default alt text for this image"
-                label="Default alt text"
-                error=""
-                type="text"
-                value={(item && item.defaultAltText) || ''}
-                placeholder="Default alt text"
-                onChange={value => {
-                  setItem({ ...item, defaultAltText: value });
-                }}
-              />
+              {item.type === 'image' && (
+                <>
+                  <WhpptInput
+                    id="alt"
+                    info=""
+                    label="Default alt text"
+                    error=""
+                    type="text"
+                    value={(item && item.defaultAltText) || ''}
+                    onChange={value => {
+                      setItem({ ...item, defaultAltText: value });
+                    }}
+                  />
 
-              <WhpptInput
-                id="caption"
-                info="Enter the default caption text for this image"
-                label="Default caption"
-                error=""
-                type="text"
-                value={(item && item.defaultCaption) || ''}
-                placeholder="Default alt caption"
-                onChange={value => {
-                  setItem({ ...item, defaultCaption: value });
-                }}
-              />
+                  <WhpptInput
+                    id="caption"
+                    info=""
+                    label="Default caption"
+                    error=""
+                    type="text"
+                    value={(item && item.defaultCaption) || ''}
+                    onChange={value => {
+                      setItem({ ...item, defaultCaption: value });
+                    }}
+                  />
+                </>
+              )}
 
               <div className="whppt-gallery-settings__action-buttons">
                 <WhpptButton text="save" onClick={() => save(item)} />
