@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
-import { WhpptGalleryUploader } from './Components';
-import { WhpptGalleryImage } from './Components';
-import { GalleryTab } from './Components';
+import { WhpptGalleryUploader, WhpptGalleryImage, GalleryTab } from './Components';
 import { useWhppt } from '..';
 
 export const Images: FC<GalleryTab> = ({ items, upload, setSelected, selectedId }) => {

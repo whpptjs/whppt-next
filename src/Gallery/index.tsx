@@ -40,7 +40,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
       .catch(error => setError(error.message || error));
 
     return toast.promise(search, {
-      error: 'Image search failed 🤯',
+      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} search failed 🤯`,
     });
   }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab, filter]);
 
@@ -53,9 +53,9 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     const upload = api.gallery.upload(newFile).then(file => setItems([...items, file]));
 
     return toast.promise(upload, {
-      pending: 'Uploading Image...',
-      success: 'Image uploaded',
-      error: 'Image upload failed 🤯',
+      pending: `Uploading ${capitalizeFirstLetter(settingsPanel.activeTab)}...`,
+      success: `${capitalizeFirstLetter(settingsPanel.activeTab)} uploaded`,
+      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} upload failed 🤯`,
     });
   };
 
@@ -66,9 +66,9 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     });
 
     return toast.promise(remove, {
-      pending: 'Deleting image...',
-      success: 'Image deleted',
-      error: 'Image delete failed 🤯',
+      pending: `Deleting ${capitalizeFirstLetter(settingsPanel.activeTab)}...`,
+      success: `${capitalizeFirstLetter(settingsPanel.activeTab)} deleted`,
+      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} delete failed 🤯`,
     });
   };
 
