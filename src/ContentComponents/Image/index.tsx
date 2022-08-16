@@ -16,11 +16,14 @@ export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, on
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
       <ImageEditor value={data?.image} sizes={['desktop', 'tablet', 'mobile']} onChange={val => onChange({ ...data, image: val })}>
         {data?.image?.desktop ? (
-          <img
-            alt="test"
-            src={buildCroppedImgUrl(data?.image?.desktop, { width: '200', height: '200' })}
-            style={{ width: '200px', height: '100px' }}
-          />
+          <>
+            <img
+              alt={data?.image?.desktop?.altText || ''}
+              src={buildCroppedImgUrl(data?.image?.desktop, { width: '200', height: '200' })}
+              style={{ width: '200px', height: '100px' }}
+            />
+            {data?.image?.desktop?.caption ? <figcaption>{data.image.desktop.caption}</figcaption> : <></>}
+          </>
         ) : (
           <h1>Select your image</h1>
         )}

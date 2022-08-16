@@ -29,14 +29,25 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
   useEffect(() => setStencilProps(getStencilProps()), [device, getStencilProps]);
 
   const useImage = (image: GalleryItem) => {
-    const defaultCrop: WhpptImageCrop = {
-      galleryItemId: image._id,
-      aspectRatio: { ...aspectRatios[0] },
-      orientation: 'landscape',
-      coords: defaultCoordinates,
+    const deviceImage = value && value[device];
+    const { _id, defaultAltText, defaultCaption } = image;
+
+    const imageOrientation = () => {
+      if (deviceImage && deviceImage.aspectRatio.label === 'square') return undefined;
+
+      return (deviceImage && deviceImage.orientation) || 'landscape';
     };
 
-    onChange({ ...value, [device]: { ...defaultCrop, galleryItemId: image._id } });
+    const defaultCrop: WhpptImageCrop = {
+      galleryItemId: _id,
+      aspectRatio: (deviceImage && deviceImage.aspectRatio) || { ...aspectRatios[0] },
+      orientation: imageOrientation(),
+      coords: (deviceImage && deviceImage.coords) || defaultCoordinates,
+      altText: defaultAltText || '',
+      caption: defaultCaption || '',
+    };
+
+    onChange({ ...value, [device]: { ...defaultCrop, galleryItemId: _id } });
   };
 
   return (
@@ -46,17 +57,39 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
       {value[device] ? (
         <>
           {value[device].galleryItemId ? (
-            <WhpptCropper
-              value={value[device]}
-              stencilProps={stencilProps}
-              onChange={updatedImageData => onChange({ ...value, [device]: updatedImageData })}
-            />
+            <>
+              <WhpptCropper
+                value={value[device]}
+                stencilProps={stencilProps}
+                onChange={updatedImageData => {
+                  onChange({ ...value, [device]: { ...value[device], ...updatedImageData } });
+                }}
+              />
+              <div className="whppt-image-editor-panel__gallery-actions">
+                <button
+                  className="whppt-image-editor-panel__gallery-actions__button"
+                  onClick={() => {
+                    toggleSettingsPanel({
+                      key: 'gallery',
+                      activeTab: 'image',
+                      component: <Gallery onUse={useImage} />,
+                    });
+                  }}>
+                  {'Choose a different image'}
+                </button>
+                <button
+                  className="whppt-image-editor-panel__gallery-actions__button"
+                  onClick={() => onChange({ ...value, [device]: null })}>
+                  Remove
+                </button>
+              </div>
+            </>
           ) : (
             <></>
           )}
 
           {aspectRatios && (
-            <div className="whppt-gallery__settings__tag-container">
+            <div className="whppt-gallery-settings__tag-container">
               {aspectRatios.map((ratio, index) => (
                 <button
                   key={index}
@@ -73,7 +106,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
                 </button>
               ))}
 
-              <div className="whppt-gallery__settings__tag-container">
+              <div className="whppt-gallery-settings__tag-container">
                 <button
                   onClick={() => {
                     onChange({ ...value, [device]: { ...value[device], orientation: 'landscape' } });
@@ -118,51 +151,34 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
       )}
 
       {value[device] && (
-        <>
-          <div className="whppt-image-editor-panel__gallery-actions">
-            <button
-              className="whppt-image-editor-panel__gallery-actions__button"
-              onClick={() => {
-                toggleSettingsPanel({
-                  key: 'gallery',
-                  activeTab: 'image',
-                  component: <Gallery onUse={useImage} />,
-                });
-              }}>
-              {'Change picture'}
-            </button>
-            <button className="whppt-image-editor-panel__gallery-actions__button" onClick={() => onChange({ ...value, [device]: null })}>
-              Remove
-            </button>
-          </div>
-
-          <div>
-            <WhpptInput
-              value={(value[device] && value[device].altText) || ''}
-              onChange={text => {
-                onChange({ ...value, [device]: { ...value[device], altText: text } });
-              }}
-              id={'altText'}
-              label={'Alt text'}
-              info={''}
-              error={''}
-              type={'text'}
-              name="altText"
-            />
-            <WhpptInput
-              value={(value[device] && value[device].caption) || ''}
-              onChange={text => {
-                onChange({ ...value, [device]: { ...value[device], caption: text } });
-              }}
-              id={'caption'}
-              label={'Caption'}
-              info={''}
-              error={''}
-              type={'text'}
-              name="caption"
-            />
-          </div>
-        </>
+        <div>
+          <WhpptInput
+            value={(value[device] && value[device].altText) || ''}
+            onChange={text => {
+              onChange({ ...value, [device]: { ...value[device], altText: text } });
+            }}
+            id={'altText'}
+            label={'Alt text'}
+            info="Enter alt text for this image"
+            error={''}
+            type={'text'}
+            name="altText"
+            placeholder="Alt text"
+          />
+          <WhpptInput
+            value={(value[device] && value[device].caption) || ''}
+            onChange={text => {
+              onChange({ ...value, [device]: { ...value[device], caption: text } });
+            }}
+            id={'caption'}
+            label={'Caption'}
+            info="Enter caption for this image"
+            error={''}
+            type={'text'}
+            name="caption"
+            placeholder="Caption"
+          />
+        </div>
       )}
     </div>
   );

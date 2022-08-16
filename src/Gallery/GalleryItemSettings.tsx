@@ -1,17 +1,18 @@
 import React, { FC, useState, useEffect } from 'react';
-import { WhpptButton, WhpptInput, WhpptDayInput } from '../ui/components';
-import { WhpptGalleryTag } from './Components';
+import { WhpptButton, WhpptInput, WhpptDayInput, WhpptIcon } from '../ui/components';
+import { WhpptGalleryTag } from './Components/GalleryTag';
 import { useWhppt } from '../Context';
 import { GalleryItem } from './Model';
 import { toast } from 'react-toastify';
 
 type GalleryItemSettingsProps = {
-  use: () => void;
+  use: (item: GalleryItem) => void;
   selectedId: string;
   remove: (id: string) => void;
+  close: () => void;
 };
 
-export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selectedId, remove }) => {
+export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selectedId, remove, close }) => {
   const { api } = useWhppt();
   const [newTag, setNewTag] = useState('');
 
@@ -41,8 +42,19 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
     });
   };
 
+  const formatFileName = (filename: string) => {
+    const filenameSplit = filename.split('.');
+    return (
+      <>
+        <span className="whppt-gallery-settings__title__name">{filenameSplit[0]}</span>
+        <span>{'.'}</span>
+        <span>{filenameSplit[1]}</span>
+      </>
+    );
+  };
+
   return (
-    <div className="whppt-gallery__settings__container">
+    <div className="whppt-gallery-settings__container">
       {loading ? (
         <div>Loading ...</div>
       ) : (
@@ -54,9 +66,15 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
             </div>
           ) : (
             <>
-              <p className="whppt-gallery__settings__title">{item.fileInfo?.originalname || ''}</p>
+              <div className="whppt-gallery-settings__header">
+                {item.fileInfo && <p className="whppt-gallery-settings__title">{formatFileName(item.fileInfo.originalname)}</p>}
 
-              <div className="whppt-gallery__settings__tag-input">
+                <button className="whppt-gallery-settings__icon" onClick={() => close()}>
+                  <WhpptIcon is="close" />
+                </button>
+              </div>
+
+              <div className="whppt-gallery-settings__tag-input">
                 <WhpptInput
                   value={newTag}
                   onChange={setNewTag}
@@ -67,7 +85,7 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
                   info="Type your new tag here and add it with the +"
                 />
                 <div
-                  className="whppt-gallery__settings__tag-add"
+                  className="whppt-gallery-settings__tag-add"
                   onClick={() => {
                     newTag && setItem(item.tags ? { ...item, tags: [newTag, ...item.tags] } : { ...item, tags: [newTag] });
                     setNewTag('');
@@ -79,7 +97,7 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
               {item.tags && (
                 <>
                   <h3>Tags</h3>
-                  <div className="whppt-gallery__settings__tag-container">
+                  <div className="whppt-gallery-settings__tag-container">
                     {item.tags.map((tag, index) => (
                       <WhpptGalleryTag tag={tag} key={index} />
                     ))}
@@ -91,11 +109,12 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
 
               <WhpptInput
                 id="alt"
-                info=""
+                info="Enter the default alt text for this image"
                 label="Default alt text"
                 error=""
                 type="text"
                 value={(item && item.defaultAltText) || ''}
+                placeholder="Default alt text"
                 onChange={value => {
                   setItem({ ...item, defaultAltText: value });
                 }}
@@ -103,21 +122,29 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
 
               <WhpptInput
                 id="caption"
-                info=""
+                info="Enter the default caption text for this image"
                 label="Default caption"
                 error=""
                 type="text"
                 value={(item && item.defaultCaption) || ''}
+                placeholder="Default alt caption"
                 onChange={value => {
                   setItem({ ...item, defaultCaption: value });
                 }}
               />
 
-              <div className="whppt-gallery__settings__action-buttons">
+              <div className="whppt-gallery-settings__action-buttons">
                 <WhpptButton text="save" onClick={() => save(item)} />
                 <WhpptButton text="delete" onClick={() => remove(item._id)} />
-                <WhpptButton text="use" onClick={use} />
               </div>
+
+              {use ? (
+                <div className="whppt-gallery-settings__action-buttons--submit">
+                  <WhpptButton text="use" onClick={() => use(item)} />
+                </div>
+              ) : (
+                <></>
+              )}
             </>
           )}
         </>
