@@ -6,8 +6,7 @@ import { EditorOptions } from '../EditorOptions';
 import { EditorArgs } from '../EditorArgs';
 import { WhpptButton, WhpptIcon } from '../../ui/components';
 
-const { arrayMoveImmutable } = require('array-move');
-console.log('🚀 ~ file: Panel.tsx ~ line 10 ~ arrayMoveImmutable', arrayMoveImmutable);
+const arrayMoveImmutable = require('array-move');
 
 export type ListEditorOptions = EditorOptions & {
   addNew: () => any;

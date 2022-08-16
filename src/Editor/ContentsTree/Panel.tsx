@@ -5,7 +5,7 @@ import { WhpptIcon } from '../../index';
 import { useWhppt } from '../../Context';
 import { ComponentData } from '../../ContentComponents/ComponentData';
 
-const { arrayMoveImmutable } = require('array-move');
+const arrayMoveImmutable = require('array-move');
 
 export const WhpptContentsTreeEditorPanel: FC = () => {
   const { contentTree, page } = useWhppt();
