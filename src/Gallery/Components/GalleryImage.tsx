@@ -20,7 +20,7 @@ export const WhpptGalleryImage: FC<WhpptGalleryImageProps> = ({ url, name, onCli
 
       <div style={loaded ? {} : { display: 'none' }} onClick={onClick}>
         <img
-          className={`whppt-gallery__image whppt-gallery__image${isSelected ? '--selected' : ''}`}
+          className={`whppt-gallery__image ${isSelected ? 'whppt-gallery__image--selected' : ''}`}
           onLoad={() => setLoaded(true)}
           src={url}
         />

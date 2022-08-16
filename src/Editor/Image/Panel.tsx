@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect, useCallback } from 'react';
 import { EditorArgs } from '../EditorArgs';
 import { useWhppt } from '../../Context';
 import { WhpptInput } from '../../ui/components';
-import { WhpptGalleryTag } from '../../Gallery/GalleryTag';
+import { WhpptGalleryTag } from '../../Gallery/Components';
 import { Gallery } from '../../Gallery';
 import { aspectRatios } from '../../Gallery/Model';
 import { DevicePicker } from './DevicePicker';

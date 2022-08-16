@@ -4,6 +4,7 @@ import { useWhppt } from '../Context';
 import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect } from '../ui/components';
 import { Images } from './Images';
 import { Videos } from './Videos';
+import { Svgs } from './Svgs';
 import { GalleryFileType } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
 import { GalleryItem } from './Model';
@@ -15,6 +16,7 @@ const tabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images' },
   { name: 'video', label: 'Videos' },
   { name: 'file', label: 'Files' },
+  { name: 'svg', label: 'SVG' },
 ];
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
@@ -32,29 +34,28 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
 
     const tags = splitKeywords(searchQueryTags) || [];
     const type = settingsPanel.activeTab as GalleryFileType;
-
     const search = api.gallery
       .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter })
       .then(({ items }: { items: GalleryItem[] }) => setItems(items))
       .catch(error => setError(error.message || error));
 
     return toast.promise(search, {
-      error: 'Image upload failed 🤯',
+      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} search failed 🤯`,
     });
   }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab, filter]);
 
   useEffect(() => {
     if (loading === 'loading') return setLoading('loaded');
     if (loading === 'loaded') search();
-  }, [loading, search]);
+  }, [loading, search, settingsPanel.activeTab]);
 
   const upload = newFile => {
     const upload = api.gallery.upload(newFile).then(file => setItems([...items, file]));
 
     return toast.promise(upload, {
-      pending: 'Uploading Image...',
-      success: 'Image uploaded',
-      error: 'Image upload failed 🤯',
+      pending: `Uploading ${capitalizeFirstLetter(settingsPanel.activeTab)}...`,
+      success: `${capitalizeFirstLetter(settingsPanel.activeTab)} uploaded`,
+      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} upload failed 🤯`,
     });
   };
 
@@ -65,9 +66,9 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     });
 
     return toast.promise(remove, {
-      pending: 'Deleting image...',
-      success: 'Image deleted',
-      error: 'Image delete failed 🤯',
+      pending: `Deleting ${capitalizeFirstLetter(settingsPanel.activeTab)}...`,
+      success: `${capitalizeFirstLetter(settingsPanel.activeTab)} deleted`,
+      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} delete failed 🤯`,
     });
   };
 
@@ -96,7 +97,15 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
             />
           )}
         </div>
-        <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+        <WhpptTabs
+          tabs={tabs}
+          selectTab={selectedTab => {
+            setItems([]);
+            setSelected(null);
+            changeSettingsPanelActiveTab(selectedTab);
+          }}
+          selectedTab={settingsPanel.activeTab}
+        />
 
         {error ? <h1>Search failed</h1> : <></>}
 
@@ -122,6 +131,12 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               setSelected={setSelected}
               selectedId={selected && selected._id}
             />
+          ) : (
+            <></>
+          )}
+
+          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'svg') ? (
+            <Svgs name="svg" label="SVG" items={items} upload={upload} setSelected={setSelected} selectedId={selected && selected._id} />
           ) : (
             <></>
           )}

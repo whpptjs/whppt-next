@@ -10,8 +10,16 @@
     @apply scrollbar-hide;
   }
 
-  &__grid {
-    @apply grid grid-cols-gallery gap-4 flex-1 auto-rows-gallery;
+  &-grid {
+    @apply grid gap-4 flex-1 auto-rows-gallery;
+
+    &__images {
+      @apply grid-cols-galleryImages;
+    }
+
+    &__svgs {
+      @apply grid-cols-gallerySvgs;
+    }
   }
 
   &__settings {
@@ -54,7 +62,7 @@
   }
 
   &__image {
-    @apply h-galleryImage w-galleryImage object-cover cursor-pointer;
+    @apply h-galleryItem w-galleryImage object-cover cursor-pointer;
 
     &--selected {
       @apply outline-whpptActive outline-2 outline;
@@ -63,6 +71,23 @@
 
   &__image-name {
     @apply whitespace-nowrap overflow-hidden text-ellipsis;
+  }
+
+  &__svg {
+    @apply h-galleryItem w-gallerySvg cursor-pointer;
+    @include checkers;
+
+    &--selected {
+      @apply outline-whpptActive outline-2 outline;
+    }
+
+    & svg {
+      @apply h-full w-full;
+    }
+  }
+
+  &.svg-title {
+    @apply text-center;
   }
 
   &__filters {

@@ -27,17 +27,19 @@ module.exports = {
         width: 'width',
       },
       gridTemplateColumns: {
-        gallery: 'repeat(auto-fit, 360px)',
+        galleryImages: 'repeat(auto-fit, 22.5rem)',
+        gallerySvgs: 'repeat(auto-fit, 12.5rem)',
       },
       gridAutoRows: {
         gallery: 'fit-content(1rem)',
       },
       height: {
-        galleryImage: '12.5rem',
+        galleryItem: '12.5rem',
       },
       width: {
         settingsSidebar: '24rem',
         galleryImage: '22.5rem',
+        gallerySvg: '12.5rem',
       },
       zIndex: {
         editorPanel: '1000',
