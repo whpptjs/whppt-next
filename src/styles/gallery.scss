@@ -76,7 +76,7 @@
   &__svg {
     @apply h-galleryItem w-gallerySvg cursor-pointer;
     @include checkers;
-    
+
     &--selected {
       @apply outline-whpptActive outline-2 outline;
     }

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { WhpptTab } from '../../../ui/components';
 import { InviteNewUser } from './InviteNewUser';
 import { UsersList } from './UsersList';
@@ -9,16 +9,15 @@ export const WhpptUsers: FC<WhpptTab> = () => {
   const { api } = useWhppt();
   const [users, setUsers] = useState([] as User[]);
 
-  useEffect(() => {
-    requery();
-  }, []);
-
-  const requery = () => {
+  const requery = useCallback(() => {
     api.app.user.list().then(_users => {
       setUsers(_users);
     });
-  };
+  }, [api.app.user]);
 
+  useEffect(() => {
+    requery();
+  }, [requery]);
   return (
     <div className="whppt-form">
       <section className="whppt-form-page-settings__actions">

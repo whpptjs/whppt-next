@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptIcon, WhpptTab } from '../../ui/components';
 import { WhpptTable } from '../../ui/components/Table';
@@ -32,7 +32,7 @@ export const Redirects: FC<WhpptTab> = () => {
   const [perPage, setPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const requery = () => {
+  const requery = useCallback(() => {
     api.site.redirect
       .load({
         page: currentPage,
@@ -45,10 +45,12 @@ export const Redirects: FC<WhpptTab> = () => {
         total && setTotal(total);
       })
       .catch(err => setError(err));
-  };
+  }, [api.site.redirect, currentPage, domain._id, perPage, searchRedirects]);
+
+  // TODO: handle double query + error and loading states
   useEffect(() => {
     requery();
-  }, [searchRedirects, currentPage, perPage]);
+  }, [requery, searchRedirects, currentPage, perPage]);
 
   const addRedirect = () => {
     const newRedirect = {
