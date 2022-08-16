@@ -25,7 +25,7 @@ export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name, onClic
         setLoading(false);
       })
       .catch(error => setError(error.message || error));
-  }, [api, created, itemId]);
+  }, [created, itemId, api.gallery]);
 
   return error ? (
     <>
@@ -34,10 +34,8 @@ export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name, onClic
   ) : loading ? (
     <p>loading ...</p>
   ) : (
-    <div
-      className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''}`}
-      onClick={() => onClick({ _id: itemId, svgString })}>
-      {parse(svgString)}
+    <div className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''}`} onClick={() => onClick(svgString)}>
+      {svgString && parse(svgString)}
       {<p className="whppt-gallery-grid--svgs svg-title">{name}</p>}
     </div>
   );
