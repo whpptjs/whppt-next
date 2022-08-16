@@ -2,11 +2,11 @@
   .whppt-select {
     &__control,
     &__menu {
-      @apply border-whpptStandard !important;
-      @apply bg-whpptLightMode  !important;
+      @apply border-whpptStandard;
+      @apply bg-whpptLightMode;
     }
     &__single-value {
-      @apply text-whpptDarkMode !important;
+      @apply text-whpptDarkMode;
     }
     &__option {
       &:hover {
@@ -25,11 +25,11 @@
   }
   &__control,
   &__menu {
-    @apply border-2 border-whpptStandard border-opacity-70 rounded-lg !important;
-    @apply bg-whpptDarkMode  !important;
+    @apply border-2 border-whpptStandard border-opacity-70 rounded-lg;
+    @apply bg-whpptDarkMode;
   }
   &__single-value {
-    @apply text-whpptLightMode !important;
+    @apply text-whpptLightMode;
   }
   &__option {
     &:hover {
