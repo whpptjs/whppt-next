@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef } from 'react';
+import React, { FC, useState, useEffect, useRef, useCallback } from 'react';
 import { WhpptTab } from '../../ui/components';
 import { WhpptInput } from '../../ui/components/Input';
 import { WhpptTable } from '../../ui/components/Table';
@@ -24,11 +24,7 @@ export const Files: FC<WhpptTab> = () => {
 
   const fileInputRef: { current: HTMLInputElement } = useRef();
 
-  useEffect(() => {
-    requery();
-  }, [currentPage, perPage]);
-
-  const requery = () => {
+  const requery = useCallback(() => {
     api.site.files
       .load({ page: currentPage, size: perPage })
       .then(({ files, total }) => {
@@ -36,7 +32,12 @@ export const Files: FC<WhpptTab> = () => {
         total && setTotal(total);
       })
       .catch(err => setError(err));
-  };
+  }, [api.site.files, currentPage, perPage]);
+
+  // TODO: Handle double call + loading and error states
+  useEffect(() => {
+    requery();
+  }, [requery, currentPage, perPage]);
 
   const handlePageChange = newPage => {
     setCurrentPage(newPage);

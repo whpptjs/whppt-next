@@ -1,8 +1,8 @@
-import { nanoid } from 'nanoid';
 import React, { FC } from 'react';
 import { ComponentData } from '../../ContentComponents/ComponentData';
 import { EditorArgs } from '../EditorArgs';
 import { ContentEditorOptions } from './Editor';
+import { nanoid } from 'nanoid';
 
 export const WhpptContentEditorPanel: FC<EditorArgs<ComponentData[], ContentEditorOptions>> = ({ onChange, options, value }) => {
   return (

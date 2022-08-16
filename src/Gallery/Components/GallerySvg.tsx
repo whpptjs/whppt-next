@@ -9,7 +9,7 @@ type WhpptGallerySvgProps = {
   isSelected: boolean;
 };
 
-export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name, isSelected }) => {
+export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name, isSelected, onClick }) => {
   const { api } = useWhppt();
   const [created, setCreated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -34,9 +34,9 @@ export const WhpptGallerySvg: FC<WhpptGallerySvgProps> = ({ itemId, name, isSele
   ) : loading ? (
     <p>loading ...</p>
   ) : (
-    <div className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''}`}>
+    <div className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''}`} onClick={onClick}>
       {svgString && parse(svgString)}
-      {<p className="whppt-gallery-grid--svgs svg-title">{name}</p>}
+      {<p className="whppt-gallery-grid__svgs svg-title">{name}</p>}
     </div>
   );
 };
