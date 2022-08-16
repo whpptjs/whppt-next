@@ -97,7 +97,17 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               isClearable
             />
           )}
-          <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+
+          <WhpptTabs
+            tabs={tabs}
+            selectTab={selectedTab => {
+              setItems([]);
+              setSelected(null);
+              changeSettingsPanelActiveTab(selectedTab);
+            }}
+            selectedTab={settingsPanel.activeTab}
+          />
+
           {error ? <h1>Search failed</h1> : <></>}
         </div>
 
