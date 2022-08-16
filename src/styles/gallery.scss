@@ -71,6 +71,15 @@
 
     &__action-buttons {
       @apply flex gap-4;
+
+      &--submit {
+        @apply mt-auto mb-4 self-end;
+
+        & button {
+          @apply flex items-center justify-center;
+          @apply text-2xl h-16 w-28;
+        }
+      }
     }
   }
 

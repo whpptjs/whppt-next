@@ -14,10 +14,14 @@
   }
 
   &__gallery-actions {
-    @apply flex justify-between w-galleryImage;
+    @apply flex justify-between w-full;
 
     &__button {
       @apply text-whpptLightMode underline;
+
+      &:hover {
+        @apply no-underline text-whpptActive;
+      }
     }
   }
 

@@ -9,10 +9,10 @@ type GalleryItemSettingsProps = {
   use: (item: GalleryItem) => void;
   selectedId: string;
   remove: (id: string) => void;
-  setSettingsOpen: (open: boolean) => void;
+  close: (open: boolean) => void;
 };
 
-export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selectedId, remove, setSettingsOpen }) => {
+export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selectedId, remove, close }) => {
   const { api } = useWhppt();
   const [newTag, setNewTag] = useState('');
 
@@ -69,7 +69,7 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
               <div className="whppt-gallery-settings__header">
                 {item.fileInfo && <p className="whppt-gallery-settings__title">{formatFileName(item.fileInfo.originalname)}</p>}
 
-                <button className="whppt-gallery-settings__icon" onClick={() => setSettingsOpen(false)}>
+                <button className="whppt-gallery-settings__icon" onClick={() => close(false)}>
                   <WhpptIcon is="close" />
                 </button>
               </div>
@@ -134,9 +134,17 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
               />
 
               <div className="whppt-gallery-settings__action-buttons">
-                {use ? <WhpptButton text="use" onClick={() => use(item)} /> : <WhpptButton text="save" onClick={() => save(item)} />}
+                <WhpptButton text="save" onClick={() => save(item)} />
                 <WhpptButton text="delete" onClick={() => remove(item._id)} />
               </div>
+
+              {use ? (
+                <div className="whppt-gallery-settings__action-buttons--submit">
+                  <WhpptButton text="use" onClick={() => use(item)} />
+                </div>
+              ) : (
+                <></>
+              )}
             </>
           )}
         </>
