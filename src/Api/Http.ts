@@ -8,6 +8,7 @@ export type WhpptSaveFileOptions = { path: string; fileData: FormData };
 
 export type WhpptHttpMethods = {
   getJson: <T>(options?: WhpptGetOptions) => Promise<T>;
+  getText: (options?: WhpptGetOptions) => Promise<string>;
   postJson: <T, R>(options?: WhpptPostOptions<T>) => Promise<R>;
   postFile: (options?: WhpptSaveFileOptions) => Promise<GalleryItem>;
 };
@@ -48,6 +49,15 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         const json = await response.json();
         return json as T;
       },
+      getText: async ({ path }: WhpptGetOptions) => {
+        const token = Cookies.get('authToken');
+        const response = await fetch(buildFullPath(baseUrl, path), {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.status >= 400) throw new Error(await response.text());
+        return await response.text();
+      },
       postJson: async <T, R>({ path, data }: WhpptPostOptions<T>) => {
         const token = Cookies.get('authToken');
 
@@ -66,6 +76,10 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
       postFile: async ({ path, fileData }: WhpptSaveFileOptions) => {
         const response = await fetch(buildFullPath(baseUrl, path), {
           method: 'POST',
+          // TODO: this route needs to be secured
+          //  headers: {
+          //   Authorization: `Bearer ${token}`,
+          // },
           body: fileData as any,
         });
         if (response.status >= 400) throw new Error(await response.text());
