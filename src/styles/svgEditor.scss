@@ -1,0 +1,21 @@
+.whppt-svg-editor-panel {
+  &--empty {
+    @apply h-galleryItem w-galleryImage object-cover;
+    @apply flex justify-center items-center h-[200px] w-[360px];
+    @apply border-whpptLightMode border-[1px] border-dashed cursor-pointer;
+  }
+
+  &__svg {
+    @include checkers;
+    @apply h-editedSvg w-editedSvg m-auto;
+
+    & svg {
+      @apply h-full w-full;
+    }
+  }
+
+  &__gallery-link {
+    @apply flex justify-between;
+    @apply text-whpptLightMode;
+  }
+}

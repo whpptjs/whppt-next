@@ -35,11 +35,13 @@ module.exports = {
       },
       height: {
         galleryItem: '12.5rem',
+        editedSvg: '12rem',
       },
       width: {
         settingsSidebar: '24rem',
         galleryImage: '22.5rem',
         gallerySvg: '12.5rem',
+        editedSvg: '12rem',
       },
       zIndex: {
         editorPanel: '1000',
