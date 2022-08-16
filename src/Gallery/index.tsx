@@ -154,7 +154,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
             }
             remove={() => remove(selected._id)}
             selectedId={selected._id}
-            close={setSettingsOpen}
+            close={() => setSettingsOpen(false)}
           />
         )}
       </div>

@@ -9,7 +9,7 @@ type GalleryItemSettingsProps = {
   use: (item: GalleryItem) => void;
   selectedId: string;
   remove: (id: string) => void;
-  close: (open: boolean) => void;
+  close: () => void;
 };
 
 export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selectedId, remove, close }) => {
@@ -69,7 +69,7 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
               <div className="whppt-gallery-settings__header">
                 {item.fileInfo && <p className="whppt-gallery-settings__title">{formatFileName(item.fileInfo.originalname)}</p>}
 
-                <button className="whppt-gallery-settings__icon" onClick={() => close(false)}>
+                <button className="whppt-gallery-settings__icon" onClick={() => close()}>
                   <WhpptIcon is="close" />
                 </button>
               </div>
