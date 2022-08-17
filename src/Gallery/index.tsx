@@ -97,7 +97,17 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               isClearable
             />
           )}
-          <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
+
+          <WhpptTabs
+            tabs={tabs}
+            selectTab={selectedTab => {
+              setItems([]);
+              setSelected(null);
+              changeSettingsPanelActiveTab(selectedTab);
+            }}
+            selectedTab={settingsPanel.activeTab}
+          />
+
           {error ? <h1>Search failed</h1> : <></>}
         </div>
 
@@ -134,7 +144,17 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
           )}
 
           {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'svg') ? (
-            <Svgs name="svg" label="SVG" items={items} upload={upload} setSelected={setSelected} selectedId={selected && selected._id} />
+            <Svgs
+              name="svg"
+              label="SVG"
+              items={items}
+              upload={upload}
+              setSelected={svg => {
+                setSelected(svg);
+                setSettingsOpen(true);
+              }}
+              selectedId={selected && selected._id}
+            />
           ) : (
             <></>
           )}

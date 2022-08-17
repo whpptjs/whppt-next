@@ -25,7 +25,7 @@ export const Svgs: FC<GalleryTab> = ({ items, upload, setSelected, selectedId })
               key={item._id}
               itemId={item._id}
               name={item.fileInfo?.originalname}
-              onClick={() => setSelected(item)}
+              onClick={svgString => setSelected({ ...item, svgString })}
               isSelected={selectedId == item._id}
             />
           ))}

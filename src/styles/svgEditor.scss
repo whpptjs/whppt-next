@@ -1,0 +1,34 @@
+.whppt-svg-editor-panel {
+  @apply flex flex-col gap-4;
+
+  &--empty {
+    @apply flex justify-center items-center w-11/12 aspect-video;
+    @apply border-whpptLightMode border-[1px] border-dashed cursor-pointer;
+  }
+
+  &__svg {
+    @include checkers;
+    @apply h-editedSvg w-editedSvg m-auto;
+
+    & svg {
+      @apply h-full w-full;
+    }
+  }
+
+  &__gallery-link {
+    @apply flex justify-between;
+    @apply text-whpptLightMode;
+  }
+
+  &__gallery-actions {
+    @apply flex justify-between w-full;
+
+    &__button {
+      @apply text-whpptLightMode underline;
+
+      &:hover {
+        @apply no-underline text-whpptActive;
+      }
+    }
+  }
+}
