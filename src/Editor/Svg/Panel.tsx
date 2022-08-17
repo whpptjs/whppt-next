@@ -48,7 +48,12 @@ export const WhpptSvgEditorPanel: FC<EditorArgs<WhpptSvgData, EditorOptions>> = 
               }}>
               {'Choose a different svg'}
             </button>
-            <button className="whppt-svg-editor-panel__gallery-actions__button" onClick={() => onChange({ ...value, galleryItemId: '' })}>
+            <button
+              className="whppt-svg-editor-panel__gallery-actions__button"
+              onClick={() => {
+                setSvgString('');
+                onChange({ ...value, galleryItemId: '' });
+              }}>
               Remove
             </button>
           </div>

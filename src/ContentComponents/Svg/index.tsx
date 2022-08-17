@@ -18,6 +18,7 @@ export const SvgComponent: FC<ComponentArgs<SvgComponentData>> = ({ data, onChan
   const [svgString, setSvgString] = useState('');
 
   const loadSvgString = useCallback(() => {
+    setLoading(true);
     api.gallery
       .loadSvg(data?.svg?.galleryItemId)
       .then(setSvgString)
@@ -28,8 +29,8 @@ export const SvgComponent: FC<ComponentArgs<SvgComponentData>> = ({ data, onChan
   useEffect(() => {
     if (!created) return setCreated(true);
 
+    setSvgString('');
     if (data?.svg?.galleryItemId) {
-      setLoading(true);
       loadSvgString();
     }
   }, [created, data?.svg?.galleryItemId, loadSvgString]);
