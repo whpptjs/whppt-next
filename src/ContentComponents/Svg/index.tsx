@@ -30,6 +30,7 @@ export const SvgComponent: FC<ComponentArgs<SvgComponentData>> = ({ data, onChan
     if (!created) return setCreated(true);
 
     setSvgString('');
+
     if (data?.svg?.galleryItemId) {
       loadSvgString();
     }
