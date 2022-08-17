@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 import { useWhppt } from '../../Context';
 import { ComponentArgs } from '../ComponentData';
 import { SvgEditor } from '../../Editor/Svg/Editor';
@@ -12,20 +12,27 @@ export type SvgComponentData = {
 export const SvgComponent: FC<ComponentArgs<SvgComponentData>> = ({ data, onChange }) => {
   const { editing, api } = useWhppt();
 
+  const [created, setCreated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [svgString, setSvgString] = useState('');
 
+  const loadSvgString = useCallback(() => {
+    api.gallery
+      .loadSvg(data?.svg?.galleryItemId)
+      .then(setSvgString)
+      .catch(err => setError(err.message || err))
+      .finally(() => setLoading(false));
+  }, [api.gallery, data?.svg?.galleryItemId]);
+
   useEffect(() => {
+    if (!created) return setCreated(true);
+
     if (data?.svg?.galleryItemId) {
       setLoading(true);
-      api.gallery
-        .loadSvg(data?.svg?.galleryItemId)
-        .then(setSvgString)
-        .catch(err => setError(err.message || err))
-        .finally(() => setLoading(false));
+      loadSvgString();
     }
-  }, [api.gallery, data]);
+  }, [created, data?.svg?.galleryItemId, loadSvgString]);
 
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>

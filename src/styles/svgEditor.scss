@@ -2,8 +2,7 @@
   @apply flex flex-col gap-4;
 
   &--empty {
-    @apply h-galleryItem w-galleryImage object-cover;
-    @apply flex justify-center items-center h-[200px] w-[360px];
+    @apply flex justify-center items-center w-11/12 aspect-video;
     @apply border-whpptLightMode border-[1px] border-dashed cursor-pointer;
   }
 
