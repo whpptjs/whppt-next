@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, useCallback } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
-import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect } from '../ui/components';
+import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect, WhpptIcon } from '../ui/components';
 import { Images } from './Images';
 import { Videos } from './Videos';
 import { Svgs } from './Svgs';
@@ -12,11 +12,11 @@ import { capitalizeFirstLetter } from '../helpers';
 import { splitKeywords } from '../splitKeywords';
 import { toast } from 'react-toastify';
 
-const tabs: Array<WhpptTab> = [
-  { name: 'image', label: 'Images' },
-  { name: 'video', label: 'Videos' },
-  { name: 'file', label: 'Files' },
-  { name: 'svg', label: 'SVG' },
+let tabs: Array<WhpptTab> = [
+  { name: 'image', label: 'Images', disabled: false },
+  { name: 'video', label: 'Videos', disabled: false },
+  { name: 'file', label: 'Files', disabled: false },
+  { name: 'svg', label: 'SVG', disabled: false },
 ];
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
@@ -50,6 +50,16 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     if (loading === 'loaded') search();
   }, [loading, search, settingsPanel.activeTab]);
 
+  useEffect(() => {
+    if (onUse) {
+      tabs = tabs.map(tab => ({ ...tab, disabled: onUse && settingsPanel.activeTab !== tab.name }));
+    }
+
+    return () => {
+      tabs = tabs.map(tab => ({ ...tab, disabled: false }));
+    };
+  }, [onUse, settingsPanel.activeTab]);
+
   const upload = newFile => {
     const upload = api.gallery.upload(newFile).then(file => setItems([...items, file]));
 
@@ -76,7 +86,12 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
   return (
     <div className="whppt-gallery">
       <div className="whppt-gallery__content">
-        <WhpptHeading text="Media Gallery" />
+        <div className="whppt-gallery__title">
+          <WhpptHeading text="Media Gallery" />
+          <button className="whppt-gallery__close" onClick={hideSettingsPanel}>
+            <WhpptIcon is="close" />
+          </button>
+        </div>
         <div className="whppt-gallery__filters">
           <WhpptQueryInput
             value={searchQueryTags}
@@ -127,7 +142,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
           ) : (
             <></>
           )}
-          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'video') ? (
+          {settingsPanel.activeTab && settingsPanel.activeTab === 'video' ? (
             <Videos
               name="videos"
               label="Videos"
