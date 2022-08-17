@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../../Editor/';
 import { WhpptSvgData } from './SvgData';
@@ -8,19 +8,51 @@ import { GalleryItem } from '../../Gallery/Model';
 import parse from 'html-react-parser';
 
 export const WhpptSvgEditorPanel: FC<EditorArgs<WhpptSvgData, EditorOptions>> = ({ value, onChange }) => {
-  const { toggleSettingsPanel } = useWhppt();
+  const { toggleSettingsPanel, api } = useWhppt();
 
-  const useSvg = ({ _id, svgString, fileInfo }: GalleryItem & WhpptSvgData) => {
-    onChange({ ...value, svgString, fileInfo, galleryItemId: _id });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [svgString, setSvgString] = useState('');
+
+  const useSvg = ({ _id }: GalleryItem) => {
+    setLoading(true);
+    onChange({ ...value, galleryItemId: _id });
+
+    api.gallery
+      .loadSvg(_id)
+      .then(setSvgString)
+      .catch(err => setError(err.message || err))
+      .finally(() => setLoading(false));
   };
 
-  return (
-    <div>
-      {value && value.svgString ? (
-        <div className="whppt-svg-editor-panel__svg">
-          {parse(value.svgString)}
-          {<p className="">{value.fileInfo?.originalname || ''}</p>}
-        </div>
+  return error ? (
+    <>
+      <p>Svg could not be loaded</p> {error}
+    </>
+  ) : loading ? (
+    <p>loading ...</p>
+  ) : (
+    <div className="whppt-svg-editor-panel">
+      {svgString ? (
+        <>
+          <div className="whppt-svg-editor-panel__svg">{parse(svgString)}</div>
+          <div className="whppt-svg-editor-panel__gallery-actions">
+            <button
+              className="whppt-svg-editor-panel__gallery-actions__button"
+              onClick={() => {
+                toggleSettingsPanel({
+                  key: 'gallery',
+                  activeTab: 'image',
+                  component: <Gallery onUse={useSvg} />,
+                });
+              }}>
+              {'Choose a different image'}
+            </button>
+            <button className="whppt-svg-editor-panel__gallery-actions__button" onClick={() => onChange({ ...value, galleryItemId: '' })}>
+              Remove
+            </button>
+          </div>
+        </>
       ) : (
         <div
           className="whppt-svg-editor-panel--empty"

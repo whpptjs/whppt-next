@@ -2,6 +2,6 @@ export const SvgDefinition = {
   key: 'Svg',
   name: 'Svg',
   init: (content: any) => {
-    return { ...content, svg: content.svg || {} } as any;
+    return { ...content, galleryItemId: content.galleryItemId || '' } as any;
   },
 };

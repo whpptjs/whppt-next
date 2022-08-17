@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useWhppt } from '../../Context';
 import { ComponentArgs } from '../ComponentData';
 import { SvgEditor } from '../../Editor/Svg/Editor';
@@ -10,12 +10,35 @@ export type SvgComponentData = {
 };
 
 export const SvgComponent: FC<ComponentArgs<SvgComponentData>> = ({ data, onChange }) => {
-  const { editing } = useWhppt();
+  const { editing, api } = useWhppt();
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [svgString, setSvgString] = useState('');
+
+  useEffect(() => {
+    if (data?.svg?.galleryItemId) {
+      setLoading(true);
+      api.gallery
+        .loadSvg(data?.svg?.galleryItemId)
+        .then(setSvgString)
+        .catch(err => setError(err.message || err))
+        .finally(() => setLoading(false));
+    }
+  }, [api.gallery, data]);
 
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
       <SvgEditor value={data?.svg} onChange={val => onChange({ ...data, svg: val })}>
-        {data?.svg?.svgString ? <div>{parse(data.svg.svgString)}</div> : <h1>Select your svg</h1>}
+        {error ? (
+          <p>There was an error loading your SVG</p>
+        ) : loading ? (
+          <p>Loading your SVG...</p>
+        ) : svgString ? (
+          <div>{parse(svgString)}</div>
+        ) : (
+          <h1>Select your svg</h1>
+        )}
       </SvgEditor>
     </div>
   );

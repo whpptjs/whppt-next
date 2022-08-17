@@ -1,4 +1,6 @@
 .whppt-svg-editor-panel {
+  @apply flex flex-col gap-4;
+
   &--empty {
     @apply h-galleryItem w-galleryImage object-cover;
     @apply flex justify-center items-center h-[200px] w-[360px];
@@ -17,5 +19,17 @@
   &__gallery-link {
     @apply flex justify-between;
     @apply text-whpptLightMode;
+  }
+
+  &__gallery-actions {
+    @apply flex justify-between w-full;
+
+    &__button {
+      @apply text-whpptLightMode underline;
+
+      &:hover {
+        @apply no-underline text-whpptActive;
+      }
+    }
   }
 }
