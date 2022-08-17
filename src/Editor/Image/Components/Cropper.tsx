@@ -1,0 +1,83 @@
+import React, { FC, useMemo, useRef, useState } from 'react';
+import { CropperRef, Cropper } from 'react-advanced-cropper';
+import { WhpptImageCrop } from '../Model/ImageData';
+
+export const defaultCoordinates = {
+  height: 150,
+  width: 250,
+  top: 20,
+  left: 10,
+};
+
+type WhpptCropperProps = {
+  value: WhpptImageCrop;
+  onChange: (data: WhpptImageCrop) => void;
+  // stencilProps: number;
+};
+
+export const getLandscapeRatio = ratio => {
+  const { w, h } = ratio;
+  return w / h;
+};
+
+export const getPortraitRatio = ratio => {
+  const { w, h } = ratio;
+  return h / w;
+};
+
+export const WhpptCropper: FC<WhpptCropperProps> = ({ value, onChange }) => {
+  const getImgUrl = galleryItemId => `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
+  const [ready, setReady] = useState(false);
+
+  const cropperRef = useRef<CropperRef>();
+
+  const stencilAspectRaio = useMemo(() => {
+    const orientation = value.orientation;
+    const aspectRatio = value.aspectRatio;
+    return orientation === 'landscape' ? getLandscapeRatio(aspectRatio?.ratio) : getPortraitRatio(aspectRatio?.ratio);
+  }, [value]);
+
+  const imageSize = useMemo(() => {
+    console.log('🚀 ~ file: Cropper.tsx ~ line 42 ~ cropperRef?.current?.getState()', cropperRef?.current, cropperRef?.current?.getImage());
+    return ready && cropperRef?.current?.getState()?.imageSize;
+  }, [cropperRef, ready]);
+
+  const valueCoords = useMemo(() => {
+    console.log('-----');
+    console.log('🚀 ~ file: Cropper.tsx ~ line 42 ~ coords ~ imageSize', imageSize);
+    if (!imageSize) return undefined;
+    console.log('🚀 ~ file: Cropper.tsx ~ line 46 ~ coords ~ stencilAspectRaio', stencilAspectRaio);
+    return (
+      value.coords || {
+        height: imageSize.height * (isNaN(stencilAspectRaio) ? 1 : stencilAspectRaio),
+        width: imageSize.width,
+        top: 0,
+        left: 0,
+      }
+    );
+  }, [stencilAspectRaio, value, imageSize]);
+
+  const onCrop = (cropper: CropperRef) => {
+    const coords = cropper.getCoordinates();
+    console.log('🚀 ~ file: Cropper.tsx ~ line 56 ~ onCrop ~ coords', valueCoords, coords);
+    if (!valueCoords) return;
+    console.log('🚀 ~ file: Cropper.tsx ~ line 56-2 ~ onCrop ~ coords', valueCoords, coords);
+    onChange({ ...value, coords: coords || value.coords });
+  };
+
+  return (
+    <Cropper
+      ref={cropperRef}
+      src={getImgUrl(value.galleryItemId)}
+      className="whppt-image-editor-panel__cropper"
+      onReady={a => {
+        console.log('ready', a.getImage());
+        setReady(true);
+      }}
+      onChange={onCrop}
+      backgroundClassName={'whppt-cropper-background'}
+      stencilProps={{ aspectRatio: stencilAspectRaio, lines: true }}
+      defaultCoordinates={valueCoords}
+    />
+  );
+};

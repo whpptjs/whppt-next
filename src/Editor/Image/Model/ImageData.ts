@@ -1,3 +1,7 @@
+import { CropAspectRatio } from './ApectRatio';
+
+export type CropOrientation = 'landscape' | 'portrait' | undefined;
+
 export type WhpptImageData = {
   [key: string]: WhpptImageCrop;
 };
@@ -6,14 +10,8 @@ export type WhpptImageCrop = {
   altText?: string;
   caption?: string;
   galleryItemId: string;
-  aspectRatio: {
-    label: string;
-    ratio: {
-      w: Number;
-      h: number;
-    };
-  };
-  orientation: 'landscape' | 'portrait' | undefined;
+  aspectRatio: CropAspectRatio;
+  orientation: CropOrientation;
   coords?: {
     width: number;
     height: number;

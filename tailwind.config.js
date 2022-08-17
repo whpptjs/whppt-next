@@ -37,6 +37,9 @@ module.exports = {
         galleryItem: '12.5rem',
         editedSvg: '12rem',
       },
+      opacity: {
+        disabled: '0.6',
+      },
       width: {
         settingsSidebar: '24rem',
         galleryImage: '22.5rem',

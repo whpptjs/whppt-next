@@ -12,7 +12,10 @@ export const WhpptTabs: FC<WhpptTabsProps> = ({ tabs, selectTab, selectedTab }) 
       {tabs.map((tab: WhpptTab, index: number) => (
         <li key={index}>
           <button
-            className={`whppt-popup__tab  ${selectedTab === tab.name ? 'whppt-popup__tab--active' : ''}`}
+            disabled={tab.disabled}
+            className={`whppt-popup__tab  ${selectedTab === tab.name ? 'whppt-popup__tab--active' : ''} ${
+              tab.disabled ? 'whppt-popup__tab--disabled' : ''
+            }`}
             onClick={() => selectTab(tab.name)}>
             <div className="whppt-popup__tab--inline">
               {tab.label}

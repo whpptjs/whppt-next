@@ -1,6 +1,14 @@
 .whppt-gallery {
   @apply bg-whpptDarkMode px-6 py-4 mb-5 flex w-full h-screen;
 
+  &__title {
+    @apply flex;
+  }
+
+  &__close {
+    @apply h-8 w-8;
+  }
+
   &__content {
     @apply w-full flex flex-col;
   }
@@ -13,11 +21,11 @@
   &-grid {
     @apply grid gap-4 flex-1 auto-rows-gallery;
 
-    &__images {
+    &__image {
       @apply grid-cols-galleryImages;
     }
 
-    &__svgs {
+    &__svg {
       @apply grid-cols-gallerySvgs;
     }
   }
@@ -69,6 +77,18 @@
       @apply flex gap-4 flex-wrap;
     }
 
+    &__tag {
+      @apply bg-whpptStandard px-2 py-1 rounded-md;
+
+      &--disabled {
+        @apply opacity-disabled;
+      }
+
+      &--active {
+        @apply bg-whpptActive;
+      }
+    }
+
     &__action-buttons {
       @apply flex gap-4;
 
@@ -114,10 +134,6 @@
 
   &__filters {
     @apply w-full px-5;
-  }
-
-  &__tag {
-    @apply bg-whpptActive px-2 py-1 rounded-md;
   }
 
   &__day-picker {

@@ -59,5 +59,8 @@
     &--underline {
       @apply border-b-2 border-transparent;
     }
+    &--disabled {
+      @apply opacity-disabled;
+    }
   }
 }
