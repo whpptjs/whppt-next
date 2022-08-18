@@ -6,7 +6,7 @@ type GalleryTabProps = {
 
 export const WhpptGalleryTag: FC<GalleryTabProps> = ({ tag }) => {
   return (
-    <div className={'whppt-gallery-settings__tag'}>
+    <div className="whppt-gallery-settings__tag">
       <span className="whppt-gallery-tag__text">{tag}</span>
     </div>
   );

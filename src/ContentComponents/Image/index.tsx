@@ -12,7 +12,7 @@ export type ImageComponentData = {
 };
 export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, onChange }) => {
   const { editing } = useWhppt();
-  console.log('data', data);
+
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
       <ImageEditor
