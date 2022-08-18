@@ -21,11 +21,11 @@
   &-grid {
     @apply grid gap-4 flex-1 auto-rows-gallery;
 
-    &__images {
+    &__image {
       @apply grid-cols-galleryImages;
     }
 
-    &__svgs {
+    &__svg {
       @apply grid-cols-gallerySvgs;
     }
   }
