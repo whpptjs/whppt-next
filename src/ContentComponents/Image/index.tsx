@@ -5,18 +5,20 @@ import { useWhppt } from '../../Context';
 import { WhpptImageData } from '../../Editor/Image/Model/ImageData';
 import { buildCroppedImgUrl } from '../../Editor/Image/buildCroppedImgUrl';
 import { ComponentArgs } from '../ComponentData';
+import { aspectRatios } from '../../Gallery/Model/ApectRatio';
 
 export type ImageComponentData = {
   image: WhpptImageData;
 };
 export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, onChange }) => {
   const { editing } = useWhppt();
-
+  console.log('data', data);
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
       <ImageEditor
         value={data?.image}
-        aspectRatio={data?.image?.dekstop?.aspectRatio?.ratio}
+        aspectRatio={data?.image?.desktop?.aspectRatio || aspectRatios.at(-1)}
+        orientation={data?.image?.desktop?.orientation || 'landscape'}
         sizes={['desktop', 'tablet', 'mobile']}
         onChange={val => onChange({ ...data, image: val })}>
         {data?.image?.desktop ? (

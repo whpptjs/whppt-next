@@ -17,12 +17,12 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
   const [device, setDevice] = useState<string>('desktop');
 
   const getStencilProps = useCallback(() => {
-    if (!value[device]) return getLandscapeRatio(aspectRatios[0].ratio);
+    if (!value[device]) return getLandscapeRatio(aspectRatios.at(-1).ratio);
 
     return value[device].orientation === 'landscape'
-      ? getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
-      : getPortraitRatio(value[device]?.aspectRatio.ratio || aspectRatios[0].ratio);
-  }, [value, device]);
+      ? getLandscapeRatio(options.aspectRatio?.ratio || value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
+      : getPortraitRatio(options.aspectRatio?.ratio || value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio);
+  }, [value, device, options.aspectRatio]);
 
   const [stencilProps, setStencilProps] = useState(() => getStencilProps());
 
@@ -35,12 +35,12 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
     const imageOrientation = () => {
       if (deviceImage && deviceImage.aspectRatio.label === 'square') return undefined;
 
-      return (deviceImage && deviceImage.orientation) || 'landscape';
+      return options.orientation || (deviceImage && deviceImage.orientation) || 'landscape';
     };
 
     const defaultCrop: WhpptImageCrop = {
       galleryItemId: _id,
-      aspectRatio: (deviceImage && deviceImage.aspectRatio) || { ...aspectRatios[0] },
+      aspectRatio: options.aspectRatio || (deviceImage && deviceImage.aspectRatio) || { ...aspectRatios.at(-1) },
       orientation: imageOrientation(),
       coords: (deviceImage && deviceImage.coords) || defaultCoordinates,
       altText: defaultAltText || '',
@@ -88,7 +88,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
             <></>
           )}
 
-          {aspectRatios && (
+          {aspectRatios && (!options.aspectRatio || options.aspectRatio.label === 'freeform') && (
             <AspectRatioPicker
               value={value}
               onChange={onChange}

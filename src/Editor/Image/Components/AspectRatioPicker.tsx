@@ -16,12 +16,9 @@ export const AspectRatioPicker: FC<ApectRatioPickerProps> = ({ value, onChange, 
   return (
     <div className="whppt-gallery-settings__tag-container">
       {aspectRatios.map((ratio, index) => {
-        const disabled = value[device] && ratio.label !== value[device].aspectRatio.label && value[device].aspectRatio.label !== 'freeform';
-
         return (
           <button
             key={index}
-            disabled={disabled}
             onClick={() => {
               value[device].aspectRatio = ratio;
               setStencilProps(
@@ -31,7 +28,7 @@ export const AspectRatioPicker: FC<ApectRatioPickerProps> = ({ value, onChange, 
               );
               if (ratio.label === 'square') onChange({ ...value, orientation: undefined });
             }}>
-            <WhpptGalleryTag tag={ratio.label} disabled={disabled} />
+            <WhpptGalleryTag tag={ratio.label} />
           </button>
         );
       })}
