@@ -90,23 +90,24 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
 
           {aspectRatios && (!options.aspectRatio || options.aspectRatio.label === 'freeform') && (
             <AspectRatioPicker
-              value={value}
-              onChange={onChange}
-              device={device}
+              onChange={updatedValue => onChange({ ...value, [device]: { ...value[device], ...updatedValue } })}
+              selectedDevice={value && value[device]}
               setStencilProps={setStencilProps}
               aspectRatios={aspectRatios}
             />
           )}
 
-          <p>
-            {value[device].aspectRatio.label === 'freeform'
-              ? 'No aspect ratio locked'
-              : `This image is locked to a ${
-                  value[device].aspectRatio.label === 'square'
-                    ? 'square'
-                    : `${value[device].aspectRatio.ratio.w.toString()} / ${value[device].aspectRatio.ratio.h.toString()}`
-                } ratio`}
-          </p>
+          {!options.aspectRatio && (
+            <p>
+              {value[device].aspectRatio.label === 'freeform'
+                ? 'No aspect ratio locked'
+                : `This image is locked to a ${
+                    value[device].aspectRatio.label === 'square'
+                      ? 'square'
+                      : `${value[device].aspectRatio.ratio.w.toString()} / ${value[device].aspectRatio.ratio.h.toString()}`
+                  } ratio`}
+            </p>
+          )}
         </>
       ) : (
         <div

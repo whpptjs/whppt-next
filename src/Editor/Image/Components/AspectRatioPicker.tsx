@@ -1,18 +1,19 @@
 import React, { FC } from 'react';
-import { WhpptImageData } from '../Model/ImageData';
+import { WhpptImageCrop } from '../Model/ImageData';
 import { WhpptGalleryTag } from '../../../Gallery/Components';
 import { getLandscapeRatio, getPortraitRatio } from './Cropper';
 import { AspectRatioObject } from '../../../Gallery/Model';
 
 type ApectRatioPickerProps = {
-  value: WhpptImageData;
-  onChange: (value: WhpptImageData) => void;
-  device: string;
+  selectedDevice: WhpptImageCrop;
+  onChange: (value: WhpptImageCrop) => void;
   setStencilProps: (number: number) => void;
   aspectRatios: AspectRatioObject[];
 };
 
-export const AspectRatioPicker: FC<ApectRatioPickerProps> = ({ value, onChange, device, setStencilProps, aspectRatios }) => {
+export const AspectRatioPicker: FC<ApectRatioPickerProps> = ({ selectedDevice, onChange, setStencilProps, aspectRatios }) => {
+  const orientationDisabled = selectedDevice.aspectRatio?.label === 'square';
+
   return (
     <div className="whppt-gallery-settings__tag-container">
       {aspectRatios.map((ratio, index) => {
@@ -20,13 +21,13 @@ export const AspectRatioPicker: FC<ApectRatioPickerProps> = ({ value, onChange, 
           <button
             key={index}
             onClick={() => {
-              value[device].aspectRatio = ratio;
+              selectedDevice.aspectRatio = ratio;
               setStencilProps(
-                value[device].orientation === 'landscape'
-                  ? getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
-                  : getPortraitRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio)
+                selectedDevice.orientation === 'landscape'
+                  ? getLandscapeRatio(selectedDevice.aspectRatio?.ratio || aspectRatios[0].ratio)
+                  : getPortraitRatio(selectedDevice.aspectRatio?.ratio || aspectRatios[0].ratio)
               );
-              if (ratio.label === 'square') onChange({ ...value, orientation: undefined });
+              if (ratio.label === 'square') onChange({ ...selectedDevice, orientation: undefined });
             }}>
             <WhpptGalleryTag tag={ratio.label} />
           </button>
@@ -35,17 +36,21 @@ export const AspectRatioPicker: FC<ApectRatioPickerProps> = ({ value, onChange, 
 
       <div className="whppt-gallery-settings__tag-container">
         <button
+          disabled={orientationDisabled}
+          className={orientationDisabled ? 'whppt-gallery-settings__tag--disabled' : ''}
           onClick={() => {
-            onChange({ ...value, [device]: { ...value[device], orientation: 'landscape' } });
-            setStencilProps(getLandscapeRatio(value[device]?.aspectRatio?.ratio || aspectRatios[0].ratio));
+            onChange({ ...selectedDevice, orientation: 'landscape' });
+            setStencilProps(getLandscapeRatio({ w: selectedDevice.coords.width, h: selectedDevice.coords.height }));
           }}>
           <WhpptGalleryTag tag={'landscape'} />
         </button>
 
         <button
+          disabled={orientationDisabled}
+          className={orientationDisabled ? 'whppt-gallery-settings__tag--disabled' : ''}
           onClick={() => {
-            onChange({ ...value, [device]: { ...value[device], orientation: 'portrait' } });
-            setStencilProps(getPortraitRatio(value[device]?.aspectRatio.ratio || aspectRatios[0].ratio));
+            onChange({ ...selectedDevice, orientation: 'portrait' });
+            setStencilProps(getPortraitRatio({ w: selectedDevice.coords.width, h: selectedDevice.coords.height }));
           }}>
           <WhpptGalleryTag tag={'portrait'} />
         </button>
