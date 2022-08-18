@@ -9,7 +9,7 @@ export type WhpptImageCrop = {
   aspectRatio: {
     label: string;
     ratio: {
-      w: Number;
+      w: number;
       h: number;
     };
   };

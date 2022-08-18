@@ -2,7 +2,7 @@ import React from 'react';
 import { FC } from 'react';
 import { ImageEditor } from '../../Editor/Editors';
 import { useWhppt } from '../../Context';
-import { WhpptImageData } from '../../Editor/Image/ImageData';
+import { WhpptImageData } from '../../Editor/Image/Model/ImageData';
 import { buildCroppedImgUrl } from '../../Editor/Image/buildCroppedImgUrl';
 import { ComponentArgs } from '../ComponentData';
 
@@ -14,7 +14,11 @@ export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, on
 
   return (
     <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
-      <ImageEditor value={data?.image} sizes={['desktop', 'tablet', 'mobile']} onChange={val => onChange({ ...data, image: val })}>
+      <ImageEditor
+        value={data?.image}
+        aspectRatio={data?.image?.dekstop?.aspectRatio?.ratio}
+        sizes={['desktop', 'tablet', 'mobile']}
+        onChange={val => onChange({ ...data, image: val })}>
         {data?.image?.desktop ? (
           <>
             <img

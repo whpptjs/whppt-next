@@ -77,6 +77,14 @@
       @apply flex gap-4 flex-wrap;
     }
 
+    &__tag {
+      @apply bg-whpptActive px-2 py-1 rounded-md;
+
+      &--disabled {
+        @apply opacity-disabled;
+      }
+    }
+
     &__action-buttons {
       @apply flex gap-4;
 
@@ -122,10 +130,6 @@
 
   &__filters {
     @apply w-full px-5;
-  }
-
-  &__tag {
-    @apply bg-whpptActive px-2 py-1 rounded-md;
   }
 
   &__day-picker {

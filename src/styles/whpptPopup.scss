@@ -60,7 +60,7 @@
       @apply border-b-2 border-transparent;
     }
     &--disabled {
-      @apply opacity-60;
+      @apply opacity-disabled;
     }
   }
 }

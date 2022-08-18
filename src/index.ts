@@ -10,6 +10,6 @@ export * from './ContentComponents';
 export * from './ContentComponents/definitions';
 export * from './Api';
 export * from './Api/Http';
-export * from './Editor/Image/ImageData';
+export * from './Editor/Image/Model/ImageData';
 export * from './helpers';
 export { toast } from 'react-toastify';

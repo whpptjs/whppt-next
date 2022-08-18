@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
-import { WhpptImageCrop } from '../..';
+import { WhpptImageCrop } from '../Model/ImageData';
 
 export const getLandscapeRatio = ratio => {
   const { w, h } = ratio;

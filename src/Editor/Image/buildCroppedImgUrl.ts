@@ -1,4 +1,4 @@
-import { WhpptImageCrop } from './ImageData';
+import { WhpptImageCrop } from './Model/ImageData';
 
 export const buildCroppedImgUrl = (image: WhpptImageCrop, { height, width }: { height: string; width: string }) => {
   const params = [
