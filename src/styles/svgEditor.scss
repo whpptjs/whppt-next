@@ -1,6 +1,6 @@
 .whppt-svg-editor-panel {
   &--empty {
-    @apply flex justify-center items-center w-11/12 aspect-video;
+    @apply flex justify-center items-center h-48 w-48 aspect-video;
     @apply border-whpptLightMode border-[1px] border-dashed cursor-pointer;
   }
 
