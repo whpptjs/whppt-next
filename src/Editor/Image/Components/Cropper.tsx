@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
 import { WhpptImageCrop } from '../Model/ImageData';
 
@@ -27,6 +27,26 @@ type WhpptCropperProps = {
 
 export const WhpptCropper: FC<WhpptCropperProps> = ({ value, onChange, stencilProps }) => {
   const getImgUrl = galleryItemId => `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
+  const [createdDefault, setCreatedDefault] = useState(false);
+
+  const cropperRef = useRef<CropperRef>();
+
+  useEffect(() => {
+    if (!createdDefault) {
+      const image = cropperRef.current.getState()?.imageSize;
+
+      if (image) {
+        cropperRef.current.setCoordinates({
+          height: image.height * 0.8,
+          width: image.width * 0.8,
+          top: image.height * 0.1,
+          left: image.width * 0.1,
+        });
+
+        setCreatedDefault(true);
+      }
+    }
+  }, [createdDefault]);
 
   const onCrop = (cropper: CropperRef) => {
     const coords = cropper.getCoordinates();
@@ -44,12 +64,13 @@ export const WhpptCropper: FC<WhpptCropperProps> = ({ value, onChange, stencilPr
 
   return (
     <Cropper
+      ref={cropperRef}
       src={getImgUrl(value.galleryItemId)}
       className="whppt-image-editor-panel__cropper"
       onChange={onCrop}
       backgroundClassName={'whppt-cropper-background'}
       stencilProps={{ aspectRatio: stencilProps, lines: true }}
-      defaultCoordinates={value.coords ? value.coords : defaultCoordinates}
+      defaultCoordinates={value.coords || defaultCoordinates}
     />
   );
 };
