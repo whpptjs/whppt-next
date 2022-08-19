@@ -1,13 +1,11 @@
 import React, { FC, useMemo } from 'react';
 import { WhpptImageCrop } from '../Model/ImageData';
 import { WhpptGalleryTag } from '../../../Gallery/Components';
-// import { getLandscapeRatio, getPortraitRatio } from './Cropper';
 import { CropAspectRatio } from '../Model';
 
 type ApectRatioPickerProps = {
   selectedDevice: WhpptImageCrop;
   onChange: (value: WhpptImageCrop) => void;
-  // setStencilProps: (number: number) => void;
   aspectRatios: CropAspectRatio[];
   disableAspectRatios: boolean;
   disableOrientation: boolean;
