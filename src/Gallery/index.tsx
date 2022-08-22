@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback } from 'react';
+import React, { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
 import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect, WhpptIcon } from '../ui/components';
@@ -45,14 +45,10 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     if (loading === 'loaded') search();
   }, [loading, search, settingsPanel.activeTab]);
 
-  useEffect(() => {
-    if (onUse) {
-      tabs = tabs.map(tab => ({ ...tab, disabled: onUse && settingsPanel.activeTab !== tab.name }));
-    }
-
-    return () => {
-      tabs = tabs.map(tab => ({ ...tab, disabled: false }));
-    };
+  useMemo(() => {
+    tabs = onUse
+      ? tabs.map(tab => ({ ...tab, disabled: onUse && settingsPanel.activeTab !== tab.name }))
+      : tabs.map(tab => ({ ...tab, disabled: false }));
   }, [onUse, settingsPanel.activeTab]);
 
   const upload = newFile => {
