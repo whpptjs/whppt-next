@@ -13,21 +13,16 @@ export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, on
   const { editing } = useWhppt();
 
   return (
-    <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
+    <div className={['whppt-image-component', editing ? 'whppt-content--hovered' : ''].join(' ')} onClick={e => e.stopPropagation()}>
       <ImageEditor
         value={data?.image}
-        sizes={[
-          { name: 'desktop', orientation: 'landscape', aspectRatio: { w: 21, h: 9 } },
-          { name: 'tablet', aspectRatio: { w: 14, h: 21 } },
-          { name: 'mobile', orientation: 'portrait' },
-        ]}
+        sizes={[{ name: 'desktop' }, { name: 'tablet' }, { name: 'mobile' }]}
         onChange={val => onChange({ ...data, image: val })}>
         {data?.image?.desktop ? (
           <>
             <img
               alt={data?.image?.desktop?.altText || ''}
               src={buildCroppedImgUrl(data?.image?.desktop, { width: '200', height: '200' })}
-              style={{ width: '200px', height: '100px' }}
             />
             {data?.image?.desktop?.caption ? <figcaption>{data.image.desktop.caption}</figcaption> : <></>}
           </>
