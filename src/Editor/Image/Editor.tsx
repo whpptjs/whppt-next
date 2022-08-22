@@ -1,16 +1,18 @@
 import React, { FC, ReactElement } from 'react';
-import { WhpptImageData } from './ImageData';
+import { WhpptImageData, CropConfig } from './Model';
 import { useWhppt } from '../../Context';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
 
-export type ImageEditorOptions = EditorOptions & { sizes: string[] };
+export type ImageEditorOptions = EditorOptions & {
+  sizes: CropConfig[];
+};
 
 export const ImageEditor: FC<
   EditorArgs<WhpptImageData, ImageEditorOptions> & {
     label?: string;
     children: ReactElement | ReactElement[];
-    sizes: string[];
+    sizes: CropConfig[];
   }
 > = ({ children, value, label, onChange, sizes, options = {} as EditorOptions }) => {
   const { editing, showEditor } = useWhppt();

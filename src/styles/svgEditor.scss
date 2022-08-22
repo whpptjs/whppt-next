@@ -1,14 +1,12 @@
 .whppt-svg-editor-panel {
-  @apply flex flex-col gap-4;
-
   &--empty {
-    @apply flex justify-center items-center w-11/12 aspect-video;
+    @apply flex justify-center items-center h-48 w-48 aspect-video;
     @apply border-whpptLightMode border-[1px] border-dashed cursor-pointer;
   }
 
   &__svg {
     @include checkers;
-    @apply h-editedSvg w-editedSvg m-auto;
+    @apply float-left mr-4 h-editedSvg w-editedSvg m-auto;
 
     & svg {
       @apply h-full w-full;
@@ -21,7 +19,7 @@
   }
 
   &__gallery-actions {
-    @apply flex justify-between w-full;
+    @apply flex flex-col items-start;
 
     &__button {
       @apply text-whpptLightMode underline;

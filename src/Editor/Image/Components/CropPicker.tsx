@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
+import { CropConfig } from '../Model';
 
-type DevicePickerProps = {
-  devices: string[];
-  activeDevice: string;
-  set: (device: string) => void;
+type CropPickerProps = {
+  devices: CropConfig[];
+  activeDevice: CropConfig;
+  set: (device: CropConfig) => void;
 };
 
-export const DevicePicker: FC<DevicePickerProps> = ({ devices, set, activeDevice }) => {
+export const CropPicker: FC<CropPickerProps> = ({ devices, set, activeDevice }) => {
   return (
     <div className="whppt-image-editor-panel__device-picker">
       {devices.map((device, index) => (
@@ -14,9 +15,9 @@ export const DevicePicker: FC<DevicePickerProps> = ({ devices, set, activeDevice
           key={index}
           className={`whppt-image-editor-panel__device-select${device === activeDevice ? '--active' : ''}`}
           onClick={() => {
-            set(device.toLocaleLowerCase());
+            set(device);
           }}>
-          {device.charAt(0).toUpperCase() + device.slice(1)}
+          {device.name.charAt(0).toUpperCase() + device.name.slice(1)}
         </p>
       ))}
     </div>

@@ -3,6 +3,7 @@ import React, { FC, ReactElement } from 'react';
 export type WhpptTab = {
   name: string;
   label: string;
+  disabled?: boolean;
 };
 
 type WhpptTabProps = {

@@ -1,22 +1,17 @@
-import React, { FC, useState, useEffect, useCallback } from 'react';
+import React, { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
-import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect } from '../ui/components';
-import { Images } from './Images';
-import { Videos } from './Videos';
-import { Svgs } from './Svgs';
-import { GalleryFileType } from './Model';
+import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect, WhpptIcon } from '../ui/components';
+import { WhpptGalleryTab, WhpptGalleryImage, WhpptGallerySvg } from './Components';
+import { GalleryFileType, GalleryItem } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
-import { GalleryItem } from './Model';
 import { capitalizeFirstLetter } from '../helpers';
 import { splitKeywords } from '../splitKeywords';
 import { toast } from 'react-toastify';
 
-const tabs: Array<WhpptTab> = [
-  { name: 'image', label: 'Images' },
-  { name: 'video', label: 'Videos' },
-  { name: 'file', label: 'Files' },
-  { name: 'svg', label: 'SVG' },
+const internalTabs: Array<WhpptTab> = [
+  { name: 'image', label: 'Images', disabled: false },
+  { name: 'svg', label: 'SVG', disabled: false },
 ];
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
@@ -50,6 +45,14 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     if (loading === 'loaded') search();
   }, [loading, search, settingsPanel.activeTab]);
 
+  const tabs: Array<WhpptTab> = useMemo(
+    () =>
+      onUse
+        ? internalTabs.map(tab => ({ ...tab, disabled: onUse && settingsPanel.activeTab !== tab.name }))
+        : internalTabs.map(tab => ({ ...tab, disabled: false })),
+    [onUse, settingsPanel.activeTab]
+  );
+
   const upload = newFile => {
     const upload = api.gallery.upload(newFile).then(file => setItems([...items, file]));
 
@@ -73,10 +76,24 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     });
   };
 
+  const getComponent = () => {
+    return {
+      image: WhpptGalleryImage,
+      svg: WhpptGallerySvg,
+    }[settingsPanel.activeTab];
+  };
+
   return (
     <div className="whppt-gallery">
       <div className="whppt-gallery__content">
-        <WhpptHeading text="Media Gallery" />
+        <div className="whppt-gallery__title">
+          <WhpptHeading text="Media Gallery" />
+          {onUse && (
+            <button className="whppt-gallery__close" onClick={hideSettingsPanel}>
+              <WhpptIcon is="close" />
+            </button>
+          )}
+        </div>
         <div className="whppt-gallery__filters">
           <WhpptQueryInput
             value={searchQueryTags}
@@ -111,54 +128,17 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
           {error ? <h1>Search failed</h1> : <></>}
         </div>
 
-        <WhpptTab selectedTab={settingsPanel.activeTab}>
-          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'image') ? (
-            <Images
-              name="images"
-              label="Images"
-              items={items}
-              upload={upload}
-              setSelected={image => {
-                setSelected(image);
-                setSettingsOpen(true);
-              }}
-              selectedId={selected && selected._id}
-            />
-          ) : (
-            <></>
-          )}
-          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'video') ? (
-            <Videos
-              name="videos"
-              label="Videos"
-              items={items}
-              upload={upload}
-              setSelected={video => {
-                setSelected(video);
-                setSettingsOpen(true);
-              }}
-              selectedId={selected && selected._id}
-            />
-          ) : (
-            <></>
-          )}
-
-          {!settingsPanel.activeTab || (settingsPanel.activeTab && settingsPanel.activeTab === 'svg') ? (
-            <Svgs
-              name="svg"
-              label="SVG"
-              items={items}
-              upload={upload}
-              setSelected={svg => {
-                setSelected(svg);
-                setSettingsOpen(true);
-              }}
-              selectedId={selected && selected._id}
-            />
-          ) : (
-            <></>
-          )}
-        </WhpptTab>
+        <WhpptGalleryTab
+          type={settingsPanel.activeTab as GalleryFileType}
+          items={items}
+          upload={upload}
+          setSelected={item => {
+            setSelected(item);
+            setSettingsOpen(true);
+          }}
+          selectedId={selected && selected._id}
+          Component={getComponent()}
+        />
       </div>
 
       <div className={`whppt-gallery-settings ${selected && settingsOpen ? 'whppt-gallery-settings--active' : ''}`}>

@@ -1,10 +1,10 @@
 import React, { FC, useRef } from 'react';
 
-type WhpptImageUploaderProps = {
+type WhpptGalleryUploaderProps = {
   upload: (file: File) => void;
 };
 
-export const WhpptGalleryUploader: FC<WhpptImageUploaderProps> = ({ upload }) => {
+export const WhpptGalleryUploader: FC<WhpptGalleryUploaderProps> = ({ upload }) => {
   const imageInputRef: { current: HTMLInputElement } = useRef();
 
   const openImageInput = () => {

@@ -1,4 +1,4 @@
-export type AspectRatioObject = {
+export type CropAspectRatio = {
   label: string;
   ratio: AspectRatio;
 };
@@ -8,7 +8,7 @@ export type AspectRatio = {
   h: number;
 };
 
-export const aspectRatios: AspectRatioObject[] = [
+export const aspectRatios: CropAspectRatio[] = [
   { label: '16/9', ratio: { w: 16, h: 9 } },
   { label: '9/5', ratio: { w: 9, h: 5 } },
   { label: '4/3', ratio: { w: 4, h: 3 } },
