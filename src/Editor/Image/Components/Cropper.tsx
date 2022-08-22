@@ -2,13 +2,6 @@ import React, { FC, useMemo, useRef, useState } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
 import { WhpptImageCrop } from '../Model/ImageData';
 
-export const defaultCoordinates = {
-  height: 150,
-  width: 250,
-  top: 20,
-  left: 10,
-};
-
 type WhpptCropperProps = {
   value: WhpptImageCrop;
   onChange: (data: WhpptImageCrop) => void;
@@ -16,12 +9,12 @@ type WhpptCropperProps = {
 
 export const getLandscapeRatio = ratio => {
   const { w, h } = ratio;
-  return w / h;
+  return w >= h ? w / h : h / w;
 };
 
 export const getPortraitRatio = ratio => {
   const { w, h } = ratio;
-  return h / w;
+  return w >= h ? h / w : w / h;
 };
 
 export const WhpptCropper: FC<WhpptCropperProps> = ({ value, onChange }) => {
