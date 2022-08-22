@@ -9,12 +9,12 @@ type WhpptCropperProps = {
 
 export const getLandscapeRatio = ratio => {
   const { w, h } = ratio;
-  return w >= h ? w / h : h / w;
+  return w / h;
 };
 
 export const getPortraitRatio = ratio => {
   const { w, h } = ratio;
-  return w >= h ? h / w : w / h;
+  return h / w;
 };
 
 export const WhpptCropper: FC<WhpptCropperProps> = ({ value, onChange }) => {
