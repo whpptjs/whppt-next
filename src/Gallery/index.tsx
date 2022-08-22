@@ -9,7 +9,7 @@ import { capitalizeFirstLetter } from '../helpers';
 import { splitKeywords } from '../splitKeywords';
 import { toast } from 'react-toastify';
 
-let tabs: Array<WhpptTab> = [
+const internalTabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images', disabled: false },
   { name: 'svg', label: 'SVG', disabled: false },
 ];
@@ -45,11 +45,13 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     if (loading === 'loaded') search();
   }, [loading, search, settingsPanel.activeTab]);
 
-  useMemo(() => {
-    tabs = onUse
-      ? tabs.map(tab => ({ ...tab, disabled: onUse && settingsPanel.activeTab !== tab.name }))
-      : tabs.map(tab => ({ ...tab, disabled: false }));
-  }, [onUse, settingsPanel.activeTab]);
+  const tabs: Array<WhpptTab> = useMemo(
+    () =>
+      onUse
+        ? internalTabs.map(tab => ({ ...tab, disabled: onUse && settingsPanel.activeTab !== tab.name }))
+        : internalTabs.map(tab => ({ ...tab, disabled: false })),
+    [onUse, settingsPanel.activeTab]
+  );
 
   const upload = newFile => {
     const upload = api.gallery.upload(newFile).then(file => setItems([...items, file]));
