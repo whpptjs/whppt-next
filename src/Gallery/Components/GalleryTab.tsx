@@ -17,7 +17,7 @@ export const WhpptGalleryTab: FC<GalleryTab> = ({ type, items, upload, setSelect
   return (
     <section className="whppt-gallery whppt-gallery__main-container">
       <div className={`whppt-gallery-grid whppt-gallery-grid__${type}`}>
-        <WhpptGalleryUploader upload={uploadItem} />
+        <WhpptGalleryUploader upload={uploadItem} type={type} />
         {items &&
           items.map(item => (
             <Component
