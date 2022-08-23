@@ -18,7 +18,20 @@ export const WhpptGalleryUploader: FC<WhpptGalleryUploaderProps> = ({ upload, ty
   const selectFile: React.ChangeEventHandler = event => {
     const fileUploaded: File = (event.target as HTMLInputElement)?.files[0];
     const extension = fileUploaded.name.split('.')[1];
-    GalleryFileExtensions[type].includes(extension) ? upload(fileUploaded) : toast.promise(Promise.reject(), { error: 'Wrong file type' });
+    GalleryFileExtensions[type].includes(extension)
+      ? upload(fileUploaded)
+      : toast.error(
+          <div>
+            <span>Unsupported file type.</span>
+            <br></br>
+            <span>
+              Supported file{' '}
+              {GalleryFileExtensions[type].length > 1
+                ? `types are ${GalleryFileExtensions[type].join(', ')}.`
+                : `type is ${GalleryFileExtensions[type][0]}.`}
+            </span>
+          </div>
+        );
   };
 
   return (
