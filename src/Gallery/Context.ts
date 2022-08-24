@@ -30,5 +30,6 @@ export const Context = ({ galleryPanel, setGalleryPanel }: GalleryContextArgs) =
       if (_galleryPanel.key === galleryPanel.key) return hideGalleryPanel();
       setGalleryPanel({ ..._galleryPanel, visible: true });
     },
+    changeGalleryPanelActiveTab: (activeTab: string) => setGalleryPanel({ ...galleryPanel, activeTab }),
   };
 };

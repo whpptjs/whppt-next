@@ -250,7 +250,7 @@ export const WhpptMainNav: FC<{
         toggleEditing(false);
         toggleGalleryPanel({
           key: 'gallery',
-          activeTab: 'svg',
+          activeTab: 'image',
           component: <Gallery />,
         });
       },
