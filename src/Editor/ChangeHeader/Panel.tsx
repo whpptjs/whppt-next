@@ -6,7 +6,6 @@ export const WhpptChangeHeaderEditorPanel: FC = () => {
 
   const changeHeader = (type: string) => {
     setPage({ ...page, header: { ...page.header, type } });
-    console.log('🚀 ~ file: Panel.tsx ~ line 6 ~ page', page);
   };
 
   return (
