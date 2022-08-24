@@ -32,10 +32,10 @@ export const pageFactory: PageFactory = {
   }),
   init: (domain, page) => ({
     ...(page || {}),
-    pageType: page.pageType || 'generic',
+    pageType: page?.pageType || 'generic',
     domainId: domain?._id,
-    settings: page.settings || defaultPageSettingsData,
-    header: page.header || { type: '' },
+    settings: page?.settings || defaultPageSettingsData,
+    header: page?.header || { type: '' },
   }),
 };
 
