@@ -8,6 +8,7 @@ import { SavePagePopup } from './Popups/SavePage';
 import { SaveNavPopup } from './Popups/SaveNav';
 import { SaveFooterPopup } from './Popups/SaveFooter';
 import { SettingsPanel } from '../Settings/Context';
+import { GalleryPanel } from '../Gallery/Context';
 import { PageSettings } from '../Page/Settings';
 import { SiteSettings } from '../Site/Settings';
 import { AppSettings } from '../App/Settings';
@@ -20,13 +21,14 @@ export type MenuItemActionOptions = {
   closeWhpptEditor: () => void;
   closeAllWhpptPanels: () => void;
   toggleSettingsPanel: (val: SettingsPanel) => void;
+  toggleGalleryPanel: (val: GalleryPanel) => void;
 };
 
 export type MenuItem = {
   key: string;
   label: string;
   icon: ReactElement;
-  isActive: (args: { settingsPanel: SettingsPanel }) => boolean;
+  isActive: (args: { settingsPanel: SettingsPanel; galleryPanel: GalleryPanel }) => boolean;
   action: (args: MenuItemActionOptions) => void;
   disabled?: boolean;
   order: number;
@@ -53,6 +55,8 @@ export const WhpptMainNav: FC<{
     hideSettingsPanel,
     toggleSettingsPanel,
     settingsPanel,
+    toggleGalleryPanel,
+    galleryPanel,
     page,
   } = useWhppt();
   const logout = () => {
@@ -242,11 +246,11 @@ export const WhpptMainNav: FC<{
       key: 'gallery',
       label: 'Gallery',
       icon: <WhpptIcon is="gallery"></WhpptIcon>,
-      action: ({ toggleSettingsPanel }) => {
+      action: ({ toggleGalleryPanel }) => {
         toggleEditing(false);
-        toggleSettingsPanel({
+        toggleGalleryPanel({
           key: 'gallery',
-          activeTab: 'image',
+          activeTab: 'svg',
           component: <Gallery />,
         });
       },
@@ -290,9 +294,14 @@ export const WhpptMainNav: FC<{
                             <button
                               disabled={item.disabled}
                               className={`whppt-main-nav-group__nav-item ${
-                                item.isActive && item.isActive({ settingsPanel }) ? 'whppt-main-nav-group__nav-item--active' : ''
+                                item.isActive && item.isActive({ settingsPanel, galleryPanel })
+                                  ? 'whppt-main-nav-group__nav-item--active'
+                                  : ''
                               }`}
-                              onClick={() => item.action && item.action({ closeWhpptEditor, closeAllWhpptPanels, toggleSettingsPanel })}>
+                              onClick={() =>
+                                item.action &&
+                                item.action({ closeWhpptEditor, closeAllWhpptPanels, toggleSettingsPanel, toggleGalleryPanel })
+                              }>
                               <div className="whppt-main-nav__icon">{item.icon}</div>
                               {showFullNav && <div className="whppt-main-nav-group__label">{item.label}</div>}
                             </button>

@@ -12,6 +12,7 @@ import * as siteContext from './Site/Context';
 import * as pageContext from './Page/Context';
 import * as securityContext from './Security/Context';
 import * as settingsContext from './Settings/Context';
+import * as galleryContext from './Gallery/Context';
 import { WhpptLogin } from './ui/Login';
 import { WhpptSetNewUserDetails } from './ui/Login/WhpptSetNewUserDetails';
 
@@ -41,6 +42,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
   const [pageSettingsData, setPageSettingsData] = useState(pageContext.defaultPageSettingsData);
   const [user, setUser] = useState(securityContext.defaultState);
   const [settingsPanel, setSettingsPanel] = useState(settingsContext.defaultSettingsPanelState);
+  const [galleryPanel, setGalleryPanel] = useState(galleryContext.defaultGalleryPanelState);
   const api = useMemo(() => {
     return Api();
   }, []);
@@ -77,6 +79,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
       }),
       ...securityContext.Context({ user, setUser }),
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
+      ...galleryContext.Context({ galleryPanel, setGalleryPanel }),
       contentTree,
       navWidth,
       isDraftMode,
@@ -95,6 +98,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
     settingsData,
     user,
     settingsPanel,
+    galleryPanel,
     navWidth,
     isDraftMode,
   ]);

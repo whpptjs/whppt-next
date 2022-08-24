@@ -8,7 +8,7 @@ import { GalleryItem } from '../../Gallery/Model';
 import parse from 'html-react-parser';
 
 export const WhpptSvgEditorPanel: FC<EditorArgs<WhpptSvgData, EditorOptions>> = ({ value, onChange }) => {
-  const { toggleSettingsPanel, api } = useWhppt();
+  const { toggleGalleryPanel, api } = useWhppt();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -40,7 +40,7 @@ export const WhpptSvgEditorPanel: FC<EditorArgs<WhpptSvgData, EditorOptions>> = 
             <button
               className="whppt-svg-editor-panel__gallery-actions__button"
               onClick={() => {
-                toggleSettingsPanel({
+                toggleGalleryPanel({
                   key: 'gallery',
                   activeTab: 'svg',
                   component: <Gallery onUse={useSvg} />,
@@ -62,7 +62,7 @@ export const WhpptSvgEditorPanel: FC<EditorArgs<WhpptSvgData, EditorOptions>> = 
         <div
           className="whppt-svg-editor-panel--empty"
           onClick={() => {
-            toggleSettingsPanel({
+            toggleGalleryPanel({
               key: 'gallery',
               activeTab: 'svg',
               component: <Gallery onUse={useSvg} />,

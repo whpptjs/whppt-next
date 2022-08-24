@@ -12,7 +12,7 @@ import { AspectRatioPicker } from './Components/AspectRatioPicker';
 import { aspectRatios } from './Model';
 
 export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
-  const { toggleSettingsPanel } = useWhppt();
+  const { toggleGalleryPanel } = useWhppt();
 
   const [device, setDevice] = useState(options.sizes[0]);
   const fixedCrop = useMemo(() => options.sizes.find(s => s.name === device.name), [options.sizes, device]);
@@ -59,7 +59,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
                 <button
                   className="whppt-image-editor-panel__gallery-actions__button"
                   onClick={() => {
-                    toggleSettingsPanel({
+                    toggleGalleryPanel({
                       key: 'gallery',
                       activeTab: 'image',
                       component: <Gallery onUse={useImage} />,
@@ -90,7 +90,7 @@ export const WhpptImageEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOpt
         <div
           className="whppt-image-editor-panel__cropper--empty"
           onClick={() => {
-            toggleSettingsPanel({
+            toggleGalleryPanel({
               key: 'gallery',
               activeTab: 'image',
               component: <Gallery onUse={useImage} />,
