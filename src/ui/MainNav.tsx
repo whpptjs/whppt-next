@@ -56,6 +56,7 @@ export const WhpptMainNav: FC<{
     toggleSettingsPanel,
     settingsPanel,
     toggleGalleryPanel,
+    hideGalleryPanel,
     galleryPanel,
     page,
   } = useWhppt();
@@ -71,6 +72,7 @@ export const WhpptMainNav: FC<{
   };
   const closeAllWhpptPanels = () => {
     hideSettingsPanel();
+    hideGalleryPanel();
     closeWhpptEditor();
   };
 
@@ -170,6 +172,7 @@ export const WhpptMainNav: FC<{
       action: () => {
         toggleEditing(false);
         closeWhpptEditor();
+        hideGalleryPanel();
         toggleSettingsPanel({
           key: 'app',
           activeTab: 'domain',
@@ -189,6 +192,7 @@ export const WhpptMainNav: FC<{
       action: () => {
         toggleEditing(false);
         closeWhpptEditor();
+        hideGalleryPanel();
         toggleSettingsPanel({
           key: 'siteSettings',
           activeTab: 'general',
@@ -222,6 +226,7 @@ export const WhpptMainNav: FC<{
       action: ({ toggleSettingsPanel }) => {
         toggleEditing(false);
         closeWhpptEditor();
+        hideGalleryPanel();
         toggleSettingsPanel({
           key: 'page',
           activeTab: 'general',
@@ -248,6 +253,7 @@ export const WhpptMainNav: FC<{
       icon: <WhpptIcon is="gallery"></WhpptIcon>,
       action: ({ toggleGalleryPanel }) => {
         toggleEditing(false);
+        hideSettingsPanel();
         toggleGalleryPanel({
           key: 'gallery',
           activeTab: 'image',

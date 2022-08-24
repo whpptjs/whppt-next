@@ -88,11 +88,9 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
       <div className="whppt-gallery__content">
         <div className="whppt-gallery__title">
           <WhpptHeading text="Media Gallery" />
-          {onUse && (
-            <button className="whppt-gallery__close" onClick={hideGalleryPanel}>
-              <WhpptIcon is="close" />
-            </button>
-          )}
+          <button className="whppt-gallery__close" onClick={hideGalleryPanel}>
+            <WhpptIcon is="close" />
+          </button>
         </div>
         <div className="whppt-gallery__filters">
           <WhpptQueryInput
