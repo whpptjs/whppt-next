@@ -254,7 +254,7 @@ export const WhpptMainNav: FC<{
           component: <Gallery />,
         });
       },
-      isActive: ({ settingsPanel }) => settingsPanel.key === 'gallery',
+      isActive: ({ galleryPanel }) => galleryPanel.key === 'gallery',
       order: 1200,
       group: 'site',
       groupOrder: 400,
