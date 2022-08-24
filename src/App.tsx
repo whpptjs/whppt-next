@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import type { WhpptAppEditorsArg } from './Editor/EditorPanel';
 import { WhpptEditorPanel } from './Editor/EditorPanel';
 import { SettingsPanel } from './Settings/Panel';
+import { GalleryPanel } from './Gallery/Panel';
 import { MenuItem, MenuItemOptions, WhpptMainNav } from './ui/MainNav';
 import { Api } from './Api';
 import * as editor from './Editor/Context';
@@ -150,6 +151,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({ children, editors, menuItems = (
                     setShowFullNav={() => setShowFullNav(!showFullNav)}
                   />
                   <SettingsPanel showFullNav={showFullNav} />
+                  <GalleryPanel showFullNav={showFullNav} />
                 </>
               ) : (
                 <WhpptLogin />
