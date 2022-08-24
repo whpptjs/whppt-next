@@ -1,9 +1,11 @@
-import { PageSettingsData } from 'src/CommonSettings/Model/SettingsData';
-import { ComponentData } from '../../ContentComponents';
+import { Domain } from '../../App';
+import { PageSettingsData } from '../../CommonSettings/Model/SettingsData';
 
-export type HeaderData = {
+export type HeaderData<T> = {
   type: string;
+  content?: T;
 };
+
 export type PageData = {
   _id?: string;
   pageType: string;
@@ -12,8 +14,48 @@ export type PageData = {
   settings?: PageSettingsData;
   createdAt?: string;
   updatedAt?: string;
-  contents: ComponentData[];
-  header: HeaderData;
+  content?: any;
+  header?: HeaderData<any>;
 };
 
-export const Page = values => values as PageData;
+export type PageFactory = {
+  new: (domain: Domain) => PageData;
+  init: (domain?: Domain, page?: PageData) => PageData;
+};
+
+export const pageFactory: PageFactory = {
+  new: domain => ({
+    domainId: domain._id,
+    pageType: 'generic',
+    settings: defaultPageSettingsData,
+    header: { type: '' },
+  }),
+  init: (domain, page) => ({
+    ...(page || {}),
+    pageType: page.pageType || 'generic',
+    domainId: domain?._id,
+    settings: page.settings || defaultPageSettingsData,
+    header: page.header || { type: '' },
+  }),
+};
+
+export const defaultPageSettingsData = {
+  hideFromSitemap: false,
+  twitter: {
+    title: '',
+    description: '',
+    keywords: [],
+  },
+  seo: {
+    title: '',
+    description: '',
+    keywords: [],
+    priority: '',
+    frequency: '',
+  },
+  og: {
+    title: '',
+    description: '',
+    keywords: [],
+  },
+};

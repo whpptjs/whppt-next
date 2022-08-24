@@ -1,19 +1,19 @@
 export type HttpErrorArgs = {
   message: string;
   stack?: string;
-  statusCode: number;
+  status: number;
 };
 
 export class HttpError extends Error {
-  public statusCode: number;
+  public status: number;
 
-  constructor({ message, stack, statusCode }: HttpErrorArgs) {
+  constructor({ message, stack, status }: HttpErrorArgs) {
     super(message);
     this.stack = stack || new Error(message).stack;
-    this.statusCode = statusCode;
+    this.status = status;
   }
 
   static notFound(message) {
-    return new HttpError({ message, statusCode: 404 });
+    return new HttpError({ message, status: 404 });
   }
 }

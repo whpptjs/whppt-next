@@ -1,6 +1,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 import Cookies from 'js-cookie';
 import { GalleryItem } from 'src/Gallery/Model';
+import { HttpError } from '../HttpError';
 
 export type WhpptGetOptions = { path: string };
 export type WhpptPostOptions<T> = { path: string; data: T };
@@ -45,7 +46,14 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        if (response.status >= 400) throw new Error(await response.text());
+        const status = response.status;
+        if (response.status >= 400) {
+          return Promise.resolve()
+            .then(() => response.json())
+            .then(resp => {
+              throw new HttpError({ status, message: resp.error?.message || resp.error || resp.message });
+            });
+        }
         const json = await response.json();
         return json as T;
       },
@@ -55,7 +63,11 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        if (response.status >= 400) throw new Error(await response.text());
+        const status = response.status;
+        if (response.status >= 400) {
+          const message = await response.text();
+          throw new HttpError({ status, message });
+        }
         return await response.text();
       },
       postJson: async <T, R>({ path, data }: WhpptPostOptions<T>) => {
@@ -69,7 +81,10 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
           },
           body: JSON.stringify(data), // body data type must match "Content-Type" header
         });
-        if (response.status >= 400) throw new Error(await response.text());
+        if (response.status >= 400) {
+          const message = await response.text();
+          return Promise.reject({ status: response.status, message });
+        }
         const json = await response.json();
         return json as R;
       },
@@ -82,7 +97,10 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
           // },
           body: fileData as any,
         });
-        if (response.status >= 400) throw new Error(await response.text());
+        if (response.status >= 400) {
+          const message = await response.text();
+          return Promise.reject({ status: response.status, message });
+        }
         const json = await response.json();
         return json as GalleryItem;
       },

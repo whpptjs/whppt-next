@@ -1,6 +1,7 @@
 import { PageData } from './Model/Page';
 import { WhpptHttp } from '../Api/Http';
 import { Domain } from '../App/Model';
+import { HttpError } from '../HttpError';
 
 export type PageApi = {
   loadFromSlug: ({ slug, collection, domain }: { slug: string; collection: string; domain: Domain }) => Promise<PageData>;
@@ -15,7 +16,11 @@ export const PageApi: PageApiConstructor = ({ http }) => {
   return {
     loadFromSlug: async ({ slug, collection = 'pages', domain }) => {
       if (slug.startsWith('/')) slug = slug.replace(/^(\/*)/, '');
-      return http.secure.getJson<PageData>({ path: `/api/page/load?slug=${slug}&collection=${collection}&domainId=${domain._id}` });
+      const queryParams = [`slug=${slug}`, `collection=${collection}`, `domainId=${domain._id}`].join('&');
+      return http.secure.getJson<PageData>({ path: `/api/page/load?${queryParams}` }).catch((err: HttpError) => {
+        if (err.status === 404) return undefined;
+        throw err;
+      });
     },
     delete: async (page: PageData) => {
       return http.secure.postJson({
