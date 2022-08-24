@@ -15,7 +15,7 @@ const internalTabs: Array<WhpptTab> = [
 ];
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
-  const { settingsPanel, changeSettingsPanelActiveTab, api, hideSettingsPanel, domain } = useWhppt();
+  const { galleryPanel, changeGalleryPanelActiveTab, api, hideGalleryPanel, domain } = useWhppt();
 
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [selected, setSelected] = useState<GalleryItem>(null);
@@ -29,37 +29,37 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     setError('');
 
     const tags = splitKeywords(searchQueryTags) || [];
-    const type = settingsPanel.activeTab as GalleryFileType;
+    const type = galleryPanel.activeTab as GalleryFileType;
     const search = api.gallery
       .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter })
       .then(({ items }: { items: GalleryItem[] }) => setItems(items))
       .catch(error => setError(error.message || error));
 
     return toast.promise(search, {
-      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} search failed 🤯`,
+      error: `${capitalizeFirstLetter(galleryPanel.activeTab)} search failed 🤯`,
     });
-  }, [api.gallery, domain._id, searchQueryTags, settingsPanel.activeTab, filter]);
+  }, [api.gallery, domain._id, searchQueryTags, galleryPanel.activeTab, filter]);
 
   useEffect(() => {
     if (loading === 'loading') return setLoading('loaded');
     if (loading === 'loaded') search();
-  }, [loading, search, settingsPanel.activeTab]);
+  }, [loading, search, galleryPanel.activeTab]);
 
   const tabs: Array<WhpptTab> = useMemo(
     () =>
       onUse
-        ? internalTabs.map(tab => ({ ...tab, disabled: onUse && settingsPanel.activeTab !== tab.name }))
+        ? internalTabs.map(tab => ({ ...tab, disabled: onUse && galleryPanel.activeTab !== tab.name }))
         : internalTabs.map(tab => ({ ...tab, disabled: false })),
-    [onUse, settingsPanel.activeTab]
+    [onUse, galleryPanel.activeTab]
   );
 
   const upload = newFile => {
     const upload = api.gallery.upload(newFile).then(file => setItems([...items, file]));
 
     return toast.promise(upload, {
-      pending: `Uploading ${capitalizeFirstLetter(settingsPanel.activeTab)}...`,
-      success: `${capitalizeFirstLetter(settingsPanel.activeTab)} uploaded`,
-      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} upload failed 🤯`,
+      pending: `Uploading ${capitalizeFirstLetter(galleryPanel.activeTab)}...`,
+      success: `${capitalizeFirstLetter(galleryPanel.activeTab)} uploaded`,
+      error: `${capitalizeFirstLetter(galleryPanel.activeTab)} upload failed 🤯`,
     });
   };
 
@@ -70,9 +70,9 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     });
 
     return toast.promise(remove, {
-      pending: `Deleting ${capitalizeFirstLetter(settingsPanel.activeTab)}...`,
-      success: `${capitalizeFirstLetter(settingsPanel.activeTab)} deleted`,
-      error: `${capitalizeFirstLetter(settingsPanel.activeTab)} delete failed 🤯`,
+      pending: `Deleting ${capitalizeFirstLetter(galleryPanel.activeTab)}...`,
+      success: `${capitalizeFirstLetter(galleryPanel.activeTab)} deleted`,
+      error: `${capitalizeFirstLetter(galleryPanel.activeTab)} delete failed 🤯`,
     });
   };
 
@@ -80,7 +80,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     return {
       image: WhpptGalleryImage,
       svg: WhpptGallerySvg,
-    }[settingsPanel.activeTab];
+    }[galleryPanel.activeTab];
   };
 
   return (
@@ -88,11 +88,9 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
       <div className="whppt-gallery__content">
         <div className="whppt-gallery__title">
           <WhpptHeading text="Media Gallery" />
-          {onUse && (
-            <button className="whppt-gallery__close" onClick={hideSettingsPanel}>
-              <WhpptIcon is="close" />
-            </button>
-          )}
+          <button className="whppt-gallery__close" onClick={hideGalleryPanel}>
+            <WhpptIcon is="close" />
+          </button>
         </div>
         <div className="whppt-gallery__filters">
           <WhpptQueryInput
@@ -120,16 +118,16 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
             selectTab={selectedTab => {
               setItems([]);
               setSelected(null);
-              changeSettingsPanelActiveTab(selectedTab);
+              changeGalleryPanelActiveTab(selectedTab);
             }}
-            selectedTab={settingsPanel.activeTab}
+            selectedTab={galleryPanel.activeTab}
           />
 
           {error ? <h1>Search failed</h1> : <></>}
         </div>
 
         <WhpptGalleryTab
-          type={settingsPanel.activeTab as GalleryFileType}
+          type={galleryPanel.activeTab as GalleryFileType}
           items={items}
           upload={upload}
           setSelected={item => {
@@ -148,7 +146,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
               onUse
                 ? updatedItem => {
                     onUse(updatedItem as GalleryItem);
-                    hideSettingsPanel();
+                    hideGalleryPanel();
                   }
                 : undefined
             }
