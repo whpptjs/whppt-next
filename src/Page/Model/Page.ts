@@ -6,9 +6,16 @@ export type HeaderData<T> = {
   content?: T;
 };
 
+export type PageBackgroundColour = {
+  label: string;
+  hexCode: string;
+  value: string;
+};
+
 export type PageData = {
   _id?: string;
   pageType: string;
+  backgroundColour?: PageBackgroundColour;
   domainId?: string;
   slug?: string;
   settings?: PageSettingsData;

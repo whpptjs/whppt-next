@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
-import { WhpptButton, WhpptTab, WhpptCheckbox } from '../../ui/components';
+import { WhpptButton, WhpptTab, WhpptCheckbox, WhpptSelect } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
 import { toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import { SavePagePopup } from '../../ui/Popups/SavePage';
 import { PageData } from '../Model/Page';
 
 export const General: FC<WhpptTab> = () => {
-  const { domain, api, page, setPage } = useWhppt();
+  const { domain, api, page, setPage, pageBGColours } = useWhppt();
   const [slug, setSlug] = useState('');
   const [slugError, setSlugError] = useState('');
   const [validSlug, setValidSlug] = useState('');
@@ -71,6 +71,14 @@ export const General: FC<WhpptTab> = () => {
       </section>
       <div className="whppt-form__content">
         <section className="whppt-form-section">
+          <WhpptSelect
+            id="whppt-page-bg-picker"
+            label="Base Colour of the background"
+            items={pageBGColours}
+            value={pageBGColours.find(i => page.backgroundColour && i.value === page.backgroundColour.value)}
+            onChange={backgroundColour => setPage({ ...page, backgroundColour })}
+            getOptionLabel={item => `${item.label} - ${item.hexCode}`}
+          />
           <WhpptCheckbox
             label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
             value={`${page.settings.hideFromSitemap}`}

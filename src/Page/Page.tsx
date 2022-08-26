@@ -16,5 +16,9 @@ export const WhpptPage = <T extends PageData = PageData>({ getContents, children
     contentTree.setGetTree(_page => getContents({ page: _page as T, setPage }));
   }, [setPage, contentTree, getContents]);
 
-  return page ? <div>{children}</div> : <div>Page failed to load</div>;
+  return page ? (
+    <div className={`bg-${(page.backgroundColour && page.backgroundColour.value) || 'whpptDefault'}`}>{children}</div>
+  ) : (
+    <div>Page failed to load</div>
+  );
 };
