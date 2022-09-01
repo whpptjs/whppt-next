@@ -77,7 +77,7 @@ export const General: FC<WhpptTab> = () => {
             items={themes}
             value={themes.find(i => page.theme && i.value === page.theme.value)}
             onChange={theme => setPage({ ...page, theme })}
-            getOptionLabel={item => `${item.label} - ${item.hexCode}`}
+            getOptionLabel={item => item.label}
           />
           <WhpptCheckbox
             label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
