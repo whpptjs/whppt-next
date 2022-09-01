@@ -6,16 +6,16 @@ export type HeaderData<T> = {
   content?: T;
 };
 
-export type PageBackgroundColour = {
+export type PageTheme = {
   label: string;
-  hexCode: string;
+  hexCode?: string;
   value: string;
 };
 
 export type PageData = {
   _id?: string;
   pageType: string;
-  backgroundColour?: PageBackgroundColour;
+  theme?: PageTheme;
   domainId?: string;
   slug?: string;
   settings?: PageSettingsData;

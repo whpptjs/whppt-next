@@ -8,7 +8,7 @@ import { SavePagePopup } from '../../ui/Popups/SavePage';
 import { PageData } from '../Model/Page';
 
 export const General: FC<WhpptTab> = () => {
-  const { domain, api, page, setPage, pageBGColours } = useWhppt();
+  const { domain, api, page, setPage, themes } = useWhppt();
   const [slug, setSlug] = useState('');
   const [slugError, setSlugError] = useState('');
   const [validSlug, setValidSlug] = useState('');
@@ -74,9 +74,9 @@ export const General: FC<WhpptTab> = () => {
           <WhpptSelect
             id="whppt-page-bg-picker"
             label="Base Colour of the background"
-            items={pageBGColours}
-            value={pageBGColours.find(i => page.backgroundColour && i.value === page.backgroundColour.value)}
-            onChange={backgroundColour => setPage({ ...page, backgroundColour })}
+            items={themes}
+            value={themes.find(i => page.theme && i.value === page.theme.value)}
+            onChange={theme => setPage({ ...page, theme })}
             getOptionLabel={item => `${item.label} - ${item.hexCode}`}
           />
           <WhpptCheckbox

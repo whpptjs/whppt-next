@@ -26,7 +26,7 @@ export const Whppt = createContext({
   ...gallery.Context(gallery.defaultArgs),
   page: {} as PageData,
   setPage: (_: PageData) => {},
-  pageBGColours: [],
+  themes: [],
   api: Api(),
   contentTree,
   isDraftMode: false,
