@@ -1,5 +1,5 @@
-import { Domain } from 'src/App';
-import { SettingsData } from 'src/CommonSettings/Model/SettingsData';
+import { Domain } from '../../App';
+import { SettingsData } from '../../CommonSettings/Model/SettingsData';
 import { WhpptHttp } from '../../Api/Http';
 
 export type SiteSettingsApi = {
