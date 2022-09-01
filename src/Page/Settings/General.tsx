@@ -8,7 +8,7 @@ import { SavePagePopup } from '../../ui/Popups/SavePage';
 import { PageData } from '../Model/Page';
 
 export const General: FC<WhpptTab> = () => {
-  const { domain, api, page, setPage, themes } = useWhppt();
+  const { domain, api, page, setPage, themes = [] } = useWhppt();
   const [slug, setSlug] = useState('');
   const [slugError, setSlugError] = useState('');
   const [validSlug, setValidSlug] = useState('');
@@ -71,14 +71,16 @@ export const General: FC<WhpptTab> = () => {
       </section>
       <div className="whppt-form__content">
         <section className="whppt-form-section">
-          <WhpptSelect
-            id="whppt-page-bg-picker"
-            label="Base Colour of the background"
-            items={themes}
-            value={themes.find(i => page.theme && i.value === page.theme.value)}
-            onChange={theme => setPage({ ...page, theme })}
-            getOptionLabel={item => item.label}
-          />
+          {themes.length && (
+            <WhpptSelect
+              id="whppt-page-bg-picker"
+              label="Base Colour of the background"
+              items={themes}
+              value={themes.find(i => page.theme && i.value === page.theme.value)}
+              onChange={theme => setPage({ ...page, theme })}
+              getOptionLabel={item => item.label}
+            />
+          )}
           <WhpptCheckbox
             label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
             value={`${page.settings.hideFromSitemap}`}
