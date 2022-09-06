@@ -1,9 +1,10 @@
-import { SettingsData } from 'src/CommonSettings/Model/SettingsData';
+import { Domain } from '../../App';
+import { SettingsData } from '../../CommonSettings/Model/SettingsData';
 import { WhpptHttp } from '../../Api/Http';
 
 export type SiteSettingsApi = {
   load: ({ domain }) => Promise<SettingsData>;
-  save: ({ domain, settings: SettingsData }) => Promise<any>;
+  save: ({ domain, settings }: { domain: Domain; settings: SettingsData }) => Promise<any>;
   publish: ({ settings }) => Promise<any>;
   publishNav: ({ nav }) => Promise<any>;
   publishFooter: ({ footer }) => Promise<any>;

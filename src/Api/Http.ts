@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { GalleryItem } from 'src/Gallery/Model';
 import { HttpError } from '../HttpError';
 
-export type WhpptGetOptions = { path: string };
+export type WhpptGetOptions = { path: string; headers?: {} };
 export type WhpptPostOptions<T> = { path: string; data: T };
 export type WhpptSaveFileOptions = { path: string; fileData: FormData };
 
@@ -40,10 +40,10 @@ export const joinQueryTags = (tags: string[]) => {
 export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
   return {
     secure: {
-      getJson: async <T>({ path }: WhpptGetOptions) => {
+      getJson: async <T>({ path, headers }: WhpptGetOptions) => {
         const token = Cookies.get('authToken');
         const response = await fetch(buildFullPath(baseUrl, path), {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}`, ...(headers || {}) },
         });
 
         const status = response.status;
