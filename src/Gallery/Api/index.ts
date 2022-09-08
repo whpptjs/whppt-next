@@ -15,6 +15,7 @@ export type GalleryApi = {
   upload: (fileData: FormData) => Promise<GalleryItem>;
   save: (details: GalleryItem) => Promise<{ item: GalleryItem }>;
   load: (id: string) => Promise<{ item: GalleryItem }>;
+  loadFile: (id: string, name: string) => Promise<string>;
   loadSvg: (id: string) => Promise<string>;
   remove: (id: string) => Promise<any>;
 };
@@ -60,6 +61,14 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
       path: `/api/gallery/load?itemId=${id}`,
     });
   },
+  loadFile: async (id: string, name: string) => {
+    if (!id) throw new Error('Id of file is missing');
+
+    return http.secure.getText({
+      path: `/gallery/file/${id}/${name}`,
+    });
+  },
+
   loadSvg: async (id: string) => {
     if (!id) throw new Error('Id of svg is missing');
     return http.secure.getText({

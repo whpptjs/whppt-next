@@ -81,7 +81,10 @@
       @apply text-xl font-bold mb-5;
     }
     &--info {
-      @apply text-base mb-5;
+      @apply text-base mb-5 whitespace-pre-wrap;
+    }
+    &--break {
+      word-break: break-word;
     }
     &--helper-text {
       @apply text-sm mb-5 text-whpptStandard;

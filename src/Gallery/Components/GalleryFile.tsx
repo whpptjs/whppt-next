@@ -1,34 +1,34 @@
 import React, { FC, useState, useEffect } from 'react';
-import parse from 'html-react-parser';
 import { useWhppt } from '../../Context';
 import { GalleryComponent } from '../Model';
+import { WhpptIcon } from '../../ui/components';
 
-export const WhpptGallerySvg: FC<GalleryComponent> = ({ id, name, onClick, isSelected }) => {
-  console.log('🚀 ~ file: GallerySvg.tsx ~ line 7 ~ id', id);
+export const WhpptGalleryFile: FC<GalleryComponent> = ({ id, name, onClick, isSelected }) => {
   const { api } = useWhppt();
   const [created, setCreated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [svgString, setSvgString] = useState('');
+  const [file, setFile] = useState('');
+  console.log('🚀 ~ file: GalleryFile.tsx ~ line 12 ~ file', file);
 
   useEffect(() => {
     if (!created) return setCreated(true);
     api.gallery
-      .loadSvg(id)
-      .then(svgString => {
-        setSvgString(svgString);
+      .loadFile(id, name)
+      .then(item => {
+        setFile(item);
         setLoading(false);
       })
       .catch(error => {
         setError(error.message || error);
       });
-  }, [created, id, api.gallery]);
+  }, [created, id, api.gallery, name]);
 
   return (
     <div>
       {error ? (
         <div className="whppt-gallery__loader__error">
-          <p>Svg could not be loaded.</p>
+          <p>File could not be loaded.</p>
           <p className="whppt-gallery__image-name whppt-gallery__loader__error--wrap">{name}</p>
         </div>
       ) : loading ? (
@@ -37,8 +37,8 @@ export const WhpptGallerySvg: FC<GalleryComponent> = ({ id, name, onClick, isSel
         </div>
       ) : (
         <div>
-          <div className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''}`} onClick={onClick}>
-            {svgString && parse(svgString)}
+          <div className={`whppt-gallery__item ${isSelected ? 'whppt-gallery__item--selected' : ''}`} onClick={onClick}>
+            <WhpptIcon is="file"></WhpptIcon>
           </div>
           {<p className="whppt-gallery-grid__svgs svg-title">{name}</p>}
         </div>

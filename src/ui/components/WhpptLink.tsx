@@ -33,9 +33,15 @@ export const WhpptLink: FC<{
 
   const linkHref = trim(link.href, '/');
   const pathname = trim(router.pathname, '/');
+
+  const getTarget = () => {
+    if (link.type === 'external' || link.type === 'file') return '_blank';
+    return '';
+  };
   return (
     <a
       href={link.href}
+      target={getTarget()}
       onClick={editing ? e => e.preventDefault() : undefined}
       className={[
         router.pathname == link.href ? 'exact-active' : '',

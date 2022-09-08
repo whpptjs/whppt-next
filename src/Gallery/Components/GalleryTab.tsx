@@ -4,6 +4,7 @@ import { GalleryTab } from '../Model';
 import { useWhppt } from '../../Context';
 
 export const WhpptGalleryTab: FC<GalleryTab> = ({ type, items, upload, setSelected, selectedId, Component }) => {
+  console.log('🚀 ~ file: GalleryTab.tsx ~ line 7 ~ type', type);
   const { domain } = useWhppt();
 
   const uploadItem = newFile => {

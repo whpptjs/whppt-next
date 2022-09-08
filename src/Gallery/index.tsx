@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
 import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect, WhpptIcon } from '../ui/components';
-import { WhpptGalleryTab, WhpptGalleryImage, WhpptGallerySvg } from './Components';
+import { WhpptGalleryTab, WhpptGalleryImage, WhpptGallerySvg, WhpptGalleryVideo, WhpptGalleryFile } from './Components';
 import { GalleryFileType, GalleryItem } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
 import { capitalizeFirstLetter } from '../helpers';
@@ -12,6 +12,8 @@ import { toast } from 'react-toastify';
 const internalTabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images', disabled: false },
   { name: 'svg', label: 'SVG', disabled: false },
+  { name: 'doc', label: 'File', disabled: false },
+  { name: 'video', label: 'Video', disabled: false },
 ];
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
@@ -80,6 +82,8 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     return {
       image: WhpptGalleryImage,
       svg: WhpptGallerySvg,
+      doc: WhpptGalleryFile,
+      video: WhpptGalleryVideo,
     }[galleryPanel.activeTab];
   };
 
@@ -122,7 +126,6 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
             }}
             selectedTab={galleryPanel.activeTab}
           />
-
           {error ? <h1>Search failed</h1> : <></>}
         </div>
 

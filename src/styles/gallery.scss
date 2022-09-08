@@ -115,8 +115,17 @@
     @apply whitespace-nowrap overflow-hidden text-ellipsis;
   }
 
+  &__item {
+    @apply cursor-pointer  h-galleryItem w-gallerySvg flex items-center justify-center outline-whpptStandard outline-2 outline;
+    & svg {
+      @apply w-10 h-10;
+    }
+    &--selected {
+      @apply outline-whpptActive;
+    }
+  }
   &__svg {
-    @apply h-galleryItem w-gallerySvg cursor-pointer;
+    @apply cursor-pointer h-galleryItem w-gallerySvg;
     @include checkers;
 
     &--selected {
@@ -157,6 +166,13 @@
 
     &__spinner {
       @apply animate-spin rounded-full h-8 w-8 border-b-2 border-whpptActive top-2/4 right-2/4;
+    }
+    &__error {
+      @apply border border-whpptStandard w-full h-full flex justify-center items-center p-10 flex-col text-center;
+
+      &--wrap {
+        @apply whitespace-pre-wrap;
+      }
     }
   }
 }
