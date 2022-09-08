@@ -1,17 +1,11 @@
 import React, { FC } from 'react';
-import { useWhppt } from '../../';
+import { getFileUrlFromGalleryItem, useWhppt } from '../../index';
 import { Gallery } from '../../Gallery';
 import { WhpptInput, WhpptLinkData, WhpptTab } from '../../ui/components';
 import { EditorArgs } from '../EditorArgs';
 
 export const FileLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ value, onChange }) => {
-  console.log('🚀 ~ file: File.tsx ~ line 8 ~ value', value);
   const { toggleGalleryPanel } = useWhppt();
-
-  const useFile = file => {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL;
-    onChange({ ...value, href: `${baseUrl}/gallery/file/${file._id}/${file.fileInfo.originalname}` });
-  };
 
   return (
     <div className="whppt-form">
@@ -32,7 +26,7 @@ export const FileLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ value, o
             toggleGalleryPanel({
               key: 'gallery',
               activeTab: 'doc',
-              component: <Gallery onUse={useFile} />,
+              component: <Gallery onUse={file => onChange({ ...value, href: getFileUrlFromGalleryItem(file) })} />,
             });
           }}>
           {'Choose a different File'}

@@ -13,4 +13,7 @@ export * from './Api';
 export * from './Api/Http';
 export * from './Editor/Image/Model/ImageData';
 export * from './helpers';
+export { getVideoUrlFromGalleryItemId } from './Gallery/Components/GalleryVideo';
+export { getFileUrlFromGalleryItem } from './Gallery/Components/GalleryFile';
+
 export { toast } from 'react-toastify';
