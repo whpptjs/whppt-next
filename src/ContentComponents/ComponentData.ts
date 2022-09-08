@@ -7,7 +7,6 @@ export type ComponentData = {
 export type WhpptComponentDefinition = {
   key: string;
   name: string;
-  componentType: string;
   init: (value: {}) => {};
 };
 
