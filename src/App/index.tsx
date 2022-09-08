@@ -17,7 +17,7 @@ import { Domain } from './Model';
 import { GalleryPanel } from '../Gallery/Panel';
 import * as galleryContext from '../Gallery/Context';
 import { Footer, Nav } from '../Site/Model';
-import { PageData, pageFactory } from '../Page';
+import { PageTheme, PageData, pageFactory } from '../Page';
 
 export * from './Model';
 
@@ -30,6 +30,7 @@ export type WhpptAppOptions = {
   editors: WhpptAppEditorsArg;
   error: (error: Error) => ReactElement;
   menuItems?: (options: MenuItemOptions) => MenuItem[];
+  pageThemes?: PageTheme[];
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
@@ -41,6 +42,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   page: defaultPage,
   editors,
   menuItems = () => [],
+  pageThemes = [],
   error,
 }) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
@@ -59,6 +61,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [user, setUser] = useState(securityContext.defaultState);
   const [settingsPanel, setSettingsPanel] = useState(settingsContext.defaultSettingsPanelState);
   const [galleryPanel, setGalleryPanel] = useState(galleryContext.defaultGalleryPanelState);
+  const [themes] = useState(pageThemes);
   const api = useMemo(() => {
     return Api();
   }, []);
@@ -92,8 +95,24 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       contentTree,
       navWidth,
       isDraftMode,
+      themes,
     };
-  }, [editing, editorState, api, domain, page, nav, footer, settingsData, user, settingsPanel, galleryPanel, navWidth, isDraftMode]);
+  }, [
+    editing,
+    editorState,
+    api,
+    domain,
+    nav,
+    footer,
+    settingsData,
+    user,
+    settingsPanel,
+    galleryPanel,
+    page,
+    navWidth,
+    isDraftMode,
+    themes,
+  ]);
 
   useEffect(() => {
     api.security
