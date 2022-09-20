@@ -6,9 +6,10 @@ import { EditorArgs } from '../EditorArgs';
 export const PlainTextEditor: FC<
   EditorArgs<string> & {
     label?: string;
-    children: ReactElement | ReactElement[];
+    children?: ReactElement | ReactElement[];
+    className?: string;
   }
-> = ({ children, value, label, onChange, options = {} as EditorOptions }) => {
+> = ({ children, value, label, className, onChange, options = {} as EditorOptions }) => {
   const { editing, showEditor } = useWhppt();
   const opts = { label: label || 'Plain Text', ...options };
   return (
@@ -20,7 +21,17 @@ export const PlainTextEditor: FC<
           e.stopPropagation();
         }
       }}>
-      {children}
+      {!value || value === 'undefined' || value === '<p></p>' ? (
+        editing ? (
+          <div className={className}>Add your text here</div>
+        ) : (
+          <></>
+        )
+      ) : children ? (
+        children
+      ) : (
+        <div className={className}>{value}</div>
+      )}
     </div>
   );
 };

@@ -48,12 +48,20 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
 
         const status = response.status;
         if (response.status >= 400) {
-          return Promise.resolve()
-            .then(() => response.json())
-            .then(resp => {
-              throw new HttpError({ status, message: resp.error?.message || resp.error || resp.message });
+          return response
+            .text()
+            .then(textResp => {
+              try {
+                return JSON.parse(textResp);
+              } catch (err) {
+                throw new Error(textResp);
+              }
+            })
+            .catch(error => {
+              throw new HttpError({ status, message: error.error?.message || error.error || error.message });
             });
         }
+
         const json = await response.json();
         return json as T;
       },
