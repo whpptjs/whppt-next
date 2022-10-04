@@ -50,6 +50,7 @@ module.exports = {
         editorPanel: '1000',
         settingsPanel: '1500',
         mainNav: '2000',
+        confirmationPopup: '2500',
       },
     },
   },
