@@ -121,9 +121,9 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       .catch(err => setError(err));
   }, [api]);
 
-  const checkWhpptUser = () => {
+  const checkIfAUserIsSignedIn = () => {
     //TODO work this out better
-    if (user._id === 'guest') return false;
+    if (!user || user._id === 'guest') return false;
     return true;
   };
 
@@ -143,7 +143,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
         <div className={`whppt-app ${lightMode ? 'whppt-lightMode' : ''}`}>
           {process.env.NEXT_PUBLIC_DRAFT === 'true' ? (
             <>
-              {checkWhpptUser() ? (
+              {checkIfAUserIsSignedIn() ? (
                 <>
                   <WhpptMainNav
                     lightMode={lightMode}

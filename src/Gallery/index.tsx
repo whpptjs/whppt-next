@@ -64,7 +64,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
   };
 
   const remove = id => {
-    const remove = api.gallery.remove(id).then(() => {
+    const remove = api.gallery.remove(id, galleryPanel.activeTab).then(() => {
       setSelected(null);
       setItems(items.filter(({ _id }) => _id == id));
     });

@@ -37,12 +37,19 @@ export const joinQueryTags = (tags: string[]) => {
   return tagsQuery;
 };
 
+const apiKey = process.env.NEXT_PUBLIC_WHPPT_API_KEY;
+export const appendApiKey = (path: string) => {
+  if (!apiKey) return path;
+  if (path.indexOf('?') < 1) return `${path}?apiKey=${apiKey}`;
+  return `${path}&apiKey=${apiKey}`;
+};
+
 export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
   return {
     secure: {
       getJson: async <T>({ path, headers }: WhpptGetOptions) => {
         const token = Cookies.get('authToken');
-        const response = await fetch(buildFullPath(baseUrl, path), {
+        const response = await fetch(appendApiKey(buildFullPath(baseUrl, path)), {
           headers: { Authorization: `Bearer ${token}`, ...(headers || {}) },
         });
 
@@ -67,7 +74,7 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
       },
       getText: async ({ path }: WhpptGetOptions) => {
         const token = Cookies.get('authToken');
-        const response = await fetch(buildFullPath(baseUrl, path), {
+        const response = await fetch(appendApiKey(buildFullPath(baseUrl, path)), {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -81,7 +88,7 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
       postJson: async <T, R>({ path, data }: WhpptPostOptions<T>) => {
         const token = Cookies.get('authToken');
 
-        const response = await fetch(buildFullPath(baseUrl, path), {
+        const response = await fetch(appendApiKey(buildFullPath(baseUrl, path)), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -97,7 +104,7 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         return json as R;
       },
       postFile: async ({ path, fileData }: WhpptSaveFileOptions) => {
-        const response = await fetch(buildFullPath(baseUrl, path), {
+        const response = await fetch(appendApiKey(buildFullPath(baseUrl, path)), {
           method: 'POST',
           // TODO: this route needs to be secured
           //  headers: {

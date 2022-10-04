@@ -1,6 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { CropperRef, Cropper } from 'react-advanced-cropper';
 import { WhpptImageCrop } from '../Model/ImageData';
+import { appendApiKey } from '../../../Api/Http';
 
 type WhpptCropperProps = {
   value: WhpptImageCrop;
@@ -18,7 +19,7 @@ export const getPortraitRatio = ratio => {
 };
 
 export const WhpptCropper: FC<WhpptCropperProps> = ({ value, onChange }) => {
-  const getImgUrl = galleryItemId => `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`;
+  const getImgUrl = galleryItemId => appendApiKey(`${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${galleryItemId}`);
 
   const stencilAspectRatio = useMemo(() => {
     const orientation = value.orientation;

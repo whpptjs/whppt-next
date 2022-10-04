@@ -1,11 +1,12 @@
 import React, { FC, useState } from 'react';
+import { appendApiKey } from '../../Api/Http';
 import { GalleryComponent } from '../Model';
 
 export const WhpptGalleryImage: FC<GalleryComponent> = ({ id, name, onClick, isSelected }) => {
   const [loaded, setLoaded] = useState(false);
 
   const getImgUrl = imgId => {
-    return `${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${imgId}?w=360`;
+    return appendApiKey(`${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${imgId}?w=360`);
   };
 
   return (
