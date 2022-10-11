@@ -68,8 +68,8 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
               throw new HttpError({ status, message: error.error?.message || error.error || error.message });
             });
         }
-
-        const json = await response.json();
+        const textResponse = await response.text();
+        const json = textResponse && textResponse.length > 1 ? JSON.parse(textResponse) : textResponse;
         return json as T;
       },
       getText: async ({ path }: WhpptGetOptions) => {
@@ -100,7 +100,9 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
           const message = await response.text();
           return Promise.reject({ status: response.status, message });
         }
-        const json = await response.json();
+
+        const textResponse = await response.text();
+        const json = textResponse && textResponse.length > 1 ? JSON.parse(textResponse) : textResponse;
         return json as R;
       },
       postFile: async ({ path, fileData }: WhpptSaveFileOptions) => {
@@ -116,7 +118,8 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
           const message = await response.text();
           return Promise.reject({ status: response.status, message });
         }
-        const json = await response.json();
+        const textResponse = await response.text();
+        const json = textResponse && textResponse.length > 1 ? JSON.parse(textResponse) : textResponse;
         return json as GalleryItem;
       },
     },
