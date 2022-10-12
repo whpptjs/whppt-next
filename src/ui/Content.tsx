@@ -74,7 +74,9 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, componentD
         if (editorState.editor !== 'spacing') return showEditor('spacing', content, onChange, undefined);
         hideEditor();
       },
-      isActive: () => editorState.editor === 'changeHeader',
+      isActive: (content: ComponentData) => {
+        return editorState.editor === 'spacing' && editorState.value._id === content._id;
+      },
     },
     {
       _id: 'delete',
@@ -110,7 +112,9 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, componentD
                               action.action({ content, onChange: changedValue => onChange(replaceInList(value, changedValue)) });
                               e.stopPropagation();
                             }}
-                            className="whppt-content-actions__action">
+                            className={`whppt-content-actions__action ${
+                              action.isActive && action.isActive(content) ? 'whppt-content-actions__action--active' : ''
+                            }`}>
                             <div>{action.icon}</div>
                             <div className="whppt-content-actions__action-info">{action.info}</div>
                           </button>
@@ -125,7 +129,7 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, componentD
                               action.action({ content, onChange: changedValue => onChange(replaceInList(value, changedValue)) });
                               e.stopPropagation();
                             }}
-                            className="whppt-content-actions__action">
+                            className={`whppt-content-actions__action`}>
                             <div>{action.icon()}</div>
                             <div className="whppt-content-actions__action-info">{action.info}</div>
                           </button>
@@ -137,7 +141,7 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, componentD
                   ''
                 )}
                 <div className={spacingClasses(content)}>
-                  {renderComponent(content, changedValue => onChange(replaceInList(value, changedValue)))}
+                  <div>{renderComponent(content, changedValue => onChange(replaceInList(value, changedValue)))}</div>
                 </div>
               </div>
             );

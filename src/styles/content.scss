@@ -38,13 +38,18 @@
     &:hover {
       .whppt-content-actions__action {
         @apply bg-whpptDarkBorder;
-        &:hover {
+
+        &:hover,
+        &--active {
           @apply bg-whpptActive text-white;
           .whppt-content-actions__action-info {
             @apply block;
           }
         }
       }
+    }
+    .whppt-content-actions__action--active {
+      @apply bg-whpptActive text-white;
     }
   }
 

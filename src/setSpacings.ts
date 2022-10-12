@@ -6,10 +6,12 @@ export default (options: any) => {
 
   const defaultMargin = options.defaultMargin || {
     top: { base: 0, sm: 0, lg: 0 },
-    bottom: { base: 0, sm: 0, lg: 0 },
+    bottom: { base: 2, sm: 2, lg: 2 },
   };
 
   return {
+    defaultPadding,
+    defaultMargin,
     setMarginTop: ({
       marginTopSmall,
       marginTopMedium,
