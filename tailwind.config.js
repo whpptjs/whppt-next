@@ -1,52 +1,6 @@
 module.exports = {
-  content: ['./src/**/*.{html,js}'],
-  // purge: {
-  //   // enabled: process.env.NODE_ENV === 'production',
-  //   enabled: true,
-  //   safelist: [
-  //     {
-  //       pattern: /lg:m/,
-  //     },
-  //     {
-  //       pattern: /md:m/,
-  //     },
-  //     {
-  //       pattern: /sm:m/,
-  //     },
-  //     {
-  //       pattern: /lg:p/,
-  //     },
-  //     {
-  //       pattern: /md:p/,
-  //     },
-  //     {
-  //       pattern: /sm:p/,
-  //     },
-  //   ],
-  // },
-  safelist: [
-    // {
-    //   pattern: /(lg|md|sm):m/,
-    // },
-    // {
-    //   pattern: /m/,
-    // },
-    // {
-    //   pattern: /md:m/,
-    // },
-    // {
-    //   pattern: /sm:m/,
-    // },
-    // {
-    //   pattern: /lg:p/,
-    // },
-    // {
-    //   pattern: /md:p/,
-    // },
-    // {
-    //   pattern: /sm:p/,
-    // },
-  ],
+  content: ['./src/**/*.{scss,css}'],
+  safelist: [],
   theme: {
     fontFamily: {
       Roboto: ['Roboto', 'Sans-serif'],
