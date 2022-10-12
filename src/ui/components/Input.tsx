@@ -8,6 +8,8 @@ export type WhpptInputArgs = {
   type: 'text' | 'number' | 'checkbox' | 'email' | 'password';
   placeholder?: string;
   disabled?: boolean;
+  max?: number;
+  min?: number;
   name?: string;
   onChangeEvent?: (event) => void;
   onChange?: (value: string) => void;
@@ -28,6 +30,8 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
   onChangeEvent,
   onEnterKeyPressed,
   disabled,
+  max,
+  min,
 }) => {
   const _value = `${value}`;
   return (
@@ -41,6 +45,8 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
           value={_value}
           placeholder={placeholder || ''}
           name={name}
+          max={max}
+          min={min}
           disabled={disabled}
           onKeyPress={e => {
             if (onEnterKeyPressed && e.key === 'Enter') onEnterKeyPressed(_value);

@@ -1,0 +1,15 @@
+.whppt-lightMode {
+  .whppt-editor-spacing {
+    @apply border-whpptDarkMode;
+  }
+}
+.whppt-editor-spacing {
+  @apply border-b border-whpptLightMode py-5;
+}
+
+.whppt-editor-spacing__split {
+  @apply flex gap-3;
+}
+.whppt-editor-spacing__title {
+  @apply text-xl;
+}
