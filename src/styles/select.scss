@@ -3,10 +3,11 @@
     &__control,
     &__menu {
       @apply border-whpptStandard;
-      @apply bg-whpptLightMode;
+      background-color: #fff !important;
     }
     &__single-value {
       @apply text-whpptDarkMode;
+      color: #121212 !important;
     }
     &__option {
       &:hover {
@@ -26,9 +27,10 @@
   &__control,
   &__menu {
     @apply border-2 border-whpptStandard border-opacity-70 rounded-lg;
-    @apply bg-whpptDarkMode;
+    background-color: #121212 !important;
   }
   &__single-value {
+    color: #fff !important;
     @apply text-whpptLightMode;
   }
   &__option {
