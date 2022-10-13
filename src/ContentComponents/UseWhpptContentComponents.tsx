@@ -11,7 +11,7 @@ export const UseWhpptContentComponents = (componentData: ComponentData, onChange
     return (
       <PlainTextComponent
         data={componentData.data as PlainTextPageComponentData}
-        container={componentData.container as boolean}
+        container={componentData.container}
         onChange={value => onChange({ ...componentData, data: value })}
       />
     );
@@ -19,7 +19,7 @@ export const UseWhpptContentComponents = (componentData: ComponentData, onChange
     return (
       <RichTextComponent
         data={componentData.data as RichTextComponentData}
-        container={componentData.container as boolean}
+        container={componentData.container}
         onChange={value => onChange({ ...componentData, data: value })}
       />
     );
@@ -27,7 +27,7 @@ export const UseWhpptContentComponents = (componentData: ComponentData, onChange
     return (
       <ImageComponent
         data={componentData.data as ImageComponentData}
-        container={componentData.container as boolean}
+        container={componentData.container}
         onChange={value => onChange({ ...componentData, data: value })}
       />
     );
@@ -35,7 +35,7 @@ export const UseWhpptContentComponents = (componentData: ComponentData, onChange
     return (
       <FormattedTextComponent
         data={componentData.data as FormattedTextComponentData}
-        container={componentData.container as boolean}
+        container={componentData.container}
         onChange={value => onChange({ ...componentData, data: value })}
       />
     );
