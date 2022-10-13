@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ComponentData, EditorArgs, WhpptCheckbox, WhpptInput } from '../../index';
 import setSpacings from '../../setSpacings';
 
-export const WhpptSpacingEditorPanel: FC<EditorArgs<ComponentData>> = ({ onChange, value, options }) => {
+export const WhpptSpacingEditorPanel: FC<EditorArgs<ComponentData>> = ({ onChange, value }) => {
   const { defaultMargin, defaultPadding } = setSpacings({});
   return (
     <div>

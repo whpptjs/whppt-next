@@ -4,7 +4,7 @@ export type ComponentData = {
   _id: string;
   definitionKey: string;
   data: any;
-  container?: boolean;
+  container: boolean;
   marginTopLarge?: string;
   marginBottomLarge?: string;
   marginTopMedium?: string;
