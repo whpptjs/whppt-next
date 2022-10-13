@@ -9,11 +9,13 @@ import { ComponentArgs } from '../ComponentData';
 export type ImageComponentData = {
   image: WhpptImageData;
 };
-export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, onChange }) => {
+export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, container, onChange }) => {
   const { editing } = useWhppt();
 
   return (
-    <div className={['whppt-image-component', editing ? 'whppt-content--hovered' : ''].join(' ')} onClick={e => e.stopPropagation()}>
+    <div
+      className={['whppt-image-component', container ? 'container' : '', editing ? 'whppt-content--hovered' : ''].join(' ')}
+      onClick={e => e.stopPropagation()}>
       <ImageEditor
         value={data?.image}
         sizes={[{ name: 'desktop' }, { name: 'tablet' }, { name: 'mobile' }]}
