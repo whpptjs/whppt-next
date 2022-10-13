@@ -76,7 +76,7 @@
 }
 
 .whppt-content-actions {
-  @apply flex flex-col bg-whpptDarkBorder bg-opacity-50 border-t text-white border-white z-10;
+  @apply flex flex-col bg-whpptDarkBorder bg-opacity-50 border-t text-white border-white z-componentActions;
   &__action {
     @apply w-10 h-10 p-2 relative;
     &-info {
