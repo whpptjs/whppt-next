@@ -8,12 +8,12 @@ export type PlainTextPageComponentData = {
   text: string;
 };
 
-export const PlainTextComponent: FC<ComponentArgs<PlainTextPageComponentData>> = ({ data, onChange }) => {
+export const PlainTextComponent: FC<ComponentArgs<PlainTextPageComponentData>> = ({ data, container, onChange }) => {
   const _data = data;
   const { editing } = useWhppt();
 
   return (
-    <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
+    <div className={`${container ? 'container' : ''} ${editing ? 'whppt-content--hovered' : ''}`} onClick={e => e.stopPropagation()}>
       <PlainTextEditor value={_data.text} onChange={text => onChange({ ...data, text })}>
         <div>{_data.text || 'Plain Text change'}</div>
       </PlainTextEditor>

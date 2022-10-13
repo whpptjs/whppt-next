@@ -12,10 +12,11 @@ export type ContentTreeNode = {
 
 export type WhpptContentArgs = EditorArgs<ComponentData[]> & {
   componentDefinitions: WhpptComponentDefinition[];
+  containerDefault?: boolean;
   renderComponent: (data: ComponentData, onChange: (data: ComponentData) => void) => ReactElement;
 };
 
-export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, componentDefinitions, onChange, value }) => {
+export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerDefault = true, componentDefinitions, onChange, value }) => {
   const [deletePopup, setShowDeletePopup] = useState({} as ComponentData);
 
   const { editing, showEditor, editorState, hideEditor } = useWhppt();
@@ -89,7 +90,11 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, componentD
   ];
 
   return (
-    <ContentEditor<ComponentData> value={value} componentDefinitions={componentDefinitions} onChange={onChange}>
+    <ContentEditor<ComponentData>
+      value={value}
+      componentDefinitions={componentDefinitions}
+      onChange={onChange}
+      containerDefault={containerDefault}>
       {
         <div className={editing ? 'whppt-content whppt-content--editor-open' : ''}>
           {value.map(content => {

@@ -4,6 +4,7 @@ export type ComponentData = {
   _id: string;
   definitionKey: string;
   data: any;
+  container: boolean;
   marginTopLarge?: string;
   marginBottomLarge?: string;
   marginTopMedium?: string;
@@ -35,5 +36,6 @@ export type WhpptComponentDefinition = {
 
 export type ComponentArgs<T> = {
   data: T;
+  container?: boolean;
   onChange: (data: T) => void;
 };
