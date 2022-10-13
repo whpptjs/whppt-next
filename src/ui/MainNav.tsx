@@ -44,6 +44,7 @@ export const WhpptMainNav: FC<{
   menuItems: (options) => MenuItem[];
 }> = ({ menuItems, lightMode, setLightMode, showFullNav, setShowFullNav }) => {
   const [confirmationPopup, setConfirmationPopup] = useState('');
+  const [minimizeGroups, setMinimizeGroups] = useState({});
   const {
     toggleEditing,
     editing,
@@ -271,6 +272,9 @@ export const WhpptMainNav: FC<{
 
   const groupedItems = sortBy(groupBy(sortBy(items, ['order']), 'group'), ['groupOrder']);
 
+  const clickNavGroup = (group: string) => {
+    setMinimizeGroups({ ...minimizeGroups, [group]: !minimizeGroups[group] });
+  };
   return (
     <div>
       {confirmationPopup && (
@@ -293,29 +297,33 @@ export const WhpptMainNav: FC<{
               {groupedItems.map(navItems => {
                 return (
                   <div className="whppt-main-nav-group" key={navItems[0].group}>
-                    <div className="whppt-main-nav-group--title">{navItems[0].group}</div>
-                    <ul className="whppt-main-nav-group__content">
-                      {navItems.map(item => {
-                        return (
-                          <li key={item.key}>
-                            <button
-                              disabled={item.disabled}
-                              className={`whppt-main-nav-group__nav-item ${
-                                item.isActive && item.isActive({ settingsPanel, galleryPanel })
-                                  ? 'whppt-main-nav-group__nav-item--active'
-                                  : ''
-                              }`}
-                              onClick={() =>
-                                item.action &&
-                                item.action({ closeWhpptEditor, closeAllWhpptPanels, toggleSettingsPanel, toggleGalleryPanel })
-                              }>
-                              <div className="whppt-main-nav__icon">{item.icon}</div>
-                              {showFullNav && <div className="whppt-main-nav-group__label">{item.label}</div>}
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                    <button className="whppt-main-nav-group--title" onClick={() => clickNavGroup(navItems[0].group)}>
+                      {navItems[0].group}
+                    </button>
+                    {!minimizeGroups[navItems[0].group] && (
+                      <ul className="whppt-main-nav-group__content">
+                        {navItems.map(item => {
+                          return (
+                            <li key={item.key}>
+                              <button
+                                disabled={item.disabled}
+                                className={`whppt-main-nav-group__nav-item ${
+                                  item.isActive && item.isActive({ settingsPanel, galleryPanel })
+                                    ? 'whppt-main-nav-group__nav-item--active'
+                                    : ''
+                                }`}
+                                onClick={() =>
+                                  item.action &&
+                                  item.action({ closeWhpptEditor, closeAllWhpptPanels, toggleSettingsPanel, toggleGalleryPanel })
+                                }>
+                                <div className="whppt-main-nav__icon">{item.icon}</div>
+                                {showFullNav && <div className="whppt-main-nav-group__label">{item.label}</div>}
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
                   </div>
                 );
               })}
