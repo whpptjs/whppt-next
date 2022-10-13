@@ -7,12 +7,12 @@ export type RichTextComponentData = {
   text: string;
 };
 
-export const RichTextComponent: FC<ComponentArgs<RichTextComponentData>> = ({ data, onChange }) => {
+export const RichTextComponent: FC<ComponentArgs<RichTextComponentData>> = ({ data, container, onChange }) => {
   const _data = data;
   const { editing } = useWhppt();
 
   return (
-    <div className={editing ? 'whppt-content--hovered' : ''} onClick={e => e.stopPropagation()}>
+    <div className={`${container ? 'container' : ''} ${editing ? 'whppt-content--hovered' : ''}`} onClick={e => e.stopPropagation()}>
       <RichTextEditor value={_data.text} onChange={text => onChange({ ...data, text })} />
     </div>
   );

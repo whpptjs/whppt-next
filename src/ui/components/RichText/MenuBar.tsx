@@ -86,12 +86,7 @@ export const WhpptMenuBar: FC<{ editor: any; formatOptionsOnly: boolean }> = ({ 
         <div className="hidden">paragraph</div>
         <WhpptIcon is="paragraph"></WhpptIcon>
       </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive('heading', { level: 1 }) ? 'whppt-richtext-menu-button is-active' : 'whppt-richtext-menu-button'}>
-        <div className="hidden">h1</div>
-        <WhpptIcon is="header-1"></WhpptIcon>
-      </button>
+
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         className={editor.isActive('heading', { level: 2 }) ? 'whppt-richtext-menu-button is-active' : 'whppt-richtext-menu-button'}>

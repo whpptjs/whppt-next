@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ComponentData, EditorArgs, WhpptInput } from '../../index';
+import { ComponentData, EditorArgs, WhpptCheckbox, WhpptInput } from '../../index';
 import setSpacings from '../../setSpacings';
 
 export const WhpptSpacingEditorPanel: FC<EditorArgs<ComponentData>> = ({ onChange, value }) => {
@@ -7,6 +7,11 @@ export const WhpptSpacingEditorPanel: FC<EditorArgs<ComponentData>> = ({ onChang
   return (
     <div>
       <div className="whppt-editor-spacing">
+        <WhpptCheckbox
+          label={'Full Width'}
+          value={`${value.container}`}
+          onChange={() => onChange({ ...value, container: !value.container })}
+        />
         <h3 className="whppt-editor-spacing__title">Desktop</h3>
         <div className="whppt-editor-spacing__split">
           <WhpptInput

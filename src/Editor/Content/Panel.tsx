@@ -10,7 +10,12 @@ export const WhpptContentEditorPanel: FC<EditorArgs<ComponentData[], ContentEdit
       {options.componentDefinitions.map(c => {
         if (!c.init) throw new Error(`Definition is missing a init funciton ${c.key}`);
         const inilizedData = c.init({});
-        const componentData: ComponentData = { _id: nanoid(), definitionKey: c.key, data: inilizedData };
+        const componentData: ComponentData = {
+          _id: nanoid(),
+          definitionKey: c.key,
+          data: inilizedData,
+          container: options.containerDefault,
+        };
 
         return (
           <div key={c.key}>

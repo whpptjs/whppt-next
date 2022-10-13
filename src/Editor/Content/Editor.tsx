@@ -7,16 +7,24 @@ import { EditorOptions } from '../EditorOptions';
 export type ContentEditorProps<T extends object> = {
   value: T[];
   onChange: (value: T[]) => void;
+  containerDefault?: boolean;
   children: ReactElement | ReactElement[];
   componentDefinitions: WhpptComponentDefinition[];
 };
 export type ContentEditorOptions = EditorOptions & {
   componentDefinitions: WhpptComponentDefinition[];
+  containerDefault?: boolean;
 };
 
-export const ContentEditor = <T extends object>({ children, value, onChange, componentDefinitions }: ContentEditorProps<T>) => {
+export const ContentEditor = <T extends object>({
+  children,
+  value,
+  onChange,
+  componentDefinitions,
+  containerDefault = true,
+}: ContentEditorProps<T>) => {
   const { editing, showEditor } = useWhppt();
-  const options = { componentDefinitions } as ContentEditorOptions;
+  const options = { componentDefinitions, containerDefault } as ContentEditorOptions;
 
   return (
     <div
