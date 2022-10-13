@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 export const WhpptIconBin: FC = ({}) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="12.831" height="14.145" viewBox="0 0 12.831 14.145">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.831 14.145">
       <g
         fill="currentColor"
         stroke="currentColor"

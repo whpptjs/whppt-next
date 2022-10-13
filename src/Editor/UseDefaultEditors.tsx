@@ -14,6 +14,7 @@ import {
   WhpptImageEditorPanel,
   WhpptChangeHeaderEditorPanel,
   WhpptSvgEditorPanel,
+  WhpptSpacingEditorPanel,
 } from './Panels';
 import { ImageEditorOptions } from './Image/Editor';
 
@@ -23,6 +24,7 @@ export const UseDefaultEditors = ({ editor, value, onChange, options }: UseDefau
   if (editor === 'newPage') return <WhpptNewPageEditorPanel />;
   if (editor === 'contentsTree') return <WhpptContentsTreeEditorPanel />;
   if (editor === 'changeHeader') return <WhpptChangeHeaderEditorPanel />;
+  if (editor === 'spacing') return <WhpptSpacingEditorPanel value={value} onChange={onChange} options={options} />;
   if (editor === 'plainText') return <WhpptPlaintextEditorPanel value={value} onChange={onChange} options={options} />;
   if (editor === 'richText') return <WhpptRichtextEditorPanel value={value} onChange={onChange} options={options} />;
   if (editor === 'formattedText') return <WhpptFormattedTextEditorPanel value={value} onChange={onChange} options={options} />;

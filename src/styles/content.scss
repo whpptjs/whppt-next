@@ -3,6 +3,22 @@
     &-tree-list {
       @apply bg-whpptLightBorder;
     }
+    &__component {
+      &:hover {
+        .whppt-content-actions__action {
+          @apply bg-whpptLightBorder;
+        }
+      }
+    }
+  }
+  .whppt-content-actions {
+    &__action {
+      @apply text-whpptDarkBorder bg-whpptLightBorder;
+    }
+  }
+
+  .whppt-content-actions {
+    @apply bg-whpptLightBorder text-whpptDarkBorder;
   }
 }
 
@@ -17,11 +33,55 @@
       @apply border-whpptActive;
     }
   }
+  &__component {
+    @apply flex gap-3;
+    &:hover {
+      .whppt-content-actions__action {
+        @apply bg-whpptDarkBorder;
+
+        &:hover,
+        &--active {
+          @apply bg-whpptActive text-white;
+          .whppt-content-actions__action-info {
+            @apply block;
+          }
+        }
+      }
+    }
+    .whppt-content-actions__action--active {
+      @apply bg-whpptActive text-white;
+    }
+  }
+
+  &--editor-open {
+    @apply pb-20;
+    min-height: 300px;
+  }
 
   &-tree-list {
     @apply bg-whpptDarkBorder p-2 mb-2;
     &__inner-list {
-      @apply bg-whpptActive px-2 my-2 rounded flex cursor-pointer;
+      @apply bg-whpptActive px-2 my-2 rounded justify-between items-center flex cursor-pointer;
+      &-left {
+        @apply flex;
+      }
+      &-right {
+        @apply flex;
+        svg {
+          @apply h-4 w-4;
+        }
+      }
+    }
+  }
+}
+
+.whppt-content-actions {
+  @apply flex flex-col bg-whpptDarkBorder bg-opacity-50 border-t text-white border-white;
+  &__action {
+    @apply w-10 h-10 p-2 relative;
+    &-info {
+      @apply hidden top-0 absolute p-2 bg-whpptActive whitespace-nowrap;
+      left: 40px;
     }
   }
 }

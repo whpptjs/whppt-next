@@ -1,7 +1,7 @@
+@import 'react-toastify/dist/ReactToastify.css';
 @import './variables.scss';
 @import './mixins.scss';
 @import './fonts.scss';
-@import 'react-toastify/dist/ReactToastify.css';
 @import './tailwind.scss';
 @import './mainNav.scss';
 @import './editorPanel.scss';
@@ -28,6 +28,7 @@
 @import './imageEditor.scss';
 @import './editors.scss';
 @import './svgEditor.scss';
+@import './spacing.scss';
 @import '../../node_modules/react-advanced-cropper/dist/style.css';
 @import '../../node_modules/react-day-picker/dist/style.css';
 

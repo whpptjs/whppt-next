@@ -1,5 +1,6 @@
 module.exports = {
-  content: ['./src/**/*.{html,js}'],
+  content: ['./src/**/*.{scss,css}'],
+  safelist: [],
   theme: {
     fontFamily: {
       Roboto: ['Roboto', 'Sans-serif'],
