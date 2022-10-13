@@ -76,13 +76,13 @@
 }
 
 .whppt-content-actions {
-  @apply flex flex-col bg-whpptDarkBorder bg-opacity-50 border-t text-white border-white;
+  @apply flex flex-col bg-whpptDarkBorder bg-opacity-50 border-t text-white border-white z-componentActions;
   &__action {
     @apply w-10 h-10 p-2 relative;
     &-info {
       @apply hidden top-0 absolute px-2 bg-whpptActive whitespace-nowrap items-center;
       left: 40px;
-      height: 45px;
+      height: 40px;
     }
   }
 }

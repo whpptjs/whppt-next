@@ -11,7 +11,7 @@
 }
 
 .whppt-confirmation-popup {
-  @apply absolute inset-0 z-confirmationPopup;
+  @apply fixed inset-0 z-confirmationPopup;
   @apply bg-whpptDarkBorder bg-opacity-40;
   @apply flex items-center justify-center;
 
