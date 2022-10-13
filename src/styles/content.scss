@@ -43,7 +43,7 @@
         &--active {
           @apply bg-whpptActive text-white;
           .whppt-content-actions__action-info {
-            @apply block;
+            @apply flex;
           }
         }
       }
@@ -80,8 +80,9 @@
   &__action {
     @apply w-10 h-10 p-2 relative;
     &-info {
-      @apply hidden top-0 absolute p-2 bg-whpptActive whitespace-nowrap;
+      @apply hidden top-0 absolute px-2 bg-whpptActive whitespace-nowrap items-center;
       left: 40px;
+      height: 45px;
     }
   }
 }

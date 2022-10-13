@@ -140,7 +140,7 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, componentD
                 ) : (
                   ''
                 )}
-                <div className={spacingClasses(content)}>
+                <div className={`w-full ${spacingClasses(content)}`}>
                   <div>{renderComponent(content, changedValue => onChange(replaceInList(value, changedValue)))}</div>
                 </div>
               </div>
