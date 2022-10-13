@@ -7,7 +7,7 @@ export type PageApi = {
   loadFromSlug: ({ slug, collection, domain }: { slug: string; collection: string; domain: Domain }) => Promise<PageData>;
   delete: (page: PageData) => Promise<any>;
   checkSlug: ({ slug, collection, domain }: { slug: string; collection?: string; domain: Domain }) => Promise<PageData>;
-  save: ({ page, publish, collection }: { page: PageData; publish?: boolean; collection?: string }) => Promise<PageData>;
+  save: ({ page, publish }: { page: PageData; publish?: boolean }) => Promise<PageData>;
 };
 
 export type PageApiConstructor = ({ http }: { http: WhpptHttp }) => PageApi;
@@ -34,10 +34,10 @@ export const PageApi: PageApiConstructor = ({ http }) => {
         data: { slug, collection, domainId: domain._id },
       });
     },
-    save: async ({ page, publish = false, collection = 'pages' }) => {
+    save: async ({ page, publish = false }) => {
       return http.secure.postJson({
         path: '/api/page/save',
-        data: { page, collection, publish },
+        data: { page, publish },
       });
     },
   };
