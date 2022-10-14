@@ -26,6 +26,8 @@
   }
   &__content {
     @apply p-5;
+    @apply overflow-y-auto h-[calc(100vh-100px)];
+
     input {
       @apply text-whpptDarkMode border-2 border-whpptDarkMode w-full p-3 rounded;
     }
