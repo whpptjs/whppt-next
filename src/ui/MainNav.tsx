@@ -11,6 +11,7 @@ import { SettingsPanel } from '../Settings/Context';
 import { GalleryPanel } from '../Gallery/Context';
 import { PageSettings } from '../Page/Settings';
 import { SiteSettings } from '../Site/Settings';
+import { SiteMap } from '../Site/Map';
 import { AppSettings } from '../App/Settings';
 import { Gallery } from '../Gallery';
 
@@ -206,6 +207,25 @@ export const WhpptMainNav: FC<{
       groupOrder: 300,
     },
     {
+      key: 'site-map',
+      label: 'Open Site Map',
+      icon: <WhpptIcon is="dashboard"></WhpptIcon>,
+      isActive: () => settingsPanel.key === 'siteMap',
+      action: () => {
+        toggleEditing(false);
+        closeWhpptEditor();
+        hideGalleryPanel();
+        toggleSettingsPanel({
+          key: 'siteMap',
+          activeTab: 'general',
+          component: <SiteMap />,
+        });
+      },
+      order: 500,
+      group: 'site',
+      groupOrder: 300,
+    },
+    {
       key: 'page-header',
       label: 'Change Page Header',
       icon: <WhpptIcon is="page-header"></WhpptIcon>,
@@ -240,14 +260,6 @@ export const WhpptMainNav: FC<{
       group: 'page',
       groupOrder: 200,
       disabled: noPageLoaded,
-    },
-    {
-      key: 'dashboard',
-      label: 'Open Dashboard',
-      icon: <WhpptIcon is="dashboard"></WhpptIcon>,
-      order: 300,
-      group: 'config',
-      groupOrder: 400,
     },
     {
       key: 'gallery',
