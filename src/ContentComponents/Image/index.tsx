@@ -22,10 +22,7 @@ export const ImageComponent: FC<ComponentArgs<ImageComponentData>> = ({ data, co
         onChange={val => onChange({ ...data, image: val })}>
         {data?.image?.desktop ? (
           <>
-            <img
-              alt={data?.image?.desktop?.altText || ''}
-              src={buildCroppedImgUrl(data?.image?.desktop, { width: '200', height: '200' })}
-            />
+            <img alt={data?.image?.desktop?.altText || ''} src={buildCroppedImgUrl(data?.image?.desktop, { width: 200, height: 200 })} />
             {data?.image?.desktop?.caption ? <figcaption>{data.image.desktop.caption}</figcaption> : <></>}
           </>
         ) : (
