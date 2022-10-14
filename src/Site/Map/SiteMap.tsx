@@ -1,14 +1,13 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useWhppt } from '../../Context';
 // import { WhpptHeading } from '../../ui/components/Heading';
-import { WhpptInput, WhpptTab, WhpptTable } from '../../ui/components';
+import { WhpptInput, WhpptTable } from '../../ui/components';
 // import { WhpptButton, WhpptTab } from '../../ui/components';
 // import { useWhppt } from '../../Context';
 // import { toast } from 'react-toastify';
 
-export const SiteMapTable: FC<WhpptTab> = () => {
+export const SiteMapTable: FC = () => {
   const { api, domain } = useWhppt();
-  // const { api, settingsData, nav, footer } = useWhppt();
   const [filter, setFilter] = useState('');
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
