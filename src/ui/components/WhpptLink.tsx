@@ -25,24 +25,22 @@ export const WhpptLink: FC<{
   const router = useRouter();
   const { editing } = useWhppt();
 
-  // TODO: Write tests
-  // router.pathname =  ""
-  // router.pathname =  "about"
-  // router.pathname =  "about/who-we-are"
-  // link.href =        "about/who-we-are"
-
   const linkHref = trim(link.href, '/');
   const pathname = trim(router.pathname, '/');
+  if (!link.href) return <div> {children ? children : <div>{link.text}</div>}</div>;
+
   return (
     <a
       href={link.href}
       onClick={editing ? e => e.preventDefault() : undefined}
+      target={link.type === 'external' ? '_blank' : ''}
       className={[
         router.pathname == link.href ? 'exact-active' : '',
         linkHref.startsWith(pathname) && pathname !== '' ? 'active' : '',
         className || '',
-      ].join(' ')}>
-      {children || ''}
+      ].join(' ')}
+      rel="noreferrer">
+      {children ? children : <div>{link.text}</div>}
     </a>
   );
 };

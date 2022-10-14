@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from 'react';
-import { WhpptLinkData } from '../../ui/components';
+import { WhpptLink, WhpptLinkData } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
@@ -7,7 +7,7 @@ import { EditorOptions } from '../EditorOptions';
 export const LinkEditor: FC<
   EditorArgs<WhpptLinkData> & {
     label?: string;
-    children: ReactElement | ReactElement[];
+    children?: ReactElement | ReactElement[];
   }
 > = ({ children, value, label, onChange, options = {} as EditorOptions }) => {
   const { editing, showEditor } = useWhppt();
@@ -21,7 +21,7 @@ export const LinkEditor: FC<
           e.stopPropagation();
         }
       }}>
-      {children}
+      {children ? children : <WhpptLink link={value} />}
     </div>
   );
 };
