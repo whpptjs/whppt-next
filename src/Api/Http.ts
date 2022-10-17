@@ -58,11 +58,7 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
           return response
             .text()
             .then(textResp => {
-              try {
-                return JSON.parse(textResp);
-              } catch (err) {
-                throw new Error(textResp);
-              }
+              return Promise.reject({ status, message: textResp });
             })
             .catch(error => {
               throw new HttpError({ status, message: error.error?.message || error.error || error.message });
