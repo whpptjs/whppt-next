@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { trim } from 'lodash';
 import { nanoid } from 'nanoid';
@@ -25,13 +25,18 @@ export const WhpptLink: FC<{
   const router = useRouter();
   const { editing } = useWhppt();
 
+  const renderedHref = useMemo(() => {
+    if (link.type === 'page' && !link.href.startsWith('/')) return `/${link.href}`;
+    return link.href;
+  }, [link]);
+
   const linkHref = trim(link.href, '/');
   const pathname = trim(router.pathname, '/');
-  if (!link.href) return <div> {children ? children : <div>{link.text}</div>}</div>;
+  if (!renderedHref) return <div> {children ? children : <div>{link.text}</div>}</div>;
 
   return (
     <a
-      href={link.href}
+      href={renderedHref}
       onClick={editing ? e => e.preventDefault() : undefined}
       target={link.type === 'external' ? '_blank' : ''}
       className={[
