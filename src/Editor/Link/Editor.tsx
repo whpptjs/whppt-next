@@ -8,8 +8,9 @@ export const LinkEditor: FC<
   EditorArgs<WhpptLinkData> & {
     label?: string;
     children?: ReactElement | ReactElement[];
+    className?: string;
   }
-> = ({ children, value, label, onChange, options = {} as EditorOptions }) => {
+> = ({ className, children, value, label, onChange, options = {} as EditorOptions }) => {
   const { editing, showEditor } = useWhppt();
   const opts = { label: label || 'Link Editor', ...options };
   return (
@@ -21,7 +22,7 @@ export const LinkEditor: FC<
           e.stopPropagation();
         }
       }}>
-      {children ? children : <WhpptLink link={value} />}
+      {children ? children : <WhpptLink link={value} className={className} />}
     </div>
   );
 };

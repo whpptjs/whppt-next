@@ -1,13 +1,18 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
+import orderBy from 'lodash/orderBy';
 import { ComponentData } from '../../ContentComponents/ComponentData';
 import { EditorArgs } from '../EditorArgs';
 import { ContentEditorOptions } from './Editor';
 import { nanoid } from 'nanoid';
 
 export const WhpptContentEditorPanel: FC<EditorArgs<ComponentData[], ContentEditorOptions>> = ({ onChange, options, value }) => {
+  const orderedComponents = useMemo(() => {
+    return orderBy(options.componentDefinitions, d => d.name);
+  }, [options.componentDefinitions]);
+
   return (
     <div>
-      {options.componentDefinitions.map(c => {
+      {orderedComponents.map(c => {
         if (!c.init) throw new Error(`Definition is missing a init funciton ${c.key}`);
         const inilizedData = c.init({});
         const componentData: ComponentData = {
