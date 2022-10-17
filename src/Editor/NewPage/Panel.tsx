@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { WhpptButton, WhpptInput } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
+import router from 'next/router';
 
 export const WhpptNewPageEditorPanel: FC = () => {
   const { api, domain } = useWhppt();
@@ -26,7 +27,7 @@ export const WhpptNewPageEditorPanel: FC = () => {
       return api.page.save({ page }).then(createdPage => {
         //TODO redirect to new page
         console.log('🚀 ~ file: NewPage.tsx ~ line 39 ~ returnapi.page.create ~ createdPage', createdPage);
-        // router.push(createdPage.slug)
+        router.push(createdPage.slug);
       });
     });
     // .catch(() => {
