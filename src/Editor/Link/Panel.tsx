@@ -15,7 +15,7 @@ export const WhpptLinkEditorPanel: FC<EditorArgs<WhpptLinkData>> = ({ value, onC
   ];
 
   return (
-    <div className="whppt-link-editor">
+    <div className="whppt-link-editor-panel">
       <WhpptTabs
         tabs={tabs}
         selectedTab={value.type}

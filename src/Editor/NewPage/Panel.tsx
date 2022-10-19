@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { WhpptButton, WhpptInput } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
+import { toast } from 'react-toastify';
 
 export const WhpptNewPageEditorPanel: FC = () => {
   const { api, domain } = useWhppt();
@@ -21,17 +22,20 @@ export const WhpptNewPageEditorPanel: FC = () => {
       domainId: domain._id,
       pageType: 'page',
     };
+
     return api.page.checkSlug({ slug: page.slug, domain }).then(_page => {
       if (_page) return setError('Slug Taken');
-      return api.page.save({ page }).then(createdPage => {
-        //TODO redirect to new page
-        console.log('🚀 ~ file: NewPage.tsx ~ line 39 ~ returnapi.page.create ~ createdPage', createdPage);
-        // router.push(createdPage.slug)
+
+      const savePromise = api.page.save({ page }).then(createdPage => {
+        window.location.href = createdPage.slug;
+      });
+
+      return toast.promise(savePromise, {
+        pending: 'Saving...',
+        success: `Page added. Please wait one moment while we navigate to it`,
+        error: `Could not add the page`,
       });
     });
-    // .catch(() => {
-    //   setError(true);
-    // });
   };
 
   return (
