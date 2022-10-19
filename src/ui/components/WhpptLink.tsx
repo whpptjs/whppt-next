@@ -26,13 +26,13 @@ export const WhpptLink: FC<{
   const { editing } = useWhppt();
 
   const renderedHref = useMemo(() => {
-    if (link.type === 'page' && !link.href.startsWith('/')) return `/${link.href}`;
+    if (link.type === 'page' && link.href && !link.href.startsWith('/')) return `/${link.href}`;
     return link.href;
   }, [link]);
 
   const linkHref = trim(link.href, '/');
   const pathname = trim(router.pathname, '/');
-  if (!renderedHref) return <div> {children ? children : <div>{link.text}</div>}</div>;
+  if (!renderedHref) return <div> {children ? <div className={className}>{children}</div> : <div>{link.text}</div>}</div>;
 
   return (
     <a
