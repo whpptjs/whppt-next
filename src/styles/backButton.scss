@@ -1,0 +1,17 @@
+.whppt-lightMode {
+  .whppt-back-button {
+    @apply text-whpptDarkMode;
+  }
+}
+
+.whppt-back-button {
+  @apply border-2 border-whpptStandard border-opacity-70 rounded;
+  @apply bg-transparent;
+  @apply p-3;
+  &:hover {
+    @apply border-opacity-100;
+  }
+  &__icon {
+    @apply w-5 h-5;
+  }
+}

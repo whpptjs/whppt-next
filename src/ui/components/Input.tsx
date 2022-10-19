@@ -35,7 +35,7 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
 }) => {
   const _value = `${value}`;
   return (
-    <div className="whppt-plaintext">
+    <div className="whppt-form-field">
       <div className="whppt-label">
         <label htmlFor={id}>{label}</label>
       </div>
@@ -56,8 +56,10 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
             onChange(e.target.value);
           }}></input>
       </div>
-      {info && <p className="whppt-input-info">{info}</p>}
-      {error && <p className="whppt-input-error">{error}</p>}
+      <div>
+        {!error && <p className="whppt-input-info">{info}</p>}
+        {error && <p className="whppt-input-error">{error}</p>}
+      </div>
     </div>
   );
 };

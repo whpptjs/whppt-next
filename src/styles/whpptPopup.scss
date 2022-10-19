@@ -31,6 +31,8 @@
 
   &__contents {
     @apply px-10;
+    @apply h-full overflow-auto;
+
     textarea {
       resize: none;
     }

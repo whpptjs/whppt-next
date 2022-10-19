@@ -26,9 +26,23 @@
   }
   &__control,
   &__menu {
-    @apply border-2 border-whpptStandard border-opacity-70 rounded-lg;
+    @apply w-full;
+    background-color: transparent !important;
+    border: 2px solid rgb(153, 152, 186, 0.7) !important;
+    border-radius: 0.5rem !important;
+
+    &:hover {
+      border: 2px solid rgb(153, 152, 186) !important;
+    }
+    &:focus,
+    &:focus-visible {
+      @apply border-whpptActive border-opacity-100 outline-none caret-whpptActive;
+    }
+  }
+  &__menu {
     background-color: #121212 !important;
   }
+
   &__single-value {
     color: #fff !important;
     @apply text-whpptLightMode;
@@ -37,8 +51,5 @@
     &:hover {
       @apply bg-whpptLightMode text-whpptDarkBorder;
     }
-  }
-  &--full {
-    @apply w-full;
   }
 }

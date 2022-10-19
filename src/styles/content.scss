@@ -24,7 +24,6 @@
 
 .whppt-content {
   @apply hover:bg-blue-300 hover:bg-opacity-20 hover:outline-blue-300 hover:outline;
-  @apply h-full overflow-auto;
   &--hovered:hover {
     @apply hover:bg-green-300 hover:bg-opacity-20 hover:outline-green-300 hover:outline;
   }

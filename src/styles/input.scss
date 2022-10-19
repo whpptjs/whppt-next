@@ -16,7 +16,7 @@
   @apply my-2;
 }
 
-.whppt-plaintext {
+.whppt-form-field {
   @apply mb-2;
   @apply w-full;
 }
@@ -24,6 +24,7 @@
   @apply w-full;
   &-info {
     @apply opacity-70 text-sm mt-2;
+    min-height: 20px;
   }
   &-error {
     @apply text-red-500;
