@@ -49,5 +49,8 @@
     &:focus-visible {
       @apply border-whpptActive border-opacity-100 outline-none caret-whpptActive;
     }
+    &:disabled {
+      @apply bg-whpptStandard bg-opacity-10;
+    }
   }
 }
