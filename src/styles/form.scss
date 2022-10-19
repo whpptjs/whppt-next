@@ -42,7 +42,9 @@
   }
 
   &-section {
-    @apply px-6 py-4 mb-5 bg-whpptDarkMode;
+    @apply px-6 py-4 mb-5;
+    @apply bg-whpptDarkMode;
+    @apply w-full;
   }
 
   .whppt-form-slug-placeholder {
