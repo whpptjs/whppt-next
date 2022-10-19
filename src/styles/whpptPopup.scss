@@ -1,6 +1,7 @@
 .whppt-lightMode {
   .whppt-popup {
-    @apply bg-whpptLightBoh-full   height: 100%;
+    @apply bg-whpptLightBorder text-whpptDarkMode;
+    @apply h-full;
     &--active {
       @apply border-whpptDarkMode;
     }
