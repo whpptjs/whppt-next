@@ -24,7 +24,7 @@ export const SaveNavPopup: FC<{ callback: () => void }> = ({ callback }) => {
     <ConfirmationPopup close={() => callback()} header="Are you sure?">
       <div>
         <div className="whppt-confirmation-popup-content__children--message">Are you sure you want to save the site Navs?</div>
-        <WhpptCheckbox label={'Publish nav aswell'} value={`${publish}`} onChange={() => setPublish(!publish)}></WhpptCheckbox>
+        <WhpptCheckbox label={'Publish nav aswell'} value={publish} onChange={val => setPublish(val)}></WhpptCheckbox>
         <div className="whppt-confirmation-popup-content__children--actions">
           <WhpptButton secondary={true} text={'Cancel'} onClick={() => callback()} />
           <WhpptButton text={'Confirm'} onClick={() => confirm()} />
