@@ -8,11 +8,16 @@
         }
       }
     }
+
+    &__footer {
+      @apply bg-whpptLightMode text-whpptDarkMode;
+    }
   }
 }
 
 .whppt-table {
   @apply w-full;
+
   &__header--left {
     @apply text-left;
   }
@@ -62,9 +67,9 @@
     @apply border-2 border-opacity-60 border-whpptStandard bg-whpptDarkMode text-whpptLightMode rounded border-collapse;
 
     thead th {
-      @apply py-3 px-6;
+      @apply py-2 px-3 xl:py-4 xl:px-6;
       @apply border-b-2 border-opacity-60 border-whpptStandard;
-      @apply text-sm uppercase font-semibold tracking-wider;
+      @apply text-xs xl:text-sm uppercase font-semibold tracking-wider;
     }
 
     tbody {
@@ -74,8 +79,8 @@
       }
 
       td {
-        @apply py-4 px-6;
-        @apply text-sm whitespace-nowrap;
+        @apply py-2 px-3 xl:py-4 xl:px-6;
+        @apply text-xs xl:text-sm whitespace-nowrap;
       }
     }
   }
@@ -106,5 +111,19 @@
     td {
       @apply text-center p-8;
     }
+  }
+
+  &__inventory {
+    @apply text-green-500;
+
+    &--out-of-stock {
+      @apply text-red-700;
+    }
+  }
+}
+.whppt-status-pill {
+  @apply rounded-full px-3 p-2  bg-red-700 inline text-white;
+  &--active-value {
+    @apply bg-green-500;
   }
 }
