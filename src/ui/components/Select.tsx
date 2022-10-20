@@ -4,6 +4,7 @@ import Select from 'react-select';
 type WhpptSelectProps<T> = {
   id?: string;
   name?: string;
+  info?: string;
   idField?: keyof T;
   label: string;
   items: T[];
@@ -30,6 +31,7 @@ export const WhpptSelect = <T extends {}>({
   onChange,
   error,
   value,
+  info,
   getOptionLabel,
   isOptionSelected,
   idField = '_id' as keyof T,
@@ -38,7 +40,7 @@ export const WhpptSelect = <T extends {}>({
   const _isOptionSelected = (item: T) => item && value && item[idField] === value[idField];
 
   return (
-    <div className="whppt-select--full">
+    <div className="whppt-form-field">
       <div className="whppt-label">
         <label htmlFor={id}>{label}</label>
       </div>
@@ -58,17 +60,10 @@ export const WhpptSelect = <T extends {}>({
         isOptionSelected={isOptionSelected || _isOptionSelected}
         {...props}
       />
-
-      {error && typeof error === 'string' && <span className="whppt-input-error">{error}</span>}
-      {error && Array.isArray(error) && (
-        <div>
-          {error.map((err, index) => (
-            <span key={index} className="whppt-input-error">
-              {err} {index + 1 < error.length && <span>, </span>}
-            </span>
-          ))}
-        </div>
-      )}
+      <div>
+        {!error && <p className="whppt-input-info">{info}</p>}
+        {error && <p className="whppt-input-error">{error}</p>}
+      </div>
     </div>
   );
 };

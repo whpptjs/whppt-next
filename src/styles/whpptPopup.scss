@@ -31,6 +31,8 @@
 
   &__contents {
     @apply px-10;
+    @apply h-full overflow-auto;
+
     textarea {
       resize: none;
     }
@@ -44,10 +46,10 @@
   }
   &__tabs {
     min-height: 74px;
-    @apply flex w-full;
+    @apply flex w-full gap-5;
   }
   &__tab {
-    @apply h-full mr-5  w-full text-left text-lg;
+    @apply h-full w-full text-left text-lg;
     &--inline {
       @apply inline-block;
     }

@@ -7,11 +7,7 @@ export const WhpptSpacingEditorPanel: FC<EditorArgs<ComponentData>> = ({ onChang
   return (
     <div>
       <div className="whppt-editor-spacing">
-        <WhpptCheckbox
-          label={'Full Width'}
-          value={`${!value.container}`}
-          onChange={() => onChange({ ...value, container: !value.container })}
-        />
+        <WhpptCheckbox label={'Full Width'} value={!value.container} onChange={val => onChange({ ...value, container: val })} />
         <h3 className="whppt-editor-spacing__title">Desktop</h3>
         <div className="whppt-editor-spacing__split">
           <WhpptInput

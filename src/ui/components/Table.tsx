@@ -72,8 +72,6 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                       perPage={perPage}
                       perPageItems={perPageItems}
                       total={total}
-                      dark={true}
-                      direction={'down'}
                       changePage={setCurrentPage}
                       setPerPage={setPerPage}
                     />
@@ -88,7 +86,30 @@ export const WhpptTable: FC<WhpptTableProps> = ({
               items.map((item, index: number) => (
                 <tr key={`${tableId}_${index}_row`}>
                   {headers.map((header, _index) => (
-                    <td key={`${tableId}_value_${_index}`}>{item[header.value]}</td>
+                    <td key={`${tableId}_value_${_index}`}>
+                      {header.type === 'boolean' ? (
+                        <div>
+                          <div className={`whppt-status-pill ${item[header.value] ? 'whppt-status-pill--active-value' : ''}`}>
+                            {item[header.value] ? 'Active' : 'Inactive'}
+                          </div>
+                        </div>
+                      ) : header.type === 'inventory' ? (
+                        <div>
+                          <div
+                            className={`whppt-table__inventory ${
+                              !item[header.value] || item[header.value] === 0 ? 'whppt-table__inventory--out-of-stock' : ''
+                            }`}>
+                            {item[header.value] || 0} in stock
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          {header.prefix ? `${header.prefix} ` : ''}
+                          {item[header.value]}
+                          {header.affix ? `${header.affix} ` : ''}
+                        </div>
+                      )}
+                    </td>
                   ))}
                   {actions && actions.length !== 0 && (
                     <td key={`${tableId}_${index}-actions`} className="whppt-table__actions">

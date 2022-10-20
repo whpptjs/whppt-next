@@ -83,8 +83,8 @@ export const General: FC<WhpptTab> = () => {
           )}
           <WhpptCheckbox
             label={'HIDE THIS PAGE FROM THE SITEMAP XML?'}
-            value={`${page.settings.hideFromSitemap}`}
-            onChange={() => setPage({ ...page, settings: { ...page.settings, hideFromSitemap: !page.settings.hideFromSitemap } })}
+            value={page.settings.hideFromSitemap}
+            onChange={val => setPage({ ...page, settings: { ...page.settings, hideFromSitemap: val } })}
           />
         </section>
         <section className="whppt-form-section">

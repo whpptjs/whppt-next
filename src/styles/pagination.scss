@@ -1,3 +1,14 @@
+.whppt-lightMode {
+  .whppt-pagination__buttons {
+    svg {
+      @apply text-whpptDarkMode;
+    }
+  }
+  .whppt-pagination__results {
+    @apply text-whpptDarkMode;
+  }
+}
+
 .whppt-pagination {
   @apply flex items-center;
 
@@ -9,23 +20,19 @@
     }
   }
 
-  &--dark {
-    @apply text-whpptLightMode;
-
-    .whppt-pagination__buttons {
-      button {
-        height: 1.5rem;
-        width: 1.5rem;
-      }
-
-      svg {
-        @apply text-whpptLightMode;
-      }
+  .whppt-pagination__buttons {
+    button {
+      height: 1.5rem;
+      width: 1.5rem;
     }
 
-    .whppt-pagination__results {
+    svg {
       @apply text-whpptLightMode;
     }
+  }
+
+  .whppt-pagination__results {
+    @apply text-whpptLightMode;
   }
 
   &__per-page * {
