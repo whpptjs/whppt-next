@@ -26,7 +26,7 @@ export const WhpptLink: FC<{
   const { editing } = useWhppt();
 
   const renderedHref = useMemo(() => {
-    if (link.type === 'page' && link.href && !link.href.startsWith('/')) return `/${link.href}`;
+    if (link.type === 'page' && typeof link.href === 'string' && !link.href.startsWith('/')) return `/${link.href}`;
     return link.href;
   }, [link]);
 
