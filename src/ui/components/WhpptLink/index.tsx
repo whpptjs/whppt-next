@@ -2,7 +2,7 @@ import React, { FC, ReactElement, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { trim } from 'lodash';
 import { nanoid } from 'nanoid';
-import { useWhppt } from '../../Context';
+import { useWhppt } from '../../../Context';
 
 export type WhpptLinkData = {
   _id?: string;
@@ -40,6 +40,7 @@ export const WhpptLink: FC<{
       onClick={editing ? e => e.preventDefault() : undefined}
       target={link.type === 'external' ? '_blank' : ''}
       className={[
+        'whppt-link',
         router.pathname == link.href ? 'exact-active' : '',
         linkHref.startsWith(pathname) && pathname !== '' ? 'active' : '',
         className || '',

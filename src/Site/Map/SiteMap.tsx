@@ -16,7 +16,7 @@ export const SiteMapTable: FC = () => {
   const [errorState, setError] = useState();
   const [created, setCreated] = useState(false);
   const headers = [
-    { text: 'Slug', value: 'slug' },
+    { text: 'Slug', value: 'slug', type: 'link' },
     { text: 'Last Published', value: 'lastPublished' },
     { text: 'Published', value: 'published' },
     { text: 'Updated At', value: 'updatedAt' },

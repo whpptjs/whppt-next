@@ -1,0 +1,6 @@
+.whppt-popup,
+.whppt-editor {
+  .whppt-link {
+    @apply no-underline hover:underline after:hidden;
+  }
+}

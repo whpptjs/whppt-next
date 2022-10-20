@@ -1,6 +1,7 @@
 import React, { FC, useId } from 'react';
 import { WhpptIcon } from './Icon';
 import { WhpptPagination } from './Pagination';
+import { WhpptLink } from './WhpptLink';
 
 type WhpptTableProps = {
   headers: any[];
@@ -101,6 +102,10 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                             }`}>
                             {item[header.value] || 0} in stock
                           </div>
+                        </div>
+                      ) : header.type === 'link' ? (
+                        <div>
+                          <WhpptLink link={{ type: 'page', href: item[header.value], text: item[header.value] }}></WhpptLink>
                         </div>
                       ) : (
                         <div>
