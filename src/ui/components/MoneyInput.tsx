@@ -12,7 +12,6 @@ export type WhpptMoneyInputArgs = {
   min?: number;
   name?: string;
   onChange?: (value: number) => void;
-  onEnterKeyPressed?: (event) => void;
   value: string;
 };
 
@@ -26,7 +25,6 @@ export const WhpptMoneyInput: FC<WhpptMoneyInputArgs> = ({
   value,
   onChange,
   name,
-  onEnterKeyPressed,
   disabled,
   max,
   min,
