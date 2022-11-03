@@ -8,11 +8,25 @@ import { GalleryItemSettings } from './GalleryItemSettings';
 import { capitalizeFirstLetter } from '../helpers';
 import { splitKeywords } from '../splitKeywords';
 import { toast } from 'react-toastify';
+import { WhpptPagination } from '../ui/components/Pagination';
 
 const internalTabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images', disabled: false },
   { name: 'svg', label: 'SVG', disabled: false },
 ];
+
+const selectOptions = {
+  image: [
+    { value: 25, label: '25' },
+    { value: 50, label: '50' },
+    { value: 100, label: '100' },
+  ],
+  svg: [
+    { value: 50, label: '50' },
+    { value: 100, label: '100' },
+    { value: 200, label: '200' },
+  ],
+};
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
   const { galleryPanel, changeGalleryPanelActiveTab, api, hideGalleryPanel, domain } = useWhppt();
@@ -25,20 +39,27 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
   const [loading, setLoading] = useState<'loading' | 'loaded'>('loading');
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(selectOptions[galleryPanel.activeTab][0].value);
+  const [total, setTotal] = useState(0);
+
   const search = useCallback(() => {
     setError('');
 
     const tags = splitKeywords(searchQueryTags) || [];
     const type = galleryPanel.activeTab as GalleryFileType;
     const search = api.gallery
-      .search({ domainId: domain._id, page: 1, size: 10, type, tags, filter })
-      .then(({ items }: { items: GalleryItem[] }) => setItems(items))
+      .search({ domainId: domain._id, page, size, type, tags, filter })
+      .then(({ items, total }: { items: GalleryItem[]; total: number }) => {
+        setItems(items);
+        total && setTotal(total);
+      })
       .catch(error => setError(error.message || error));
 
     return toast.promise(search, {
       error: `${capitalizeFirstLetter(galleryPanel.activeTab)} search failed 🤯`,
     });
-  }, [api.gallery, domain._id, searchQueryTags, galleryPanel.activeTab, filter]);
+  }, [api.gallery, domain._id, searchQueryTags, galleryPanel.activeTab, filter, page, size]);
 
   useEffect(() => {
     if (loading === 'loading') return setLoading('loaded');
@@ -137,6 +158,17 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
           selectedId={selected && selected._id}
           Component={getComponent()}
         />
+
+        <div className="whppt-gallery__footer">
+          <WhpptPagination
+            page={page}
+            perPage={size}
+            selectOptions={selectOptions[galleryPanel.activeTab as GalleryFileType]}
+            total={total}
+            changePage={setPage}
+            setPerPage={setSize}
+          />
+        </div>
       </div>
 
       <div className={`whppt-gallery-settings ${selected && settingsOpen ? 'whppt-gallery-settings--active' : ''}`}>

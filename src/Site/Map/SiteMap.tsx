@@ -1,10 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useWhppt } from '../../Context';
-// import { WhpptHeading } from '../../ui/components/Heading';
 import { WhpptInput, WhpptTable } from '../../ui/components';
-// import { WhpptButton, WhpptTab } from '../../ui/components';
-// import { useWhppt } from '../../Context';
-// import { toast } from 'react-toastify';
 
 export const SiteMapTable: FC = () => {
   const { api, domain } = useWhppt();
@@ -37,8 +33,11 @@ export const SiteMapTable: FC = () => {
 
   useEffect(() => {
     if (!created) return setCreated(true);
+
     requery();
   }, [created, filter]);
+
+  useEffect(() => requery(), [perPage, currentPage]);
 
   return (
     <form className="whppt-form whppt-site-settings">

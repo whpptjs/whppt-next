@@ -33,6 +33,7 @@ export const Context = ({ editing, setEditing, editorState, setEditorState }: Ed
       setEditing(value === undefined ? !editing : value);
     },
     editorState,
+    setEditorState,
     hideEditor: () => {
       setEditorState({
         editor: '',

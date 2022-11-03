@@ -14,7 +14,10 @@ export const WhpptButton: FC<WhpptButtonProps> = ({ text, icon, onClick, disable
   return (
     <button
       className={secondary ? 'whppt-secondary-button whppt-button--defaults' : 'whppt-button whppt-button--defaults'}
-      onClick={onClick}
+      onClick={e => {
+        e.stopPropagation();
+        onClick();
+      }}
       type={type || 'button'}
       disabled={disabled}>
       <div className={icon ? 'whppt-button--defaults--text' : ''}>{text}</div>

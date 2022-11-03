@@ -36,7 +36,11 @@ export const WhpptTable: FC<WhpptTableProps> = ({
 }) => {
   const tableId = useId();
   const tableContainerHeight = typeof height === 'number' ? `${height}px` : height;
-  const perPageItems = [{ text: '5' }, { text: '10' }, { text: '25' }, { text: '50' }, { text: '100' }];
+  const selectOptions = [
+    { value: 5, label: '5' },
+    { value: 10, label: '10' },
+    { value: 20, label: '20' },
+  ];
 
   return (
     <div className={`whppt-table ${dense ? 'whppt-table--dense' : ''}`}>
@@ -71,7 +75,7 @@ export const WhpptTable: FC<WhpptTableProps> = ({
                     <WhpptPagination
                       page={page}
                       perPage={perPage}
-                      perPageItems={perPageItems}
+                      selectOptions={selectOptions}
                       total={total}
                       changePage={setCurrentPage}
                       setPerPage={setPerPage}
