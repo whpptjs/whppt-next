@@ -35,9 +35,7 @@ export const SiteMapTable: FC = () => {
     if (!created) return setCreated(true);
 
     requery();
-  }, [created, filter]);
-
-  useEffect(() => requery(), [perPage, currentPage]);
+  }, [created, filter, perPage, currentPage]);
 
   return (
     <form className="whppt-form whppt-site-settings">
