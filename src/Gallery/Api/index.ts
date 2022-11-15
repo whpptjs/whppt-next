@@ -11,7 +11,7 @@ export type GalleryApi = {
     size?: string | number;
     tags?: string[];
     filter?: string;
-  }) => Promise<{ items: GalleryItem[] }>;
+  }) => Promise<{ items: GalleryItem[]; total: number }>;
   upload: (fileData: FormData) => Promise<GalleryItem>;
   save: (details: GalleryItem) => Promise<{ item: GalleryItem }>;
   load: (id: string) => Promise<{ item: GalleryItem }>;
@@ -24,14 +24,14 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
   search: async ({ domainId, page, size, type, tags, filter }) => {
     const params = [
       `domainId=${domainId}`,
-      `limit=${size}`,
-      `currentPage=${page}`,
+      `size=${size}`,
+      `page=${page}`,
       `type=${type}`,
       joinQueryTags(tags),
       `filterTag=${filter}`,
     ].join('&');
 
-    return http.secure.getJson<{ items: GalleryItem[] }>({
+    return http.secure.getJson<{ items: GalleryItem[]; total: number }>({
       path: `/api/gallery/search?${params}`,
     });
   },

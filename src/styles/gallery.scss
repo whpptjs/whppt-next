@@ -159,4 +159,8 @@
       @apply animate-spin rounded-full h-8 w-8 border-b-2 border-whpptActive top-2/4 right-2/4;
     }
   }
+
+  &__footer {
+    @apply w-1/2 sm:w-1/4 m-auto;
+  }
 }

@@ -1,6 +1,12 @@
 .whppt-lightMode {
   .whppt-select {
     &__control,
+    &__option,
+    &__indicators {
+      cursor: pointer !important;
+    }
+
+    &__control,
     &__menu {
       @apply border-whpptStandard;
       background-color: #fff !important;
@@ -20,6 +26,12 @@
 .whppt-select {
   @apply mb-2;
   @apply w-full relative;
+
+  &__control,
+  &__option,
+  &__indicators {
+    cursor: pointer !important;
+  }
 
   &__control {
     padding: 6px 0;
