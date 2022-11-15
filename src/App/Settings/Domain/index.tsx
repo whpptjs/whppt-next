@@ -9,21 +9,29 @@ export const Domain: FC<WhpptTab> = () => {
   const { api } = useWhppt();
   const [domains, setDomains] = useState([]);
 
+  const requery = () => {
+    api.app.domain.list().then(domains => {
+      setDomains(
+        domains.map(d => ({
+          ...d,
+          hostNameValue: d.hostNames && d.hostNames.join(', '),
+          isPublished: d.published ? '🟢' : '🔴',
+        }))
+      );
+    });
+  };
+
   useEffect(() => {
     api.app.domain.list().then(domains => {
       setDomains(
         domains.map(d => ({
           ...d,
           hostNameValue: d.hostNames && d.hostNames.join(', '),
+          isPublished: d.published ? '🟢' : '🔴',
         }))
       );
     });
   }, [api.app.domain]);
-  const requery = () => {
-    api.app.domain.list().then(domains => {
-      setDomains(domains);
-    });
-  };
 
   return (
     <div className="whppt-form">

@@ -21,6 +21,8 @@
   }
 
   .whppt-pagination__buttons {
+    @apply mb-2 mx-2;
+
     button {
       height: 1.5rem;
       width: 1.5rem;
@@ -40,6 +42,10 @@
   }
 
   &__results {
-    @apply text-center mx-2 w-32;
+    @apply text-right mb-2 mx-2 w-32;
+  }
+
+  &__select {
+    @apply text-center mb-2 mx-2 w-48;
   }
 }

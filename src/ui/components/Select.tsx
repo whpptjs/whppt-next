@@ -6,7 +6,7 @@ type WhpptSelectProps<T> = {
   name?: string;
   info?: string;
   idField?: keyof T;
-  label: string;
+  label?: string;
   items: T[];
   value?: T;
   onChange: (item: T) => void;
@@ -41,11 +41,16 @@ export const WhpptSelect = <T extends {}>({
 
   return (
     <div className="whppt-form-field">
-      <div className="whppt-label">
-        <label htmlFor={id}>{label}</label>
-      </div>
+      {label ? (
+        <div className="whppt-label">
+          <label htmlFor={id}>{label}</label>
+        </div>
+      ) : (
+        <></>
+      )}
       <Select<T>
         id={id}
+        menuPosition={'fixed'}
         className="whppt-select"
         classNamePrefix="whppt-select"
         isDisabled={isDisabled}
@@ -61,7 +66,7 @@ export const WhpptSelect = <T extends {}>({
         {...props}
       />
       <div>
-        {!error && <p className="whppt-input-info">{info}</p>}
+        {!error && info ? <p className="whppt-input-info">{info}</p> : <></>}
         {error && <p className="whppt-input-error">{error}</p>}
       </div>
     </div>

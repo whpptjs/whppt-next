@@ -19,7 +19,7 @@ export type WhpptContentArgs = EditorArgs<ComponentData[]> & {
 export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerDefault = true, componentDefinitions, onChange, value }) => {
   const [deletePopup, setShowDeletePopup] = useState({} as ComponentData);
 
-  const { editing, showEditor, editorState, hideEditor } = useWhppt();
+  const { editing, showEditor, editorState, setEditorState, hideEditor } = useWhppt();
 
   const deleteComponent = ({
     content,
@@ -30,8 +30,10 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
     items: ComponentData[];
     onChange: (value: ComponentData[]) => void;
   }) => {
-    onChange(items.filter(i => i._id !== content._id));
+    const updatedContent = items.filter(i => i._id !== content._id);
+    onChange(updatedContent);
     setShowDeletePopup({} as ComponentData);
+    setEditorState({ ...editorState, value: updatedContent });
   };
 
   const spacingClasses = (content: ComponentData) => {
@@ -85,6 +87,40 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
       icon: <WhpptIcon is="bin"></WhpptIcon>,
       action: ({ content }: { content: ComponentData }) => {
         setShowDeletePopup(content);
+      },
+    },
+    {
+      _id: 'up',
+      info: 'Move Up',
+      icon: (
+        <div className="whppt-content-actions__arrow-icon--up">
+          <WhpptIcon is="back-arrow"></WhpptIcon>
+        </div>
+      ),
+      action: ({ content }: { content: ComponentData }) => {
+        const index = value.indexOf(content);
+        const toIndex = index - 1;
+        const items = [...value];
+        items.splice(index, 1);
+        items.splice(toIndex, 0, content);
+        onChange(items);
+      },
+    },
+    {
+      _id: 'down',
+      info: 'Move Down',
+      icon: (
+        <div className="whppt-content-actions__arrow-icon--down">
+          <WhpptIcon is="back-arrow"></WhpptIcon>
+        </div>
+      ),
+      action: ({ content }: { content: ComponentData }) => {
+        const index = value.indexOf(content);
+        const toIndex = index + 1;
+        const items = [...value];
+        items.splice(index, 1);
+        items.splice(toIndex, 0, content);
+        onChange(items);
       },
     },
   ];

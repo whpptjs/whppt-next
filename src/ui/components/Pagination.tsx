@@ -1,17 +1,17 @@
 import React, { FC, useMemo } from 'react';
+import { WhpptSelect } from '.';
 import { WhpptIcon } from './Icon';
-// import { WhpptSelect } from './Select';
 
 type WhpptPagintionProps = {
   page: number;
   total: number;
   perPage: number;
-  perPageItems: any[];
+  selectOptions: any[];
   changePage: (page: any) => any;
   setPerPage: (page: any) => any;
 };
 
-export const WhpptPagination: FC<WhpptPagintionProps> = ({ page, total, perPage, changePage }) => {
+export const WhpptPagination: FC<WhpptPagintionProps> = ({ page, total, perPage, selectOptions, changePage, setPerPage }) => {
   const firstNumber = page * perPage - perPage + 1;
   const secondNumber = total < page * perPage ? total : page * perPage;
   const shownItems = `${firstNumber} - ${secondNumber}`;
@@ -33,6 +33,15 @@ export const WhpptPagination: FC<WhpptPagintionProps> = ({ page, total, perPage,
         <button type="button" disabled={!canIncreasePage} onClick={() => handleClick(page + 1)}>
           <WhpptIcon is="next"></WhpptIcon>
         </button>
+      </div>
+
+      <div className="whppt-pagination__select">
+        <WhpptSelect
+          items={selectOptions}
+          onChange={option => setPerPage(option.value)}
+          getOptionLabel={item => item.label}
+          value={{ label: perPage }}
+        />
       </div>
     </div>
   );
