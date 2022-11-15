@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-next.29](https://github.com/whpptjs/whppt-next/compare/v0.0.3-next.28...v0.0.3-next.29) (2022-11-15)
+
 ### [0.0.3-next.28](https://github.com/whpptjs/whppt-next/compare/v0.0.3-next.27...v0.0.3-next.28) (2022-11-15)
 
 ### [0.0.3-next.27](https://github.com/whpptjs/whppt-next/compare/v0.0.3-next.26...v0.0.3-next.27) (2022-10-20)
