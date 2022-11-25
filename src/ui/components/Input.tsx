@@ -14,6 +14,7 @@ export type WhpptInputArgs = {
   onChangeEvent?: (event) => void;
   onChange?: (value: string) => void;
   onEnterKeyPressed?: (event) => void;
+  onBlur?: (event) => void;
   value: string;
 };
 
@@ -32,6 +33,7 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
   disabled,
   max,
   min,
+  onBlur,
 }) => {
   const _value = `${value}`;
   return (
@@ -50,6 +52,9 @@ export const WhpptInput: FC<WhpptInputArgs> = ({
           disabled={disabled}
           onKeyPress={e => {
             if (onEnterKeyPressed && e.key === 'Enter') onEnterKeyPressed(_value);
+          }}
+          onBlur={e => {
+            if (onBlur) onBlur(e);
           }}
           onChange={e => {
             if (onChangeEvent) return onChangeEvent(e);
