@@ -25,6 +25,11 @@ export const WhpptChangeHeaderEditorPanel: FC = () => {
           News/Events Header
         </button>
       </div>
+      <div>
+        <button className="whppt-content__item" onClick={() => changeHeader('backgroundImageHeader')}>
+          Background Image Header
+        </button>
+      </div>
     </div>
   );
 };
