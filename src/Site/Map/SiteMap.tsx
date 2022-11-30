@@ -35,6 +35,8 @@ export const SiteMapTable: FC = () => {
     if (!created) return setCreated(true);
 
     requery();
+    // TODO: Fix missing dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [created, filter, perPage, currentPage]);
 
   return (

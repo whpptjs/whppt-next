@@ -21,6 +21,13 @@ import { PageTheme, PageData, pageFactory } from '../Page';
 
 export * from './Model';
 
+export type WhpptComponentPlugins = {
+  componentSettings: {
+    showOnRootOnly: boolean;
+    Component: FC;
+  }[];
+};
+
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
   domain?: Domain;
@@ -31,6 +38,7 @@ export type WhpptAppOptions = {
   error: (error: Error) => ReactElement;
   menuItems?: (options: MenuItemOptions) => MenuItem[];
   pageThemes?: PageTheme[];
+  plugins: WhpptComponentPlugins;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
@@ -44,6 +52,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   menuItems = () => [],
   pageThemes = [],
   error,
+  plugins = {} as WhpptComponentPlugins,
 }) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [isDraftMode] = useState(process.env.NEXT_PUBLIC_DRAFT === 'true');
@@ -96,6 +105,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       navWidth,
       isDraftMode,
       themes,
+      plugins,
     };
   }, [
     editing,
@@ -112,6 +122,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
     navWidth,
     isDraftMode,
     themes,
+    plugins,
   ]);
 
   useEffect(() => {
