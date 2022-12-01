@@ -8,6 +8,7 @@ import { SavePagePopup } from './Popups/SavePage';
 import { SaveNavPopup } from './Popups/SaveNav';
 import { SaveFooterPopup } from './Popups/SaveFooter';
 import { SettingsPanel } from '../Settings/Context';
+import { TaggingPanel } from '../Tagging/context';
 import { GalleryPanel } from '../Gallery/Context';
 import { PageSettings } from '../Page/Settings';
 import { SiteSettings } from '../Site/Settings';
@@ -23,13 +24,14 @@ export type MenuItemActionOptions = {
   closeAllWhpptPanels: () => void;
   toggleSettingsPanel: (val: SettingsPanel) => void;
   toggleGalleryPanel: (val: GalleryPanel) => void;
+  toggleTaggingPanel: (val: TaggingPanel) => void;
 };
 
 export type MenuItem = {
   key: string;
   label: string;
   icon: ReactElement;
-  isActive: (args: { settingsPanel: SettingsPanel; galleryPanel: GalleryPanel }) => boolean;
+  isActive: (args: { settingsPanel: SettingsPanel; galleryPanel: GalleryPanel; taggingPanel: TaggingPanel }) => boolean;
   action: (args: MenuItemActionOptions) => void;
   disabled?: boolean;
   order: number;
@@ -57,6 +59,8 @@ export const WhpptMainNav: FC<{
     hideSettingsPanel,
     toggleSettingsPanel,
     settingsPanel,
+    toggleTaggingPanel,
+    taggingPanel,
     toggleGalleryPanel,
     hideGalleryPanel,
     galleryPanel,
@@ -279,6 +283,24 @@ export const WhpptMainNav: FC<{
       group: 'site',
       groupOrder: 400,
     },
+    {
+      key: 'tagging',
+      label: 'Tagging',
+      icon: <WhpptIcon is="tagging"></WhpptIcon>,
+      action: ({}) => {
+        toggleEditing(false);
+        closeWhpptEditor();
+        hideGalleryPanel();
+        hideSettingsPanel();
+        if (editorState.editor !== 'pageTagging') return showEditor('pageTagging', undefined, undefined, undefined);
+        hideEditor();
+      },
+      isActive: ({ taggingPanel }) => taggingPanel.key === 'tagging',
+      order: 1300,
+      group: 'page',
+      groupOrder: 400,
+      disabled: noPageLoaded,
+    },
     ...menuItems({ closeAllWhpptPanels }),
   ] as MenuItem[];
 
@@ -320,14 +342,20 @@ export const WhpptMainNav: FC<{
                               <button
                                 disabled={item.disabled}
                                 className={`whppt-main-nav-group__nav-item ${
-                                  item.isActive && item.isActive({ settingsPanel, galleryPanel })
+                                  item.isActive && item.isActive({ settingsPanel, galleryPanel, taggingPanel })
                                     ? 'whppt-main-nav-group__nav-item--active'
                                     : ''
                                 }`}
-                                onClick={() =>
+                                onClick={() => {
                                   item.action &&
-                                  item.action({ closeWhpptEditor, closeAllWhpptPanels, toggleSettingsPanel, toggleGalleryPanel })
-                                }>
+                                    item.action({
+                                      closeWhpptEditor,
+                                      closeAllWhpptPanels,
+                                      toggleSettingsPanel,
+                                      toggleGalleryPanel,
+                                      toggleTaggingPanel,
+                                    });
+                                }}>
                                 <div className="whppt-main-nav__icon">{item.icon}</div>
                                 {showFullNav && <div className="whppt-main-nav-group__label">{item.label}</div>}
                               </button>
