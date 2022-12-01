@@ -71,7 +71,23 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
 
   const settingsClasses = (content: ComponentData) => {
     const colors = plugins.theme.bgColours;
-    return `${colors[content.backgroundSettings || 'white'].backgroundColor} ${colors[content.backgroundSettings || 'white'].text}`;
+
+    return content?.backgroundSettings && content?.backgroundSettings.length > 1
+      ? {
+          background: `linear-gradient(to right,
+            ${colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].backgroundColor} 50% ,
+            ${colors[(content?.backgroundSettings && content?.backgroundSettings[1]) || 'white'].backgroundColor} 50%)`,
+          color: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].text,
+        }
+      : content?.backgroundSettings && content?.backgroundSettings.length === 1
+      ? {
+          background: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].backgroundColor,
+          color: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].text,
+        }
+      : {
+          background: 'inherit',
+          color: 'inherit',
+        };
   };
 
   const actions = [
@@ -187,7 +203,7 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
                 ) : (
                   ''
                 )}
-                <div className={`w-full ${spacingClasses(content)} ${settingsClasses(content)}`}>
+                <div className={`w-full ${spacingClasses(content)}`} style={settingsClasses(content)}>
                   <div>{renderComponent(content, changedValue => onChange(replaceInList(value, changedValue)))}</div>
                 </div>
               </div>

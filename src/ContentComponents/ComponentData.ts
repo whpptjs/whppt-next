@@ -17,7 +17,7 @@ export type ComponentData = {
   paddingBottomMedium?: string;
   paddingTopSmall?: string;
   paddingBottomSmall?: string;
-  backgroundSettings?: string;
+  backgroundSettings?: string[];
 };
 
 export type ComponentAction = {
