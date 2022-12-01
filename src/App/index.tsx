@@ -18,14 +18,16 @@ import { GalleryPanel } from '../Gallery/Panel';
 import * as galleryContext from '../Gallery/Context';
 import { Footer, Nav } from '../Site/Model';
 import { PageTheme, PageData, pageFactory } from '../Page';
+import { ComponentData } from '../ContentComponents';
 
 export * from './Model';
 
 export type WhpptComponentPlugins = {
   componentSettings: {
     showOnRootOnly: boolean;
-    Component: FC;
+    Component: FC<{ value: ComponentData; onChange: (val: ComponentData) => void }>;
   }[];
+  theme: { bgColours: { [key: string]: { backgroundColor: string; text: string } } };
 };
 
 export type WhpptAppOptions = {

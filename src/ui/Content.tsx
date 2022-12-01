@@ -19,7 +19,7 @@ export type WhpptContentArgs = EditorArgs<ComponentData[]> & {
 export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerDefault = true, componentDefinitions, onChange, value }) => {
   const [deletePopup, setShowDeletePopup] = useState({} as ComponentData);
 
-  const { editing, showEditor, editorState, setEditorState, hideEditor } = useWhppt();
+  const { editing, showEditor, editorState, setEditorState, hideEditor, plugins } = useWhppt();
 
   const deleteComponent = ({
     content,
@@ -62,10 +62,16 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
 
     return `${marginTop} ${marginBottom} ${paddingTop} ${paddingBottom}`;
   };
+
   const definitionActions = (content: ComponentData) => {
     const definition = componentDefinitions.find(c => c.key === content.definitionKey);
     //TODO impliment this on the other side. And get it working.
     return (definition && definition.actions) || [];
+  };
+
+  const settingsClasses = (content: ComponentData) => {
+    const colors = plugins.theme.bgColours;
+    return `${colors[content.backgroundSettings || 'white'].backgroundColor} ${colors[content.backgroundSettings || 'white'].text}`;
   };
 
   const actions = [
@@ -181,7 +187,7 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
                 ) : (
                   ''
                 )}
-                <div className={`w-full ${spacingClasses(content)}`}>
+                <div className={`w-full ${spacingClasses(content)} ${settingsClasses(content)}`}>
                   <div>{renderComponent(content, changedValue => onChange(replaceInList(value, changedValue)))}</div>
                 </div>
               </div>

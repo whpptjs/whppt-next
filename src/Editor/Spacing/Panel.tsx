@@ -154,7 +154,7 @@ export const WhpptSpacingEditorPanel: FC<EditorArgs<ComponentData>> = ({ onChang
         plugins.componentSettings.map(({ Component: SettingComponent }, index) => {
           return (
             <div key={index}>
-              <SettingComponent />
+              <SettingComponent value={value} onChange={value => onChange(value)} />
             </div>
           );
         })
