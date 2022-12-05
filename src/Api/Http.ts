@@ -4,7 +4,7 @@ import { GalleryItem } from 'src/Gallery/Model';
 import { HttpError } from '../HttpError';
 
 export type WhpptGetOptions = { path: string; headers?: {} };
-export type WhpptPostOptions<T> = { path: string; data: T };
+export type WhpptPostOptions<T> = { path: string; data: T; headers?: {} };
 export type WhpptSaveFileOptions = { path: string; fileData: FormData };
 
 export type WhpptHttpMethods = {
@@ -81,7 +81,7 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
         }
         return await response.text();
       },
-      postJson: async <T, R>({ path, data }: WhpptPostOptions<T>) => {
+      postJson: async <T, R>({ path, data, headers }: WhpptPostOptions<T>) => {
         const token = Cookies.get('authToken');
 
         const response = await fetch(appendApiKey(buildFullPath(baseUrl, path)), {
@@ -89,6 +89,7 @@ export const Http: (baseUrl: string) => WhpptHttp = baseUrl => {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
+            ...(headers || {}),
           },
           body: JSON.stringify(data), // body data type must match "Content-Type" header
         });
