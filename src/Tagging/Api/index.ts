@@ -1,7 +1,7 @@
 import { WhpptHttp } from '../../Api/Http';
 
 export type TaggingApi = {
-  fetch: () => Promise<any>;
+  fetch: (domainId: string) => Promise<any>;
   filterList: () => Promise<any>;
   filterListSelected: () => Promise<any>;
   save: (tag: any) => Promise<any>;
@@ -11,16 +11,14 @@ export type TaggingApiConstructor = ({ http }: { http: WhpptHttp }) => TaggingAp
 
 export const TaggingApi: TaggingApiConstructor = ({ http }) => ({
   save: async tag => {
-    return http.secure.postJson<{ item: any }, any>({
+    return http.secure.postJson<any, any>({
       path: '/api/tagging/save',
-      data: {
-        item: tag,
-      },
+      data: tag,
     });
   },
-  fetch: async () => {
+  fetch: async domainId => {
     return http.secure.getJson<Promise<any[]>>({
-      path: 'api/tagging/fetch',
+      path: `api/tagging/fetch?domainId=${domainId}`,
     });
   },
   filterList: async () => {
