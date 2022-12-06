@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { WhpptInput, WhpptButton, WhpptTable, WhpptTabs, WhpptTab } from '../../ui/components';
 import { useWhppt } from '../../Context';
 
-export const SiteTagging = ({ name, label }: WhpptTab) => {
+export const SiteTagging = () => {
   const { api } = useWhppt();
   const [categoryName, setCategoryName] = useState('');
   const [tagName, setTagName] = useState('');
@@ -17,7 +17,9 @@ export const SiteTagging = ({ name, label }: WhpptTab) => {
     api.tagging.fetch().then(results => console.log(results));
   }, [api]);
 
-  const onSave = (tagName, activeTab) => {};
+  const onSave = (tagName, activeTab) => {
+    console.log(tagName, activeTab);
+  };
 
   return (
     <form className="whppt-form">
