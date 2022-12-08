@@ -19,47 +19,73 @@ export const SiteTagging = ({ name }: WhpptTab) => {
       setSiteTags(result);
       setSelectedCategory(result[0]);
     });
-  }, [api]);
+  }, [api, domain._id]);
 
   const addNewTag = (_tagName: string) => {
+    if (_tagName === '') return;
     const _updatedCategory = { ...selectedCategory, values: [...selectedCategory.values, { id: _tagName, slug: '' }] };
 
     siteTags.forEach(cat => {
       if (cat.id === selectedCategory.id) cat.values = _updatedCategory.values;
     });
 
-    api.tagging.save({ tags: siteTags, domainId: domain._id }).then(() => requery());
+    api.tagging.save({ tags: siteTags, domainId: domain._id }).then(() => requery(selectedCategory.id));
+    setTagName('');
   };
+
+  const removeTag = _tag => {
+    const _updatedCategory = { ...selectedCategory, values: selectedCategory.values.filter(item => item !== _tag) };
+
+    const newSiteTagList = siteTags.map(obj => {
+      if (obj.id == _updatedCategory.id) {
+        obj = _updatedCategory;
+      }
+      return obj;
+    });
+
+    api.tagging.save({ tags: newSiteTagList, domainId: domain._id }).then(() => requery(selectedCategory.id));
+  };
+
   const addNewCategory = (_categoryName: string) => {
     siteTags.push({ id: _categoryName, slug: '', values: [] });
     api.tagging.save({ tags: siteTags, domainId: domain._id }).then(() => requery(_categoryName));
+    setCategoryName('');
   };
   const requery = (_categoryName?: string) => {
     api.tagging.fetch(domain._id).then(result => {
       setSiteTags(result);
       setCategoryName('');
       setShowNewCategory(false);
-      if (_categoryName) setSelectedCategory(result.find(r => r.id === _categoryName));
+      if (_categoryName) {
+        setSelectedCategory(result.find(r => r.id === _categoryName));
+      }
     });
   };
 
   return (
-    <form name={name}>
-      <div className="hentley-settings-form">
-        <div className="hentley-settings-form__left">
-          <div className="hentley-settings-form-section">
-            <div className="hentley-settings-form__title">Category</div>
+    <div>
+      <div id={name} className="whppt-tagging-form">
+        <div className="whppt-tagging-form__left">
+          <div className="whppt-tagging-form-section">
+            <div className="whppt-tagging-form__title">Categories</div>
+
             {siteTags.map(category => {
               return (
                 <div
-                  key={category}
-                  className={`hentley-settings-form__title ${selectedCategory.id === category.id ? 'underline' : ''}`}
+                  key={category.id}
+                  className={`whppt-tagging-form__badge ${
+                    selectedCategory?.id === category.id ? 'whppt-tagging-form__badge--selected' : ''
+                  }`}
                   onClick={() => setSelectedCategory(category)}>
                   {category.id}
                 </div>
               );
             })}
-            {selectedCategory && selectedCategory.id && selectedCategory.values.length ? (
+            <br />
+            <br />
+            {!selectedCategory ? (
+              <p>Add a category to start creating tags</p>
+            ) : selectedCategory && selectedCategory.id && selectedCategory.values.length ? (
               <WhpptTable
                 headers={headers}
                 perPage={10}
@@ -79,17 +105,21 @@ export const SiteTagging = ({ name }: WhpptTab) => {
                   {
                     icon: 'unpublish',
                     info: 'Remove Tag',
-                    action: (_item: any) => {},
+                    action: _tag => {
+                      removeTag(_tag);
+                    },
                   },
                 ]}
               />
+            ) : selectedCategory.id ? (
+              <div> No tags have been created for this category yet.</div>
             ) : (
-              <div> No Tags for this category</div>
+              <div>Select a category above to start adding tags</div>
             )}
           </div>
         </div>
-        <div className="hentley-settings-form__right">
-          <div className="hentley-settings-form--flex-end">
+        <div className="whppt-tagging-form__right">
+          <div className="whppt-tagging-form--flex-end">
             <WhpptButton
               text="Add new category"
               onClick={() => {
@@ -99,7 +129,7 @@ export const SiteTagging = ({ name }: WhpptTab) => {
             />
             {selectedCategory && selectedCategory.id ? (
               <WhpptButton
-                text={`Add new tag to ${selectedCategory.id}`}
+                text={`Add new tag to category`}
                 onClick={() => {
                   setShowNewCategory(false);
                   setShowNewTag(true);
@@ -110,11 +140,9 @@ export const SiteTagging = ({ name }: WhpptTab) => {
             )}
           </div>
           {showNewCategory ? (
-            <div className="hentley-settings-form-section">
-              <div className="hentley-settings-form__title">Add a new category?</div>
-              <div className="hentley-settings-form__note">
-                We found a contact in the system that shares this email account and can become a staff member.
-              </div>
+            <div className="whppt-tagging-form-section">
+              <div className="whppt-tagging-form__title">Add a new category?</div>
+              <div className="whppt-tagging-form__note">Create a new category and populate it with new tags.</div>
 
               <WhpptInput id="category-input" label="Category Name" type="text" value={categoryName} onChange={setCategoryName} />
 
@@ -124,11 +152,9 @@ export const SiteTagging = ({ name }: WhpptTab) => {
             <></>
           )}
           {showNewTag ? (
-            <div className="hentley-settings-form-section">
-              <div className="hentley-settings-form__title">`Add new tag to ${selectedCategory.id}`</div>
-              <div className="hentley-settings-form__note">
-                We found a contact in the system that shares this email account and can become a staff member.
-              </div>
+            <div className="whppt-tagging-form-section">
+              <div className="whppt-tagging-form__title">Add new tag to {selectedCategory.id}</div>
+              <div className="whppt-tagging-form__note">This tag will be saved within the category of {selectedCategory.id}</div>
 
               <WhpptInput id="tag-input" label="New Tag Name" type="text" value={tagName} onChange={setTagName} />
 
@@ -139,43 +165,6 @@ export const SiteTagging = ({ name }: WhpptTab) => {
           )}
         </div>
       </div>
-
-      {/* <section className="whppt-form-page-settings__actions">
-        <h2>Website Tags</h2>
-      </section> */}
-      {/* <section className="whppt-form-section whppt-form-page-settings__form whppt-form-section--bottom-gap">
-        <div>
-          <h3>Categories</h3>
-          <WhpptTabs tabs={tabs} selectedTab={activeTab} selectTab={newTab => setActiveTab(newTab.name)} />
-          <WhpptInput id="category-input" label="Category Name" type="text" value={categoryName} onChange={setCategoryName} />
-          <WhpptButton icon="" text="Save new category" onClick={() => null} />
-          <WhpptInput id="tag-input" label="New Tag Name" type="text" value={tagName} onChange={setTagName} />
-          <WhpptButton icon="" text="Add new tag" onClick={() => onSave(tagName, activeTab)} />
-          <WhpptTable
-            headers={headers}
-            perPage={10}
-            dense={false}
-            hideHeaders={false}
-            hideFooters={false}
-            items={[]}
-            height={''}
-            fixedHeader={false}
-            page={1}
-            total={0}
-            setCurrentPage={function (page: any): void {
-              throw new Error('Function not implemented.');
-            }}
-            setPerPage={() => 10}
-            actions={[
-              {
-                icon: 'unpublish',
-                info: 'Remove Tag',
-                action: (_item: any) => {},
-              },
-            ]}
-          />
-        </div>
-      </section> */}
-    </form>
+    </div>
   );
 };

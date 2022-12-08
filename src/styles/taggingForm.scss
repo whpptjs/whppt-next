@@ -1,0 +1,70 @@
+.whppt-lightMode {
+  .whppt-tagging-form {
+    &-section {
+      @apply bg-whpptLightMode text-whpptDarkMode;
+    }
+  }
+}
+.whppt-tagging-form {
+  @apply lg:flex gap-5;
+  &__left {
+    @apply lg:w-8/12 flex gap-5 flex-col;
+  }
+  &__right {
+    @apply lg:w-4/12 flex gap-5 flex-col-reverse lg:flex-col;
+  }
+  &-section {
+    @apply bg-whpptDarkMode p-5 rounded;
+  }
+  &__title {
+    @apply text-lg xl:text-xl mb-3;
+  }
+  &__badge {
+    @apply inline-block mr-2 my-2;
+    @apply px-4 py-1 rounded-xl;
+    @apply bg-blue-50 text-blue-500;
+    @apply cursor-pointer;
+
+    &--selected {
+      @apply bg-blue-600 text-white;
+    }
+  }
+  &__note {
+    @apply text-sm my-3 opacity-70;
+  }
+  &__sub-title {
+    @apply text-lg mt-3;
+  }
+  &__flex {
+    @apply flex gap-5;
+    .whppt-checkbox {
+      @apply whitespace-nowrap;
+    }
+  }
+  &--flex-end {
+    @apply flex justify-end gap-5;
+  }
+}
+
+.whppt-tagging-autocomplete-input {
+  @apply z-10;
+  @apply relative w-full h-full;
+  &__container {
+    @apply py-1;
+    @apply -top-8;
+    @apply w-full;
+    @apply absolute;
+    @apply bg-whpptDarkMode;
+    @apply border-2 border-whpptStandard border-opacity-70 rounded-lg text-white;
+  }
+
+  &__result {
+    @apply w-full;
+    @apply bg-slate-800;
+    @apply cursor-pointer;
+    @apply py-4 px-3;
+    &:hover {
+      @apply bg-whpptDarkMode;
+    }
+  }
+}

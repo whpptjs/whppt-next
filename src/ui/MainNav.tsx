@@ -295,7 +295,7 @@ export const WhpptMainNav: FC<{
         if (editorState.editor !== 'pageTagging') return showEditor('pageTagging', undefined, undefined, undefined);
         hideEditor();
       },
-      isActive: ({ taggingPanel }) => taggingPanel.key === 'tagging',
+      isActive: ({ taggingPanel }) => taggingPanel.key === 'pageTagging',
       order: 1300,
       group: 'page',
       groupOrder: 400,
