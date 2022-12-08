@@ -20,8 +20,17 @@ import * as taggingContext from '../Tagging/context';
 import { Footer, Nav } from '../Site/Model';
 import { PageTheme, PageData, pageFactory } from '../Page';
 import { TaggingPanel } from '../Tagging/Panel';
+import { ComponentData } from '../ContentComponents';
 
 export * from './Model';
+
+export type WhpptComponentPlugins = {
+  componentSettings: {
+    showOnRootOnly: boolean;
+    Component: FC<{ value: ComponentData; onChange: (val: ComponentData) => void }>;
+  }[];
+  theme: { bgColours: { [key: string]: { backgroundColor: string; text: string } } };
+};
 
 export type WhpptAppOptions = {
   children: ReactElement[] | ReactElement;
@@ -33,6 +42,7 @@ export type WhpptAppOptions = {
   error: (error: Error) => ReactElement;
   menuItems?: (options: MenuItemOptions) => MenuItem[];
   pageThemes?: PageTheme[];
+  plugins: WhpptComponentPlugins;
 };
 export type WhpptApp = FC<WhpptAppOptions>;
 
@@ -46,6 +56,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   menuItems = () => [],
   pageThemes = [],
   error,
+  plugins = {} as WhpptComponentPlugins,
 }) => {
   const [renderChildren, setRenderChildren] = useState(process.env.NEXT_PUBLIC_DRAFT !== 'true');
   const [isDraftMode] = useState(process.env.NEXT_PUBLIC_DRAFT === 'true');
@@ -100,6 +111,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       navWidth,
       isDraftMode,
       themes,
+      plugins,
     };
   }, [
     editing,
@@ -117,6 +129,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
     navWidth,
     isDraftMode,
     themes,
+    plugins,
   ]);
 
   useEffect(() => {

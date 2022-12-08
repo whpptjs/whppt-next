@@ -10,6 +10,7 @@ import * as tagging from './Tagging/context';
 import * as gallery from './Gallery/Context';
 import { ContentTreeNode } from './ui/Content';
 import { PageData } from './Page';
+import { WhpptComponentPlugins } from './App';
 
 export const contentTree = {
   getTree: undefined as (page: PageData) => ContentTreeNode[],
@@ -32,6 +33,7 @@ export const Whppt = createContext({
   api: Api(),
   contentTree,
   isDraftMode: false,
+  plugins: {} as WhpptComponentPlugins,
 });
 
 Whppt.displayName = 'WhpptContext';

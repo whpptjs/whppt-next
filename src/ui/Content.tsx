@@ -19,7 +19,7 @@ export type WhpptContentArgs = EditorArgs<ComponentData[]> & {
 export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerDefault = true, componentDefinitions, onChange, value }) => {
   const [deletePopup, setShowDeletePopup] = useState({} as ComponentData);
 
-  const { editing, showEditor, editorState, setEditorState, hideEditor } = useWhppt();
+  const { editing, showEditor, editorState, setEditorState, hideEditor, plugins } = useWhppt();
 
   const deleteComponent = ({
     content,
@@ -62,10 +62,32 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
 
     return `${marginTop} ${marginBottom} ${paddingTop} ${paddingBottom}`;
   };
+
   const definitionActions = (content: ComponentData) => {
     const definition = componentDefinitions.find(c => c.key === content.definitionKey);
     //TODO impliment this on the other side. And get it working.
     return (definition && definition.actions) || [];
+  };
+
+  const settingsClasses = (content: ComponentData) => {
+    const colors = plugins.theme.bgColours;
+
+    return content?.backgroundSettings && content?.backgroundSettings.length > 1
+      ? {
+          background: `linear-gradient(to right,
+            ${colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].backgroundColor} 50% ,
+            ${colors[(content?.backgroundSettings && content?.backgroundSettings[1]) || 'white'].backgroundColor} 50%)`,
+          color: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].text,
+        }
+      : content?.backgroundSettings && content?.backgroundSettings.length === 1
+      ? {
+          background: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].backgroundColor,
+          color: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].text,
+        }
+      : {
+          background: 'inherit',
+          color: 'inherit',
+        };
   };
 
   const actions = [
@@ -181,7 +203,7 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
                 ) : (
                   ''
                 )}
-                <div className={`w-full ${spacingClasses(content)}`}>
+                <div className={`w-full ${spacingClasses(content)}`} style={settingsClasses(content)}>
                   <div>{renderComponent(content, changedValue => onChange(replaceInList(value, changedValue)))}</div>
                 </div>
               </div>

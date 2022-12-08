@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
-import { ComponentData, EditorArgs, WhpptCheckbox, WhpptInput } from '../../index';
+import { ComponentData, EditorArgs, useWhppt, WhpptCheckbox, WhpptInput } from '../../index';
 import setSpacings from '../../setSpacings';
 
 export const WhpptSpacingEditorPanel: FC<EditorArgs<ComponentData>> = ({ onChange, value }) => {
   const { defaultMargin, defaultPadding } = setSpacings({});
+  const { plugins } = useWhppt();
+
   return (
     <div>
       <div className="whppt-editor-spacing">
@@ -148,6 +150,17 @@ export const WhpptSpacingEditorPanel: FC<EditorArgs<ComponentData>> = ({ onChang
           />
         </div>
       </div>
+      {plugins.componentSettings ? (
+        plugins.componentSettings.map(({ Component: SettingComponent }, index) => {
+          return (
+            <div key={index}>
+              <SettingComponent value={value} onChange={value => onChange(value)} />
+            </div>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
