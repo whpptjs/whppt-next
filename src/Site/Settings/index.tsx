@@ -8,6 +8,7 @@ import { General } from './General';
 import { SiteTwitter } from './SiteTwitter';
 import { Redirects } from './Redirects';
 import { Files } from './Files';
+import { SiteTagging } from './SiteTagging';
 
 export type WhpptSelectedType = string;
 
@@ -22,6 +23,7 @@ export const SiteSettings: FC = () => {
     { name: 'redirects', label: 'Redirects' },
     { name: 'files', label: 'Files' },
     { name: 'banner', label: 'Banner' },
+    { name: 'tagging', label: 'Tagging' },
   ];
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export const SiteSettings: FC = () => {
         <SiteTwitter name="twitter" label="Twitter" />
         <Redirects name="redirects" label="Redirects" />
         <Files name="files" label="Files" />
+        <SiteTagging name="tagging" label="Tagging" />
       </WhpptTab>
     </div>
   );

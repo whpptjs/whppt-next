@@ -6,6 +6,7 @@ import * as editor from './Editor/Context';
 import * as site from './Site/Context';
 import * as security from './Security/Context';
 import * as settings from './Settings/Context';
+import * as tagging from './Tagging/context';
 import * as gallery from './Gallery/Context';
 import { ContentTreeNode } from './ui/Content';
 import { PageData } from './Page';
@@ -25,6 +26,7 @@ export const Whppt = createContext({
   ...site.Context(site.defaultArgs),
   ...settings.Context(settings.defaultArgs),
   ...gallery.Context(gallery.defaultArgs),
+  ...tagging.Context(tagging.defaultArgs),
   page: {} as PageData,
   setPage: (_: PageData) => {},
   themes: [],

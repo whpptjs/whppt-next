@@ -45,6 +45,7 @@ import { WhpptIconList } from '../../icons/List';
 import { WhpptIconPageHeader } from '../../icons/PageHeader';
 import { WhpptIconSpacing } from '../../icons/Spacing';
 import { WhpptBackArrow } from '../../icons/BackArrow';
+import { WhpptTagging } from '../../icons/Tagging';
 
 export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'pointer') return <WhpptIconPointer></WhpptIconPointer>;
@@ -93,5 +94,6 @@ export const WhpptIcon: FC<{ is: String }> = ({ is }) => {
   if (is === 'page-header') return <WhpptIconPageHeader></WhpptIconPageHeader>;
   if (is === 'spacing') return <WhpptIconSpacing></WhpptIconSpacing>;
   if (is === 'back-arrow') return <WhpptBackArrow></WhpptBackArrow>;
+  if (is === 'tagging') return <WhpptTagging></WhpptTagging>;
   return <div></div>;
 };

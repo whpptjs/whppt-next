@@ -23,6 +23,7 @@ export type PageData = {
   updatedAt?: string;
   content?: any;
   header?: HeaderData<any>;
+  tags?: string[];
 };
 
 export type PageFactory = {

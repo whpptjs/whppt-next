@@ -16,8 +16,10 @@ import { WhpptSetNewUserDetails } from '../ui/Login/WhpptSetNewUserDetails';
 import { Domain } from './Model';
 import { GalleryPanel } from '../Gallery/Panel';
 import * as galleryContext from '../Gallery/Context';
+import * as taggingContext from '../Tagging/context';
 import { Footer, Nav } from '../Site/Model';
 import { PageTheme, PageData, pageFactory } from '../Page';
+import { TaggingPanel } from '../Tagging/Panel';
 import { ComponentData } from '../ContentComponents';
 
 export * from './Model';
@@ -72,6 +74,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
   const [user, setUser] = useState(securityContext.defaultState);
   const [settingsPanel, setSettingsPanel] = useState(settingsContext.defaultSettingsPanelState);
   const [galleryPanel, setGalleryPanel] = useState(galleryContext.defaultGalleryPanelState);
+  const [taggingPanel, setTaggingPanel] = useState(taggingContext.defaultTaggingPanelState);
   const [themes] = useState(pageThemes);
   const api = useMemo(() => {
     return Api();
@@ -101,6 +104,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
       ...securityContext.Context({ user, setUser }),
       ...settingsContext.Context({ settingsPanel, setSettingsPanel }),
       ...galleryContext.Context({ galleryPanel, setGalleryPanel }),
+      ...taggingContext.Context({ taggingPanel, setTaggingPanel }),
       page,
       setPage,
       contentTree,
@@ -120,6 +124,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
     user,
     settingsPanel,
     galleryPanel,
+    taggingPanel,
     page,
     navWidth,
     isDraftMode,
@@ -167,6 +172,7 @@ export const WhpptApp: FC<WhpptAppOptions> = ({
                   />
                   <SettingsPanel showFullNav={showFullNav} />
                   <GalleryPanel showFullNav={showFullNav} />
+                  <TaggingPanel showFullNav={showFullNav} />
                 </>
               ) : (
                 <WhpptLogin />

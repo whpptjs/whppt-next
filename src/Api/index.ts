@@ -4,8 +4,9 @@ import { PageApi } from '../Page/Api';
 import { SiteApi } from '../Site/Api';
 import { SecurityApi } from '../Security/Api';
 import { GalleryApi } from './../Gallery/Api/index';
+import { TaggingApi } from './../Tagging/Api';
 
-export type WhpptApi = { app: AppApi; site: SiteApi; page: PageApi; security: SecurityApi; gallery: GalleryApi };
+export type WhpptApi = { app: AppApi; site: SiteApi; page: PageApi; security: SecurityApi; gallery: GalleryApi; tagging: TaggingApi };
 export type WhpptApiConstructor = () => WhpptApi;
 
 const http = Http(process.env.NEXT_PUBLIC_BASE_API_URL);
@@ -17,5 +18,6 @@ export const Api: WhpptApiConstructor = () => {
     page: PageApi({ http }),
     security: SecurityApi({ http }),
     gallery: GalleryApi({ http }),
+    tagging: TaggingApi({ http }),
   };
 };
