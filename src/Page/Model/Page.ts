@@ -24,6 +24,7 @@ export type PageData = {
   content?: any;
   header?: HeaderData<any>;
   tags?: string[];
+  productId?: string;
 };
 
 export type PageFactory = {
