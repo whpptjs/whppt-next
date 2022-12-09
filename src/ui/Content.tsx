@@ -70,9 +70,9 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
   };
 
   const settingsClasses = (content: ComponentData) => {
-    const colors = plugins.theme.bgColours;
+    const colors = plugins?.theme?.bgColours;
 
-    return content?.backgroundSettings && content?.backgroundSettings.length > 1
+    return colors && content?.backgroundSettings && content?.backgroundSettings.length > 1
       ? {
           background: `linear-gradient(to right,
             ${colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].backgroundColor} 50% ,
