@@ -16,6 +16,7 @@ import {
   WhpptSvgEditorPanel,
   WhpptSpacingEditorPanel,
   WhpptPageTaggingPanel,
+  WhpptTagFilterPanel,
 } from './Panels';
 import { ImageEditorOptions } from './Image/Editor';
 
@@ -35,4 +36,5 @@ export const UseDefaultEditors = ({ editor, value, onChange, options }: UseDefau
   if (editor === 'image') return <WhpptImageEditorPanel value={value} onChange={onChange} options={options as ImageEditorOptions} />;
   if (editor === 'svg') return <WhpptSvgEditorPanel value={value} onChange={onChange} options={options} />;
   if (editor === 'pageTagging') return <WhpptPageTaggingPanel />;
+  if (editor === 'tagFilter') return <WhpptTagFilterPanel value={value} onChange={onChange} options={options} />;
 };
