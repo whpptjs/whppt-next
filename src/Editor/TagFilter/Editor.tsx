@@ -12,7 +12,7 @@ export const TagFilterEditor: FC<
   const { editing, showEditor } = useWhppt();
   return (
     <div
-      className={['whppt-editor-selector whppt-rich-text', editing ? 'whppt-editor-selector--editing' : ''].join(' ')}
+      className={['whppt-editor-selector whppt-tag-filter', editing ? 'whppt-editor-selector--editing' : ''].join(' ')}
       onClick={e => {
         if (editing) {
           showEditor('tagFilter', value, onChange, {
