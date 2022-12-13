@@ -160,6 +160,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
         />
 
         <div className="whppt-gallery__footer">
+          asd
           <WhpptPagination
             page={page}
             perPage={size}

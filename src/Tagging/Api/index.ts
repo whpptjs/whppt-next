@@ -1,9 +1,21 @@
 import { WhpptHttp } from '../../Api/Http';
 
+type TaggingArgs = {
+  domainId: string;
+  tagFilters: {
+    include: string[];
+    exclude: string[];
+    selected: string[];
+    ignoreLimit: boolean;
+    ignoreSort: boolean;
+    limit: string | number;
+  };
+};
+
 export type TaggingApi = {
   fetch: (domainId: string) => Promise<any>;
-  filterList: () => Promise<any>;
-  filterListSelected: () => Promise<any>;
+  filterList: (args: TaggingArgs & { headerFilter?: string }) => Promise<any[]>;
+  filterListSelected: (args: TaggingArgs) => Promise<any[]>;
   save: (tag: any) => Promise<any>;
 };
 
@@ -21,14 +33,16 @@ export const TaggingApi: TaggingApiConstructor = ({ http }) => ({
       path: `api/tagging/fetch?domainId=${domainId}`,
     });
   },
-  filterList: async () => {
-    return http.secure.getJson<Promise<any>>({
+  filterList: async data => {
+    return http.secure.postJson<TaggingArgs, any[]>({
       path: 'api/tagging/filterList',
+      data,
     });
   },
-  filterListSelected: async () => {
-    return http.secure.getJson<Promise<any>>({
+  filterListSelected: async data => {
+    return http.secure.postJson<TaggingArgs, any[]>({
       path: 'api/tagging/filterListSelected',
+      data,
     });
   },
 });

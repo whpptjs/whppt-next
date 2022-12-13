@@ -2,41 +2,65 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { WhpptCheckbox, WhpptInput, WhpptSelect } from '../../ui/components';
 import { EditorArgs } from '../EditorArgs';
 import { useWhppt } from '../../Context';
-import { Reorder } from 'framer-motion';
-import { ListItem } from './ListItem';
+// import { Reorder } from 'framer-motion';
+// import { ListItem } from './ListItem';
 
 import { WhpptIconClose } from '../../icons/Close';
 
-const sortByOptions = [
-  { name: 'Title (A-Z)', value: 'Title (A-Z)' },
-  { name: 'Title (Z-A)', value: 'Title (Z-A)' },
-  { name: 'Publish Date (Earliest)', value: 'Publish Date (Earliest)' },
-  { name: 'Publish Date (Latest)', value: 'Publish Date (Latest)' },
-];
-const initialItems = ['🍅 page 1', '🥒 page 2', '🧀 page 3', '🥬 page four'];
+// const sortByOptions = [
+//   { name: 'Title (A-Z)', value: 'Title (A-Z)' },
+//   { name: 'Title (Z-A)', value: 'Title (Z-A)' },
+//   { name: 'Publish Date (Earliest)', value: 'Publish Date (Earliest)' },
+//   { name: 'Publish Date (Latest)', value: 'Publish Date (Latest)' },
+// ];
 
 export const WhpptTagFilterPanel: FC<EditorArgs<string>> = () => {
   const { api, domain } = useWhppt();
 
-  const [showAllItems, setShowAllItems] = useState(false);
-  const [itemsToShow, setItemsToShow] = useState(8);
-  const [manualSort, setManualSort] = useState(false);
-  const [sortByFilter, setSortByFilter] = useState([]);
-  const [siteTags, setSiteTags] = useState([] as any);
-  const [autoCompleteResults, setAutoCompleteResults] = useState([]);
-  const [includeTagInput, setIncludeTagInput] = useState('');
-  const [tagsToInclude, setTagsToInclude] = useState([]);
-  const [tagsToExclude, setTagsToExclude] = useState([]);
-  const [excludeTagInput, setExcludeTagInput] = useState('');
-  const [selectedPages, setSelectedPages] = useState([]);
-  const [filteredPages, setFilteredPages] = useState(initialItems);
+  const [tagFilters, setTagFilters] = useState({
+    include: [],
+    exclude: [],
+    selected: [],
+    ignoreLimit: false,
+    ignoreSort: false,
+    limit: '8',
+  });
+
+  const [selectedItems, setSelectedItems] = useState([]);
+  console.log('🚀 ~ file: Panel.tsx:31 ~ selectedItems', selectedItems);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [siteTags, setSiteTags] = useState([]);
+  const [includedTagSearch] = useState('');
+
+  useEffect(() => {
+    api.tagging.filterListSelected({ domainId: domain._id, tagFilters }).then(data => {
+      setSelectedItems(data);
+    });
+  }, [api.tagging, domain._id, tagFilters.ignoreLimit, tagFilters.ignoreSort]);
+
+  useEffect(() => {
+    api.tagging.filterList({ domainId: domain._id, tagFilters }).then(data => {
+      setFilteredItems(data);
+    });
+  }, [api.tagging, domain._id, tagFilters.include, tagFilters.exclude, tagFilters.selected]);
+
+  // const [manualSort, setManualSort] = useState(false);
+  // const [sortByFilter, setSortByFilter] = useState([]);
+  // const [siteTags, setSiteTags] = useState([] as any);
+  // const [autoCompleteResults, setAutoCompleteResults] = useState([]);
+  // const [includeTagInput, setIncludeTagInput] = useState('');
+  // const [tagsToInclude, setTagsToInclude] = useState([]);
+  // const [tagsToExclude, setTagsToExclude] = useState([]);
+  // const [excludeTagInput, setExcludeTagInput] = useState('');
+  // const [selectedPages, setSelectedPages] = useState([]);
+  // const [filteredPages, setFilteredPages] = useState(initialItems);
 
   const concatCategoriesAndTags = useCallback(data => {
     const concatCatAndTagArray = [];
 
     data.map(cat => {
       cat.values.map(tag => {
-        concatCatAndTagArray.push(cat.id.concat(':', tag.id));
+        concatCatAndTagArray.push({ _id: cat.id.concat(':', tag.id), value: cat.id.concat(':', tag.id) });
       });
     });
 
@@ -49,66 +73,83 @@ export const WhpptTagFilterPanel: FC<EditorArgs<string>> = () => {
     });
   }, [api.tagging, concatCategoriesAndTags, domain._id]);
 
-  useEffect(() => {
-    const _suggestedList = [];
-    siteTags.find(element => {
-      if (element.toLowerCase().includes(includeTagInput.toLowerCase())) {
-        _suggestedList.push(element);
-      }
-    });
-    setAutoCompleteResults(_suggestedList);
-  }, [includeTagInput, siteTags]);
+  // useEffect(() => {
+  //   const _suggestedList = [];
+  //   siteTags.find(element => {
+  //     if (element.toLowerCase().includes(includeTagInput.toLowerCase())) {
+  //       _suggestedList.push(element);
+  //     }
+  //   });
+  //   setAutoCompleteResults(_suggestedList);
+  // }, [includeTagInput, siteTags]);
 
   const addPageTagToInclude = tag => {
-    if (tagsToInclude.some(substring => tag.includes(substring))) {
-      setIncludeTagInput('');
-      return;
-    }
-    setTagsToInclude(prevState => [...prevState, tag]);
+    if (tagFilters.include.some(substring => tag.value.includes(substring))) return;
 
-    setIncludeTagInput('');
+    setTagFilters({ ...tagFilters, include: [...tagFilters.include, tag.value] });
   };
 
-  const addPageTagToExclude = tag => {
-    if (tagsToExclude.some(substring => tag.includes(substring))) {
-      setExcludeTagInput('');
-      return;
-    }
-    setTagsToExclude(prevState => [...prevState, tag]);
+  // const addPageTagToExclude = tag => {
+  //   if (tagsToExclude.some(substring => tag.includes(substring))) {
+  //     setExcludeTagInput('');
+  //     return;
+  //   }
+  //   setTagsToExclude(prevState => [...prevState, tag]);
 
-    setExcludeTagInput('');
-  };
+  //   setExcludeTagInput('');
+  // };
 
-  const updateSelectedPages = pageItem => {
-    setSelectedPages(prevPages => [...prevPages, pageItem]);
-    setFilteredPages(filteredPages.filter(item => item !== pageItem));
-  };
+  // const updateSelectedPages = pageItem => {
+  //   setSelectedPages(prevPages => [...prevPages, pageItem]);
+  //   setFilteredPages(filteredPages.filter(item => item !== pageItem));
+  // };
   return (
     <div className="whppt-tag-filter-editor">
       <p>Tag Filter Panel</p>
 
-      <WhpptCheckbox label={'Show all items'} value={showAllItems} onChange={setShowAllItems} />
+      <WhpptCheckbox
+        label={'Show all items'}
+        value={tagFilters.ignoreLimit}
+        onChange={() => setTagFilters({ ...tagFilters, ignoreLimit: !tagFilters.ignoreLimit })}
+      />
       <WhpptInput
         type="number"
-        value={`${itemsToShow}`}
-        onChange={e => `${setItemsToShow(Number(e))}`}
+        value={tagFilters.limit}
+        onChange={e => setTagFilters({ ...tagFilters, limit: e })}
         id={'showItems'}
         label={'Number of items to show'}
       />
-      <WhpptCheckbox label={'Manual sort'} value={manualSort} onChange={setManualSort} />
+      <WhpptCheckbox
+        label={'Manual sort'}
+        value={tagFilters.ignoreSort}
+        onChange={() => setTagFilters({ ...tagFilters, ignoreSort: !tagFilters.ignoreSort })}
+      />
 
-      {!manualSort && (
-        <WhpptSelect<{ name: string; value: string }>
-          id="whppt-sort-by-filter"
-          label={'Sort by'}
-          items={sortByOptions}
-          value={sortByFilter}
-          onChange={item => setSortByFilter(item)}
-          getOptionLabel={option => option.name}
-        />
-      )}
+      <WhpptSelect
+        id={'include-tags'}
+        label={'Select tags to include'}
+        value={includedTagSearch}
+        onChange={p => addPageTagToInclude(p)}
+        items={siteTags}
+        getOptionLabel={option => option.value}
+      />
 
-      <WhpptInput id="tagging-input" label="Select tags to include" type="text" value={includeTagInput} onChange={setIncludeTagInput} />
+      <p>Current included tags:</p>
+      <div>
+        {tagFilters.include.length > 0 &&
+          tagFilters.include.map(tag => (
+            <div className="whppt-tag-filter__badge" key={tag}>
+              {tag}
+              <figure
+                className="whppt-tag-filter__badge--close"
+                onClick={() => setTagFilters({ ...tagFilters, include: tagFilters.include.filter(item => item !== tag) })}>
+                <WhpptIconClose />
+              </figure>
+            </div>
+          ))}
+      </div>
+
+      {/* <WhpptInput id="tagging-input" label="Select tags to include" type="text" value={includeTagInput} onChange={setIncludeTagInput} />
       {includeTagInput.length > 0 && (
         <div className="whppt-tagging-autocomplete-input">
           <div className="whppt-tagging-autocomplete-input__container">
@@ -127,7 +168,20 @@ export const WhpptTagFilterPanel: FC<EditorArgs<string>> = () => {
             )}
           </div>
         </div>
+      )} */}
+      {/* 
+      {!manualSort && (
+        <WhpptSelect<{ name: string; value: string }>
+          id="whppt-sort-by-filter"
+          label={'Sort by'}
+          items={sortByOptions}
+          value={sortByFilter}
+          onChange={item => setSortByFilter(item)}
+          getOptionLabel={option => option.name}
+        />
       )}
+
+
       <p>Current included tags:</p>
       <div>
         {tagsToInclude.length > 0 &&
@@ -189,11 +243,11 @@ export const WhpptTagFilterPanel: FC<EditorArgs<string>> = () => {
         {selectedPages.map(item => (
           <ListItem key={item} item={item} setSelectedPages={setSelectedPages} selectedPages={selectedPages} />
         ))}
-      </Reorder.Group>
+      </Reorder.Group> */}
       <p>Filtered pages:</p>
-      {filteredPages.map(pageItem => (
+      {filteredItems.map(pageItem => (
         <div key={pageItem}>
-          <WhpptCheckbox label={pageItem} value={false} onChange={() => updateSelectedPages(pageItem)} />
+          <WhpptCheckbox label={pageItem.header.title} value={false} onChange={() => {}} />
         </div>
       ))}
     </div>
