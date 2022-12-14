@@ -27,6 +27,10 @@
   @apply mb-2;
   @apply w-full relative;
 
+  &--is-disabled {
+    @apply cursor-not-allowed;
+  }
+
   &__control,
   &__option,
   &__indicators {

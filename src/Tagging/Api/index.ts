@@ -9,6 +9,11 @@ type TaggingArgs = {
     ignoreLimit: boolean;
     ignoreSort: boolean;
     limit: string | number;
+    sort: {
+      fields: { [key: string]: any };
+      sortType: string;
+      text: string;
+    };
   };
 };
 
