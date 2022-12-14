@@ -12,8 +12,13 @@
   padding: 1rem 2rem 1rem 0.75rem;
   overflow-y: auto;
   line-height: 1.25;
-  height: 60vh;
   min-height: 400px;
+  height: auto;
+}
+.whppt-richtext-editor {
+  .ProseMirror {
+    height: 60vh;
+  }
 }
 
 .whppt-richtext-menu-button {

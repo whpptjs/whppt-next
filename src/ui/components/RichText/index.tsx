@@ -16,21 +16,27 @@ export type WhpptRichTextArgs = {
 };
 
 export const WhpptRichText: FC<WhpptRichTextArgs> = ({ id, label, info, value, onChange, formatOptionsOnly }) => {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      TextAlign.configure({
-        types: ['heading', 'paragraph'],
-      }),
-      Underline,
-    ],
-    content: `${value}`,
-
-    onUpdate({ editor }) {
-      const json2 = editor.getHTML();
-      onChange(json2);
+  const editor = useEditor(
+    {
+      extensions: [
+        StarterKit,
+        TextAlign.configure({
+          types: ['heading', 'paragraph'],
+        }),
+        Underline,
+      ],
+      content: `${value}`,
+      // onUpdate({ editor }) {
+      //   const json2 = editor.getHTML();
+      //   onChange(json2);
+      // },
+      onBlur({ editor }) {
+        const json2 = editor.getHTML();
+        onChange(json2);
+      },
     },
-  });
+    [onChange]
+  );
 
   return (
     <div className="whppt-richtext">
