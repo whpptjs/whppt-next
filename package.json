@@ -1,6 +1,6 @@
 {
   "name": "@whppt/next",
-  "version": "0.0.3-next.36",
+  "version": "0.0.3-next.37",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "types/index.d.ts",
