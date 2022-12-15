@@ -6,3 +6,4 @@ export * from './Link/Editor';
 export * from './Content/Editor';
 export * from './Image/Editor';
 export * from './Svg/Editor';
+export * from './TagFilter/Editor';

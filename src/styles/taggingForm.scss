@@ -68,3 +68,66 @@
     }
   }
 }
+
+.whppt-tag-filter {
+  &--flex-apart {
+    @apply flex gap-2 justify-between items-center;
+  }
+  &__label {
+    @apply text-lg mb-2;
+  }
+  &__info {
+    @apply text-sm mb-2 text-gray-400;
+  }
+  &__group {
+    @apply mb-3 pb-3 border-b border-gray-300;
+  }
+  &__list-item {
+    @apply bg-slate-700 text-white;
+    @apply rounded-md;
+    @apply px-3 py-1;
+    @apply my-2;
+    @apply flex;
+    @apply cursor-grab;
+    &--order {
+      @apply inline;
+    }
+    &--close {
+      @apply h-6 w-6;
+      @apply ml-auto;
+      @apply cursor-pointer;
+      svg {
+        &:hover {
+          path {
+            @apply text-red-600;
+          }
+        }
+      }
+    }
+  }
+
+  &__badge {
+    @apply relative;
+    @apply inline-block mr-2 my-2;
+    @apply px-7 py-1 rounded-xl;
+    @apply bg-blue-600 text-white;
+
+    &--close {
+      @apply w-4 h-4;
+      @apply inline-block;
+      @apply absolute top-2 right-2;
+
+      svg {
+        @apply cursor-pointer;
+        path {
+          @apply text-gray-200;
+        }
+        &:hover {
+          path {
+            @apply text-red-600;
+          }
+        }
+      }
+    }
+  }
+}

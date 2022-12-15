@@ -11,3 +11,4 @@ export * from './ChangeHeader/Panel';
 export * from './Spacing/Panel';
 export * from './Svg/Panel';
 export * from './Tagging/Panel';
+export * from './TagFilter/Panel';

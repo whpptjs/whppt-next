@@ -22,6 +22,9 @@
 }
 .whppt-input {
   @apply w-full;
+  *:disabled {
+    @apply cursor-not-allowed;
+  }
   &-info {
     @apply opacity-70 text-sm mt-2;
     min-height: 20px;
