@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
+import { WhpptTagFilters } from '..';
 import { useWhppt } from '../../Context';
 import { EditorArgs } from '../EditorArgs';
 import { EditorOptions } from '../EditorOptions';
 
 export const TagFilterEditor: FC<
-  EditorArgs<string> & {
+  EditorArgs<WhpptTagFilters> & {
     label?: string;
     // children?: ReactElement | ReactElement[];
   }

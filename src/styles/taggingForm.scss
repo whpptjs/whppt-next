@@ -70,9 +70,18 @@
 }
 
 .whppt-tag-filter {
-  &__list {
+  &--flex-apart {
+    @apply flex gap-2 justify-between items-center;
   }
-
+  &__label {
+    @apply text-lg mb-2;
+  }
+  &__info {
+    @apply text-sm mb-2 text-gray-400;
+  }
+  &__group {
+    @apply mb-3 pb-3 border-b border-gray-300;
+  }
   &__list-item {
     @apply bg-slate-700 text-white;
     @apply rounded-md;
