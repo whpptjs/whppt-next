@@ -74,7 +74,7 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
 
     return colors && content?.backgroundSettings && content?.backgroundSettings.length > 1
       ? {
-          background: `linear-gradient(to right,
+          background: `linear-gradient(to bottom,
             ${colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].backgroundColor} 50% ,
             ${colors[(content?.backgroundSettings && content?.backgroundSettings[1]) || 'white'].backgroundColor} 50%)`,
           color: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].text,
