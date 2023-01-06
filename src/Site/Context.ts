@@ -24,6 +24,10 @@ export const defaultSettingsData = {
     description: '',
     keywords: [],
   },
+  cookiePopUp: {
+    title: '',
+    message: '',
+  },
 };
 
 export const defaultNavState = {} as Nav<any>;

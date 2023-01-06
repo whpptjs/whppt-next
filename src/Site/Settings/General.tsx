@@ -1,11 +1,18 @@
 import React, { FC } from 'react';
 import { WhpptHeading } from '../../ui/components/Heading';
-import { WhpptButton, WhpptTab } from '../../ui/components';
+import { WhpptButton, WhpptInput, WhpptTab, WhpptTextArea } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { toast } from 'react-toastify';
+import { Field, Formik } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required('Required'),
+  message: Yup.string().required('Required'),
+});
 
 export const General: FC<WhpptTab> = () => {
-  const { api, settingsData, nav, footer } = useWhppt();
+  const { api, settingsData, setSettingsData, nav, footer, domain } = useWhppt();
 
   const publishSettings = () => {
     const publish = api.site.settings.publish({ settings: settingsData });
@@ -39,6 +46,19 @@ export const General: FC<WhpptTab> = () => {
 
   const saveNewSlug = () => {};
 
+  const saveCookiePopup = ({ title, message }) => {
+    const settings = { ...settingsData, cookiePopUp: { title, message } };
+    const save = api.site.settings.save({ settings, domain }).then(() => {
+      setSettingsData(settingsData);
+    });
+
+    toast.promise(save, {
+      pending: 'Saving Cookie Popup...',
+      success: 'Cookie Popup Saved',
+      error: 'Saving Cookie Popup failed 🤯',
+    });
+  };
+
   return (
     <form className="whppt-form whppt-site-settings">
       <section className="whppt-form-section whppt-form-section--bottom-gap">
@@ -59,6 +79,44 @@ export const General: FC<WhpptTab> = () => {
         <hr className="whppt-site-setings__ruler" />
 
         <WhpptButton text="Save New Slug" onClick={saveNewSlug} />
+      </section>
+
+      <section className="whppt-form-section whppt-form-section--bottom-gap">
+        <WhpptHeading text={'Cookie Agreement Popup'} />
+
+        <hr className="whppt-site-setings__ruler" />
+        {
+          <Formik
+            initialValues={{ title: settingsData?.cookiePopUp?.title || '', message: settingsData?.cookiePopUp?.message || '' }}
+            enableReinitialize
+            validationSchema={validationSchema}
+            onSubmit={saveCookiePopup}>
+            {({ handleSubmit, touched, values, errors, setFieldValue }) => (
+              <>
+                <Field
+                  as={WhpptInput}
+                  id="whppt-plaintext-input"
+                  label="Popup titile"
+                  type="text"
+                  error={(touched.title && errors.title) || ''}
+                  value={values.title}
+                  placeholder="Example: About cookies on this site"
+                  onChange={(title: string) => setFieldValue('title', title)}
+                />
+                <Field
+                  as={WhpptTextArea}
+                  id="whppt-plaintext-input"
+                  label="Agreement text"
+                  error={(touched.message && errors.message) || ''}
+                  value={values.message}
+                  placeholder="Example: This website uses cookies to ensure you get the best experience on our website."
+                  onChange={(message: string) => setFieldValue('message', message)}
+                />
+                <WhpptButton text="Save Title and Message" onClick={handleSubmit} />
+              </>
+            )}
+          </Formik>
+        }
       </section>
     </form>
   );

@@ -8,9 +8,10 @@ export type WhpptTextAreaArgs = {
   error: string | undefined;
   value: string;
   onChange: (value: string) => void;
+  placeholder?: string;
 };
 
-export const WhpptTextArea: FC<WhpptTextAreaArgs> = ({ id, label, error, info, value, onChange }) => {
+export const WhpptTextArea: FC<WhpptTextAreaArgs> = ({ id, label, error, info, value, onChange, placeholder }) => {
   const _value = `${value}`;
   return (
     <div className="whppt-plaintext">
@@ -18,10 +19,10 @@ export const WhpptTextArea: FC<WhpptTextAreaArgs> = ({ id, label, error, info, v
         <label htmlFor={id}>{label}</label>
       </div>
       <div className="whppt-input">
-        <textarea value={_value} onChange={e => onChange(e.target.value)}></textarea>
+        <textarea value={_value} placeholder={placeholder || ''} onChange={e => onChange(e.target.value)}></textarea>
       </div>
-      <p className="whppt-input-info">{info}</p>
-      <p className="whppt-input-error">{error}</p>
+      {info ? <p className="whppt-input-info">{info}</p> : <></>}
+      {error ? <p className="whppt-input-error">{error}</p> : <></>}
     </div>
   );
 };
