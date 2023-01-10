@@ -29,6 +29,7 @@ export type SeoData = {
 };
 
 export type CookiePopUpData = {
+  _id: string;
   title: string;
   message: string;
 };

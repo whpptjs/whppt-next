@@ -5,6 +5,7 @@ import { useWhppt } from '../../Context';
 import { toast } from 'react-toastify';
 import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
+import { nanoid } from 'nanoid';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
@@ -47,7 +48,7 @@ export const General: FC<WhpptTab> = () => {
   const saveNewSlug = () => {};
 
   const saveCookiePopup = ({ title, message }) => {
-    const settings = { ...settingsData, cookiePopUp: { title, message } };
+    const settings = { ...settingsData, cookiePopUp: { title, message, _id: nanoid() } };
     const save = api.site.settings.save({ settings, domain }).then(() => {
       setSettingsData(settingsData);
     });
