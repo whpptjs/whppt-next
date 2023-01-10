@@ -6,7 +6,7 @@ export const WhpptGalleryImage: FC<GalleryComponent> = ({ id, name, onClick, isS
   const [loaded, setLoaded] = useState(false);
 
   const getImgUrl = imgId => {
-    return appendApiKey(`${process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${imgId}?w=360`);
+    return appendApiKey(`${process.env.NEXT_PUBLIC_BASE_CDN_API_URL || process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${imgId}?w=360`);
   };
 
   return (
