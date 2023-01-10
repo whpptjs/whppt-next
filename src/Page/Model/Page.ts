@@ -67,8 +67,4 @@ export const defaultPageSettingsData = {
     description: '',
     keywords: [],
   },
-  cookiePopUp: {
-    message: '',
-    title: '',
-  },
 };

@@ -2,7 +2,7 @@ export type SettingsData = {
   twitter: TwitterData;
   seo: SeoData;
   og: OpenGraphData;
-  cookiePopUp: CookiePopUpData;
+  cookiePopUp?: CookiePopUpData;
 };
 export type PageSettingsData = SettingsData & {
   hideFromSitemap: boolean;
