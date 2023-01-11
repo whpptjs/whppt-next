@@ -17,13 +17,19 @@ export const General: FC<WhpptTab> = () => {
   const saveSlug = () => {
     const formattedSlug = formatSlug(slug);
     const slugCheck = api.page.checkSlug({ slug: formattedSlug, domain }).then(_page => {
-      _page ? setSlugError('Slug taken') : setValidSlug(formattedSlug);
+      if (_page) {
+        setSlugError('Slug taken');
+        throw new Error('Slug taken');
+      }
+      setValidSlug(formattedSlug);
+      setPage({ ...page, slug });
+      setConfirmationPopup('page');
     });
 
     toast.promise(slugCheck, {
       pending: 'Checking slug...',
       success: 'Slug saved',
-      error: 'Slug asve failed 🤯',
+      error: 'Slug save failed 🤯',
     });
   };
 
