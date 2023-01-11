@@ -48,7 +48,7 @@ module.exports = {
         editedSvg: '12rem',
       },
       zIndex: {
-        editorPanel: '1000',
+        editorPanel: '1600',
         settingsPanel: '1500',
         mainNav: '2000',
         confirmationPopup: '2500',
