@@ -28,8 +28,8 @@ export const General: FC<WhpptTab> = () => {
 
     toast.promise(slugCheck, {
       pending: 'Checking slug...',
-      success: 'Slug saved',
-      error: 'Slug save failed 🤯',
+      success: 'Slug Available',
+      error: 'Slug Not Available 🤯',
     });
   };
 
