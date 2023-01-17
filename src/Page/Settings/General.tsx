@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
-import { WhpptButton, WhpptTab, WhpptCheckbox, WhpptSelect, WhpptRichText } from '../../ui/components';
+import { WhpptButton, WhpptTab, WhpptCheckbox, WhpptSelect } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
 import { toast } from 'react-toastify';
