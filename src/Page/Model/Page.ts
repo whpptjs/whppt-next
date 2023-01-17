@@ -23,6 +23,7 @@ export type PageData = {
   updatedAt?: string;
   content?: any;
   header?: HeaderData<any>;
+  cardDescription?: string;
   tags?: string[];
   productId?: string;
 };

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { WhpptInput } from '../../ui/components/Input';
-import { WhpptButton, WhpptTab, WhpptCheckbox, WhpptSelect } from '../../ui/components';
+import { WhpptButton, WhpptTab, WhpptCheckbox, WhpptSelect, WhpptRichText } from '../../ui/components';
 import { useWhppt } from '../../Context';
 import { formatSlug } from '../../helpers';
 import { toast } from 'react-toastify';
@@ -105,6 +105,18 @@ export const General: FC<WhpptTab> = () => {
             onChange={setSlug}
           />
           <WhpptButton text="Save New Slug" icon="" disabled={!slug} onClick={saveSlug} />
+        </section>
+        <section className="whppt-form-section">
+          <h4 className="whppt-form__content--header">Card Description</h4>
+          <WhpptRichText
+            id="whppt-plaintext-input-cardDescription"
+            label="Card Description"
+            error=""
+            info={`A short description for cards to advertise the page.`}
+            value={page.cardDescription}
+            formatOptionsOnly={false}
+            onChange={cardDescription => setPage({ ...page, cardDescription })}
+          />
         </section>
       </div>
     </form>
