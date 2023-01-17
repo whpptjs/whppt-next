@@ -108,13 +108,13 @@ export const General: FC<WhpptTab> = () => {
         </section>
         <section className="whppt-form-section">
           <h4 className="whppt-form__content--header">Card Description</h4>
-          <WhpptRichText
+          <WhpptInput
             id="whppt-plaintext-input-cardDescription"
             label="Card Description"
-            error=""
+            type="text"
+            error={slugError}
             info={`A short description for cards to advertise the page.`}
             value={page.cardDescription}
-            formatOptionsOnly={false}
             onChange={cardDescription => setPage({ ...page, cardDescription })}
           />
         </section>
