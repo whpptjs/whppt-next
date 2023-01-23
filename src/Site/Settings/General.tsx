@@ -44,6 +44,15 @@ export const General: FC<WhpptTab> = () => {
       error: 'Publishing Footer failed 🤯',
     });
   };
+  const publishGallery = () => {
+    const publish = api.gallery.publishGallery(domain._id);
+
+    toast.promise(publish, {
+      pending: 'Publishing Site Gallery...',
+      success: 'Site Gallery published',
+      error: 'Publishing Gallery failed 🤯',
+    });
+  };
 
   const saveNewSlug = () => {};
 
@@ -71,6 +80,7 @@ export const General: FC<WhpptTab> = () => {
           <WhpptButton text="Publish Site Settings" disabled={!settingsData} onClick={publishSettings} />
           <WhpptButton text="Publish Nav" disabled={!nav} onClick={publishNav} />
           <WhpptButton text="Publish Footer" disabled={!footer} onClick={publishFooter} />
+          <WhpptButton text="Publish Gallery" onClick={publishGallery} />
         </div>
       </section>
 

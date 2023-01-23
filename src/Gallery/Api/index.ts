@@ -14,6 +14,7 @@ export type GalleryApi = {
   }) => Promise<{ items: GalleryItem[]; total: number }>;
   upload: (fileData: FormData) => Promise<GalleryItem>;
   save: (details: GalleryItem) => Promise<{ item: GalleryItem }>;
+  publishGallery: (domainId: string) => Promise<void>;
   load: (id: string) => Promise<{ item: GalleryItem }>;
   loadSvg: (id: string) => Promise<string>;
   remove: (id: string, type: string) => Promise<any>;
@@ -50,6 +51,16 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
       path: '/api/gallery/save',
       data: {
         item: details,
+      },
+    });
+  },
+  publishGallery: async domainId => {
+    if (!domainId) throw new Error('Domain Id is required');
+
+    return http.secure.postJson<{ domainId: string }, void>({
+      path: '/api/gallery/publishAll',
+      data: {
+        domainId,
       },
     });
   },
