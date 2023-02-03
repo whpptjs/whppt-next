@@ -69,6 +69,10 @@
   @apply w-full;
   &__actions {
     @apply lg:w-3/12;
+
+    &-message {
+      @apply text-xs mr-8;
+    }
   }
   &--group {
     @apply border-b border-whpptStandard pb-3 mb-3;

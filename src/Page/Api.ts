@@ -22,10 +22,10 @@ export const PageApi: PageApiConstructor = ({ http }) => {
         throw err;
       });
     },
-    delete: async (page: PageData) => {
+    delete: async (page: PageData, collection = 'pages') => {
       return http.secure.postJson({
-        path: '/api/page/deletePage',
-        data: { _id: page._id },
+        path: '/api/page/delete',
+        data: { _id: page._id, collection },
       });
     },
     checkSlug: async ({ slug, collection = 'pages', domain }) => {
