@@ -204,10 +204,10 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
                   ''
                 )}
                 <div
+                  id={content._id}
                   className={`w-full ${spacingClasses(content)} ${
                     content?.backgroundSettings?.length && content?.backgroundSettings[0] && `theme-${content?.backgroundSettings[0]}`
-                  } `}
-                  style={settingsClasses(content)}>
+                  } `}>
                   <div>{renderComponent(content, changedValue => onChange(replaceInList(value, changedValue)))}</div>
                 </div>
               </div>
