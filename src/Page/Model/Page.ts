@@ -26,6 +26,7 @@ export type PageData = {
   cardDescription?: string;
   tags?: string[];
   productId?: string;
+  published?: boolean;
 };
 
 export type PageFactory = {

@@ -6,6 +6,8 @@ import { formatSlug } from '../../helpers';
 import { toast } from 'react-toastify';
 import { SavePagePopup } from '../../ui/Popups/SavePage';
 import { PageData } from '../Model/Page';
+import { useRouter } from 'next/router';
+import { delay } from 'lodash';
 
 export const General: FC<WhpptTab> = () => {
   const { domain, api, page, setPage, themes = [] } = useWhppt();
@@ -13,6 +15,8 @@ export const General: FC<WhpptTab> = () => {
   const [slugError, setSlugError] = useState('');
   const [validSlug, setValidSlug] = useState('');
   const [confirmationPopup, setConfirmationPopup] = useState('');
+
+  const router = useRouter();
 
   const saveSlug = () => {
     const formattedSlug = formatSlug(slug);
@@ -53,11 +57,21 @@ export const General: FC<WhpptTab> = () => {
   const deletePage = () => {
     const pageDeletePromise = api.page.delete(page);
 
-    toast.promise(pageDeletePromise, {
-      pending: 'Deleting Page...',
-      success: 'Page deleted',
-      error: 'Page delete failed 🤯',
-    });
+    toast
+      .promise(pageDeletePromise, {
+        pending: 'Deleting Page...',
+        success: 'Page deleted',
+        error: 'Page delete failed 🤯',
+      })
+      .then(() => {
+        delay(
+          () =>
+            router.push('/').then(() => {
+              router.reload();
+            }),
+          2000
+        );
+      });
   };
 
   return (
@@ -72,7 +86,8 @@ export const General: FC<WhpptTab> = () => {
           <WhpptButton text="Duplicate Page" icon="duplicate" disabled={!validSlug} onClick={duplicatePage} />
         </div>
         <div>
-          <WhpptButton text="Delete Page" icon="bin" onClick={deletePage} />
+          <WhpptButton text="Delete Page" disabled={page.published} icon="bin" onClick={deletePage} />
+          {page.published ? <p className="whppt-form__actions-message">You need to unpublish the page before deleting</p> : <></>}
         </div>
       </section>
       <div className="whppt-form__content">
@@ -114,7 +129,7 @@ export const General: FC<WhpptTab> = () => {
             type="text"
             error={slugError}
             info={`A short description for cards to advertise the page.`}
-            value={page.cardDescription}
+            value={page.cardDescription || ''}
             onChange={cardDescription => setPage({ ...page, cardDescription })}
           />
         </section>
