@@ -69,27 +69,6 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
     return (definition && definition.actions) || [];
   };
 
-  const settingsClasses = (content: ComponentData) => {
-    const colors = plugins?.theme?.bgColours;
-
-    return colors && content?.backgroundSettings && content?.backgroundSettings.length > 1
-      ? {
-          background: `linear-gradient(to bottom,
-            ${colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].backgroundColor} 50% ,
-            ${colors[(content?.backgroundSettings && content?.backgroundSettings[1]) || 'white'].backgroundColor} 50%)`,
-          color: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].text,
-        }
-      : content?.backgroundSettings && content?.backgroundSettings.length === 1
-      ? {
-          background: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].backgroundColor,
-          color: colors[(content?.backgroundSettings && content?.backgroundSettings[0]) || 'white'].text,
-        }
-      : {
-          background: 'inherit',
-          color: 'inherit',
-        };
-  };
-
   const actions = [
     {
       _id: 'spacing',
