@@ -19,7 +19,7 @@ export type WhpptContentArgs = EditorArgs<ComponentData[]> & {
 export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerDefault = true, componentDefinitions, onChange, value }) => {
   const [deletePopup, setShowDeletePopup] = useState({} as ComponentData);
 
-  const { editing, showEditor, editorState, setEditorState, hideEditor, plugins } = useWhppt();
+  const { editing, showEditor, editorState, setEditorState, hideEditor } = useWhppt();
 
   const deleteComponent = ({
     content,
