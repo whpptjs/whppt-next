@@ -17,6 +17,9 @@
   &--active {
     @apply border-l-2 border-whpptDarkMode w-[480px];
   }
+  &--higher-z-index {
+    @apply z-editorPanelHigher;
+  }
 
   &__header {
     @apply border-b-2 border-whpptLightMode p-5 text-xl flex items-center justify-between font-bold;

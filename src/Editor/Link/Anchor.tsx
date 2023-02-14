@@ -13,7 +13,7 @@ export const AnchorLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ value,
           error=""
           info=""
           value={value.text}
-          onChange={text => onChange({ ...value, text })}
+          onChange={text => onChange({ ...value, text, fileId: undefined })}
         />
 
         <WhpptInput
@@ -23,7 +23,7 @@ export const AnchorLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ value,
           error=""
           info="eg. #anchor"
           value={value.href}
-          onChange={href => onChange({ ...value, href })}
+          onChange={href => onChange({ ...value, href, fileId: undefined })}
         />
       </section>
     </form>

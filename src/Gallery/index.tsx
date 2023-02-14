@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
 import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect, WhpptIcon } from '../ui/components';
-import { WhpptGalleryTab, WhpptGalleryImage, WhpptGallerySvg } from './Components';
+import { WhpptGalleryTab, WhpptGalleryImage, WhpptGallerySvg, WhpptGalleryDoc } from './Components';
 import { GalleryFileType, GalleryItem } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
 import { capitalizeFirstLetter } from '../helpers';
@@ -13,6 +13,7 @@ import { WhpptPagination } from '../ui/components/Pagination';
 const internalTabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images', disabled: false },
   { name: 'svg', label: 'SVG', disabled: false },
+  { name: 'doc', label: 'Documents', disabled: false },
 ];
 
 const selectOptions = {
@@ -26,6 +27,7 @@ const selectOptions = {
     { value: 100, label: '100' },
     { value: 200, label: '200' },
   ],
+  doc: [{ value: 200, label: '200' }],
 };
 
 export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse }) => {
@@ -101,6 +103,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     return {
       image: WhpptGalleryImage,
       svg: WhpptGallerySvg,
+      doc: WhpptGalleryDoc,
     }[galleryPanel.activeTab];
   };
 
@@ -184,6 +187,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
             }
             remove={() => remove(selected._id)}
             selectedId={selected._id}
+            type={selected.type}
             close={() => setSettingsOpen(false)}
           />
         )}

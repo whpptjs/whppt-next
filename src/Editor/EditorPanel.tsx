@@ -29,7 +29,10 @@ export const WhpptEditorPanel: FC<WhpptEditorPanelArgs> = ({ editors }) => {
   };
 
   return (
-    <div className={`whppt-editor ${editorState.editor ? 'whppt-editor--active' : ''}`}>
+    <div
+      className={`whppt-editor ${editorState.editor ? 'whppt-editor--active' : ''} ${
+        editorState?.options?.overSettingsPanel ? 'whppt-editor--higher-z-index' : ''
+      }`}>
       <div className="whppt-editor__content-wrapper">
         <div className="whppt-editor__header">
           {editorState.options ? editorState.options.label : 'Whppt Editor'}

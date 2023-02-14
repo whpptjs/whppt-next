@@ -9,6 +9,7 @@ export type WhpptLinkData = {
   type: 'page' | 'external' | 'anchor' | 'file';
   text: string;
   href: string;
+  fileId?: string;
 };
 
 export const WhpptLinkData = {
@@ -30,6 +31,10 @@ export const WhpptLink: FC<{
     return link.href;
   }, [link]);
 
+  const getTarget = useMemo(() => {
+    return link.type === 'external' || link.type === 'file' ? '_blank' : '';
+  }, [link.type]);
+
   const linkHref = trim(link.href, '/');
   const pathname = trim(router.pathname, '/');
   if (!renderedHref) return <div> {children ? <div className={className}>{children}</div> : <div>{link.text}</div>}</div>;
@@ -38,7 +43,7 @@ export const WhpptLink: FC<{
     <a
       href={renderedHref}
       onClick={editing ? e => e.preventDefault() : undefined}
-      target={link.type === 'external' ? '_blank' : ''}
+      target={getTarget}
       className={[
         'whppt-link',
         router.pathname == link.href ? 'exact-active' : '',

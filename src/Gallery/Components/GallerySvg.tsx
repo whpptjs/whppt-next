@@ -31,7 +31,11 @@ export const WhpptGallerySvg: FC<GalleryComponent> = ({ id, name, onClick, isSel
     </div>
   ) : (
     <div>
-      <div className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''}`} onClick={onClick}>
+      <div
+        className={`whppt-gallery__svg ${isSelected ? 'whppt-gallery__svg--selected' : ''} ${
+          !svgString ? 'whppt-gallery__svg--empty' : ''
+        }`}
+        onClick={onClick}>
         {svgString && parse(svgString)}
       </div>
       {<p className="whppt-gallery-grid__svgs svg-title">{name}</p>}

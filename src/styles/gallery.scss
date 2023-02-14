@@ -1,3 +1,15 @@
+.whppt-lightMode {
+  .whppt-gallery {
+    @apply bg-whpptLightMode text-whpptDarkMode;
+    .whppt-form-heading {
+      @apply text-whpptDarkMode;
+    }
+    .whppt-gallery-uploader__div {
+      @apply border-whpptDarkMode;
+    }
+  }
+}
+
 .whppt-gallery {
   @apply bg-whpptDarkMode px-6 py-4 mb-5 flex w-full h-screen;
 
@@ -26,6 +38,9 @@
     }
 
     &__svg {
+      @apply grid-cols-gallerySvgs;
+    }
+    &__doc {
       @apply grid-cols-gallerySvgs;
     }
   }
@@ -109,6 +124,9 @@
     &--selected {
       @apply outline-whpptActive outline-2 outline;
     }
+    &:hover {
+      @apply outline-whpptStandard outline-2 outline;
+    }
   }
 
   &__image-name {
@@ -117,14 +135,36 @@
 
   &__svg {
     @apply h-galleryItem w-gallerySvg cursor-pointer;
-    @include checkers;
 
     &--selected {
       @apply outline-whpptActive outline-2 outline;
     }
+    &:hover {
+      @apply outline-whpptStandard outline-2 outline;
+    }
 
     & svg {
       @apply h-full w-full;
+    }
+    &--empty {
+      @include checkers;
+    }
+  }
+  &__doc {
+    @apply h-galleryItem w-gallerySvg cursor-pointer mb-2 relative;
+
+    &--selected {
+      @apply outline-whpptActive outline-2 outline;
+    }
+    &:hover {
+      @apply outline-whpptStandard outline-2 outline;
+    }
+
+    & svg {
+      @apply h-full w-full;
+    }
+    &-type {
+      @apply absolute inset-0 flex justify-center items-center z-0 uppercase;
     }
   }
 

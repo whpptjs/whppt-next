@@ -13,7 +13,7 @@ export const ExternalLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ valu
           error=""
           info=""
           value={value.text}
-          onChange={text => onChange({ ...value, text })}
+          onChange={text => onChange({ ...value, text, fileId: undefined })}
         />
 
         <WhpptInput
@@ -23,7 +23,7 @@ export const ExternalLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ valu
           error=""
           info=""
           value={value.href}
-          onChange={href => onChange({ ...value, href })}
+          onChange={href => onChange({ ...value, href, fileId: undefined })}
         />
       </section>
     </form>

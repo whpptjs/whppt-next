@@ -3,6 +3,7 @@ import { ContentEditor, EditorArgs, replaceInList, useWhppt, WhpptIcon } from '.
 import { ComponentData, WhpptComponentDefinition } from '../ContentComponents/ComponentData';
 import Spacing from '../setSpacings';
 import { StandardPopup } from './Popups/Standard';
+import { WhpptIconInfo } from '../icons/Info';
 
 export type ContentTreeNode = {
   name: string;
@@ -67,6 +68,10 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
     const definition = componentDefinitions.find(c => c.key === content.definitionKey);
     //TODO impliment this on the other side. And get it working.
     return (definition && definition.actions) || [];
+  };
+  const definitionName = (content: ComponentData) => {
+    const definition = componentDefinitions.find(c => c.key === content.definitionKey);
+    return definition.name;
   };
 
   const actions = [
@@ -146,6 +151,13 @@ export const WhpptContent: FC<WhpptContentArgs> = ({ renderComponent, containerD
                         message={'Are you sure you want to delete this component?'}
                       />
                     )}
+                    <button className={`whppt-content-actions__action`}>
+                      <div>
+                        <WhpptIconInfo></WhpptIconInfo>
+                      </div>
+                      <div className="whppt-content-actions__action-info">{definitionName(content)}</div>
+                    </button>
+
                     {actions.map(action => {
                       return (
                         <div key={action._id}>

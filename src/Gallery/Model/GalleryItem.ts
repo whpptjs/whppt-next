@@ -1,4 +1,4 @@
-export type GalleryItemType = 'image' | 'video' | 'file' | 'lotty' | 'svg';
+export type GalleryItemType = 'image' | 'video' | 'file' | 'doc' | 'lotty' | 'svg';
 export type GalleryFileInfo = {
   originalname: string;
   ext?: string;

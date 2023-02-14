@@ -59,6 +59,12 @@
       @apply lg:w-8/12 overflow-auto;
     }
   }
+  &__link {
+    @apply mb-5;
+    a {
+      @apply ml-3 underline;
+    }
+  }
 }
 .whppt-form-heading {
   @apply flex w-full items-center py-3 px-5;

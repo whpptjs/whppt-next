@@ -23,10 +23,11 @@ export const WhpptGalleryTab: FC<GalleryTab> = ({ type, items, upload, setSelect
             <Component
               key={item._id}
               id={item._id}
+              type={item.type || item.fileInfo?.ext}
               name={item.fileInfo?.originalname}
               onClick={e => {
                 e.target?.scrollIntoView && e.target.scrollIntoView({ behavior: 'smooth' });
-                setSelected(item);
+                setSelected({ ...item, type: type });
               }}
               isSelected={selectedId == item._id}
             />

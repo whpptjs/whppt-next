@@ -1,18 +1,20 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useMemo } from 'react';
 import { WhpptButton, WhpptInput, WhpptDayInput, WhpptIcon } from '../ui/components';
 import { WhpptGalleryTag } from './Components/GalleryTag';
 import { useWhppt } from '../Context';
 import { GalleryItem } from './Model';
 import { toast } from 'react-toastify';
+import { BuildDocUrl } from '../Editor/Link/File';
 
 type GalleryItemSettingsProps = {
   use: (item: GalleryItem) => void;
+  type?: string;
   selectedId: string;
   remove: (id: string) => void;
   close: () => void;
 };
 
-export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selectedId, remove, close }) => {
+export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, type, selectedId, remove, close }) => {
   const { api } = useWhppt();
   const [newTag, setNewTag] = useState('');
 
@@ -52,6 +54,10 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
       </>
     );
   };
+
+  const getFileUrl = useMemo(() => {
+    return BuildDocUrl(selectedId, item?.fileInfo?.originalname);
+  }, [item?.fileInfo?.originalname, selectedId]);
 
   return (
     <div className="whppt-gallery-settings__container">
@@ -133,6 +139,15 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, selecte
                     }}
                   />
                 </>
+              )}
+              {type === 'doc' ? (
+                <div>
+                  <a className="whppt-gallery-settings__preview" href={getFileUrl} target="_black">
+                    Preview Document
+                  </a>
+                </div>
+              ) : (
+                <></>
               )}
 
               <div className="whppt-gallery-settings__action-buttons">

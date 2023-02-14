@@ -22,11 +22,17 @@
     @apply flex flex-col items-start;
 
     &__button {
-      @apply text-whpptLightMode underline;
+      @apply text-whpptLightMode underline cursor-pointer;
 
       &:hover {
         @apply no-underline text-whpptActive;
       }
     }
+  }
+}
+
+.whppt-lightMode {
+  .whppt-image-editor-panel__gallery-actions__button {
+    @apply text-whpptDarkMode;
   }
 }

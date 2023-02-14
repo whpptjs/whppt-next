@@ -17,6 +17,7 @@ export type GalleryApi = {
   publishGallery: (domainId: string) => Promise<void>;
   load: (id: string) => Promise<{ item: GalleryItem }>;
   loadSvg: (id: string) => Promise<string>;
+  loadDoc: (id: string, name: string) => Promise<string>;
   remove: (id: string, type: string) => Promise<any>;
 };
 export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryApi;
@@ -75,6 +76,12 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
     if (!id) throw new Error('Id of svg is missing');
     return http.secure.getText({
       path: `/gallery/svg/${id}`,
+    });
+  },
+  loadDoc: async (id: string, name: string) => {
+    if (!id) throw new Error('Id of doc is missing');
+    return http.secure.getText({
+      path: `/gallery/doc/${id}/${name}`,
     });
   },
   remove: async (itemId: string, type: string) => {

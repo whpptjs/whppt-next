@@ -33,7 +33,7 @@ export const PageLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ value, o
           error=""
           info=""
           value={value.text}
-          onChange={text => onChange({ ...value, text })}
+          onChange={text => onChange({ ...value, text, fileId: undefined })}
         />
 
         <WhpptSelect
@@ -41,7 +41,7 @@ export const PageLinkTab: FC<WhpptTab & EditorArgs<WhpptLinkData>> = ({ value, o
           label="Page to link to"
           items={items}
           value={items.find(i => i.slug === value.href)}
-          onChange={item => onChange({ ...value, href: item.slug })}
+          onChange={item => onChange({ ...value, href: item.slug, fileId: undefined })}
           getOptionLabel={item => `/${item.slug}`}
         />
       </section>
