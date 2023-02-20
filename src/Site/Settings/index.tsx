@@ -7,7 +7,6 @@ import { SiteOpenGraph } from './SiteOpenGraph';
 import { General } from './General';
 import { SiteTwitter } from './SiteTwitter';
 import { Redirects } from './Redirects';
-import { Files } from './Files';
 import { SiteTagging } from './SiteTagging';
 
 export type WhpptSelectedType = string;
@@ -21,7 +20,6 @@ export const SiteSettings: FC = () => {
     { name: 'open-graph', label: 'Open Graph' },
     { name: 'twitter', label: 'Twitter' },
     { name: 'redirects', label: 'Redirects' },
-    { name: 'files', label: 'Files' },
     { name: 'banner', label: 'Banner' },
     { name: 'tagging', label: 'Tagging' },
   ];
@@ -41,7 +39,6 @@ export const SiteSettings: FC = () => {
         <SiteOpenGraph name="open-graph" label="Open Graph" />
         <SiteTwitter name="twitter" label="Twitter" />
         <Redirects name="redirects" label="Redirects" />
-        <Files name="files" label="Files" />
         <SiteTagging name="tagging" label="Tagging" />
       </WhpptTab>
     </div>
