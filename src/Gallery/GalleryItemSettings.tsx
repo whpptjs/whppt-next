@@ -10,7 +10,7 @@ type GalleryItemSettingsProps = {
   use: (item: GalleryItem) => void;
   type?: string;
   selectedId: string;
-  remove: (id: string) => void;
+  remove: () => void;
   close: () => void;
 };
 
@@ -152,7 +152,7 @@ export const GalleryItemSettings: FC<GalleryItemSettingsProps> = ({ use, type, s
 
               <div className="whppt-gallery-settings__action-buttons">
                 <WhpptButton text="save" onClick={() => save(item)} />
-                <WhpptButton text="delete" onClick={() => remove(item._id)} />
+                <WhpptButton text="delete" onClick={remove} />
               </div>
 
               {use ? (
