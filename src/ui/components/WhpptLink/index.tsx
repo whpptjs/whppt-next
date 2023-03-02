@@ -28,6 +28,12 @@ export const WhpptLink: FC<{
 
   const renderedHref = useMemo(() => {
     if (link.type === 'page' && typeof link.href === 'string' && !link.href.startsWith('/')) return `/${link.href}`;
+
+    if (link.type === 'external') {
+      if (/^https?:\/\//i.test(link.href)) return link.href;
+      return `https://${link.href}`;
+    }
+
     return link.href;
   }, [link]);
 
