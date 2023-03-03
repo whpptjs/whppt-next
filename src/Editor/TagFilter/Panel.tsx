@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { WhpptCheckbox, WhpptInput, WhpptSelect } from '../../ui/components';
+import { WhpptButton, WhpptCheckbox, WhpptInput, WhpptSelect } from '../../ui/components';
 import { EditorArgs } from '../EditorArgs';
 import { useWhppt } from '../../Context';
 import { Reorder } from 'framer-motion';
@@ -69,6 +69,8 @@ export const WhpptTagFilterPanel: FC<EditorArgs<WhpptTagFilters>> = ({ value, on
   const [excludedTagSearch] = useState('');
   const [sortByFilter, setSortByFilter] = useState({ name: '', value: '' });
 
+  const [queryInput, setQueryInput] = useState('');
+
   useEffect(() => {
     if (!tagFilters?.selected?.length) {
       setSelectedItems([]);
@@ -82,12 +84,12 @@ export const WhpptTagFilterPanel: FC<EditorArgs<WhpptTagFilters>> = ({ value, on
   }, [api.tagging, domain._id, tagFilters.ignoreLimit, tagFilters.ignoreSort, tagFilters.sort, tagFilters.selected]);
 
   useEffect(() => {
-    api.tagging.filterList({ domainId: domain._id, tagFilters }).then(data => {
+    api.tagging.filterList({ domainId: domain._id, tagFilters, queryInput }).then(data => {
       setFilteredItems(
         data.map(d => ({ ...d, header: { ...d.header, content: { ...d.header?.content, title: parse(d.header?.content?.title || '') } } }))
       );
     });
-  }, [api.tagging, domain._id, tagFilters.include, tagFilters.exclude, tagFilters.selected]);
+  }, [api.tagging, domain._id, tagFilters.include, tagFilters.exclude, tagFilters.selected, queryInput]);
 
   useEffect(() => {
     onChange(tagFilters);
@@ -267,26 +269,31 @@ export const WhpptTagFilterPanel: FC<EditorArgs<WhpptTagFilters>> = ({ value, on
         </Reorder.Group>
       </div>
       {unselectedItems.length ? (
-        <div className="whppt-tag-filter__group">
-          <p className="whppt-tag-filter__label">Filtered pages:</p>
-          {unselectedItems.map(pageItem => {
-            return (
-              <div key={pageItem._id}>
-                <WhpptCheckbox
-                  label={pageItem.header.content.title}
-                  value={false}
-                  onChange={() => {
-                    if (tagFilters.selected.find(s => s === pageItem._id)) return;
-                    setTagFilters({ ...tagFilters, selected: [...tagFilters.selected, pageItem._id] });
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
+        <>
+          <div className="whppt-tag-filter__group">
+            <p className="whppt-tag-filter__label">Filtered pages:</p>
+            {unselectedItems.map(pageItem => {
+              return (
+                <div key={pageItem._id}>
+                  <WhpptCheckbox
+                    label={pageItem.header.content.title}
+                    value={false}
+                    onChange={() => {
+                      if (tagFilters.selected.find(s => s === pageItem._id)) return;
+                      setTagFilters({ ...tagFilters, selected: [...tagFilters.selected, pageItem._id] });
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </>
       ) : (
         <></>
       )}
+      <div className="whppt-tag-filter__group">
+        <WhpptInput id="query-input" label="Filter by header title" type="text" value={queryInput} onChange={setQueryInput} />
+      </div>
     </div>
   );
 };
