@@ -15,6 +15,7 @@ type TaggingArgs = {
       text: string;
     };
   };
+  queryInput?: string;
 };
 
 export type TaggingApi = {
