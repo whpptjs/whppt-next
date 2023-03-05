@@ -1,0 +1,6 @@
+.gallery-prompt {
+  @apply flex flex-col gap-4;
+  @apply border-2 border-whpptStandard border-opacity-70 rounded-lg;
+  @apply h-full py-0 px-4 max-h-screen overflow-auto w-settingsSidebar;
+  @apply scrollbar-hide;
+}

@@ -9,6 +9,7 @@ import { capitalizeFirstLetter } from '../helpers';
 import { splitKeywords } from '../splitKeywords';
 import { toast } from 'react-toastify';
 import { WhpptPagination } from '../ui/components/Pagination';
+import { Prompt } from './Components/Prompt';
 
 const internalTabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images', disabled: false },
@@ -44,6 +45,8 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(selectOptions[galleryPanel.activeTab][0].value);
   const [total, setTotal] = useState(0);
+
+  const [showPrompt, setShowPrompt] = useState(false);
 
   const search = useCallback(() => {
     setError('');
@@ -88,6 +91,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
 
   const remove = id => {
     const remove = api.gallery.remove(id, galleryPanel.activeTab).then(() => {
+      setShowPrompt(false);
       setSelected(null);
       setItems(items.filter(({ _id }) => _id !== id));
     });
@@ -185,13 +189,15 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
                   }
                 : undefined
             }
-            remove={() => remove(selected._id)}
+            remove={() => setShowPrompt(true)}
             selectedId={selected._id}
             type={selected.type}
             close={() => setSettingsOpen(false)}
           />
         )}
       </div>
+
+      {showPrompt ? <Prompt itemId={selected._id} close={() => setShowPrompt(false)} remove={() => remove(selected._id)} /> : <></>}
     </div>
   );
 };

@@ -19,6 +19,7 @@ export type GalleryApi = {
   loadSvg: (id: string) => Promise<string>;
   loadDoc: (id: string, name: string) => Promise<string>;
   remove: (id: string, type: string) => Promise<any>;
+  findDependency: (itemId: string, parentId: string) => Promise<any>;
 };
 export type GalleryApiConstructor = ({ http }: { http: WhpptHttp }) => GalleryApi;
 
@@ -90,6 +91,14 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
     return http.secure.postJson({
       path: '/api/gallery/remove',
       data: { itemId, type },
+    });
+  },
+  findDependency: async (itemId: string, parentId: string) => {
+    if (!itemId) throw new Error('Id of file is missing');
+    if (!parentId) throw new Error('Id of page is missing');
+
+    return http.secure.getJson({
+      path: `/api/gallery/findDependency?itemId=${itemId}&parentId=${parentId}`,
     });
   },
 });
