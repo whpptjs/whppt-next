@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { WhpptButton, WhpptCheckbox, WhpptInput, WhpptSelect } from '../../ui/components';
+import { WhpptCheckbox, WhpptInput, WhpptSelect } from '../../ui/components';
 import { EditorArgs } from '../EditorArgs';
 import { useWhppt } from '../../Context';
 import { Reorder } from 'framer-motion';
