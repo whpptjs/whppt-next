@@ -42,7 +42,7 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
     if (!fileData) throw new Error('Invalid file data');
 
     return http.secure.postFile({
-      path: '/gallery/upload',
+      path: '/api/gallery/upload',
       fileData,
     });
   },
@@ -76,13 +76,13 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
   loadSvg: async (id: string) => {
     if (!id) throw new Error('Id of svg is missing');
     return http.secure.getText({
-      path: `/gallery/svg/${id}`,
+      path: `/api/gallery/svg/${id}`,
     });
   },
   loadDoc: async (id: string, name: string) => {
     if (!id) throw new Error('Id of doc is missing');
     return http.secure.getText({
-      path: `/gallery/doc/${id}/${name}`,
+      path: `/api/gallery/doc/${id}/${name}`,
     });
   },
   remove: async (itemId: string, type: string) => {
