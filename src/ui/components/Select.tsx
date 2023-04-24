@@ -18,6 +18,7 @@ type WhpptSelectProps<T> = {
   isSearchable?: boolean;
   error?: string;
   placeholder?: string;
+  defaultValue?: T;
 };
 
 export const WhpptSelect = <T extends {}>({
