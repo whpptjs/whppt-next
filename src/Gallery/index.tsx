@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import { WhpptHeading } from '../ui/components/Heading';
 import { useWhppt } from '../Context';
 import { WhpptTabs, WhpptTab, WhpptQueryInput, WhpptSelect, WhpptIcon } from '../ui/components';
-import { WhpptGalleryTab, WhpptGalleryImage, WhpptGallerySvg, WhpptGalleryDoc } from './Components';
+import { WhpptGalleryTab, WhpptGalleryImage, WhpptGallerySvg, WhpptGalleryDoc, WhpptGalleryVideo } from './Components';
 import { GalleryFileType, GalleryItem } from './Model';
 import { GalleryItemSettings } from './GalleryItemSettings';
 import { capitalizeFirstLetter } from '../helpers';
@@ -14,6 +14,7 @@ import { Prompt } from './Components/Prompt';
 const internalTabs: Array<WhpptTab> = [
   { name: 'image', label: 'Images', disabled: false },
   { name: 'svg', label: 'SVG', disabled: false },
+  { name: 'video', label: 'Videos', disabled: false },
   { name: 'doc', label: 'Documents', disabled: false },
 ];
 
@@ -22,6 +23,11 @@ const selectOptions = {
     { value: 25, label: '25' },
     { value: 50, label: '50' },
     { value: 100, label: '100' },
+  ],
+  video: [
+    { value: 50, label: '50' },
+    { value: 100, label: '100' },
+    { value: 200, label: '200' },
   ],
   svg: [
     { value: 50, label: '50' },
@@ -107,6 +113,7 @@ export const Gallery: FC<{ onUse?: (image: GalleryItem) => void }> = ({ onUse })
     return {
       image: WhpptGalleryImage,
       svg: WhpptGallerySvg,
+      video: WhpptGalleryVideo,
       doc: WhpptGalleryDoc,
     }[galleryPanel.activeTab];
   };

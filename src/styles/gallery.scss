@@ -37,9 +37,14 @@
       @apply grid-cols-galleryImages;
     }
 
+    &__video {
+      @apply grid-cols-galleryImages;
+    }
+
     &__svg {
       @apply grid-cols-gallerySvgs;
     }
+
     &__doc {
       @apply grid-cols-gallerySvgs;
     }
