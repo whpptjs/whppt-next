@@ -76,13 +76,13 @@ export const GalleryApi: GalleryApiConstructor = ({ http }) => ({
   loadSvg: async (id: string) => {
     if (!id) throw new Error('Id of svg is missing');
     return http.secure.getText({
-      path: `/api/gallery/svg/${id}`,
+      path: `/api/gallery-file/svg/${id}`,
     });
   },
   loadDoc: async (id: string, name: string) => {
     if (!id) throw new Error('Id of doc is missing');
     return http.secure.getText({
-      path: `/api/gallery/doc/${id}/${name}`,
+      path: `/api/gallery-file/doc/${id}/${name}`,
     });
   },
   remove: async (itemId: string, type: string) => {

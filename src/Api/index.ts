@@ -9,7 +9,7 @@ import { TaggingApi } from './../Tagging/Api';
 export type WhpptApi = { app: AppApi; site: SiteApi; page: PageApi; security: SecurityApi; gallery: GalleryApi; tagging: TaggingApi };
 export type WhpptApiConstructor = () => WhpptApi;
 
-const http = Http(process.env.NEXT_PUBLIC_BASE_API_URL);
+const http = Http(process.env.NEXT_PUBLIC_BASE_API_URL || 'http://localhost:3000');
 
 export const Api: WhpptApiConstructor = () => {
   return {

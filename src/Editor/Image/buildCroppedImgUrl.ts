@@ -12,7 +12,7 @@ export const buildCroppedImgUrl = (
   if (_height) baseParams.push(`h=${_height}`);
   const coordParams = () => [`cw=${image.coords.width}`, `ch=${image.coords.height}`, `cx=${image.coords.left}`, `cy=${image.coords.top}`];
   const params = [...baseParams, ...(image.coords ? coordParams() : [])];
-  const pathWithImageParams = `${process.env.NEXT_PUBLIC_BASE_CDN_API_URL || process.env.NEXT_PUBLIC_BASE_API_URL}/gallery/image/${
+  const pathWithImageParams = `${process.env.NEXT_PUBLIC_BASE_CDN_API_URL || process.env.NEXT_PUBLIC_BASE_API_URL}/gallery-file/image/${
     image.galleryItemId
   }?${params.join('&')}`;
   return appendApiKey(pathWithImageParams);
