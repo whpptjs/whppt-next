@@ -20,7 +20,9 @@ export const getPortraitRatio = ratio => {
 
 export const WhpptCropper: FC<WhpptCropperProps> = ({ value, onChange }) => {
   const getImgUrl = galleryItemId =>
-    appendApiKey(`${process.env.NEXT_PUBLIC_BASE_CDN_API_URL || process.env.NEXT_PUBLIC_BASE_API_URL}/gallery-file/image/${galleryItemId}`);
+    appendApiKey(
+      `${process.env.NEXT_PUBLIC_BASE_CDN_API_URL || process.env.NEXT_PUBLIC_BASE_API_URL}/api/gallery-file/image/${galleryItemId}`
+    );
 
   const stencilAspectRatio = useMemo(() => {
     const orientation = value.orientation;
