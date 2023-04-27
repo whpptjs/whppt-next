@@ -2,11 +2,14 @@ import React, { FC } from 'react';
 import { WhpptGalleryUploader } from '.';
 import { GalleryTab } from '../Model';
 import { useWhppt } from '../../Context';
+import { toast } from 'react-toastify';
 
 export const WhpptGalleryTab: FC<GalleryTab> = ({ type, items, upload, setSelected, selectedId, Component }) => {
   const { domain } = useWhppt();
 
   const uploadItem = newFile => {
+    if (newFile.size > 100 * 1024 * 1024) return toast.error('File size exceeds limit (100 MB)');
+
     const file = new FormData();
     file.append('file', newFile);
     file.append('type', type);

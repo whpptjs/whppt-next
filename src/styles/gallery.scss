@@ -173,6 +173,14 @@
     }
   }
 
+  &__video {
+    @apply mb-7;
+
+    & video {
+      @apply h-full w-full;
+    }
+  }
+
   &__filters {
     @apply w-full px-5;
   }

@@ -4,7 +4,7 @@ import { EditorArgs } from '../EditorArgs';
 import { WhpptImageData } from '../Image/Model';
 import { ImageEditorOptions } from '../Editors';
 
-export const VideoEditor: FC<
+export const WhpptVideoEditor: FC<
   EditorArgs<WhpptImageData, ImageEditorOptions> & {
     label?: string;
     children: ReactElement | ReactElement[];
@@ -16,7 +16,7 @@ export const VideoEditor: FC<
       className="whppt-editor-selector"
       onClick={e => {
         if (editing) {
-          showEditor('video', value, onChange, {});
+          showEditor('whppt-video', value, onChange, {});
           e.stopPropagation();
         }
       }}>

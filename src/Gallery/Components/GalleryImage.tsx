@@ -1,15 +1,9 @@
 import React, { FC, useState } from 'react';
-import { appendApiKey } from '../../Api/Http';
 import { GalleryComponent } from '../Model';
+import { getGalleryItemUrl } from '../../helpers';
 
 export const WhpptGalleryImage: FC<GalleryComponent> = ({ id, name, onClick, isSelected }) => {
   const [loaded, setLoaded] = useState(false);
-
-  const getImgUrl = imgId => {
-    return appendApiKey(
-      `${process.env.NEXT_PUBLIC_BASE_CDN_API_URL || process.env.NEXT_PUBLIC_BASE_API_URL}/api/gallery-file/image/${imgId}?w=360`
-    );
-  };
 
   return (
     <div>
@@ -23,7 +17,7 @@ export const WhpptGalleryImage: FC<GalleryComponent> = ({ id, name, onClick, isS
         <img
           className={`whppt-gallery__image ${isSelected ? 'whppt-gallery__image--selected' : ''}`}
           onLoad={() => setLoaded(true)}
-          src={getImgUrl(id)}
+          src={getGalleryItemUrl('image', id, 'w=360')}
         />
         <p className="whppt-gallery__image-name">{name}</p>
       </div>

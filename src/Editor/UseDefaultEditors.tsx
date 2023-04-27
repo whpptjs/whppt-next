@@ -38,5 +38,5 @@ export const UseDefaultEditors = ({ editor, value, onChange, options }: UseDefau
   if (editor === 'svg') return <WhpptSvgEditorPanel value={value} onChange={onChange} options={options} />;
   if (editor === 'pageTagging') return <WhpptPageTaggingPanel />;
   if (editor === 'tagFilter') return <WhpptTagFilterPanel value={value} onChange={onChange} options={options} />;
-  if (editor === 'video') return <WhpptVideoEditorPanel value={value} onChange={onChange} options={options as ImageEditorOptions} />;
+  if (editor === 'whppt-video') return <WhpptVideoEditorPanel value={value} onChange={onChange} options={options} />;
 };

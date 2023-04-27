@@ -1,43 +1,28 @@
 import React, { FC } from 'react';
 import { EditorArgs } from '../EditorArgs';
-import { WhpptInput } from '../../ui/components';
-import { ImageEditorOptions } from '../Editors';
-import { WhpptImageData } from '../Image/Model';
+import { WhpptCheckbox } from '../../ui/components';
+import { useWhppt } from '../../Context';
+import { Gallery } from '../../Gallery';
+import { GalleryItem } from 'src/Gallery/Model/GalleryItem';
 
-export const WhpptVideoEditorPanel: FC<EditorArgs<WhpptImageData, ImageEditorOptions>> = ({ value, onChange, options }) => {
-  console.log('🚀 ~ file: Panel.tsx:8 ~ options:', options);
-  console.log('🚀 ~ file: Panel.tsx:8 ~ value:', value);
+export const WhpptVideoEditorPanel: FC<EditorArgs<any, any>> = ({ value, onChange }) => {
+  const { toggleGalleryPanel } = useWhppt();
+
   return (
     <div className="whppt-image-editor-panel">
+      <div
+        className="whppt-image-editor-panel__cropper--empty"
+        onClick={() => {
+          toggleGalleryPanel({
+            key: 'gallery',
+            activeTab: 'video',
+            component: <Gallery onUse={(video: GalleryItem) => onChange({ ...value, galleryItemId: video._id })} />,
+          });
+        }}>
+        <button className="whppt-image-editor-panel__gallery-actions__button">{'Pick from Gallery'}</button>
+      </div>
       <div>
-        <WhpptInput
-          value={''}
-          onChange={text => {
-            console.log('🚀 ~ file: Panel.tsx:43 ~ text:', text);
-            onChange({});
-          }}
-          id={'altText'}
-          label={'Alt text'}
-          info="Enter alt text for this image"
-          error={''}
-          type={'text'}
-          name="altText"
-          placeholder="Alt text"
-        />
-        <WhpptInput
-          value={''}
-          onChange={text => {
-            console.log('🚀 ~ file: Panel.tsx:43 ~ text:', text);
-            onChange({});
-          }}
-          id={'caption'}
-          label={'Caption'}
-          info="Enter caption for this image"
-          error={''}
-          type={'text'}
-          name="caption"
-          placeholder="Caption"
-        />
+        <WhpptCheckbox label={'Autoplay'} value={value?.autoplay} onChange={autoplay => onChange({ ...value, autoplay })} />
       </div>
     </div>
   );
