@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect } from 'react';
 import { ContentTreeNode } from '../ui/Content';
-
 import { useWhppt } from '../Context';
 import { PageData } from './Model/Page';
+import { Meta } from './Meta';
 
 export type WhpptPageProps<T extends PageData> = {
   getContents: (args: { page: T; setPage: (page: T) => void }) => ContentTreeNode[];
@@ -17,7 +17,10 @@ export const WhpptPage = <T extends PageData = PageData>({ getContents, children
   }, [setPage, contentTree, getContents]);
 
   return page ? (
-    <div className={`theme-${(page.theme && page.theme.value) || 'whpptDefault'}`}>{children}</div>
+    <>
+      <Meta />
+      <div className={`theme-${(page.theme && page.theme.value) || 'whpptDefault'}`}>{children}</div>
+    </>
   ) : (
     <div>Page failed to load</div>
   );

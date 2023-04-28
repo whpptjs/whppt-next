@@ -27,6 +27,7 @@ export type PageData = {
   tags?: string[];
   productId?: string;
   published?: boolean;
+  lastPublished?: Date;
 };
 
 export type PageFactory = {
