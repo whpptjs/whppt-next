@@ -44,6 +44,7 @@ export const Meta = () => {
   }, [page?.header?.content?.title, seo?.title, og?.title, twitter?.title]);
 
   const image = useMemo(() => {
+    if (!page?.header?.content?.image?.desktop) return '';
     return buildCroppedImgUrl(page?.header?.content?.image?.desktop, {
       width: undefined,
       height: undefined,
