@@ -6,25 +6,42 @@ import { format } from 'date-fns';
 import { buildCroppedImgUrl } from '../Editor';
 
 export const Meta = () => {
-  const { page } = useWhppt();
-
-  const title = useMemo(() => {
-    return htmlToText.fromString(page?.header?.content?.title || '', {
-      wordWrap: false,
-    });
-  }, [page?.header?.content?.title]);
+  const { page, settingsData } = useWhppt();
 
   const twitter = useMemo(() => {
-    return page?.settings?.twitter;
-  }, [page?.settings?.twitter]);
+    return {
+      title: page?.settings?.twitter?.title || settingsData?.twitter?.title,
+      description: page?.settings?.twitter?.description || settingsData?.twitter?.description,
+      keywords: page?.settings?.twitter?.keywords || settingsData?.twitter?.keywords,
+    };
+  }, [page?.settings?.twitter, settingsData?.twitter]);
 
   const seo = useMemo(() => {
-    return page?.settings?.seo;
-  }, [page?.settings?.seo]);
+    return {
+      title: page?.settings?.seo?.title || settingsData?.seo?.title,
+      description: page?.settings?.seo?.description || settingsData?.seo?.description,
+      keywords: page?.settings?.seo?.keywords || settingsData?.seo?.keywords,
+    };
+  }, [page?.settings?.seo, settingsData?.seo]);
 
   const og = useMemo(() => {
-    return page?.settings?.og;
-  }, [page?.settings?.og]);
+    return {
+      title: page?.settings?.og?.title || settingsData?.og?.title,
+      description: page?.settings?.og?.description || settingsData?.og?.description,
+      keywords: page?.settings?.og?.keywords || settingsData?.og?.keywords,
+    };
+  }, [page?.settings?.og, settingsData?.og]);
+
+  const title = useMemo(() => {
+    return (
+      seo?.title ||
+      og?.title ||
+      twitter?.title ||
+      htmlToText.fromString(page?.header?.content?.title || '', {
+        wordWrap: false,
+      })
+    );
+  }, [page?.header?.content?.title, seo?.title, og?.title, twitter?.title]);
 
   const image = useMemo(() => {
     return buildCroppedImgUrl(page?.header?.content?.image?.desktop, {
