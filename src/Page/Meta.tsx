@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useWhppt } from '../Context';
 import htmlToText from 'html-to-text';
 import { format } from 'date-fns';
-import { buildCroppedImgUrl } from 'src/Editor';
+import { buildCroppedImgUrl } from '../Editor';
 
 export const Meta = () => {
   const { page } = useWhppt();
