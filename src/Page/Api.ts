@@ -6,6 +6,7 @@ import { HttpError } from '../HttpError';
 export type PageApi = {
   loadFromSlug: ({ slug, collection, domain }: { slug: string; collection: string; domain: Domain }) => Promise<PageData>;
   delete: (page: PageData) => Promise<any>;
+  unpublish: (page: PageData, collection?: string) => Promise<void>;
   checkSlug: ({ slug, collection, domain }: { slug: string; collection?: string; domain: Domain }) => Promise<PageData>;
   save: ({ page, publish }: { page: PageData; publish?: boolean }) => Promise<PageData>;
 };
@@ -40,7 +41,7 @@ export const PageApi: PageApiConstructor = ({ http }) => {
         data: { page, publish },
       });
     },
-    unpublish: async ({ page, collection = 'pages' }) => {
+    unpublish: async (page, collection = 'pages') => {
       return http.secure.postJson({
         path: '/api/page/unpublishPage',
         data: { _id: page._id, collection },
