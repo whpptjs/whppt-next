@@ -55,7 +55,9 @@ export const General: FC<WhpptTab> = () => {
   };
 
   const unpublishPage = () => {
-    const pageUnpublishPromise = api.page.unpublish(page);
+    const pageUnpublishPromise = api.page.unpublish(page).then(() => {
+      setPage({ ...page, published: false });
+    });
 
     toast.promise(pageUnpublishPromise, {
       pending: 'Unpublishing Page...',

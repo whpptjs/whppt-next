@@ -7,10 +7,11 @@ import { ConfirmationPopup } from '../ConfirmationPopup';
 
 export const SavePagePopup: FC<{ callback: () => void }> = ({ callback }) => {
   const [publish, setPublish] = useState(false);
-  const { api, page } = useWhppt();
+  const { api, page, setPage } = useWhppt();
 
   const confirm = () => {
     const save = api.page.save({ page, publish }).then(() => {
+      if (publish) setPage({ ...page, published: true });
       callback();
     });
     toast.promise(save, {
