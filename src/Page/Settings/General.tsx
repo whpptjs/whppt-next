@@ -54,6 +54,15 @@ export const General: FC<WhpptTab> = () => {
     });
   };
 
+  const unpublishPage = () => {
+    const pageUnpublishPromise = api.page.unpublish(page);
+
+    toast.promise(pageUnpublishPromise, {
+      pending: 'Unpublishing Page...',
+      success: 'Page unpublished',
+      error: 'Page unpublishing failed 🤯',
+    });
+  };
   const deletePage = () => {
     const pageDeletePromise = api.page.delete(page);
 
@@ -86,7 +95,11 @@ export const General: FC<WhpptTab> = () => {
           <WhpptButton text="Duplicate Page" icon="duplicate" disabled={!validSlug} onClick={duplicatePage} />
         </div>
         <div>
-          <WhpptButton text="Delete Page" disabled={page.published} icon="bin" onClick={deletePage} />
+          {page.published ? (
+            <WhpptButton text="Unpublish Page" disabled={!page.published} onClick={unpublishPage} />
+          ) : (
+            <WhpptButton text="Delete Page" disabled={page.published} icon="bin" onClick={deletePage} />
+          )}
           {page.published ? <p className="whppt-form__actions-message">You need to unpublish the page before deleting</p> : <></>}
         </div>
       </section>

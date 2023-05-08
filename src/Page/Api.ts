@@ -40,5 +40,11 @@ export const PageApi: PageApiConstructor = ({ http }) => {
         data: { page, publish },
       });
     },
+    unpublish: async ({ page, collection = 'pages' }) => {
+      return http.secure.postJson({
+        path: '/api/page/unpublishPage',
+        data: { _id: page._id, collection },
+      });
+    },
   };
 };
