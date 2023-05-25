@@ -4,3 +4,4 @@ export * from './GalleryDoc';
 export * from './GalleryTab';
 export * from './GalleryTag';
 export * from './GalleryUploader';
+export * from './GalleryVideo';

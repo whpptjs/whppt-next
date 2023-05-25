@@ -12,3 +12,4 @@ export * from './Spacing/Panel';
 export * from './Svg/Panel';
 export * from './Tagging/Panel';
 export * from './TagFilter/Panel';
+export * from './Video/Panel';

@@ -16,3 +16,4 @@ export * from './DayInput';
 export * from './Svg';
 export * from './MoneyInput';
 export * from '../ConfirmationPopup';
+export * from './Scrim';

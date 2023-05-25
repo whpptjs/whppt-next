@@ -37,9 +37,14 @@
       @apply grid-cols-galleryImages;
     }
 
+    &__video {
+      @apply grid-cols-galleryImages;
+    }
+
     &__svg {
       @apply grid-cols-gallerySvgs;
     }
+
     &__doc {
       @apply grid-cols-gallerySvgs;
     }
@@ -165,6 +170,14 @@
     }
     &-type {
       @apply absolute inset-0 flex justify-center items-center z-0 uppercase;
+    }
+  }
+
+  &__video {
+    @apply mb-7;
+
+    & video {
+      @apply h-full w-full;
     }
   }
 
